@@ -49,12 +49,18 @@ export async function POST(req: Request) {
       ok: true,
       role: user.role,
     });
+
+    // If we're behind a proxy/load balancer (e.g. Vercel), `x-forwarded-proto` tells us
+    // whether the original request was HTTPS. `secure` cookies require HTTPS.
+    const isSecure =
+      req.headers.get("x-forwarded-proto") === "https" ||
+      process.env.NODE_ENV === "production";
     res.cookies.set(SESSION_COOKIE, token, {
       httpOnly: true,
       path: "/",
       sameSite: "lax",
       maxAge: 60 * 60 * 24 * 7,
-      secure: process.env.NODE_ENV === "production",
+      secure: isSecure,
     });
     return res;
   } catch (err) {
