@@ -60,9 +60,8 @@ export async function POST(req: Request) {
   } catch (err) {
     // Debug: production-da dəqiq nə çökdüyünü logla və müvəqqəti message qaytar.
     console.error("[POST /api/auth/login] Unexpected error:", err);
-    const message = err instanceof Error ? err.message : String(err);
     return NextResponse.json(
-      { error: "Server error", message },
+      { error: "Server error", message: (err as any).message },
       { status: 500 }
     );
   }
