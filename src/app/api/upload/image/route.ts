@@ -2,9 +2,9 @@ import { NextResponse } from "next/server";
 import { writeFile, mkdir } from "fs/promises";
 import path from "path";
 import { randomUUID } from "crypto";
-import { getSession } from "@/lib/auth";
-import { ALLOWED_IMAGE_TYPES, MAX_UPLOAD_BYTES } from "@/lib/constants";
-import { optimizeLessonImage } from "@/lib/image-optimize";
+import { getSession } from "@/server/auth";
+import { ALLOWED_IMAGE_TYPES, MAX_UPLOAD_BYTES } from "@/server/config/constants";
+import { optimizeLessonImage } from "@/server/lib/image-optimize";
 
 export async function POST(req: Request) {
   const session = await getSession();

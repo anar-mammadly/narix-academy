@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { prisma } from "@/lib/prisma";
-import { getSession } from "@/lib/auth";
-import { slugify } from "@/lib/slugify";
+import { prisma } from "@/server/db/prisma";
+import { getSession } from "@/server/auth";
+import { slugify } from "@/server/lib/slugify";
 
 export async function GET(req: Request) {
   const session = await getSession();

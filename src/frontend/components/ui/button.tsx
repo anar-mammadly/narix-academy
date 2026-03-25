@@ -1,5 +1,5 @@
 import { forwardRef, type ButtonHTMLAttributes } from "react";
-import { cn } from "@/lib/cn";
+import { cn } from "@/frontend/lib/cn";
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: "primary" | "secondary" | "ghost" | "danger" | "outline";
@@ -15,7 +15,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(
           "inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-50",
           variant === "primary" &&
-            "bg-blue-600 text-white shadow-sm hover:bg-blue-700 hover:shadow-md focus-visible:outline-blue-600 active:scale-[0.98]",
+            "bg-gradient-to-br from-indigo-600 to-blue-600 text-white shadow-md hover:from-indigo-500 hover:to-blue-600 hover:shadow-lg focus-visible:outline-indigo-600 active:scale-[0.98]",
           variant === "secondary" &&
             "bg-slate-900 text-white hover:bg-slate-800 focus-visible:outline-slate-900",
           variant === "outline" &&

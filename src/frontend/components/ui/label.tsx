@@ -1,4 +1,4 @@
-import { cn } from "@/lib/cn";
+import { cn } from "@/frontend/lib/cn";
 import type { LabelHTMLAttributes } from "react";
 
 export function Label({ className, ...props }: LabelHTMLAttributes<HTMLLabelElement>) {

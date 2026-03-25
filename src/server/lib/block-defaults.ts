@@ -1,4 +1,4 @@
-import type { BlockType } from "@/types/blocks";
+import type { BlockType } from "@/shared/types/blocks";
 
 export function defaultContentForType(type: BlockType): { content: string; settings: string; title: string | null } {
   switch (type) {

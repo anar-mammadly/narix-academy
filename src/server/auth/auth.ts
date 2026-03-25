@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
-import { SESSION_COOKIE } from "./constants";
+import { SESSION_COOKIE } from "@/server/config/constants";
 import { verifyJwt, type SessionPayload, signJwt } from "./jwt";
-import type { Role } from "@/types/blocks";
+import type { Role } from "@/shared/types/blocks";
 
 export type SessionUser = {
   userId: string;

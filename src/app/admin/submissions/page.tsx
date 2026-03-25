@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/server/db/prisma";
 import { SubmissionsClient } from "./SubmissionsClient";
 
 export default async function AdminSubmissionsPage() {

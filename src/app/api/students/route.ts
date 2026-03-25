@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { prisma } from "@/lib/prisma";
-import { getSession } from "@/lib/auth";
-import { hashPassword } from "@/lib/password";
+import { prisma } from "@/server/db/prisma";
+import { getSession, hashPassword } from "@/server/auth";
 
 export async function GET() {
   const session = await getSession();

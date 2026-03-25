@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { prisma } from "@/lib/prisma";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { prisma } from "@/server/db/prisma";
+import { Card, CardHeader, CardTitle } from "@/frontend/components/ui/card";
 import { Users, BookOpen, FolderOpen, Inbox, Plus } from "lucide-react";
 
 export default async function AdminDashboardPage() {

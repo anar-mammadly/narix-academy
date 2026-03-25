@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { prisma } from "@/lib/prisma";
-import { Badge } from "@/components/ui/badge";
+import { prisma } from "@/server/db/prisma";
+import { Badge } from "@/frontend/components/ui/badge";
 
 export default async function AdminStudentsPage() {
   const students = await prisma.user.findMany({

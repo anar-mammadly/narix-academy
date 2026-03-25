@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
-import { getSession } from "@/lib/auth";
-import { AdminShell } from "@/components/admin/AdminShell";
+import { getSession } from "@/server/auth";
+import { AdminShell } from "@/frontend/components/admin/AdminShell";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const s = await getSession();

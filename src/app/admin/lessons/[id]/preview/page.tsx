@@ -1,9 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { prisma } from "@/lib/prisma";
-import { isRemoteImageSrc } from "@/lib/remote-image";
-import { LessonBlocksStudent } from "@/components/lesson/LessonBlocksStudent";
+import { prisma } from "@/server/db/prisma";
+import { isRemoteImageSrc } from "@/frontend/lib/remote-image";
+import { LessonBlocksStudent } from "@/frontend/components/lesson/LessonBlocksStudent";
 
 export default async function AdminLessonPreviewPage({ params }: { params: { id: string } }) {
   const lesson = await prisma.lesson.findUnique({

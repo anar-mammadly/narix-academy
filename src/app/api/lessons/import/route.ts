@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { prisma } from "@/lib/prisma";
-import { getSession } from "@/lib/auth";
-import { slugify } from "@/lib/slugify";
-import type { BlockType } from "@/types/blocks";
+import { prisma } from "@/server/db/prisma";
+import { getSession } from "@/server/auth";
+import { slugify } from "@/server/lib/slugify";
+import type { BlockType } from "@/shared/types/blocks";
 
 const BLOCK_ENUM = [
   "HEADING",

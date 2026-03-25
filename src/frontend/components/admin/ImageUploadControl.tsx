@@ -3,9 +3,9 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Upload } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/cn";
-import { isRemoteImageSrc } from "@/lib/remote-image";
+import { Button } from "@/frontend/components/ui/button";
+import { cn } from "@/frontend/lib/cn";
+import { isRemoteImageSrc } from "@/frontend/lib/remote-image";
 
 type Props = {
   value: string;

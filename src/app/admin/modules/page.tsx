@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/server/db/prisma";
 import { ModuleListClient } from "./ModuleListClient";
 
 export default async function AdminModulesPage() {

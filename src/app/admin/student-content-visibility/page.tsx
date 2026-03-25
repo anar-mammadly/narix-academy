@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/server/db/prisma";
 import { StudentContentVisibilityClient } from "./StudentContentVisibilityClient";
 
 export default async function StudentContentVisibilityPage() {

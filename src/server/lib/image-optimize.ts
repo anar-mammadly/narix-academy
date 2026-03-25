@@ -1,5 +1,5 @@
 import sharp from "sharp";
-import { MAX_UPLOAD_BYTES } from "./constants";
+import { MAX_UPLOAD_BYTES } from "@/server/config/constants";
 
 export async function optimizeLessonImage(buffer: Buffer): Promise<Buffer> {
   if (buffer.length > MAX_UPLOAD_BYTES) {

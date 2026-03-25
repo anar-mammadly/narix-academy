@@ -13,7 +13,7 @@ import {
   LogOut,
   GraduationCap,
 } from "lucide-react";
-import { cn } from "@/lib/cn";
+import { cn } from "@/frontend/lib/cn";
 
 const links = [
   { href: "/admin", label: "İdarə paneli", icon: LayoutDashboard },

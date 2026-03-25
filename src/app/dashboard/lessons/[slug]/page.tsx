@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { prisma } from "@/lib/prisma";
-import { getSession } from "@/lib/auth";
-import { isRemoteImageSrc } from "@/lib/remote-image";
-import { LessonBlocksStudent } from "@/components/lesson/LessonBlocksStudent";
+import { prisma } from "@/server/db/prisma";
+import { getSession } from "@/server/auth";
+import { isRemoteImageSrc } from "@/frontend/lib/remote-image";
+import { LessonBlocksStudent } from "@/frontend/components/lesson/LessonBlocksStudent";
 
 export default async function StudentLessonPage({ params }: { params: Promise<{ slug: string }> }) {
   const session = await getSession();
@@ -59,10 +59,13 @@ export default async function StudentLessonPage({ params }: { params: Promise<{ 
 
   return (
     <div className="mx-auto max-w-3xl animate-fade-in pb-16">
-      <Link href="/dashboard" className="text-sm text-blue-600 hover:underline">
+      <Link
+        href="/dashboard"
+        className="inline-flex items-center gap-1 text-sm font-medium text-indigo-600 transition-colors hover:text-indigo-800 hover:underline"
+      >
         ← Panelə qayıt
       </Link>
-      <header className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-soft">
+      <header className="mt-6 overflow-hidden rounded-3xl border border-slate-200/90 bg-white shadow-lift transition-shadow duration-300 hover:shadow-glow">
         {lesson.coverImageUrl ? (
           <div className="relative h-52 w-full bg-slate-100">
             <Image

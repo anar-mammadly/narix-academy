@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
-import { getSession } from "@/lib/auth";
-import { slugify } from "@/lib/slugify";
+import { prisma } from "@/server/db/prisma";
+import { getSession } from "@/server/auth";
+import { slugify } from "@/server/lib/slugify";
 
 async function uniqueSlug(base: string): Promise<string> {
   let slug = base;

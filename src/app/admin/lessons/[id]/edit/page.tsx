@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { prisma } from "@/lib/prisma";
-import { LessonBuilder } from "@/components/admin/LessonBuilder";
+import { prisma } from "@/server/db/prisma";
+import { LessonBuilder } from "@/frontend/components/admin/LessonBuilder";
 
 export default async function EditLessonPage({ params }: { params: { id: string } }) {
   const lesson = await prisma.lesson.findUnique({

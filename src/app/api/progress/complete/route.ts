@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { prisma } from "@/lib/prisma";
-import { getSession } from "@/lib/auth";
-import { canStudentCompleteLesson } from "@/lib/lesson-completion";
+import { prisma } from "@/server/db/prisma";
+import { getSession } from "@/server/auth";
+import { canStudentCompleteLesson } from "@/server/lib/lesson-completion";
 
 const schema = z.object({
   lessonId: z.string().min(1),

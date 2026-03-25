@@ -12,11 +12,11 @@ import {
   Eye,
   GripVertical,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
+import { Button } from "@/frontend/components/ui/button";
+import { Input } from "@/frontend/components/ui/input";
+import { Textarea } from "@/frontend/components/ui/textarea";
+import { Label } from "@/frontend/components/ui/label";
+import { Badge } from "@/frontend/components/ui/badge";
 import {
   parseJson,
   type HeadingContent,
@@ -28,7 +28,7 @@ import {
   type QuizQuestion,
   type TaskContent,
   type NoteContent,
-} from "@/types/blocks";
+} from "@/shared/types/blocks";
 import { ImageUploadControl } from "./ImageUploadControl";
 
 export type BuilderBlock = {

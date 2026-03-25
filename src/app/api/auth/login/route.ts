@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { prisma } from "@/lib/prisma";
-import { verifyPassword } from "@/lib/password";
-import { createSessionToken } from "@/lib/auth";
-import { SESSION_COOKIE } from "@/lib/constants";
+import { prisma } from "@/server/db/prisma";
+import { verifyPassword, createSessionToken } from "@/server/auth";
+import { SESSION_COOKIE } from "@/server/config/constants";
 
 const bodySchema = z.object({
   email: z.string().email(),

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Suspense } from "react";
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/server/db/prisma";
 import { LessonAdminTable } from "./LessonAdminTable";
 import { LessonFilters } from "./LessonFilters";
 

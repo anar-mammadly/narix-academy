@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { prisma } from "@/lib/prisma";
-import { getSession } from "@/lib/auth";
-import { pruneUndefined } from "@/lib/prune";
+import { prisma } from "@/server/db/prisma";
+import { getSession } from "@/server/auth";
+import { pruneUndefined } from "@/server/lib/prune";
 const patchSchema = z.object({
   title: z.string().nullable().optional(),
   content: z.string().optional(),

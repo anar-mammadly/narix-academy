@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
+import { Button } from "@/frontend/components/ui/button";
+import { Card } from "@/frontend/components/ui/card";
+import { Label } from "@/frontend/components/ui/label";
 
 type StudentRow = { id: string; name: string; email: string };
 type ModuleLessonRow = { id: string; title: string; order: number };

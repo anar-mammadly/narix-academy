@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
-import { getSession } from "@/lib/auth";
-import { StudentShell } from "@/components/student/StudentShell";
+import { getSession } from "@/server/auth";
+import { StudentShell } from "@/frontend/components/student/StudentShell";
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const s = await getSession();

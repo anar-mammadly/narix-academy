@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { prisma } from "@/lib/prisma";
-import { getSession } from "@/lib/auth";
-import { parseJson, type QuizContent } from "@/types/blocks";
+import { prisma } from "@/server/db/prisma";
+import { getSession } from "@/server/auth";
+import { parseJson, type QuizContent } from "@/shared/types/blocks";
 
 const schema = z.object({
   lessonId: z.string().min(1),

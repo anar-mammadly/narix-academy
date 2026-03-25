@@ -11,13 +11,13 @@ import {
   type QuizContent,
   type TaskContent,
   type NoteContent,
-} from "@/types/blocks";
+} from "@/shared/types/blocks";
 import { UniformImage } from "./UniformImage";
 import { SectionImage } from "./SectionImage";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/cn";
+import { Button } from "@/frontend/components/ui/button";
+import { Textarea } from "@/frontend/components/ui/textarea";
+import { Badge } from "@/frontend/components/ui/badge";
+import { cn } from "@/frontend/lib/cn";
 import { CheckCircle2, CircleAlert, Lightbulb, Sparkles } from "lucide-react";
 
 export type BlockRow = {

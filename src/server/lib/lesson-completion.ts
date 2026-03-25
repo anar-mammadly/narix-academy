@@ -1,5 +1,5 @@
-import { prisma } from "./prisma";
-import { parseJson, type TaskContent, type QuizContent } from "@/types/blocks";
+import { prisma } from "@/server/db/prisma";
+import { parseJson, type TaskContent, type QuizContent } from "@/shared/types/blocks";
 
 export async function canStudentCompleteLesson(
   userId: string,

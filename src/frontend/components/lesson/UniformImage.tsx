@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { cn } from "@/lib/cn";
-import { isRemoteImageSrc } from "@/lib/remote-image";
-import { Modal } from "@/components/ui/modal";
+import { cn } from "@/frontend/lib/cn";
+import { isRemoteImageSrc } from "@/frontend/lib/remote-image";
+import { Modal } from "@/frontend/components/ui/modal";
 
 type UniformImageProps = {
   src: string;
