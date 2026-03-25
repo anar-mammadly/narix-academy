@@ -14,7 +14,9 @@ export async function POST(req: Request) {
   let json: unknown;
   try {
     json = await req.json();
-  } catch {
+  } catch (err) {
+    // Debug: production-da dəqiq nə çökdüyünü logla.
+    console.error("[POST /api/auth/login] Failed to parse request body:", err);
     return NextResponse.json({ error: "Yanlış sorğu" }, { status: 400 });
   }
   const parsed = bodySchema.safeParse(json);
@@ -22,33 +24,46 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Yanlış məlumat" }, { status: 400 });
   }
   const { email, password } = parsed.data;
-  const user = await prisma.user.findUnique({ where: { email: email.toLowerCase() } });
-  if (!user) {
-    return NextResponse.json({ error: "E-poçt və ya şifrə yanlışdır" }, { status: 401 });
+  try {
+    const user = await prisma.user.findUnique({ where: { email: email.toLowerCase() } });
+    if (!user) {
+      return NextResponse.json({ error: "E-poçt və ya şifrə yanlışdır" }, { status: 401 });
+    }
+
+    const ok = await verifyPassword(password, user.passwordHash);
+    if (!ok) {
+      return NextResponse.json({ error: "E-poçt və ya şifrə yanlışdır" }, { status: 401 });
+    }
+
+    const token = createSessionToken({
+      sub: user.id,
+      role: user.role,
+      email: user.email,
+      name: user.name,
+    });
+    if (!token) {
+      return NextResponse.json({ error: "Server konfiqurasiyası" }, { status: 500 });
+    }
+
+    const res = NextResponse.json({
+      ok: true,
+      role: user.role,
+    });
+    res.cookies.set(SESSION_COOKIE, token, {
+      httpOnly: true,
+      path: "/",
+      sameSite: "lax",
+      maxAge: 60 * 60 * 24 * 7,
+      secure: process.env.NODE_ENV === "production",
+    });
+    return res;
+  } catch (err) {
+    // Debug: production-da dəqiq nə çökdüyünü logla və müvəqqəti message qaytar.
+    console.error("[POST /api/auth/login] Unexpected error:", err);
+    const message = err instanceof Error ? err.message : String(err);
+    return NextResponse.json(
+      { error: "Server error", message },
+      { status: 500 }
+    );
   }
-  const ok = await verifyPassword(password, user.passwordHash);
-  if (!ok) {
-    return NextResponse.json({ error: "E-poçt və ya şifrə yanlışdır" }, { status: 401 });
-  }
-  const token = createSessionToken({
-    sub: user.id,
-    role: user.role,
-    email: user.email,
-    name: user.name,
-  });
-  if (!token) {
-    return NextResponse.json({ error: "Server konfiqurasiyası" }, { status: 500 });
-  }
-  const res = NextResponse.json({
-    ok: true,
-    role: user.role,
-  });
-  res.cookies.set(SESSION_COOKIE, token, {
-    httpOnly: true,
-    path: "/",
-    sameSite: "lax",
-    maxAge: 60 * 60 * 24 * 7,
-    secure: process.env.NODE_ENV === "production",
-  });
-  return res;
 }
