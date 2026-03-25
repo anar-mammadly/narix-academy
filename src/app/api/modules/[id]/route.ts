@@ -10,12 +10,16 @@ const patchSchema = z.object({
   order: z.number().int().optional(),
 });
 
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+export async function PATCH(
+  req: Request,
+  { params }: { params: { id: string } | Promise<{ id: string }> }
+) {
+  const p = (params as unknown) as { id: string } | Promise<{ id: string }>;
+  const { id } = await p;
   const session = await getSession();
   if (!session || session.role !== "TEACHER") {
     return NextResponse.json({ error: "İcazə yoxdur" }, { status: 403 });
   }
-  const { id } = params;
   let json: unknown;
   try {
     json = await req.json();
@@ -33,12 +37,16 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   return NextResponse.json({ module: mod });
 }
 
-export async function DELETE(_req: Request, { params }: { params: { id: string } }) {
+export async function DELETE(
+  _req: Request,
+  { params }: { params: { id: string } | Promise<{ id: string }> }
+) {
+  const p = (params as unknown) as { id: string } | Promise<{ id: string }>;
+  const { id } = await p;
   const session = await getSession();
   if (!session || session.role !== "TEACHER") {
     return NextResponse.json({ error: "İcazə yoxdur" }, { status: 403 });
   }
-  const { id } = params;
   await prisma.module.deleteMany({ where: { id } });
   return NextResponse.json({ ok: true });
 }

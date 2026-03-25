@@ -21,13 +21,18 @@ const patchSchema = z.object({
   minQuizScore: z.number().int().min(0).max(100).nullable().optional(),
 });
 
-export async function GET(_req: Request, { params }: { params: { id: string } }) {
+export async function GET(
+  _req: Request,
+  { params }: { params: { id: string } | Promise<{ id: string }> }
+) {
+  const p = (params as unknown) as { id: string } | Promise<{ id: string }>;
+  const { id } = await p;
   const session = await getSession();
   if (!session || session.role !== "TEACHER") {
     return NextResponse.json({ error: "İcazə yoxdur" }, { status: 403 });
   }
   const lesson = await prisma.lesson.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: {
       module: true,
       blocks: { orderBy: { order: "asc" } },
@@ -39,7 +44,12 @@ export async function GET(_req: Request, { params }: { params: { id: string } })
   return NextResponse.json({ lesson });
 }
 
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+export async function PATCH(
+  req: Request,
+  { params }: { params: { id: string } | Promise<{ id: string }> }
+) {
+  const p = (params as unknown) as { id: string } | Promise<{ id: string }>;
+  const { id } = await p;
   const session = await getSession();
   if (!session || session.role !== "TEACHER") {
     return NextResponse.json({ error: "İcazə yoxdur" }, { status: 403 });
@@ -64,7 +74,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
     let n = 0;
     while (
       await prisma.lesson.findFirst({
-        where: { slug, NOT: { id: params.id } },
+        where: { slug, NOT: { id } },
       })
     ) {
       n += 1;
@@ -74,17 +84,22 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   }
   const data = pruneUndefined(raw as Record<string, unknown>);
   const lesson = await prisma.lesson.update({
-    where: { id: params.id },
+    where: { id },
     data,
   });
   return NextResponse.json({ lesson });
 }
 
-export async function DELETE(_req: Request, { params }: { params: { id: string } }) {
+export async function DELETE(
+  _req: Request,
+  { params }: { params: { id: string } | Promise<{ id: string }> }
+) {
+  const p = (params as unknown) as { id: string } | Promise<{ id: string }>;
+  const { id } = await p;
   const session = await getSession();
   if (!session || session.role !== "TEACHER") {
     return NextResponse.json({ error: "İcazə yoxdur" }, { status: 403 });
   }
-  await prisma.lesson.deleteMany({ where: { id: params.id } });
+  await prisma.lesson.deleteMany({ where: { id } });
   return NextResponse.json({ ok: true });
 }

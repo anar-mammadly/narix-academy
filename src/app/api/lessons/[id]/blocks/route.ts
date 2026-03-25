@@ -22,7 +22,13 @@ const addSchema = z.object({
   afterOrder: z.number().int().optional(),
 });
 
-export async function POST(req: Request, { params }: { params: { id: string } }) {
+export async function POST(
+  req: Request,
+  { params }: { params: { id: string } | Promise<{ id: string }> }
+) {
+  // Next.js route handler typing differs across versions (params may be a Promise in newer Next).
+  const p = (params as unknown) as { id: string } | Promise<{ id: string }>;
+  const { id } = await p;
   const session = await getSession();
   if (!session || session.role !== "TEACHER") {
     return NextResponse.json({ error: "İcazə yoxdur" }, { status: 403 });
@@ -38,7 +44,7 @@ export async function POST(req: Request, { params }: { params: { id: string } })
     return NextResponse.json({ error: "Yanlış məlumat" }, { status: 400 });
   }
   const lesson = await prisma.lesson.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: { blocks: { orderBy: { order: "desc" }, take: 1 } },
   });
   if (!lesson) {
@@ -50,7 +56,7 @@ export async function POST(req: Request, { params }: { params: { id: string } })
   if (typeof parsed.data.afterOrder === "number") {
     insertOrder = parsed.data.afterOrder + 1;
     await prisma.lessonBlock.updateMany({
-      where: { lessonId: params.id, order: { gte: insertOrder } },
+      where: { lessonId: id, order: { gte: insertOrder } },
       data: { order: { increment: 1 } },
     });
   } else {
@@ -58,7 +64,7 @@ export async function POST(req: Request, { params }: { params: { id: string } })
   }
   const block = await prisma.lessonBlock.create({
     data: {
-      lessonId: params.id,
+      lessonId: id,
       type,
       title: defaults.title,
       content: defaults.content,

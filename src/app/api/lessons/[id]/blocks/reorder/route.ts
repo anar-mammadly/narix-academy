@@ -7,7 +7,12 @@ const schema = z.object({
   orderedIds: z.array(z.string().min(1)),
 });
 
-export async function POST(req: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function POST(
+  req: Request,
+  { params }: { params: { id: string } | Promise<{ id: string }> }
+) {
+  const p = (params as unknown) as { id: string } | Promise<{ id: string }>;
+  const { id: lessonId } = await p;
   const session = await getSession();
   if (!session || session.role !== "TEACHER") {
     return NextResponse.json({ error: "İcazə yoxdur" }, { status: 403 });
@@ -23,7 +28,6 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
     return NextResponse.json({ error: "Yanlış məlumat" }, { status: 400 });
   }
   const { orderedIds } = parsed.data;
-  const lessonId = params.id;
   await prisma.$transaction(
     orderedIds.map((blockId, index) =>
       prisma.lessonBlock.updateMany({

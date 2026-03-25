@@ -13,13 +13,18 @@ async function uniqueSlug(base: string): Promise<string> {
   return slug;
 }
 
-export async function POST(_req: Request, { params }: { params: { id: string } }) {
+export async function POST(
+  _req: Request,
+  { params }: { params: { id: string } | Promise<{ id: string }> }
+) {
+  const p = (params as unknown) as { id: string } | Promise<{ id: string }>;
+  const { id } = await p;
   const session = await getSession();
   if (!session || session.role !== "TEACHER") {
     return NextResponse.json({ error: "İcazə yoxdur" }, { status: 403 });
   }
   const src = await prisma.lesson.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: { blocks: { orderBy: { order: "asc" } } },
   });
   if (!src) {

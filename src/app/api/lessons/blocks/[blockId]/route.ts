@@ -11,7 +11,12 @@ const patchSchema = z.object({
   type: z.string().optional(),
 });
 
-export async function PATCH(req: Request, { params }: { params: { blockId: string } }) {
+export async function PATCH(
+  req: Request,
+  { params }: { params: { blockId: string } | Promise<{ blockId: string }> }
+) {
+  const p = (params as unknown) as { blockId: string } | Promise<{ blockId: string }>;
+  const { blockId } = await p;
   const session = await getSession();
   if (!session || session.role !== "TEACHER") {
     return NextResponse.json({ error: "İcazə yoxdur" }, { status: 403 });
@@ -28,22 +33,32 @@ export async function PATCH(req: Request, { params }: { params: { blockId: strin
   }
   const data = pruneUndefined(parsed.data as Record<string, unknown>);
   const block = await prisma.lessonBlock.update({
-    where: { id: params.blockId },
+    where: { id: blockId },
     data,
   });
   return NextResponse.json({ block });
 }
 
-export async function DELETE(_req: Request, { params }: { params: { blockId: string } }) {
+export async function DELETE(
+  _req: Request,
+  { params }: { params: { blockId: string } | Promise<{ blockId: string }> }
+) {
+  const p = (params as unknown) as { blockId: string } | Promise<{ blockId: string }>;
+  const { blockId } = await p;
   const session = await getSession();
   if (!session || session.role !== "TEACHER") {
     return NextResponse.json({ error: "İcazə yoxdur" }, { status: 403 });
   }
-  await prisma.lessonBlock.deleteMany({ where: { id: params.blockId } });
+  await prisma.lessonBlock.deleteMany({ where: { id: blockId } });
   return NextResponse.json({ ok: true });
 }
 
-export async function POST(req: Request, { params }: { params: { blockId: string } }) {
+export async function POST(
+  req: Request,
+  { params }: { params: { blockId: string } | Promise<{ blockId: string }> }
+) {
+  const p = (params as unknown) as { blockId: string } | Promise<{ blockId: string }>;
+  const { blockId } = await p;
   const session = await getSession();
   if (!session || session.role !== "TEACHER") {
     return NextResponse.json({ error: "İcazə yoxdur" }, { status: 403 });
@@ -52,7 +67,7 @@ export async function POST(req: Request, { params }: { params: { blockId: string
   if (intent !== "duplicate") {
     return NextResponse.json({ error: "Yanlış əməliyyat" }, { status: 400 });
   }
-  const src = await prisma.lessonBlock.findUnique({ where: { id: params.blockId } });
+  const src = await prisma.lessonBlock.findUnique({ where: { id: blockId } });
   if (!src) {
     return NextResponse.json({ error: "Tapılmadı" }, { status: 404 });
   }
