@@ -3,123 +3,114 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id           String   @id @default(cuid())
-  email        String   @unique
-  passwordHash String
-  name         String
-  role         String   @default("STUDENT")
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
-  submissions Submission[]
-  progress    Progress[]
+  id                String                     @id @default(cuid())
+  email             String                     @unique
+  passwordHash      String
+  name              String
+  role              String                     @default("STUDENT")
+  createdAt         DateTime                   @default(now())
+  updatedAt         DateTime                   @updatedAt
+  progress          Progress[]
   contentVisibility StudentContentVisibility[]
+  submissions       Submission[]
 }
 
 model Module {
-  id          String   @id @default(cuid())
-  title       String
-  description String?
-  order       Int      @default(0)
-  published   Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  lessons Lesson[]
+  id                String                     @id @default(cuid())
+  title             String
+  description       String?
+  order             Int                        @default(0)
+  published         Boolean                    @default(false)
+  createdAt         DateTime                   @default(now())
+  updatedAt         DateTime                   @updatedAt
+  lessons           Lesson[]
   contentVisibility StudentContentVisibility[]
 }
 
 model Lesson {
-  id               String   @id @default(cuid())
-  title            String
-  slug             String   @unique
-  shortDescription String?
-  moduleId         String
-  module           Module   @relation(fields: [moduleId], references: [id], onDelete: Cascade)
-  order            Int      @default(0)
-  estimatedMinutes Int      @default(30)
-  coverImageUrl    String?
-  published        Boolean  @default(false)
-  quizEnabled      Boolean  @default(false)
-  minQuizScore     Int?
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
-
-  blocks      LessonBlock[]
-  submissions Submission[]
-  progress    Progress[]
+  id                String                     @id @default(cuid())
+  title             String
+  slug              String                     @unique
+  shortDescription  String?
+  moduleId          String
+  order             Int                        @default(0)
+  estimatedMinutes  Int                        @default(30)
+  coverImageUrl     String?
+  published         Boolean                    @default(false)
+  quizEnabled       Boolean                    @default(false)
+  minQuizScore      Int?
+  createdAt         DateTime                   @default(now())
+  updatedAt         DateTime                   @updatedAt
+  module            Module                     @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  blocks            LessonBlock[]
+  progress          Progress[]
   contentVisibility StudentContentVisibility[]
+  submissions       Submission[]
 }
 
 model LessonBlock {
-  id       String   @id @default(cuid())
-  lessonId String
-  lesson   Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
-  type     String
-  title    String?
-  content  String   @default("{}")
-  settings String   @default("{}")
-  imageUrl String?
-  order    Int      @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
+  id          String       @id @default(cuid())
+  lessonId    String
+  type        String
+  title       String?
+  content     String       @default("{}")
+  settings    String       @default("{}")
+  imageUrl    String?
+  order       Int          @default(0)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  lesson      Lesson       @relation(fields: [lessonId], references: [id], onDelete: Cascade)
   submissions Submission[]
 }
 
 model Submission {
-  id        String   @id @default(cuid())
+  id        String      @id @default(cuid())
   userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   lessonId  String
-  lesson    Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
   blockId   String
-  block     LessonBlock @relation(fields: [blockId], references: [id], onDelete: Cascade)
   answer    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  block     LessonBlock @relation(fields: [blockId], references: [id], onDelete: Cascade)
+  lesson    Lesson      @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, blockId])
 }
 
 model Progress {
-  id           String   @id @default(cuid())
+  id           String    @id @default(cuid())
   userId       String
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   lessonId     String
-  lesson       Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
-  completed    Boolean  @default(false)
+  completed    Boolean   @default(false)
   quizScore    Int?
-  quizAttempts Int      @default(0)
-  quizPassed   Boolean  @default(false)
+  quizAttempts Int       @default(0)
+  quizPassed   Boolean   @default(false)
   completedAt  DateTime?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  lesson       Lesson    @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, lessonId])
 }
 
 model StudentContentVisibility {
-  id String @id @default(cuid())
-
+  id        String   @id @default(cuid())
   studentId String
-  student   User   @relation(fields: [studentId], references: [id], onDelete: Cascade)
-
-  moduleId String?
-  module   Module? @relation(fields: [moduleId], references: [id], onDelete: Cascade)
-
-  lessonId String?
-  lesson   Lesson? @relation(fields: [lessonId], references: [id], onDelete: Cascade)
-
-  visible Boolean @default(true)
-
+  moduleId  String?
+  lessonId  String?
+  visible   Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  lesson    Lesson?  @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  module    Module?  @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  student   User     @relation(fields: [studentId], references: [id], onDelete: Cascade)
 
   @@index([studentId, moduleId])
   @@index([studentId, lessonId])

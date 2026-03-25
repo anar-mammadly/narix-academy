@@ -6,13 +6,16 @@ import { getSession } from "@/lib/auth";
 import { isRemoteImageSrc } from "@/lib/remote-image";
 import { LessonBlocksStudent } from "@/components/lesson/LessonBlocksStudent";
 
-export default async function StudentLessonPage({ params }: { params: { slug: string } }) {
+export default async function StudentLessonPage({ params }: { params: Promise<{ slug: string }> }) {
   const session = await getSession();
   if (!session) return null;
 
+  // Next.js dynamic route params can be a Promise in async server components.
+  const { slug } = await params;
+
   const lesson = await prisma.lesson.findFirst({
     where: {
-      slug: params.slug,
+      slug,
       published: true,
       contentVisibility: { none: { studentId: session.userId, visible: false } },
       module: {
