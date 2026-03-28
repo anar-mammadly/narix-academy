@@ -5,9 +5,10 @@ import { prisma } from "@/server/db/prisma";
 import { isRemoteImageSrc } from "@/frontend/lib/remote-image";
 import { LessonBlocksStudent } from "@/frontend/components/lesson/LessonBlocksStudent";
 
-export default async function AdminLessonPreviewPage({ params }: { params: { id: string } }) {
+export default async function AdminLessonPreviewPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const lesson = await prisma.lesson.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: { blocks: { orderBy: { order: "asc" } }, module: true },
   });
   if (!lesson) notFound();

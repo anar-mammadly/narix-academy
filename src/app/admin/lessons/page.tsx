@@ -7,11 +7,12 @@ import { LessonFilters } from "./LessonFilters";
 export default async function AdminLessonsPage({
   searchParams,
 }: {
-  searchParams: { q?: string; moduleId?: string; published?: string };
+  searchParams: Promise<{ q?: string; moduleId?: string; published?: string }>;
 }) {
-  const q = searchParams.q?.trim();
-  const moduleId = searchParams.moduleId;
-  const published = searchParams.published;
+  const sp = await searchParams;
+  const q = sp.q?.trim();
+  const moduleId = sp.moduleId;
+  const published = sp.published;
 
   const [modules, lessons] = await Promise.all([
     prisma.module.findMany({ orderBy: { order: "asc" }, select: { id: true, title: true } }),

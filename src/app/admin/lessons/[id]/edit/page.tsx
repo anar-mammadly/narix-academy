@@ -3,9 +3,10 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/server/db/prisma";
 import { LessonBuilder } from "@/frontend/components/admin/LessonBuilder";
 
-export default async function EditLessonPage({ params }: { params: { id: string } }) {
+export default async function EditLessonPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const lesson = await prisma.lesson.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: { blocks: true },
   });
   if (!lesson) notFound();
