@@ -1,0 +1,244 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         String   @default("STUDENT")
+  avatarUrl    String?
+  bio          String?
+  phone        String?
+  language     String   @default("az")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  progress          Progress[]
+  contentVisibility StudentContentVisibility[]
+  submissions       Submission[]
+  questions         Question[]
+  questionReplies   QuestionReply[]
+  notes             Note[]
+  homeworkSubmits   HomeworkSubmit[]
+  certificates      Certificate[]
+  calendarEvents    CalendarEvent[]
+}
+
+model Module {
+  id          String   @id @default(cuid())
+  title       String
+  titleEn     String?
+  description String?
+  descriptionEn String?
+  order       Int      @default(0)
+  published   Boolean  @default(false)
+  coverColor  String   @default("#2563eb")
+  icon        String   @default("BookOpen")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  lessons           Lesson[]
+  contentVisibility StudentContentVisibility[]
+}
+
+model Lesson {
+  id               String   @id @default(cuid())
+  title            String
+  titleEn          String?
+  slug             String   @unique
+  shortDescription String?
+  shortDescriptionEn String?
+  moduleId         String
+  order            Int      @default(0)
+  estimatedMinutes Int      @default(30)
+  coverImageUrl    String?
+  published        Boolean  @default(false)
+  quizEnabled      Boolean  @default(false)
+  minQuizScore     Int?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  module            Module                     @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  blocks            LessonBlock[]
+  progress          Progress[]
+  contentVisibility StudentContentVisibility[]
+  submissions       Submission[]
+  questions         Question[]
+  homeworks         Homework[]
+}
+
+model LessonBlock {
+  id        String   @id @default(cuid())
+  lessonId  String
+  type      String
+  title     String?
+  content   String   @default("{}")
+  settings  String   @default("{}")
+  imageUrl  String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  lesson      Lesson       @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  submissions Submission[]
+}
+
+model Submission {
+  id        String   @id @default(cuid())
+  userId    String
+  lessonId  String
+  blockId   String
+  answer    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  block  LessonBlock @relation(fields: [blockId], references: [id], onDelete: Cascade)
+  lesson Lesson      @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  user   User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, blockId])
+}
+
+model Progress {
+  id           String    @id @default(cuid())
+  userId       String
+  lessonId     String
+  completed    Boolean   @default(false)
+  quizScore    Int?
+  quizAttempts Int       @default(0)
+  quizPassed   Boolean   @default(false)
+  completedAt  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, lessonId])
+}
+
+model StudentContentVisibility {
+  id        String   @id @default(cuid())
+  studentId String
+  moduleId  String?
+  lessonId  String?
+  visible   Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  lesson  Lesson? @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  module  Module? @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  student User    @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@index([studentId, moduleId])
+  @@index([studentId, lessonId])
+}
+
+// Q&A System
+model Question {
+  id        String   @id @default(cuid())
+  userId    String
+  lessonId  String?
+  title     String
+  body      String
+  status    String   @default("OPEN") // OPEN, ANSWERED, CLOSED
+  pinned    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user    User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson  Lesson?         @relation(fields: [lessonId], references: [id], onDelete: SetNull)
+  replies QuestionReply[]
+}
+
+model QuestionReply {
+  id         String   @id @default(cuid())
+  questionId String
+  userId     String
+  body       String
+  isTeacher  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Notes (student personal notes per lesson)
+model Note {
+  id        String   @id @default(cuid())
+  userId    String
+  lessonId  String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, lessonId])
+}
+
+// Homework system
+model Homework {
+  id          String    @id @default(cuid())
+  lessonId    String
+  title       String
+  description String
+  dueDate     DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  lesson   Lesson           @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  submits  HomeworkSubmit[]
+}
+
+model HomeworkSubmit {
+  id         String    @id @default(cuid())
+  homeworkId String
+  userId     String
+  content    String
+  fileUrl    String?
+  grade      Int?
+  feedback   String?
+  status     String    @default("SUBMITTED") // SUBMITTED, GRADED, RETURNED
+  submittedAt DateTime @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  homework Homework @relation(fields: [homeworkId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([homeworkId, userId])
+}
+
+// Certificates
+model Certificate {
+  id          String   @id @default(cuid())
+  userId      String
+  title       String
+  issuedAt    DateTime @default(now())
+  code        String   @unique @default(cuid())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Calendar Events (teacher creates, students see)
+model CalendarEvent {
+  id          String   @id @default(cuid())
+  createdById String
+  title       String
+  description String?
+  startAt     DateTime
+  endAt       DateTime?
+  type        String   @default("CLASS") // CLASS, EXAM, DEADLINE, OTHER
+  meetLink    String?
+  createdAt   DateTime @default(now())
+
+  createdBy User @relation(fields: [createdById], references: [id], onDelete: Cascade)
+}
