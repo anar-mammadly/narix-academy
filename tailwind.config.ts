@@ -9,22 +9,28 @@ const config: Config = {
         mono: ["JetBrains Mono", "monospace"],
       },
       colors: {
-        primary: { DEFAULT: "#1d4ed8", light: "#3b82f6", dark: "#1e3a8a" },
+        primary: { DEFAULT: "#2563eb", hover: "#1d4ed8", light: "#eff6ff" },
         accent: "#06b6d4",
         surface: { DEFAULT: "#f8fafc", 2: "#f1f5f9" },
       },
       borderRadius: {
-        xl: "12px", "2xl": "16px", "3xl": "20px",
+        xl: "14px", "2xl": "18px", "3xl": "24px",
       },
       boxShadow: {
-        sm: "0 1px 3px 0 rgb(0 0 0 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.08)",
-        md: "0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.08)",
-        lg: "0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.08)",
-        card: "0 0 0 1px rgb(0 0 0 / 0.04), 0 2px 8px rgb(0 0 0 / 0.06)",
+        card: "0 1px 3px rgb(0 0 0 / 0.06), 0 1px 2px rgb(0 0 0 / 0.04)",
+        lg: "0 8px 24px rgb(0 0 0 / 0.08), 0 2px 8px rgb(0 0 0 / 0.04)",
+        xl: "0 20px 60px rgb(0 0 0 / 0.1), 0 1px 3px rgb(0 0 0 / 0.05)",
+      },
+      screens: {
+        xs: "375px",
+      },
+      keyframes: {
+        progressFill: {
+          from: { width: "0" },
+        },
       },
       animation: {
-        "fade-in": "fadeIn 0.3s ease-out",
-        "slide-up": "slideUp 0.4s ease-out",
+        "progress-fill": "progressFill 1.5s cubic-bezier(0.16,1,0.3,1) both",
       },
     },
   },
