@@ -206,7 +206,7 @@ export default function LessonEditor({ lesson }: { lesson: any }) {
                 {!isActive && <BlockPreview block={block} content={c} />}
                 {isActive && (
                   <div className="border-t border-gray-100 pt-3 space-y-3">
-                    <BlockEditor block={block} content={c} onChange={(nc: string, t: string) => updateBlock(block.id, nc, t)}
+                    <BlockEditor block={block} content={c} onChange={(nc: object, t: string) => updateBlock(block.id, nc, t)}
                       onImageUpload={() => { uploadForBlock.current = block.id; fileRef.current?.click(); }}
                       uploadingImage={uploadingImage === block.id} />
                   </div>
