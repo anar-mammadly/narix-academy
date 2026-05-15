@@ -11,6 +11,9 @@ export const BLOCK_TYPES = [
   "VIDEO",
   "CODE",
   "CHECKLIST",
+  "DIAGRAM",
+  "CALLOUT",
+  "STEPPER",
 ] as const;
 
 export type BlockType = (typeof BLOCK_TYPES)[number];
@@ -21,12 +24,9 @@ export type ImageContent = { url: string; caption: string; alt: string; alignmen
 export type ExampleContent = { description: string; takeaway: string; relatedImageUrl: string | null };
 export type TableContent = { headers: string[]; rows: string[][] };
 export type QuizQuestion = {
-  id: string;
-  text: string;
+  id: string; text: string;
   options: [string, string, string, string];
-  correctIndex: number;
-  explanation?: string;
-  imageUrl?: string | null;
+  correctIndex: number; explanation?: string; imageUrl?: string | null;
 };
 export type QuizContent = { questions: QuizQuestion[] };
 export type TaskContent = { instructions: string; placeholder: string; required: boolean };
@@ -35,9 +35,11 @@ export type DividerContent = Record<string, never>;
 export type VideoContent = { url: string; caption?: string };
 export type CodeContent = { code: string; language: string; caption?: string };
 export type ChecklistContent = { items: { id: string; text: string }[] };
+export type DiagramContent = { code: string; caption?: string };
+export type CalloutContent = { emoji: string; title: string; body: string; color: "blue" | "green" | "yellow" | "red" | "purple" };
+export type StepperContent = { steps: { title: string; description: string; icon?: string }[] };
 
 export type Role = "TEACHER" | "STUDENT";
-
 export type Lang = "az" | "en";
 
 export function parseJson<T>(raw: string, fallback: T): T {
