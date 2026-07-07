@@ -6,7 +6,8 @@ import {
   ArrowLeft, Plus, Trash2, Save, Eye,
   GripVertical, Type, AlignLeft, Image, Table,
   HelpCircle, ClipboardList, AlertCircle, Minus, BookOpen,
-  Video, Code, CheckSquare, GitBranch, Megaphone, ListOrdered
+  Video, Code, CheckSquare, GitBranch, Megaphone, ListOrdered,
+  FileJson, Sparkles
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { VideoBlockEditor } from "@/components/admin/VideoBlockEditor";
@@ -18,6 +19,10 @@ import {
   SortableContext, verticalListSortingStrategy, useSortable, arrayMove,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { Modal } from "@/components/ui/Modal";
+import { Button } from "@/components/ui/Button";
+import { Textarea } from "@/components/ui/Input";
+import { useToast } from "@/components/ui/Toast";
 
 const BLOCK_META: Record<string, { label: string; icon: any; color: string }> = {
   HEADING:  { label: "Başlıq",     icon: Type,          color: "bg-purple-100 text-purple-700" },
@@ -55,6 +60,13 @@ const BLOCK_DEFAULTS: Record<string, object> = {
   DIVIDER:   {},
 };
 
+const JSON_IMPORT_EXAMPLE = [
+  { type: "HEADING", content: { text: "Giriş", level: 2 } },
+  { type: "TEXT", content: { body: "Bu bölmədə öyrənəcəksiniz:\n- Birinci mövzu\n- İkinci mövzu\n- Üçüncü mövzu", highlight: "normal" } },
+  { type: "NOTE", content: { variant: "tip", body: "Vacib məqamları unutmayın." } },
+  { type: "TABLE", title: "Müqayisə", content: { headers: ["Sütun 1", "Sütun 2"], rows: [["Dəyər A", "Dəyər B"]] } },
+];
+
 export default function LessonEditor({ lesson }: { lesson: any }) {
   const [meta, setMeta] = useState({
     title: lesson.title, titleEn: lesson.titleEn ?? "",
@@ -69,8 +81,12 @@ export default function LessonEditor({ lesson }: { lesson: any }) {
   const [activeBlock, setActiveBlock] = useState<string | null>(null);
   const [showAddBlock, setShowAddBlock] = useState(false);
   const [uploadingImage, setUploadingImage] = useState<string | null>(null);
+  const [showImport, setShowImport] = useState(false);
+  const [importText, setImportText] = useState("");
+  const [importing, setImporting] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
   const uploadForBlock = useRef<string | null>(null);
+  const toast = useToast();
 
   async function saveMeta() {
     setMetaSaving(true);
@@ -87,6 +103,50 @@ export default function LessonEditor({ lesson }: { lesson: any }) {
     setBlocks([...blocks, block]);
     setActiveBlock(block.id);
     setShowAddBlock(false);
+  }
+
+  async function importBlocksFromJson() {
+    let parsed: any;
+    try {
+      parsed = JSON.parse(importText);
+    } catch {
+      toast({ title: "JSON formatı yanlışdır", description: "Mətni yenidən yoxlayın.", variant: "error" });
+      return;
+    }
+
+    const list = Array.isArray(parsed) ? parsed : parsed?.blocks;
+    if (!Array.isArray(list) || list.length === 0) {
+      toast({ title: "Bloklar tapılmadı", description: 'JSON bir massiv olmalıdır, məsələn: [{ "type": "TEXT", "content": {...} }]', variant: "error" });
+      return;
+    }
+    for (const item of list) {
+      if (!item?.type || !BLOCK_META[item.type]) {
+        toast({ title: `Naməlum blok növü: ${item?.type ?? "?"}`, description: "Blok növünü yoxlayın (məs. HEADING, TEXT, TABLE...).", variant: "error" });
+        return;
+      }
+    }
+
+    setImporting(true);
+    let count = 0;
+    try {
+      for (const item of list) {
+        const res = await fetch(`/api/lessons/${lesson.id}/blocks`, {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ type: item.type, title: item.title ?? null, content: JSON.stringify(item.content ?? {}) }),
+        });
+        if (!res.ok) throw new Error(`"${item.type}" bloku əlavə edilmədi`);
+        const block = await res.json();
+        setBlocks(prev => [...prev, block]);
+        count++;
+      }
+      toast({ title: `${count} blok əlavə edildi`, variant: "success" });
+      setShowImport(false);
+      setImportText("");
+    } catch (e: any) {
+      toast({ title: "İdxal yarımçıq qaldı", description: `${count} blok əlavə edildikdən sonra: ${e.message}`, variant: "error" });
+    } finally {
+      setImporting(false);
+    }
   }
 
   async function updateBlock(blockId: string, content: object, title?: string | null) {
@@ -170,9 +230,14 @@ export default function LessonEditor({ lesson }: { lesson: any }) {
         <div className="col-span-2 space-y-3">
           <div className="flex items-center justify-between">
             <h2 className="font-bold text-gray-900">Bloklar ({blocks.length})</h2>
-            <button onClick={() => setShowAddBlock(!showAddBlock)} className="btn-primary btn-sm">
-              <Plus size={14} /> Blok əlavə et
-            </button>
+            <div className="flex items-center gap-2">
+              <button onClick={() => setShowImport(true)} className="btn-secondary btn-sm">
+                <FileJson size={14} /> JSON idxal et
+              </button>
+              <button onClick={() => setShowAddBlock(!showAddBlock)} className="btn-primary btn-sm">
+                <Plus size={14} /> Blok əlavə et
+              </button>
+            </div>
           </div>
 
           {showAddBlock && (
@@ -267,6 +332,41 @@ export default function LessonEditor({ lesson }: { lesson: any }) {
           </div>
         </div>
       </div>
+
+      <Modal
+        open={showImport}
+        onOpenChange={setShowImport}
+        title="JSON ilə blok idxal et"
+        description="Bütün dərsin bloklarını JSON massivi kimi yaz, hamısı avtomatik əlavə olunacaq."
+        className="max-w-2xl"
+      >
+        <div className="space-y-3">
+          <Textarea
+            className="h-72 font-mono text-xs"
+            placeholder={JSON.stringify(JSON_IMPORT_EXAMPLE, null, 2)}
+            value={importText}
+            onChange={e => setImportText(e.target.value)}
+          />
+          <div className="flex items-center justify-between gap-2">
+            <button
+              type="button"
+              onClick={() => setImportText(JSON.stringify(JSON_IMPORT_EXAMPLE, null, 2))}
+              className="text-xs text-primary hover:underline flex items-center gap-1"
+            >
+              <Sparkles size={12} /> Nümunə doldur
+            </button>
+            <div className="text-xs text-muted">
+              Hər element: <code className="font-mono bg-gray-100 px-1 rounded">{"{ type, title?, content }"}</code>
+            </div>
+          </div>
+          <div className="flex justify-end gap-2 pt-2">
+            <Button variant="secondary" onClick={() => setShowImport(false)}>Ləğv et</Button>
+            <Button loading={importing} disabled={!importText.trim()} onClick={importBlocksFromJson}>
+              İdxal et
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }
