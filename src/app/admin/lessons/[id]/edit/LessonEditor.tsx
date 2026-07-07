@@ -160,7 +160,7 @@ export default function LessonEditor({ lesson }: { lesson: any }) {
           </Link>
           <h1 className="text-xl font-bold text-gray-900 truncate max-w-lg">{lesson.title}</h1>
         </div>
-        <Link href={`/dashboard/lessons/${lesson.slug}`} target="_blank" className="btn-secondary btn-sm">
+        <Link href={`/admin/lessons/${lesson.id}/preview`} target="_blank" className="btn-secondary btn-sm">
           <Eye size={14} /> Önizlə
         </Link>
       </div>

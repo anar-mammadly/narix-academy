@@ -24,7 +24,7 @@ import { Table, TableHead, TableBody, TableRow, TableTh, TableTd } from "@/compo
 
 type Tab = "content" | "quiz" | "notes" | "qa";
 
-export default function LessonView({ lesson, progress, submissions, note, questions, session }: any) {
+export default function LessonView({ lesson, progress, submissions, note, questions, session, previewMode = false }: any) {
   const [activeTab, setActiveTab] = useState<Tab>("content");
   const [noteText, setNoteText] = useState(note?.content ?? "");
   const [noteSaved, setNoteSaved] = useState(false);
@@ -53,18 +53,27 @@ export default function LessonView({ lesson, progress, submissions, note, questi
   ];
 
   async function saveNote() {
+    if (previewMode) { setNoteSaved(true); setTimeout(() => setNoteSaved(false), 2000); return; }
     await fetch("/api/notes", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ lessonId: lesson.id, content: noteText }) });
     setNoteSaved(true); setTimeout(() => setNoteSaved(false), 2000);
   }
 
   async function submitQuiz() {
     if (!quizContent) return;
+    if (previewMode) {
+      const correct = quizContent.questions.filter(q => quizAnswers[q.id] === q.correctIndex).length;
+      const score = Math.round((correct / quizContent.questions.length) * 100);
+      setQuizResult({ score, passed: score >= (lesson.minQuizScore ?? 60) });
+      setQuizSubmitted(true);
+      return;
+    }
     const res = await fetch("/api/quiz/submit", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ lessonId: lesson.id, answers: quizAnswers }) });
     const data = await res.json();
     setQuizResult(data); setQuizSubmitted(true);
   }
 
   async function completeLesson() {
+    if (previewMode) { setCompleted(true); return; }
     setCompleting(true);
     await fetch("/api/progress/complete", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ lessonId: lesson.id }) });
     setCompleted(true); setCompleting(false);
@@ -72,6 +81,11 @@ export default function LessonView({ lesson, progress, submissions, note, questi
 
   async function submitQuestion() {
     if (!questionText.title.trim()) return;
+    if (previewMode) {
+      setQuestionsList([{ id: `preview-${Date.now()}`, ...questionText, status: "OPEN", user: { name: session.name }, replies: [] }, ...questionsList]);
+      setQuestionText({ title: "", body: "" });
+      return;
+    }
     const res = await fetch("/api/questions", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ lessonId: lesson.id, ...questionText }) });
     const q = await res.json();
     setQuestionsList([{ ...q, user: { name: session.name }, replies: [] }, ...questionsList]);
@@ -81,6 +95,11 @@ export default function LessonView({ lesson, progress, submissions, note, questi
   async function submitReply(questionId: string) {
     const body = replyText[questionId];
     if (!body?.trim()) return;
+    if (previewMode) {
+      setQuestionsList(questionsList.map((q: any) => q.id === questionId ? { ...q, replies: [...q.replies, { id: `preview-${Date.now()}`, body, user: { name: session.name } }] } : q));
+      setReplyText({ ...replyText, [questionId]: "" });
+      return;
+    }
     const res = await fetch(`/api/questions/${questionId}/replies`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ body }) });
     const reply = await res.json();
     setQuestionsList(questionsList.map((q: any) => q.id === questionId ? { ...q, replies: [...q.replies, { ...reply, user: { name: session.name } }] } : q));
@@ -127,7 +146,7 @@ export default function LessonView({ lesson, progress, submissions, note, questi
             {lesson.blocks.filter((b: any) => b.type !== "QUIZ").map((block: any) => (
               <BlockRenderer key={block.id} block={block} taskAnswers={taskAnswers}
                 setTaskAnswers={setTaskAnswers} submissions={submissions} lessonId={lesson.id}
-                checklistState={checklistState} setChecklistState={setChecklistState} />
+                checklistState={checklistState} setChecklistState={setChecklistState} previewMode={previewMode} />
             ))}
           </div>
         </Card>
@@ -303,13 +322,14 @@ function FormattedText({ text, className }: { text: string; className?: string }
 }
 
 // ─── Block Renderer ───────────────────────────────────────────────
-function BlockRenderer({ block, taskAnswers, setTaskAnswers, submissions, lessonId, checklistState, setChecklistState }: any) {
+function BlockRenderer({ block, taskAnswers, setTaskAnswers, submissions, lessonId, checklistState, setChecklistState, previewMode }: any) {
   const [taskSaved, setTaskSaved] = useState(false);
   const [taskSaving, setTaskSaving] = useState(false);
   const [diagramSvg, setDiagramSvg] = useState<string>("");
   const [diagramError, setDiagramError] = useState(false);
 
   async function saveTask() {
+    if (previewMode) { setTaskSaved(true); setTimeout(() => setTaskSaved(false), 2000); return; }
     setTaskSaving(true);
     await fetch("/api/submissions", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ lessonId, blockId: block.id, answer: taskAnswers[block.id] }) });
     setTaskSaving(false); setTaskSaved(true); setTimeout(() => setTaskSaved(false), 2000);
