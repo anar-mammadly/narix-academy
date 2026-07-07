@@ -24,9 +24,6 @@ yarn-error.log*
 public/uploads/*
 !public/uploads/.gitkeep
 
-# Prisma
-prisma/migrations/
-
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts

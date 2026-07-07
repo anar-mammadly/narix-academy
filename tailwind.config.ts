@@ -12,6 +12,10 @@ const config: Config = {
         primary: { DEFAULT: "#2563eb", hover: "#1d4ed8", light: "#eff6ff" },
         accent: "#06b6d4",
         surface: { DEFAULT: "#f8fafc", 2: "#f1f5f9" },
+        success: { DEFAULT: "#10b981", hover: "#059669", light: "#ecfdf5" },
+        warning: { DEFAULT: "#f59e0b", hover: "#d97706", light: "#fffbeb" },
+        danger: { DEFAULT: "#ef4444", hover: "#dc2626", light: "#fef2f2" },
+        info: { DEFAULT: "#06b6d4", hover: "#0891b2", light: "#ecfeff" },
       },
       borderRadius: {
         xl: "14px", "2xl": "18px", "3xl": "24px",

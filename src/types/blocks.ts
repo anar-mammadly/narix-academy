@@ -32,7 +32,13 @@ export type QuizContent = { questions: QuizQuestion[] };
 export type TaskContent = { instructions: string; placeholder: string; required: boolean };
 export type NoteContent = { variant: "important" | "remember" | "tip" | "warning"; body: string };
 export type DividerContent = Record<string, never>;
-export type VideoContent = { url: string; caption?: string };
+export type VideoContent = {
+  url: string;
+  source: "upload" | "external";
+  caption?: string;
+  thumbnailUrl?: string | null;
+  durationSeconds?: number | null;
+};
 export type CodeContent = { code: string; language: string; caption?: string };
 export type ChecklistContent = { items: { id: string; text: string }[] };
 export type DiagramContent = { code: string; caption?: string };

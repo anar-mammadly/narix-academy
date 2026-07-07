@@ -14,6 +14,13 @@ import type {
   VideoContent, CodeContent, ChecklistContent, DiagramContent,
   CalloutContent, StepperContent
 } from "@/types/blocks";
+import { Card } from "@/components/ui/Card";
+import { Badge } from "@/components/ui/Badge";
+import { Tabs } from "@/components/ui/Tabs";
+import { Button } from "@/components/ui/Button";
+import { Input, Textarea } from "@/components/ui/Input";
+import { EmptyState } from "@/components/ui/EmptyState";
+import { Table, TableHead, TableBody, TableRow, TableTh, TableTd } from "@/components/ui/Table";
 
 type Tab = "content" | "quiz" | "notes" | "qa";
 
@@ -81,7 +88,7 @@ export default function LessonView({ lesson, progress, submissions, note, questi
   }
 
   return (
-    <div className="space-y-6 fade-in">
+    <div className="max-w-3xl mx-auto space-y-6 fade-in">
       {/* Header */}
       <div>
         <Link href="/dashboard/lessons" className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-gray-700 mb-4 transition-colors">
@@ -89,70 +96,69 @@ export default function LessonView({ lesson, progress, submissions, note, questi
         </Link>
         <div className="flex items-start justify-between gap-4">
           <div>
-            <div className="text-xs text-blue-600 font-semibold mb-1">{lesson.module.title}</div>
-            <h1 className="text-2xl font-bold text-gray-900">{lesson.title}</h1>
+            <div className="text-xs text-primary font-semibold mb-1">{lesson.module.title}</div>
+            <h1 className="text-2xl font-semibold text-gray-900">{lesson.title}</h1>
             {lesson.shortDescription && <p className="text-muted mt-1">{lesson.shortDescription}</p>}
             <div className="flex items-center gap-3 mt-2">
               <div className="flex items-center gap-1 text-xs text-muted"><Clock size={13} /> {formatTime(lesson.estimatedMinutes)}</div>
-              {completed && <div className="badge badge-green"><CheckCircle2 size={12} /> Tamamlandı</div>}
+              {completed && <Badge color="green"><CheckCircle2 size={12} /> Tamamlandı</Badge>}
             </div>
           </div>
           {!completed && (
-            <button onClick={completeLesson} disabled={completing} className="btn-primary shrink-0">
-              {completing ? "..." : "✓ Tamamla"}
-            </button>
+            <Button onClick={completeLesson} loading={completing} className="shrink-0">
+              ✓ Tamamla
+            </Button>
           )}
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 bg-gray-100 p-1 rounded-xl w-fit">
-        {tabs.map(({ key, label, icon: Icon }) => (
-          <button key={key} onClick={() => setActiveTab(key)}
-            className={cn("flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all",
-              activeTab === key ? "bg-white text-gray-900 shadow-sm" : "text-gray-500 hover:text-gray-700")}>
-            <Icon size={15} /> {label}
-          </button>
-        ))}
-      </div>
+      <Tabs
+        value={activeTab}
+        onValueChange={(v) => setActiveTab(v as Tab)}
+        className="w-fit"
+        items={tabs.map(({ key, label, icon: Icon }) => ({ value: key, label, icon: <Icon size={15} /> }))}
+      />
 
       {/* Content */}
       {activeTab === "content" && (
-        <div className="space-y-5">
-          {lesson.blocks.filter((b: any) => b.type !== "QUIZ").map((block: any) => (
-            <BlockRenderer key={block.id} block={block} taskAnswers={taskAnswers}
-              setTaskAnswers={setTaskAnswers} submissions={submissions} lessonId={lesson.id}
-              checklistState={checklistState} setChecklistState={setChecklistState} />
-          ))}
-        </div>
+        <Card className="p-6 sm:p-8">
+          <div className="space-y-7">
+            {lesson.blocks.filter((b: any) => b.type !== "QUIZ").map((block: any) => (
+              <BlockRenderer key={block.id} block={block} taskAnswers={taskAnswers}
+                setTaskAnswers={setTaskAnswers} submissions={submissions} lessonId={lesson.id}
+                checklistState={checklistState} setChecklistState={setChecklistState} />
+            ))}
+          </div>
+        </Card>
       )}
 
       {/* Quiz */}
       {activeTab === "quiz" && quizContent && (
         <div className="space-y-6">
           {quizSubmitted && quizResult ? (
-            <div className={cn("card text-center py-10", quizResult.passed ? "border-green-200 bg-green-50" : "border-red-200 bg-red-50")}>
-              <div className="text-6xl font-black mb-3" style={{ color: quizResult.passed ? "#16a34a" : "#dc2626" }}>{quizResult.score}%</div>
-              <div className={cn("text-xl font-bold mb-1", quizResult.passed ? "text-green-700" : "text-red-700")}>
+            <Card className={cn("text-center py-10", quizResult.passed ? "border-success/30 bg-success-light" : "border-danger/30 bg-danger-light")}>
+              <div className={cn("text-6xl font-bold mb-3", quizResult.passed ? "text-success" : "text-danger")}>{quizResult.score}%</div>
+              <div className={cn("text-xl font-semibold mb-1", quizResult.passed ? "text-success" : "text-danger")}>
                 {quizResult.passed ? "Keçdiniz! 🎉" : "Yenidən cəhd edin"}
               </div>
               {lesson.minQuizScore && <div className="text-sm text-muted">Keçid balı: {lesson.minQuizScore}%</div>}
               {!quizResult.passed && (
-                <button onClick={() => { setQuizSubmitted(false); setQuizAnswers({}); setQuizResult(null); }} className="btn-secondary mt-4">
+                <Button variant="secondary" className="mt-4" onClick={() => { setQuizSubmitted(false); setQuizAnswers({}); setQuizResult(null); }}>
                   Yenidən cəhd et
-                </button>
+                </Button>
               )}
-            </div>
+            </Card>
           ) : (
             <>
               <div className="flex items-center justify-between">
-                <h2 className="font-bold text-gray-900">Quiz — {quizContent.questions.length} sual</h2>
+                <h2 className="font-semibold text-gray-900">Quiz — {quizContent.questions.length} sual</h2>
                 <div className="text-sm text-muted">{Object.keys(quizAnswers).length}/{quizContent.questions.length} cavablandı</div>
               </div>
               {quizContent.questions.map((q, i) => (
-                <div key={q.id} className="card space-y-4">
+                <Card key={q.id} className="space-y-4">
                   <div className="flex gap-3">
-                    <div className="w-7 h-7 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-sm font-bold shrink-0">{i + 1}</div>
+                    <div className="w-7 h-7 rounded-full bg-primary-light text-primary flex items-center justify-center text-sm font-semibold shrink-0">{i + 1}</div>
                     <div className="font-semibold text-gray-900 flex-1">{q.text}</div>
                   </div>
                   {q.imageUrl && <img src={q.imageUrl} className="rounded-xl max-h-48 object-cover" alt="" />}
@@ -161,18 +167,18 @@ export default function LessonView({ lesson, progress, submissions, note, questi
                       <button key={idx} onClick={() => setQuizAnswers({ ...quizAnswers, [q.id]: idx })}
                         className={cn("w-full text-left px-4 py-3 rounded-xl border text-sm transition-all",
                           quizAnswers[q.id] === idx
-                            ? "border-blue-500 bg-blue-50 text-blue-900 font-semibold"
-                            : "border-gray-200 hover:border-blue-300 hover:bg-gray-50")}>
+                            ? "border-primary bg-primary-light text-primary font-semibold"
+                            : "border-gray-200 hover:border-primary/40 hover:bg-gray-50")}>
                         <span className="font-semibold mr-2 text-muted">{String.fromCharCode(65 + idx)}.</span>
                         {opt}
                       </button>
                     ))}
                   </div>
-                </div>
+                </Card>
               ))}
-              <button onClick={submitQuiz} disabled={Object.keys(quizAnswers).length < quizContent.questions.length} className="btn-primary btn-lg w-full">
+              <Button size="lg" className="w-full" disabled={Object.keys(quizAnswers).length < quizContent.questions.length} onClick={submitQuiz}>
                 Testi göndər
-              </button>
+              </Button>
             </>
           )}
         </div>
@@ -180,44 +186,44 @@ export default function LessonView({ lesson, progress, submissions, note, questi
 
       {/* Notes */}
       {activeTab === "notes" && (
-        <div className="card space-y-4">
-          <h2 className="font-bold text-gray-900">Qeydlər</h2>
-          <textarea className="textarea h-48" placeholder="Bu dərs haqqında qeydlərini yaz..." value={noteText} onChange={e => setNoteText(e.target.value)} />
+        <Card className="space-y-4">
+          <h2 className="font-semibold text-gray-900">Qeydlər</h2>
+          <Textarea className="h-48" placeholder="Bu dərs haqqında qeydlərini yaz..." value={noteText} onChange={e => setNoteText(e.target.value)} />
           <div className="flex items-center gap-3">
-            <button onClick={saveNote} className="btn-primary flex items-center gap-2"><Save size={15} /> Saxla</button>
-            {noteSaved && <span className="text-sm text-green-600 font-medium fade-in">✓ Saxlanıldı</span>}
+            <Button onClick={saveNote}><Save size={15} /> Saxla</Button>
+            {noteSaved && <span className="text-sm text-success font-medium fade-in">✓ Saxlanıldı</span>}
           </div>
-        </div>
+        </Card>
       )}
 
       {/* Q&A */}
       {activeTab === "qa" && (
         <div className="space-y-6">
-          <div className="card space-y-3">
-            <h2 className="font-bold text-gray-900">Yeni sual</h2>
+          <Card className="space-y-3">
+            <h2 className="font-semibold text-gray-900">Yeni sual</h2>
             <div>
               <label className="label">Mövzu</label>
-              <input className="input" placeholder="Sualın başlığı..." value={questionText.title} onChange={e => setQuestionText({ ...questionText, title: e.target.value })} />
+              <Input placeholder="Sualın başlığı..." value={questionText.title} onChange={e => setQuestionText({ ...questionText, title: e.target.value })} />
             </div>
             <div>
               <label className="label">Sual</label>
-              <textarea className="textarea h-24" placeholder="Sualını ətraflı yaz..." value={questionText.body} onChange={e => setQuestionText({ ...questionText, body: e.target.value })} />
+              <Textarea className="h-24" placeholder="Sualını ətraflı yaz..." value={questionText.body} onChange={e => setQuestionText({ ...questionText, body: e.target.value })} />
             </div>
-            <button onClick={submitQuestion} disabled={!questionText.title.trim()} className="btn-primary"><Send size={15} /> Göndər</button>
-          </div>
+            <Button disabled={!questionText.title.trim()} onClick={submitQuestion}><Send size={15} /> Göndər</Button>
+          </Card>
           {questionsList.length === 0 ? (
-            <div className="card text-center text-muted py-8">Hələ sual yoxdur.</div>
+            <EmptyState icon={<MessageCircle size={28} />} title="Hələ sual yoxdur" description="Bu dərs haqqında ilk sualı sən ver." />
           ) : (
             <div className="space-y-3">
               {questionsList.map((q: any) => (
-                <div key={q.id} className="card space-y-3">
+                <Card key={q.id} className="space-y-3">
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <div className="font-semibold text-gray-900">{q.title}</div>
                       <div className="text-sm text-muted mt-0.5">{q.user.name}</div>
                     </div>
                     <div className="flex items-center gap-2 shrink-0">
-                      <div className={`badge ${q.status === "ANSWERED" ? "badge-green" : "badge-gray"}`}>{q.status === "ANSWERED" ? "Cavablandı" : "Açıq"}</div>
+                      <Badge color={q.status === "ANSWERED" ? "green" : "gray"}>{q.status === "ANSWERED" ? "Cavablandı" : "Açıq"}</Badge>
                       <button onClick={() => setExpandedQ(expandedQ === q.id ? null : q.id)} className="btn-ghost btn-sm">
                         {expandedQ === q.id ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
                       </button>
@@ -227,23 +233,71 @@ export default function LessonView({ lesson, progress, submissions, note, questi
                   {expandedQ === q.id && (
                     <div className="space-y-3 pt-2 border-t border-gray-100">
                       {q.replies.map((r: any) => (
-                        <div key={r.id} className={cn("rounded-xl p-3 text-sm", r.isTeacher ? "bg-blue-50 border border-blue-100" : "bg-gray-50")}>
+                        <div key={r.id} className={cn("rounded-xl p-3 text-sm", r.isTeacher ? "bg-primary-light border border-primary/20" : "bg-surface-2")}>
                           <div className="font-semibold text-xs mb-1 text-muted">{r.isTeacher ? "👨‍🏫 " : ""}{r.user.name}</div>
                           <div>{r.body}</div>
                         </div>
                       ))}
                       <div className="flex gap-2">
-                        <input className="input flex-1" placeholder="Cavab yaz..." value={replyText[q.id] ?? ""} onChange={e => setReplyText({ ...replyText, [q.id]: e.target.value })} />
-                        <button onClick={() => submitReply(q.id)} className="btn-primary btn-sm"><Send size={13} /></button>
+                        <Input className="flex-1" placeholder="Cavab yaz..." value={replyText[q.id] ?? ""} onChange={e => setReplyText({ ...replyText, [q.id]: e.target.value })} />
+                        <Button size="sm" onClick={() => submitReply(q.id)}><Send size={13} /></Button>
                       </div>
                     </div>
                   )}
-                </div>
+                </Card>
               ))}
             </div>
           )}
         </div>
       )}
+    </div>
+  );
+}
+
+// ─── Formatted text (turns "- " lines into real bullet lists, blank lines into paragraph breaks) ───
+function FormattedText({ text, className }: { text: string; className?: string }) {
+  const lines = (text ?? "").split("\n");
+  const groups: { type: "list" | "p"; lines: string[] }[] = [];
+  for (const raw of lines) {
+    const line = raw.trim();
+    const isBullet = /^[-*•]\s+/.test(line);
+    if (line === "") {
+      groups.push({ type: "p", lines: [] });
+      continue;
+    }
+    const last = groups[groups.length - 1];
+    if (isBullet) {
+      const item = line.replace(/^[-*•]\s+/, "");
+      if (last?.type === "list") last.lines.push(item);
+      else groups.push({ type: "list", lines: [item] });
+    } else {
+      if (last?.type === "p" && last.lines.length) last.lines.push(line);
+      else groups.push({ type: "p", lines: [line] });
+    }
+  }
+
+  return (
+    <div className={cn("space-y-3", className)}>
+      {groups.map((g, i) => {
+        if (g.lines.length === 0) return null;
+        if (g.type === "list") {
+          return (
+            <ul key={i} className="list-disc pl-5 space-y-1.5 marker:text-gray-400">
+              {g.lines.map((item, j) => <li key={j}>{item}</li>)}
+            </ul>
+          );
+        }
+        return (
+          <p key={i}>
+            {g.lines.map((l, j) => (
+              <span key={j}>
+                {l}
+                {j < g.lines.length - 1 && <br />}
+              </span>
+            ))}
+          </p>
+        );
+      })}
     </div>
   );
 }
@@ -280,9 +334,9 @@ function BlockRenderer({ block, taskAnswers, setTaskAnswers, submissions, lesson
   switch (block.type) {
     case "HEADING": {
       const c = parseJson<HeadingContent>(block.content, { text: "", level: 2 });
-      const sizes: Record<number, string> = { 2: "text-2xl mt-4", 3: "text-xl mt-3", 4: "text-lg mt-2" };
+      const sizes: Record<number, string> = { 2: "text-xl", 3: "text-lg", 4: "text-base" };
       const Tag = `h${c.level}` as "h2" | "h3" | "h4";
-      return <Tag className={`${sizes[c.level]} font-bold text-gray-900`}>{c.text}</Tag>;
+      return <Tag className={`${sizes[c.level]} font-semibold text-gray-900`}>{c.text}</Tag>;
     }
 
     case "TEXT": {
@@ -291,7 +345,7 @@ function BlockRenderer({ block, taskAnswers, setTaskAnswers, submissions, lesson
       return (
         <div className={cls || ""}>
           {block.title && <div className="font-semibold text-gray-800 mb-1.5 text-sm">{block.title}</div>}
-          <div className="text-gray-700 leading-relaxed whitespace-pre-wrap">{c.body}</div>
+          <FormattedText text={c.body} className="text-gray-700 leading-relaxed" />
         </div>
       );
     }
@@ -308,7 +362,7 @@ function BlockRenderer({ block, taskAnswers, setTaskAnswers, submissions, lesson
       return (
         <div className={cls}>
           <div className="font-semibold text-sm mb-1">{icon} {block.title ?? label}</div>
-          <div className="text-sm leading-relaxed">{c.body}</div>
+          <FormattedText text={c.body} className="text-sm leading-relaxed" />
         </div>
       );
     }
@@ -316,19 +370,19 @@ function BlockRenderer({ block, taskAnswers, setTaskAnswers, submissions, lesson
     case "CALLOUT": {
       const c = parseJson<CalloutContent>(block.content, { emoji: "💡", title: "", body: "", color: "blue" });
       const colors: Record<string, string> = {
-        blue:   "bg-blue-50 border-blue-200 text-blue-900",
-        green:  "bg-green-50 border-green-200 text-green-900",
-        yellow: "bg-yellow-50 border-yellow-200 text-yellow-900",
-        red:    "bg-red-50 border-red-200 text-red-900",
+        blue:   "bg-primary-light border-primary/20 text-primary",
+        green:  "bg-success-light border-success/20 text-success",
+        yellow: "bg-warning-light border-warning/20 text-warning",
+        red:    "bg-danger-light border-danger/20 text-danger",
         purple: "bg-purple-50 border-purple-200 text-purple-900",
       };
       return (
-        <div className={`rounded-2xl border-2 p-5 ${colors[c.color] ?? colors.blue}`}>
+        <div className={`rounded-2xl border p-5 ${colors[c.color] ?? colors.blue}`}>
           <div className="flex items-start gap-3">
             <span className="text-2xl shrink-0">{c.emoji}</span>
             <div>
               {c.title && <div className="font-bold mb-1">{c.title}</div>}
-              <div className="text-sm leading-relaxed">{c.body}</div>
+              <FormattedText text={c.body} className="text-sm leading-relaxed" />
             </div>
           </div>
         </div>
@@ -343,10 +397,10 @@ function BlockRenderer({ block, taskAnswers, setTaskAnswers, submissions, lesson
           {c.steps.map((step, i) => (
             <div key={i} className="flex gap-4">
               <div className="flex flex-col items-center">
-                <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm shrink-0 z-10">
+                <div className="w-9 h-9 rounded-full bg-primary text-white flex items-center justify-center font-semibold text-sm shrink-0 z-10">
                   {i + 1}
                 </div>
-                {i < c.steps.length - 1 && <div className="w-0.5 flex-1 bg-blue-200 my-1" />}
+                {i < c.steps.length - 1 && <div className="w-0.5 flex-1 bg-primary-light my-1" />}
               </div>
               <div className={cn("pb-6 flex-1", i === c.steps.length - 1 && "pb-0")}>
                 <div className="font-semibold text-gray-900 mt-1.5">{step.title}</div>
@@ -361,13 +415,13 @@ function BlockRenderer({ block, taskAnswers, setTaskAnswers, submissions, lesson
     case "EXAMPLE": {
       const c = parseJson<ExampleContent>(block.content, { description: "", takeaway: "", relatedImageUrl: null });
       return (
-        <div className="card border-l-4 border-blue-400 bg-gradient-to-r from-blue-50 to-white">
-          <div className="font-semibold text-blue-800 mb-2 flex items-center gap-2">📋 {block.title ?? "Nümunə"}</div>
-          <div className="text-sm text-gray-700 mb-3 leading-relaxed">{c.description}</div>
+        <div className="card border-l-4 border-primary bg-primary-light/40">
+          <div className="font-semibold text-primary mb-2 flex items-center gap-2">📋 {block.title ?? "Nümunə"}</div>
+          <FormattedText text={c.description} className="text-sm text-gray-700 mb-3" />
           {c.relatedImageUrl && <img src={c.relatedImageUrl} className="rounded-xl mb-3 max-h-48 object-cover w-full" alt="" />}
           {c.takeaway && (
-            <div className="bg-blue-100 rounded-xl px-4 py-3 text-sm text-blue-900 font-medium flex items-start gap-2">
-              <span className="text-green-600 shrink-0 mt-0.5">✅</span> {c.takeaway}
+            <div className="bg-white rounded-xl px-4 py-3 text-sm text-gray-800 font-medium flex items-start gap-2 border border-primary/15">
+              <span className="text-success shrink-0 mt-0.5">✅</span> {c.takeaway}
             </div>
           )}
         </div>
@@ -377,22 +431,22 @@ function BlockRenderer({ block, taskAnswers, setTaskAnswers, submissions, lesson
     case "TABLE": {
       const c = parseJson<TableContent>(block.content, { headers: [], rows: [] });
       return (
-        <div className="overflow-x-auto rounded-2xl border border-gray-200 shadow-sm">
-          {block.title && <div className="px-5 py-3 bg-gray-50 border-b border-gray-200 font-semibold text-sm text-gray-700">{block.title}</div>}
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="bg-blue-600">
-                {c.headers.map((h, i) => <th key={i} className="px-5 py-3 text-left font-semibold text-white">{h}</th>)}
-              </tr>
-            </thead>
-            <tbody>
+        <div className="space-y-2">
+          {block.title && <div className="font-semibold text-gray-900 text-sm">{block.title}</div>}
+          <Table>
+            <TableHead>
+              <TableRow>
+                {c.headers.map((h, i) => <TableTh key={i}>{h}</TableTh>)}
+              </TableRow>
+            </TableHead>
+            <TableBody>
               {c.rows.map((row, i) => (
-                <tr key={i} className={cn("border-b border-gray-100 transition-colors", i % 2 === 0 ? "bg-white" : "bg-gray-50/50", "hover:bg-blue-50/30")}>
-                  {row.map((cell, j) => <td key={j} className="px-5 py-3 text-gray-700">{cell}</td>)}
-                </tr>
+                <TableRow key={i}>
+                  {row.map((cell, j) => <TableTd key={j}>{cell}</TableTd>)}
+                </TableRow>
               ))}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </div>
       );
     }
@@ -410,9 +464,27 @@ function BlockRenderer({ block, taskAnswers, setTaskAnswers, submissions, lesson
     }
 
     case "VIDEO": {
-      const c = parseJson<VideoContent>(block.content, { url: "", caption: "" });
+      const c = parseJson<VideoContent>(block.content, { url: "", source: "external", caption: "" });
       if (!c.url) return null;
-      // Convert YouTube URL to embed
+
+      if (c.source === "upload") {
+        return (
+          <figure className="space-y-2">
+            {block.title && <div className="font-semibold text-gray-900">{block.title}</div>}
+            <video
+              controls
+              preload="metadata"
+              poster={c.thumbnailUrl ?? undefined}
+              className="w-full rounded-2xl bg-black shadow-md"
+            >
+              <source src={c.url} />
+            </video>
+            {c.caption && <div className="text-xs text-muted text-center italic">{c.caption}</div>}
+          </figure>
+        );
+      }
+
+      // Legacy / external: YouTube (or other) URL embedded via iframe
       const ytMatch = c.url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([a-zA-Z0-9_-]{11})/);
       const embedUrl = ytMatch ? `https://www.youtube.com/embed/${ytMatch[1]}` : c.url;
       return (
@@ -471,9 +543,9 @@ function BlockRenderer({ block, taskAnswers, setTaskAnswers, submissions, lesson
             {c.items.map(item => (
               <button key={item.id} onClick={() => toggle(item.id)}
                 className={cn("w-full flex items-center gap-3 p-3 rounded-xl border transition-all text-left",
-                  checked.has(item.id) ? "bg-green-50 border-green-200" : "bg-white border-gray-200 hover:border-gray-300")}>
+                  checked.has(item.id) ? "bg-success-light border-success/30" : "bg-white border-gray-200 hover:border-gray-300")}>
                 <div className={cn("w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors",
-                  checked.has(item.id) ? "bg-green-500 border-green-500" : "border-gray-300")}>
+                  checked.has(item.id) ? "bg-success border-success" : "border-gray-300")}>
                   {checked.has(item.id) && <Check size={11} className="text-white" />}
                 </div>
                 <span className={cn("text-sm", checked.has(item.id) && "line-through text-muted")}>{item.text}</span>
@@ -505,9 +577,9 @@ function BlockRenderer({ block, taskAnswers, setTaskAnswers, submissions, lesson
       const c = parseJson<TaskContent>(block.content, { instructions: "", placeholder: "", required: false });
       const existing = submissions.find((s: any) => s.blockId === block.id);
       return (
-        <div className="card border-2 border-orange-200 bg-gradient-to-br from-orange-50 to-white">
-          <div className="font-semibold text-orange-800 mb-2 flex items-center gap-2">📝 {block.title ?? "Tapşırıq"}</div>
-          <div className="text-sm text-gray-700 mb-3 leading-relaxed">{c.instructions}</div>
+        <div className="card border-warning/30 bg-warning-light/40">
+          <div className="font-semibold text-warning mb-2 flex items-center gap-2">📝 {block.title ?? "Tapşırıq"}</div>
+          <FormattedText text={c.instructions} className="text-sm text-gray-700 mb-3" />
           <textarea className="textarea h-28 bg-white" placeholder={c.placeholder}
             defaultValue={existing?.answer ?? ""}
             onChange={e => setTaskAnswers({ ...taskAnswers, [block.id]: e.target.value })} />
@@ -515,7 +587,7 @@ function BlockRenderer({ block, taskAnswers, setTaskAnswers, submissions, lesson
             <button onClick={saveTask} disabled={taskSaving} className="btn-primary btn-sm">
               <Send size={13} /> {taskSaving ? "Göndərilir..." : "Göndər"}
             </button>
-            {(taskSaved || existing) && <span className="text-xs text-green-600 font-medium">✓ Göndərildi</span>}
+            {(taskSaved || existing) && <span className="text-xs text-success font-medium">✓ Göndərildi</span>}
           </div>
         </div>
       );

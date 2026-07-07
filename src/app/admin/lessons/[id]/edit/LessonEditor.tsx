@@ -4,11 +4,20 @@ import { useState, useRef } from "react";
 import Link from "next/link";
 import {
   ArrowLeft, Plus, Trash2, Save, Eye,
-  ChevronUp, ChevronDown, Type, AlignLeft, Image, Table,
+  GripVertical, Type, AlignLeft, Image, Table,
   HelpCircle, ClipboardList, AlertCircle, Minus, BookOpen,
   Video, Code, CheckSquare, GitBranch, Megaphone, ListOrdered
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { VideoBlockEditor } from "@/components/admin/VideoBlockEditor";
+import {
+  DndContext, closestCenter, PointerSensor, useSensor, useSensors,
+  type DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  SortableContext, verticalListSortingStrategy, useSortable, arrayMove,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 const BLOCK_META: Record<string, { label: string; icon: any; color: string }> = {
   HEADING:  { label: "Başlıq",     icon: Type,          color: "bg-purple-100 text-purple-700" },
@@ -37,7 +46,7 @@ const BLOCK_DEFAULTS: Record<string, object> = {
   STEPPER:   { steps: [{ title: "Addım 1", description: "İzahat..." }, { title: "Addım 2", description: "İzahat..." }] },
   TABLE:     { headers: ["Sütun 1", "Sütun 2", "Sütun 3"], rows: [["Dəyər", "Dəyər", "Dəyər"]] },
   IMAGE:     { url: "", caption: "", alt: "", alignment: "center" },
-  VIDEO:     { url: "", caption: "" },
+  VIDEO:     { url: "", source: "external", caption: "" },
   CODE:      { code: "# Kodu buraya yazın\necho 'Hello World'", language: "bash" },
   DIAGRAM:   { code: "flowchart TD\n    A[Başlayır] --> B[Proses]\n    B --> C[Bitir]", caption: "" },
   CHECKLIST: { items: [{ id: "item-1", text: "Birinci maddə" }, { id: "item-2", text: "İkinci maddə" }] },
@@ -98,18 +107,22 @@ export default function LessonEditor({ lesson }: { lesson: any }) {
     if (activeBlock === blockId) setActiveBlock(null);
   }
 
-  async function moveBlock(blockId: string, dir: "up" | "down") {
-    const idx = blocks.findIndex(b => b.id === blockId);
-    if (dir === "up" && idx === 0) return;
-    if (dir === "down" && idx === blocks.length - 1) return;
-    const nb = [...blocks];
-    const swap = dir === "up" ? idx - 1 : idx + 1;
-    [nb[idx], nb[swap]] = [nb[swap], nb[idx]];
-    setBlocks(nb);
-    await Promise.all([
-      fetch(`/api/lessons/blocks/${nb[idx].id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ order: idx }) }),
-      fetch(`/api/lessons/blocks/${nb[swap].id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ order: swap }) }),
-    ]);
+  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
+
+  async function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+    const oldIndex = blocks.findIndex(b => b.id === active.id);
+    const newIndex = blocks.findIndex(b => b.id === over.id);
+    const reordered = arrayMove(blocks, oldIndex, newIndex);
+    setBlocks(reordered);
+    await Promise.all(
+      reordered.map((b, i) =>
+        fetch(`/api/lessons/blocks/${b.id}`, {
+          method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ order: i }),
+        })
+      )
+    );
   }
 
   async function handleImageUpload(blockId: string) {
@@ -183,37 +196,32 @@ export default function LessonEditor({ lesson }: { lesson: any }) {
             <div className="card text-center text-muted py-10">Blok əlavə et düyməsinə bas</div>
           )}
 
-          {blocks.map((block, idx) => {
-            const bm = BLOCK_META[block.type] ?? BLOCK_META.TEXT;
-            const Icon = bm.icon;
-            const isActive = activeBlock === block.id;
-            const c = parse(block);
-            return (
-              <div key={block.id} className={cn("card transition-all cursor-pointer", isActive && "ring-2 ring-blue-400 shadow-md")}>
-                <div className="flex items-center gap-2 mb-2" onClick={() => setActiveBlock(isActive ? null : block.id)}>
-                  <div className={`w-7 h-7 rounded-lg ${bm.color} flex items-center justify-center shrink-0`}>
-                    <Icon size={14} />
-                  </div>
-                  <span className="text-sm font-semibold text-gray-700 flex-1">{bm.label}</span>
-                  {block.title && <span className="text-xs text-muted truncate max-w-28">{block.title}</span>}
-                  <div className="flex items-center gap-0.5 ml-auto" onClick={e => e.stopPropagation()}>
-                    <button onClick={() => moveBlock(block.id, "up")} disabled={idx === 0} className="btn-ghost btn-sm py-1 px-1.5 disabled:opacity-30"><ChevronUp size={13} /></button>
-                    <button onClick={() => moveBlock(block.id, "down")} disabled={idx === blocks.length - 1} className="btn-ghost btn-sm py-1 px-1.5 disabled:opacity-30"><ChevronDown size={13} /></button>
-                    <button onClick={() => deleteBlock(block.id)} className="btn-ghost btn-sm py-1 px-1.5 text-red-400 hover:text-red-600"><Trash2 size={13} /></button>
-                  </div>
-                </div>
-
-                {!isActive && <BlockPreview block={block} content={c} />}
-                {isActive && (
-                  <div className="border-t border-gray-100 pt-3 space-y-3">
-                    <BlockEditor block={block} content={c} onChange={(nc: object, t: string) => updateBlock(block.id, nc, t)}
-                      onImageUpload={() => { uploadForBlock.current = block.id; fileRef.current?.click(); }}
-                      uploadingImage={uploadingImage === block.id} />
-                  </div>
-                )}
-              </div>
-            );
-          })}
+          <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+            <SortableContext items={blocks.map(b => b.id)} strategy={verticalListSortingStrategy}>
+              {blocks.map((block) => {
+                const c = parse(block);
+                const isActive = activeBlock === block.id;
+                return (
+                  <SortableBlockRow
+                    key={block.id}
+                    block={block}
+                    isActive={isActive}
+                    onToggle={() => setActiveBlock(isActive ? null : block.id)}
+                    onDelete={() => deleteBlock(block.id)}
+                  >
+                    {!isActive && <BlockPreview block={block} content={c} />}
+                    {isActive && (
+                      <div className="border-t border-gray-100 pt-3 space-y-3">
+                        <BlockEditor block={block} content={c} onChange={(nc: object, t: string) => updateBlock(block.id, nc, t)}
+                          onImageUpload={() => { uploadForBlock.current = block.id; fileRef.current?.click(); }}
+                          uploadingImage={uploadingImage === block.id} />
+                      </div>
+                    )}
+                  </SortableBlockRow>
+                );
+              })}
+            </SortableContext>
+          </DndContext>
         </div>
 
         {/* Meta panel */}
@@ -263,6 +271,35 @@ export default function LessonEditor({ lesson }: { lesson: any }) {
   );
 }
 
+function SortableBlockRow({
+  block, isActive, onToggle, onDelete, children,
+}: { block: any; isActive: boolean; onToggle: () => void; onDelete: () => void; children: React.ReactNode }) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: block.id });
+  const bm = BLOCK_META[block.type] ?? BLOCK_META.TEXT;
+  const Icon = bm.icon;
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={{ transform: CSS.Transform.toString(transform), transition }}
+      className={cn("card transition-all", isActive && "ring-2 ring-blue-400 shadow-md", isDragging && "opacity-50")}
+    >
+      <div className="flex items-center gap-2 mb-2">
+        <button {...attributes} {...listeners} className="cursor-grab text-gray-300 hover:text-gray-500 active:cursor-grabbing shrink-0">
+          <GripVertical size={15} />
+        </button>
+        <div className={`w-7 h-7 rounded-lg ${bm.color} flex items-center justify-center shrink-0 cursor-pointer`} onClick={onToggle}>
+          <Icon size={14} />
+        </div>
+        <span className="text-sm font-semibold text-gray-700 flex-1 cursor-pointer" onClick={onToggle}>{bm.label}</span>
+        {block.title && <span className="text-xs text-muted truncate max-w-28">{block.title}</span>}
+        <button onClick={onDelete} className="btn-ghost btn-sm py-1 px-1.5 text-red-400 hover:text-red-600 ml-auto"><Trash2 size={13} /></button>
+      </div>
+      {children}
+    </div>
+  );
+}
+
 function BlockPreview({ block, content: c }: { block: any; content: any }) {
   switch (block.type) {
     case "HEADING":   return <div className={`font-bold text-gray-700 ${c.level === 2 ? "text-lg" : "text-base"}`}>{c.text}</div>;
@@ -273,7 +310,12 @@ function BlockPreview({ block, content: c }: { block: any; content: any }) {
     case "STEPPER":   return <div className="text-sm text-muted">{c.steps?.length ?? 0} addım</div>;
     case "TABLE":     return <div className="text-sm text-muted">{c.headers?.join(" | ")}</div>;
     case "IMAGE":     return c.url ? <img src={c.url} className="max-h-16 rounded-lg object-cover" alt="" /> : <div className="text-sm text-muted italic">Şəkil seçilməyib</div>;
-    case "VIDEO":     return <div className="text-sm text-muted">🎬 {c.url || "URL yoxdur"}</div>;
+    case "VIDEO":
+      return c.url
+        ? c.source === "upload"
+          ? <video src={c.url} className="max-h-16 rounded-lg object-cover" muted />
+          : <div className="text-sm text-muted">🎬 {c.url}</div>
+        : <div className="text-sm text-muted italic">Video seçilməyib</div>;
     case "CODE":      return <div className="text-sm font-mono text-gray-500 bg-gray-50 rounded px-2 py-1 truncate">{c.code?.slice(0, 60)}...</div>;
     case "DIAGRAM":   return <div className="text-sm text-muted">📊 Mermaid diaqram</div>;
     case "CHECKLIST": return <div className="text-sm text-muted">☑ {c.items?.length ?? 0} maddə</div>;
@@ -439,8 +481,7 @@ function BlockEditor({ block, content: c, onChange, onImageUpload, uploadingImag
     case "VIDEO":
       return (
         <div className="space-y-3">
-          <div><label className="label">YouTube / Loom URL</label>
-            <input className="input" placeholder="https://youtube.com/watch?v=..." value={c.url??""} onChange={e=>onChange({...c,url:e.target.value})}/></div>
+          <VideoBlockEditor content={c} onChange={(nc) => onChange(nc, block.title)} />
           <div><label className="label">Başlıq</label>
             <input className="input" value={block.title??""} onChange={e=>onChange(c,e.target.value)}/></div>
           <div><label className="label">Qeyd</label>
