@@ -185,6 +185,10 @@
 
   p { text-wrap: pretty; }
 
+  /* Grid children default to min-width: auto, so one long truncated line
+     can widen the whole column past a phone screen. */
+  .grid > * { min-width: 0; }
+
   ::selection { background: color-mix(in oklab, var(--c-iris) 25%, transparent); }
 
   :focus-visible {
