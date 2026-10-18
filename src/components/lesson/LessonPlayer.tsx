@@ -193,7 +193,7 @@ export default function LessonPlayer(p: Omit<LessonPlayerProps, "hrefFor"> & { l
             </div>
           </div>
 
-          <div className="grid gap-6">
+          <div className="grid grid-cols-1 gap-6">
             {lesson.blocks.map((b) => (
               <div key={b.id} id={`block-${b.id}`} className={cn("scroll-mt-24", BLOCK_SPACING[b.type as BlockType])}>
                 <BlockRenderer block={b} lessonId={lesson.id} attempt={p.attempts[b.id] ?? null} submission={p.submissions[b.id] ?? null} />
