@@ -19,7 +19,7 @@ export function slugify(text: string): string {
 export function formatDate(date: Date | string, lang: "az" | "en" = "az"): string {
   const d = new Date(date);
   return d.toLocaleDateString(lang === "az" ? "az-AZ" : "en-US", {
-    day: "numeric", month: "long", year: "numeric",
+    day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Baku",
   });
 }
 
@@ -43,4 +43,9 @@ export function getScoreColor(score: number): string {
   if (score >= 80) return "text-green-600";
   if (score >= 60) return "text-yellow-600";
   return "text-red-600";
+}
+
+/** 1375 → "1 375": same output on server and in every browser. */
+export function formatNumber(n: number): string {
+  return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "\u00a0");
 }

@@ -1,8 +1,7 @@
 "use client";
 
+import { RelativeTime } from "@/components/ui/RelativeTime";
 import { useMemo, useState } from "react";
-import { formatDistanceToNowStrict } from "date-fns";
-import { az } from "date-fns/locale";
 import { BookOpen, ChevronDown, Lock, MessageCircle, Pin, PinOff, Search, Send, Unlock } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Avatar } from "@/components/ui/Avatar";
@@ -36,7 +35,6 @@ const STATUS: Record<Status, { label: string; tone: BadgeTone }> = {
   CLOSED: { label: "Bağlı", tone: "neutral" },
 };
 
-const ago = (iso: string) => formatDistanceToNowStrict(new Date(iso), { addSuffix: true, locale: az });
 
 function Thread({ q, onChange }: { q: QuestionItem; onChange: (q: QuestionItem) => void }) {
   const toast = useToast();
@@ -84,7 +82,7 @@ function Thread({ q, onChange }: { q: QuestionItem; onChange: (q: QuestionItem) 
               <Avatar name={r.user.name} src={r.user.avatarUrl} size="sm" />
               <div className={cn("min-w-0 max-w-[85%] rounded-xl px-3.5 py-2.5 text-sm", r.isTeacher ? "bg-iris-soft text-ink" : "bg-surface-2 text-ink-2")}>
                 <p className="mb-0.5 text-xs font-semibold text-muted">
-                  {r.user.name}{r.isTeacher && " · müəllim"} · <time dateTime={r.createdAt}>{ago(r.createdAt)}</time>
+                  {r.user.name}{r.isTeacher && " · müəllim"} · <RelativeTime iso={r.createdAt} />
                 </p>
                 <p className="whitespace-pre-wrap break-words">{r.body}</p>
               </div>
@@ -207,7 +205,7 @@ export default function AdminQuestionsClient({ questions: init }: { questions: Q
                     <span className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted">
                       <span>{q.user.name}</span>
                       <span aria-hidden>·</span>
-                      <time dateTime={q.createdAt}>{ago(q.createdAt)}</time>
+                      <RelativeTime iso={q.createdAt} />
                       {q.lessonTitle && (
                         <span className="inline-flex min-w-0 items-center gap-1"><BookOpen className="h-3.5 w-3.5 shrink-0" aria-hidden /><span className="truncate">{q.lessonTitle}</span></span>
                       )}

@@ -1,8 +1,7 @@
 "use client";
 
+import { RelativeTime } from "@/components/ui/RelativeTime";
 import { useId, useMemo, useState } from "react";
-import { format, formatDistanceToNowStrict } from "date-fns";
-import { az } from "date-fns/locale";
 import { CalendarClock, Check, ChevronDown, ClipboardList, FileText, Inbox, Paperclip, Plus } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Button } from "@/components/ui/Button";
@@ -30,8 +29,8 @@ export type Submit = {
 export type HomeworkItem = { id: string; title: string; description: string; dueDate: string | null; lessonTitle: string; submits: Submit[] };
 
 const isPending = (s: Submit) => s.grade === null;
-const ago = (iso: string) => formatDistanceToNowStrict(new Date(iso), { addSuffix: true, locale: az });
-const fmt = (iso: string) => format(new Date(iso), "d MMM yyyy, HH:mm", { locale: az });
+const fmtDate = new Intl.DateTimeFormat("az-AZ", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit", timeZone: "Asia/Baku" });
+const fmt = (iso: string) => fmtDate.format(new Date(iso));
 
 function GradeForm({ submit, onGraded }: { submit: Submit; onGraded: (s: Submit) => void }) {
   const toast = useToast();
@@ -99,7 +98,7 @@ function SubmitCard({ submit, homeworkTitle, onGraded }: { submit: Submit; homew
           <p className="truncate text-sm font-semibold text-ink">{submit.user.name}</p>
           <p className="text-xs text-muted">
             {homeworkTitle && <>{homeworkTitle} · </>}
-            <time dateTime={submit.submittedAt} title={fmt(submit.submittedAt)}>{ago(submit.submittedAt)}</time>
+            <RelativeTime iso={submit.submittedAt} />
           </p>
         </div>
         {pending ? <Badge tone="xp">Yoxlanılmayıb</Badge> : <Badge tone="pass">{submit.grade}/100</Badge>}

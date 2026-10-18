@@ -1,9 +1,8 @@
 "use client";
 
+import { RelativeTime } from "@/components/ui/RelativeTime";
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { formatDistanceToNowStrict } from "date-fns";
-import { az } from "date-fns/locale";
 import { Flame, Search, UserPlus, Users, Zap } from "lucide-react";
 import { Input } from "@/components/ui/Input";
 import { Tabs } from "@/components/ui/Tabs";
@@ -14,7 +13,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Select } from "@/components/ui/Select";
 import { buttonStyles } from "@/components/ui/Button";
 import { Table, TableBody, TableHead, TableRow, TableTd, TableTh } from "@/components/ui/Table";
-import { cn } from "@/lib/utils";
+import { cn, formatNumber } from "@/lib/utils";
 import type { StudentRow } from "./student-stats";
 
 type Filter = "all" | "active" | "inactive";
@@ -23,8 +22,7 @@ type Sort = "name" | "progress" | "xp" | "last";
 const WEEK = 7 * 24 * 60 * 60 * 1000;
 
 function lastLabel(iso: string | null) {
-  if (!iso) return "Heç vaxt";
-  return formatDistanceToNowStrict(new Date(iso), { addSuffix: true, locale: az });
+  return iso ? <RelativeTime iso={iso} /> : "Heç vaxt";
 }
 
 function isInactive(r: StudentRow, now: number) {
@@ -42,7 +40,7 @@ function Streak({ n }: { n: number }) {
 function Xp({ n }: { n: number }) {
   return (
     <span className="inline-flex items-center gap-1 font-semibold tabular-nums text-ink">
-      <Zap className="h-4 w-4 fill-xp-bright text-xp-bright" aria-hidden /> {n.toLocaleString("az-AZ")}<span className="sr-only"> XP</span>
+      <Zap className="h-4 w-4 fill-xp-bright text-xp-bright" aria-hidden /> {formatNumber(n)}<span className="sr-only"> XP</span>
     </span>
   );
 }
