@@ -14,7 +14,7 @@ import { Select } from "@/components/ui/Select";
 import { Tabs } from "@/components/ui/Tabs";
 import { useToast } from "@/components/ui/Toast";
 import { errorMessage, requestJson } from "@/components/admin/request";
-import { cn } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 
 export type Submit = {
   id: string;
@@ -29,8 +29,8 @@ export type Submit = {
 export type HomeworkItem = { id: string; title: string; description: string; dueDate: string | null; lessonTitle: string; submits: Submit[] };
 
 const isPending = (s: Submit) => s.grade === null;
-const fmtDate = new Intl.DateTimeFormat("az-AZ", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit", timeZone: "Asia/Baku" });
-const fmt = (iso: string) => fmtDate.format(new Date(iso));
+const bakuTime = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "Asia/Baku" });
+const fmt = (iso: string) => `${formatDate(iso)}, ${bakuTime.format(new Date(iso))}`;
 
 function GradeForm({ submit, onGraded }: { submit: Submit; onGraded: (s: Submit) => void }) {
   const toast = useToast();

@@ -16,11 +16,14 @@ export function slugify(text: string): string {
     .trim();
 }
 
+const AZ_MONTHS = ["yanvar", "fevral", "mart", "aprel", "may", "iyun", "iyul", "avqust", "sentyabr", "oktyabr", "noyabr", "dekabr"];
+const BAKU_PARTS = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Baku", year: "numeric", month: "numeric", day: "numeric" });
+
+/** "18 oktyabr 2026" in Baku time. Month names are fixed so server and browser ICU data can't disagree. */
 export function formatDate(date: Date | string, lang: "az" | "en" = "az"): string {
-  const d = new Date(date);
-  return d.toLocaleDateString(lang === "az" ? "az-AZ" : "en-US", {
-    day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Baku",
-  });
+  const parts = Object.fromEntries(BAKU_PARTS.formatToParts(new Date(date)).map((p) => [p.type, p.value]));
+  if (lang === "en") return `${parts.day}.${parts.month}.${parts.year}`;
+  return `${Number(parts.day)} ${AZ_MONTHS[Number(parts.month) - 1]} ${parts.year}`;
 }
 
 export function formatTime(minutes: number): string {
