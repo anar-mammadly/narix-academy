@@ -1,0 +1,2080 @@
+{
+  "id": "cmn1ukexq003bvkfig24olril",
+  "key": "test-dizayn",
+  "order": 5,
+  "title": "Test dizayn texnikaları",
+  "description": "Black-box, white-box və təcrübəyə əsaslanan texnikalarla az testlə çox baq tapmağı öyrən.",
+  "icon": "PenTool",
+  "color": "#FF4D6D",
+  "lessons": [
+    {
+      "id": "cmn4hv2zr001sxbrd9rujjkgb",
+      "slug": "black-box-testing-1",
+      "title": "Black Box testing (qara qutu testi)",
+      "shortDescription": "Kodu bilmədən, tələblərə və davranışa əsaslanaraq test dizayn etməyi və düzgün texnikanı seçməyi öyrən.",
+      "estimatedMinutes": 10,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Black-box testing-i tərif edib onun test basis-ini göstərə biləcəksən",
+              "ISTQB v4.0-dakı üç texnika ailəsini fərqləndirə biləcəksən",
+              "Tələbin növünə görə uyğun black-box texnikasını seçə biləcəksən"
+            ]
+          },
+          "id": "cmve390p7d88c70e4cfa9"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Black-box testing",
+                "az": "qara qutu testi",
+                "definition": "Test obyektinin daxili quruluşuna baxmadan, gözlənilən davranışa əsaslanan test."
+              },
+              {
+                "term": "Test basis",
+                "az": "test əsası",
+                "definition": "Testlərin çıxarıldığı mənbə: tələblər, user story, acceptance criteria, maketlər, API spesifikasiyası."
+              },
+              {
+                "term": "Test condition",
+                "az": "test şərti",
+                "definition": "Yoxlanılacaq konkret aspekt, məs. “18 yaşdan kiçik istifadəçinin qeydiyyatı rədd edilir”."
+              },
+              {
+                "term": "Test technique",
+                "az": "test texnikası",
+                "definition": "Test şərtlərini və test case-ləri sistemli şəkildə seçmək üsulu."
+              },
+              {
+                "term": "Coverage",
+                "az": "əhatə",
+                "definition": "Seçilmiş elementlərin (partition, qayda, keçid) neçə faizinin testlə yoxlandığı."
+              }
+            ]
+          },
+          "id": "cmve390p720b73b47821b"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Black-box testing nədir?",
+            "level": 2
+          },
+          "id": "cmve390p79df1c08a95fe"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "**Black-box testing** — sistemi “qara qutu” kimi görürsən: input verirsən, output-u tələblə müqayisə edirsən. Kodun necə yazıldığı sənə lazım deyil.\n\nISTQB v4.0 bunu **specification-based** (spesifikasiyaya əsaslanan) test də adlandırır. Test basis tələblər, user story-lər, acceptance criteria və maketlərdir. Üstünlüyü: kod yenidən yazılsa da, davranış dəyişməyibsə, testlərin keçərli qalır.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p703642179523d"
+        },
+        {
+          "type": "DIAGRAM",
+          "content": {
+            "code": "flowchart LR\n  A[Input və test data] --> B[Test obyekti - qara qutu]\n  B --> C[Actual result]\n  D[Tələb və spesifikasiya] --> E[Expected result]\n  C --> F{Uyğundur?}\n  E --> F\n  F -->|Bəli| G[Pass]\n  F -->|Xeyr| H[Fail - baq ehtimalı]",
+            "caption": "Expected result tələbdən, actual result sistemdən gəlir. Fərq baq ehtimalıdır."
+          },
+          "id": "cmve390p706ab5d66a381"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Test texnikalarının üç ailəsi",
+            "level": 2
+          },
+          "id": "cmve390p71a5d10b503af"
+        },
+        {
+          "type": "TABLE",
+          "title": "ISTQB CTFL v4.0-a görə texnika ailələri",
+          "content": {
+            "headers": [
+              "Ailə",
+              "Nəyə əsaslanır",
+              "Texnikalar"
+            ],
+            "rows": [
+              [
+                "Black-box",
+                "Tələblər və gözlənilən davranış",
+                "Equivalence Partitioning, Boundary Value Analysis, Decision Table, State Transition"
+              ],
+              [
+                "White-box",
+                "Kodun daxili strukturu",
+                "Statement testing, Branch testing"
+              ],
+              [
+                "Experience-based",
+                "Testerin bilik və təcrübəsi",
+                "Error guessing, Exploratory testing, Checklist-based testing"
+              ]
+            ]
+          },
+          "id": "cmve390p7b35166effcc9"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "tip",
+            "body": "Exhaustive testing — bütün mümkün input-ları yoxlamaq — praktik olaraq mümkün deyil. Texnikalar az sayda, amma ən çox baq tapma ehtimalı olan testləri seçməyə kömək edir."
+          },
+          "id": "cmve390p78dcc68322305"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Hansı texnikanı nə vaxt seçməli?",
+            "level": 2
+          },
+          "id": "cmve390p7c74e16ca1a58"
+        },
+        {
+          "type": "TABLE",
+          "title": "Tələbdəki işarəyə görə texnika seçimi",
+          "content": {
+            "headers": [
+              "Tələbdə nə görürsən",
+              "Texnika",
+              "Nümunə"
+            ],
+            "rows": [
+              [
+                "Dəyər qrupları",
+                "Equivalence Partitioning",
+                "“0–17 uşaq, 18+ böyük bileti”"
+              ],
+              [
+                "Aralığın sərhədləri",
+                "Boundary Value Analysis",
+                "“Şifrə 8–20 simvol olmalıdır”"
+              ],
+              [
+                "Şərtlərin kombinasiyası",
+                "Decision Table",
+                "“Tələbədirsə və sifariş ≥ 100 AZN-dirsə — 15% endirim”"
+              ],
+              [
+                "Vəziyyətlər və hadisələr",
+                "State Transition",
+                "“3 səhv PIN-dən sonra kart bloklanır”"
+              ]
+            ]
+          },
+          "id": "cmve390p7a29bcacc5934"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "Bir tələbdən bir neçə texnika",
+          "content": {
+            "description": "Tələb (taksi tətbiqi): “Promo kod 6 simvoldan ibarətdir, yalnız böyük hərf və rəqəm qəbul edilir. Bir istifadəçi kodu yalnız 1 dəfə istifadə edə bilər.”\n\n- **Uzunluq** → BVA: 5, 6 və 7 simvol\n- **Simvol növü** → EP: `BAKU26` (valid), `baku26` (kiçik hərf), `BAKU-6` (xüsusi simvol)\n- **Təkrar istifadə** → State Transition: “istifadə olunmayıb” → “istifadə olunub” → ikinci cəhd rədd edilir",
+            "takeaway": "Tələbi hissələrə böl: hər hissə öz texnikasını tələb edə bilər."
+          },
+          "id": "cmve390p7c2e3b61c5811"
+        },
+        {
+          "type": "CATEGORIZE",
+          "title": "Tələbi texnika ilə uyğunlaşdır",
+          "content": {
+            "instructions": "Hər tələb üçün ən uyğun black-box texnikasını seç.",
+            "categories": [
+              {
+                "id": "ep",
+                "label": "Equivalence Partitioning"
+              },
+              {
+                "id": "bva",
+                "label": "Boundary Value Analysis"
+              },
+              {
+                "id": "dt",
+                "label": "Decision Table"
+              },
+              {
+                "id": "st",
+                "label": "State Transition"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "Ödəniş üsulu: kart, nağd, bonus — hər üsul üçün bir test",
+                "categoryId": "ep"
+              },
+              {
+                "id": "i2",
+                "text": "Bilet: 0–17 uşaq, 18–64 tam, 65+ pensiyaçı — hər qrupdan bir yaş",
+                "categoryId": "ep"
+              },
+              {
+                "id": "i3",
+                "text": "İstifadəçi adı 3–15 simvol: 2, 3, 15 və 16 simvolu yoxla",
+                "categoryId": "bva"
+              },
+              {
+                "id": "i4",
+                "text": "Maksimum fayl ölçüsü 5 MB: 5 MB və 5,01 MB fayl yüklə",
+                "categoryId": "bva"
+              },
+              {
+                "id": "i5",
+                "text": "Kredit: maaş ≥ 1000 AZN, staj ≥ 1 il, gecikmiş borc yoxdur — bütün kombinasiyalar",
+                "categoryId": "dt"
+              },
+              {
+                "id": "i6",
+                "text": "Çatdırılma pulsuzdur, əgər sifariş ≥ 30 AZN-dirsə və ya istifadəçi Premium-dursa",
+                "categoryId": "dt"
+              },
+              {
+                "id": "i7",
+                "text": "Sifariş: Yaradıldı → Ödənildi → Göndərildi → Çatdırıldı",
+                "categoryId": "st"
+              },
+              {
+                "id": "i8",
+                "text": "5 səhv şifrədən sonra hesab 15 dəqiqəlik kilidlənir",
+                "categoryId": "st"
+              }
+            ],
+            "explanation": "Qruplar → EP, sərhədlər → BVA, şərt kombinasiyaları → Decision Table, vəziyyət və hadisələr → State Transition."
+          },
+          "id": "cmve390p79d071040fe08"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Güclü və zəif tərəflər",
+            "level": 2
+          },
+          "id": "cmve390p7000a722353be"
+        },
+        {
+          "type": "TABLE",
+          "title": "Black-box testing-in güclü tərəfləri və məhdudiyyətləri",
+          "content": {
+            "headers": [
+              "Güclü tərəf",
+              "Məhdudiyyət"
+            ],
+            "rows": [
+              [
+                "Kod bilmək tələb olunmur, hər test səviyyəsində işləyir",
+                "Kodda olub tələbdə olmayan budaqları görmür"
+              ],
+              [
+                "Tələblərdəki boşluq və ziddiyyətləri tez üzə çıxarır",
+                "Tələb səhvdirsə, expected result da səhv olur"
+              ],
+              [
+                "İstifadəçi baxışından yoxlayır",
+                "Texnikasız seçilən testlər təsadüfi və natamam olur"
+              ]
+            ]
+          },
+          "id": "cmve390p78dca5f8f6858"
+        },
+        {
+          "type": "TASK",
+          "title": "Tələbdən test şərtləri çıxar",
+          "content": {
+            "instructions": "Tələb: “Şifrə 8–16 simvol olmalı və ən azı bir rəqəm daxil etməlidir.”\n\nBu tələbdən ən azı 4 test şərti çıxar. Hər şərt üçün istifadə etdiyin texnikanı və 1–2 test dəyərini yaz.",
+            "placeholder": "1) Şərt: ... | Texnika: ... | Dəyərlər: ...\n2) ...\n3) ...\n4) ...",
+            "required": true
+          },
+          "id": "cmve390p729f25b8116d7"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Black-box testing kodu deyil, tələbdə təsvir olunan davranışı yoxlayır.",
+              "ISTQB v4.0-da üç texnika ailəsi var: black-box, white-box, experience-based.",
+              "Qruplar üçün EP, sərhədlər üçün BVA, kombinasiyalar üçün Decision Table, vəziyyətlər üçün State Transition seç.",
+              "Texnikalar exhaustive testing-in mümkün olmadığı yerdə ağıllı test seçimi verir."
+            ]
+          },
+          "id": "cmve390p715731bb2ce95"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Black-box texnikaları nəyə əsaslanır?",
+                "options": [
+                  "Kodun daxili strukturuna",
+                  "Test basis-ə: tələblərə və spesifikasiyalara",
+                  "Yalnız testerin intuisiyasına",
+                  "Server loglarına"
+                ],
+                "correctIndex": 1,
+                "explanation": "Black-box testlər tələblərdən, user story-lərdən və spesifikasiyalardan çıxarılır, kodun quruluşundan yox."
+              },
+              {
+                "id": "q2",
+                "text": "“3 səhv PIN-dən sonra kart bloklanır” tələbi üçün ən uyğun texnika hansıdır?",
+                "options": [
+                  "Equivalence Partitioning",
+                  "Boundary Value Analysis",
+                  "State Transition",
+                  "Statement testing"
+                ],
+                "correctIndex": 2,
+                "explanation": "Sistemin cavabı əvvəlki hadisələrdən, yəni indiki vəziyyətdən asılıdır. Bu, State Transition-ın tipik halıdır."
+              },
+              {
+                "id": "q3",
+                "text": "Aşağıdakılardan hansı experience-based texnikadır?",
+                "options": [
+                  "Error guessing",
+                  "Decision Table",
+                  "Branch testing",
+                  "Boundary Value Analysis"
+                ],
+                "correctIndex": 0,
+                "explanation": "Error guessing testerin təcrübəsinə əsaslanır. Decision Table və BVA black-box, Branch testing isə white-box texnikasıdır."
+              },
+              {
+                "id": "q4",
+                "text": "Black-box testing-in məhdudiyyəti hansıdır?",
+                "options": [
+                  "Yalnız component səviyyəsində tətbiq olunur",
+                  "Tələb səhvdirsə, testlərin expected result-u da səhv olur",
+                  "Proqramlaşdırma bilikləri tələb edir",
+                  "İstifadəçi baxışını nəzərə almır"
+                ],
+                "correctIndex": 1,
+                "explanation": "Expected result tələbdən götürülür. Tələbdəki səhv testlərə də keçir, ona görə tələbləri test dizaynı zamanı tənqidi oxu."
+              },
+              {
+                "id": "q5",
+                "text": "Hansı ifadə test condition-dır?",
+                "options": [
+                  "Jira-da açılmış baq",
+                  "“18 yaşdan kiçik istifadəçinin qeydiyyatı rədd edilir”",
+                  "Test mühitinin URL-i",
+                  "Test icrasının cədvəli"
+                ],
+                "correctIndex": 1,
+                "explanation": "Test condition test edilə bilən konkret aspektdir. Ondan sonra konkret test case-lər yazılır."
+              }
+            ]
+          },
+          "id": "cmve390p731c3d1ba7251"
+        }
+      ]
+    },
+    {
+      "slug": "equivalence-partitioning-boundary-value-analysis",
+      "title": "Equivalence Partitioning və Boundary Value Analysis",
+      "shortDescription": "Input-ları partition-lara bölüb sərhəd dəyərlərini seçərək az testlə çox baq tapmağı öyrən.",
+      "estimatedMinutes": 13,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Bir sahə üçün valid və invalid partition-ları müəyyən edə biləcəksən",
+              "ISTQB v4.0-a görə 2-value və 3-value BVA dəyərlərini hesablaya biləcəksən",
+              "EP və BVA-nı birlikdə tətbiq edib minimum test dəstini seçə biləcəksən"
+            ]
+          },
+          "id": "cmve390p74b69c1a00d44"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Equivalence Partitioning (EP)",
+                "az": "ekvivalent bölgü",
+                "definition": "Sistemin eyni cür emal etdiyi dəyərləri qruplara (partition) bölmək və hər qrupdan ən azı bir dəyər yoxlamaq."
+              },
+              {
+                "term": "Valid partition",
+                "az": "düzgün qrup",
+                "definition": "Sistemin qəbul etməli olduğu dəyərlər qrupu."
+              },
+              {
+                "term": "Invalid partition",
+                "az": "yanlış qrup",
+                "definition": "Sistemin rədd etməli olduğu dəyərlər qrupu."
+              },
+              {
+                "term": "Boundary Value Analysis (BVA)",
+                "az": "sərhəd dəyərləri analizi",
+                "definition": "Sıralanmış partition-ların minimum və maksimum dəyərlərini yoxlayan texnika."
+              },
+              {
+                "term": "Boundary value",
+                "az": "sərhəd dəyəri",
+                "definition": "Partition-un ən kiçik və ya ən böyük dəyəri."
+              }
+            ]
+          },
+          "id": "cmve390p79f9f46109a64"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Equivalence Partitioning (EP)",
+            "level": 2
+          },
+          "id": "cmve390p76fc7f8fec725"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Fikir sadədir: sistem bir partition-dakı bütün dəyərlərə eyni cür reaksiya verir. 25 yaş qəbul olunursa, 35 də qəbul olunmalıdır, ona görə ikisini də yoxlamağın mənası yoxdur.\n\nPartition-lar üst-üstə düşmür və boş olmur. Hər dəyər yalnız bir partition-a aiddir. **EP coverage** = yoxlanmış partition-lar / bütün partition-lar × 100%.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p7f05b3c10813c"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "Yaş sahəsi: 18–60",
+          "content": {
+            "description": "Tələb: “Onlayn kart sifarişi üçün yaş 18–60 (daxil olmaqla) olmalıdır.”\n\n- Invalid: 18-dən kiçik → test dəyəri 10\n- Valid: 18–60 → test dəyəri 35\n- Invalid: 60-dan böyük → test dəyəri 70\n- Invalid (format): hərf `abc`, boş sahə",
+            "takeaway": "Rəqəm partition-ları üçün 3 test, format üçün əlavə 2 test kifayətdir."
+          },
+          "id": "cmve390p797b354c1aaf1"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "important",
+            "body": "Bir test case-də yalnız bir invalid dəyər yoxla. Yaşı 10 və email-i `aysel@` eyni anda versən, sistem birinci səhvi göstərib ikincini yoxlamaya bilər. Buna **defect masking** (baqın gizlənməsi) deyilir."
+          },
+          "id": "cmve390p76156bc1925ba"
+        },
+        {
+          "type": "CATEGORIZE",
+          "title": "Şifrə uzunluğunu partition-lara böl",
+          "content": {
+            "instructions": "Tələb: “Şifrə 8–20 simvol olmalıdır.” Hər uzunluğu aid olduğu partition-a yerləşdir.",
+            "categories": [
+              {
+                "id": "short",
+                "label": "Invalid: 8-dən qısa"
+              },
+              {
+                "id": "valid",
+                "label": "Valid: 8–20"
+              },
+              {
+                "id": "long",
+                "label": "Invalid: 20-dən uzun"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "Boş sahə (0 simvol)",
+                "categoryId": "short"
+              },
+              {
+                "id": "i2",
+                "text": "7 simvol",
+                "categoryId": "short"
+              },
+              {
+                "id": "i3",
+                "text": "8 simvol",
+                "categoryId": "valid"
+              },
+              {
+                "id": "i4",
+                "text": "14 simvol",
+                "categoryId": "valid"
+              },
+              {
+                "id": "i5",
+                "text": "20 simvol",
+                "categoryId": "valid"
+              },
+              {
+                "id": "i6",
+                "text": "21 simvol",
+                "categoryId": "long"
+              },
+              {
+                "id": "i7",
+                "text": "50 simvol",
+                "categoryId": "long"
+              }
+            ],
+            "explanation": "8 və 20 valid partition-a aiddir, çünki tələbdə “daxil olmaqla” mənası var. 7 və 21 qonşu invalid partition-ların sərhədləridir."
+          },
+          "id": "cmve390p7dc9f958a7cf4"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Boundary Value Analysis (BVA)",
+            "level": 2
+          },
+          "id": "cmve390p7853a06629310"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Baqlar ən çox sərhədlərdə olur: developer `>=` əvəzinə `>` yazır və ya aralığı bir vahid səhv hesablayır (**off-by-one error**).\n\nBVA yalnız **sıralanmış** partition-lara tətbiq olunur: rəqəm, uzunluq, tarix, məbləğ. ISTQB v4.0-da iki variant var:\n- **2-value BVA**: sərhəd dəyəri və qonşu partition-dakı ən yaxın dəyər\n- **3-value BVA**: sərhəd dəyəri və onun hər iki qonşusu",
+            "highlight": "normal"
+          },
+          "id": "cmve390p72f8b19d0954e"
+        },
+        {
+          "type": "TABLE",
+          "title": "18–60 yaş aralığı üçün BVA dəyərləri",
+          "content": {
+            "headers": [
+              "Sərhəd",
+              "2-value BVA",
+              "3-value BVA"
+            ],
+            "rows": [
+              [
+                "Alt sərhəd: 18",
+                "17, 18",
+                "17, 18, 19"
+              ],
+              [
+                "Üst sərhəd: 60",
+                "60, 61",
+                "59, 60, 61"
+              ],
+              [
+                "Cəmi test",
+                "4",
+                "6"
+              ]
+            ]
+          },
+          "id": "cmve390p7df267eae5653"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "// Tələb: 18–60 yaş (daxil olmaqla) qəbul edilir\nfunction isEligible(age) {\n  return age > 18 && age <= 60; // baq: >= olmalı idi\n}\n\nisEligible(35); // true  — EP testi keçir, baqı görmür\nisEligible(18); // false — BVA testi baqı tapır",
+            "language": "javascript",
+            "caption": "Partition-un ortasındakı dəyər off-by-one baqını tutmur, sərhəd dəyəri tutur."
+          },
+          "id": "cmve390p7c80d31057f99"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "tip",
+            "body": "3-value BVA bəzi baqları əlavə tutur. Developer `age <= 60` əvəzinə `age == 60` yazıbsa, 2-value testləri (60 və 61) keçir. Yalnız 3-value-dakı 59 baqı göstərir: 59 rədd edilir."
+          },
+          "id": "cmve390p767f36a01e443"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Sərhədləri yoxla",
+          "content": {
+            "questions": [
+              {
+                "id": "m1",
+                "text": "Səbətdə məhsul miqdarı 1–10 ədəd ola bilər. 2-value BVA dəyərləri hansılardır?",
+                "options": [
+                  "1 və 10",
+                  "0, 1, 10, 11",
+                  "0, 1, 2, 9, 10, 11",
+                  "1, 5, 10"
+                ],
+                "correctIndex": 1,
+                "explanation": "Hər sərhəd (1 və 10) və qonşu invalid partition-dakı ən yaxın dəyər (0 və 11). Cəmi 4 dəyər."
+              },
+              {
+                "id": "m2",
+                "text": "Şifrə 8–20 simvol olmalıdır. 3-value BVA ilə üst sərhəd üçün hansı uzunluqları yoxlayırsan?",
+                "options": [
+                  "20 və 21",
+                  "19, 20, 21",
+                  "20, 21, 22",
+                  "18, 19, 20"
+                ],
+                "correctIndex": 1,
+                "explanation": "3-value BVA sərhəd dəyərini (20) və onun hər iki qonşusunu (19 və 21) götürür."
+              }
+            ]
+          },
+          "id": "cmve390p77d38fb005f26"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "EP və BVA-nı birlikdə tətbiq et",
+            "level": 2
+          },
+          "id": "cmve390p7b93b0656d123"
+        },
+        {
+          "type": "STEPPER",
+          "title": "Test dizaynı addım-addım",
+          "content": {
+            "steps": [
+              {
+                "title": "Input-u tap",
+                "description": "Tələbdə hansı sahənin və hansı qaydanın olduğunu müəyyən et."
+              },
+              {
+                "title": "Partition-ları qur",
+                "description": "Valid və invalid qrupları yaz, format partition-larını (boş, hərf) unutma."
+              },
+              {
+                "title": "Sərhədləri tap",
+                "description": "Hər sıralanmış partition-un minimum və maksimumunu yaz. Addımı (1 il, 1 simvol, 0,01 AZN) müəyyən et."
+              },
+              {
+                "title": "Dəyərləri seç",
+                "description": "Hər partition-dan bir nümayəndə və hər sərhəd üçün BVA dəyərlərini götür."
+              },
+              {
+                "title": "Təkrarları sil",
+                "description": "Sərhəd dəyəri valid partition-un nümayəndəsi kimi də sayıla bilər. Bir dəyəri iki dəfə test etmə."
+              }
+            ]
+          },
+          "id": "cmve390p783727928d32a"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "Çatdırılma tətbiqi: sifariş məbləği 5–200 AZN",
+          "content": {
+            "description": "Məbləğ qəpiklə yazılır, deməli addım 0,01 AZN-dir.\n\n- EP: 2 AZN (invalid), 50 AZN (valid), 300 AZN (invalid)\n- 2-value BVA: 4,99 · 5,00 · 200,00 · 200,01\n- Format: boş sahə, mənfi məbləğ, `abc`",
+            "takeaway": "Addımı səhv seçsən (məs. 4 və 201), 4,99 və 200,01 kimi real sərhəd baqlarını qaçırarsan."
+          },
+          "id": "cmve390p7879ca26eb42b"
+        },
+        {
+          "type": "TASK",
+          "title": "Ad sahəsi üçün test dəsti",
+          "content": {
+            "instructions": "Tələb: “Ad sahəsi 2–30 simvol qəbul edir.”\n\nPartition-ları yaz, sonra 2-value BVA dəyərlərini seç. Hər test dəyəri üçün gözlənilən nəticəni (qəbul / rədd) göstər.",
+            "placeholder": "Partition-lar: ...\nBVA dəyərləri: ...\nGözlənilən nəticələr: ...",
+            "required": true
+          },
+          "id": "cmve390p7739baa0358f0"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "EP dəyərləri sistemin eyni cür emal etdiyi qruplara bölür. Hər partition-dan bir dəyər kifayətdir.",
+              "Invalid dəyərləri ayrı-ayrı test et, yoxsa defect masking baş verir.",
+              "BVA sıralanmış partition-ların sərhədlərini yoxlayır, çünki off-by-one baqları orada olur.",
+              "2-value BVA: sərhəd və qonşu partition-dakı ən yaxın dəyər. 3-value BVA: sərhəd və hər iki qonşusu."
+            ]
+          },
+          "id": "cmve390p7b7e2ae6b454e"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Equivalence Partitioning-in əsas fərziyyəsi nədir?",
+                "options": [
+                  "Ən çox baq sərhədlərdə olur",
+                  "Bir partition-dakı bütün dəyərləri sistem eyni cür emal edir",
+                  "Hər input-u ayrıca test etmək lazımdır",
+                  "Invalid dəyərləri test etmək lazım deyil"
+                ],
+                "correctIndex": 1,
+                "explanation": "EP fərz edir ki, partition-dakı bir dəyər bütün qrupu təmsil edir. “Sərhədlərdə baq” isə BVA-nın fikridir."
+              },
+              {
+                "id": "q2",
+                "text": "Yaş 18–60 olmalıdır. Yalnız rəqəm partition-larını götürsək, EP üçün minimum neçə test lazımdır?",
+                "options": [
+                  "1",
+                  "2",
+                  "3",
+                  "6"
+                ],
+                "correctIndex": 2,
+                "explanation": "Üç partition var: 18-dən kiçik, 18–60, 60-dan böyük. Hər birindən bir dəyər: 3 test."
+              },
+              {
+                "id": "q3",
+                "text": "Endirim 10–50 AZN arası sifarişlərə (tam AZN) tətbiq olunur. 2-value BVA neçə test dəyəri verir?",
+                "options": [
+                  "2",
+                  "4",
+                  "6",
+                  "8"
+                ],
+                "correctIndex": 1,
+                "explanation": "9 və 10 (alt sərhəd), 50 və 51 (üst sərhəd). Cəmi 4 dəyər."
+              },
+              {
+                "id": "q4",
+                "text": "Niyə bir test case-də iki invalid dəyəri birlikdə yoxlamaq olmaz?",
+                "options": [
+                  "Test çox uzun olur",
+                  "Sistem birinci səhvə görə rədd edə bilər və ikincinin emalı yoxlanmamış qalır",
+                  "ISTQB invalid dəyərləri qadağan edir",
+                  "Bu, BVA-nı mümkünsüz edir"
+                ],
+                "correctIndex": 1,
+                "explanation": "Bu, defect masking-dir: bir səhv o birini gizlədir. Hər invalid partition-u ayrıca test et."
+              },
+              {
+                "id": "q5",
+                "text": "Developer `age <= 60` əvəzinə `age == 60` yazıb. Bu baqı hansı yanaşma mütləq tapır?",
+                "options": [
+                  "2-value BVA (60, 61)",
+                  "3-value BVA (59, 60, 61)",
+                  "Yalnız 35 dəyəri ilə EP",
+                  "Heç biri"
+                ],
+                "correctIndex": 1,
+                "explanation": "60 və 61 hər iki variantda eyni nəticə verir. Yalnız 59 fərqi göstərir: o, rədd edilir, halbuki qəbul olunmalı idi."
+              },
+              {
+                "id": "q6",
+                "text": "BVA hansı sahəyə tətbiq oluna bilməz?",
+                "options": [
+                  "Şifrə uzunluğu 8–20",
+                  "Ödəniş üsulu: kart, nağd, bonus",
+                  "Doğum tarixi",
+                  "Sifariş məbləği 5–200 AZN"
+                ],
+                "correctIndex": 1,
+                "explanation": "Ödəniş üsullarının sırası yoxdur, deməli sərhəd də yoxdur. Onlar üçün yalnız EP istifadə olunur."
+              }
+            ]
+          },
+          "id": "cmve390p71c197df765e1"
+        }
+      ]
+    },
+    {
+      "slug": "decision-table-state-transition",
+      "title": "Decision Table və State Transition testing",
+      "shortDescription": "Biznes qaydalarını qərar cədvəli ilə, vəziyyət dəyişən sistemləri state diaqramı ilə test etməyi öyrən.",
+      "estimatedMinutes": 14,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Biznes qaydasından decision table qurub hər qaydadan test case çıxara biləcəksən",
+              "State diaqramında vəziyyət, hadisə və keçidləri fərqləndirə biləcəksən",
+              "Valid və invalid keçidləri əhatə edən test case-lər seçə biləcəksən"
+            ]
+          },
+          "id": "cmve390p7f36c0d1c8ffa"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Decision table",
+                "az": "qərar cədvəli",
+                "definition": "Şərtlərin bütün kombinasiyalarını və hər birinin nəticəsini göstərən cədvəl."
+              },
+              {
+                "term": "Condition / Action",
+                "az": "şərt / hərəkət",
+                "definition": "Şərt — sistemin yoxladığı fakt (tələbədir?). Hərəkət — nəticə (10% endirim)."
+              },
+              {
+                "term": "Rule",
+                "az": "qayda",
+                "definition": "Decision table-da bir sütun: şərtlərin bir kombinasiyası və onun nəticəsi. Bir qayda = bir test case."
+              },
+              {
+                "term": "State",
+                "az": "vəziyyət",
+                "definition": "Sistemin müəyyən anda olduğu hal, məs. “Kart bloklanıb”."
+              },
+              {
+                "term": "Transition",
+                "az": "keçid",
+                "definition": "Bir hadisə (event) nəticəsində bir vəziyyətdən digərinə keçid."
+              }
+            ]
+          },
+          "id": "cmve390p7bf281b5d252c"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Decision Table testing",
+            "level": 2
+          },
+          "id": "cmve390p7014f80ba4523"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Nəticə bir neçə şərtin kombinasiyasından asılıdırsa, decision table qur. Sətirlərdə şərtlər və hərəkətlər, sütunlarda qaydalar olur.\n\nHər şərt Bəli/Xeyr olarsa, **n** şərt üçün **2ⁿ** qayda alınır: 2 şərt → 4, 3 şərt → 8. Coverage: bütün mümkün (feasible) qaydaların neçə faizi test olunub.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p7c74db1dab0e2"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "Kitab mağazası: endirim qaydaları",
+          "content": {
+            "description": "Tələb: “Tələbə kartı olan müştəriyə 10% endirim. Sifariş 100 AZN və ya daha çoxdursa 5% endirim. Hər iki şərt ödənirsə endirimlər toplanır: 15%.”"
+          },
+          "id": "cmve390p7dbfa1585cdf6"
+        },
+        {
+          "type": "TABLE",
+          "title": "Endirim qaydaları üçün decision table",
+          "content": {
+            "headers": [
+              "",
+              "R1",
+              "R2",
+              "R3",
+              "R4"
+            ],
+            "rows": [
+              [
+                "Şərt: Tələbə kartı var",
+                "Bəli",
+                "Bəli",
+                "Xeyr",
+                "Xeyr"
+              ],
+              [
+                "Şərt: Sifariş ≥ 100 AZN",
+                "Bəli",
+                "Xeyr",
+                "Bəli",
+                "Xeyr"
+              ],
+              [
+                "Hərəkət: Endirim",
+                "15%",
+                "10%",
+                "5%",
+                "0%"
+              ]
+            ]
+          },
+          "id": "cmve390p71acdd491a50d"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "tip",
+            "body": "Hər sütundan bir test case yaz. Mümkün olmayan kombinasiyaları (məs. “yaş < 18” və “pensiyaçı”) sil. Bir şərtin nəticəyə təsir etmədiyi sütunları birləşdirib “–” (fərq etməz) yaza bilərsən — bu, **collapsed** (sıxılmış) cədvəldir."
+          },
+          "id": "cmve390p73bc4c4ef16b0"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Cədvəli oxu",
+          "content": {
+            "questions": [
+              {
+                "id": "m1",
+                "text": "Tələbə kartı olan müştəri 80 AZN-lik sifariş verir. Cədvələ görə endirim neçə faizdir?",
+                "options": [
+                  "0%",
+                  "5%",
+                  "10%",
+                  "15%"
+                ],
+                "correctIndex": 2,
+                "explanation": "Tələbə: Bəli, sifariş ≥ 100: Xeyr. Bu, R2 qaydasıdır: 10%."
+              },
+              {
+                "id": "m2",
+                "text": "Üç Bəli/Xeyr şərti olan tam decision table-da neçə qayda olur?",
+                "options": [
+                  "3",
+                  "6",
+                  "8",
+                  "9"
+                ],
+                "correctIndex": 2,
+                "explanation": "2³ = 8 kombinasiya."
+              }
+            ]
+          },
+          "id": "cmve390p7ab1af3f9a670"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "State Transition testing",
+            "level": 2
+          },
+          "id": "cmve390p76a6b5a854da7"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Sistemin cavabı yalnız input-dan yox, **indiki vəziyyətdən** də asılıdırsa, State Transition istifadə et. Eyni “səhv PIN” hadisəsi birinci cəhddə xəbərdarlıq, üçüncü cəhddə isə kartın bloklanması ilə nəticələnir.\n\nModelin elementləri: **state** (vəziyyət), **event** (hadisə), **transition** (keçid) və keçid zamanı baş verən **action** (hərəkət).",
+            "highlight": "normal"
+          },
+          "id": "cmve390p7eb4fc88d1d4b"
+        },
+        {
+          "type": "DIAGRAM",
+          "content": {
+            "code": "stateDiagram-v2\n    state \"PIN gözlənilir\" as S0\n    state \"1 səhv cəhd\" as S1\n    state \"2 səhv cəhd\" as S2\n    state \"Hesaba giriş\" as OK\n    state \"Kart bloklanıb\" as BL\n    [*] --> S0\n    S0 --> OK: düzgün PIN\n    S0 --> S1: səhv PIN\n    S1 --> OK: düzgün PIN\n    S1 --> S2: səhv PIN\n    S2 --> OK: düzgün PIN\n    S2 --> BL: səhv PIN\n    OK --> [*]",
+            "caption": "Bankomat: üçüncü səhv PIN kartı bloklayır."
+          },
+          "id": "cmve390p7439b352df557"
+        },
+        {
+          "type": "TABLE",
+          "title": "Bankomat üçün state table",
+          "content": {
+            "headers": [
+              "Vəziyyət",
+              "Hadisə: düzgün PIN",
+              "Hadisə: səhv PIN"
+            ],
+            "rows": [
+              [
+                "PIN gözlənilir",
+                "Hesaba giriş",
+                "1 səhv cəhd"
+              ],
+              [
+                "1 səhv cəhd",
+                "Hesaba giriş",
+                "2 səhv cəhd"
+              ],
+              [
+                "2 səhv cəhd",
+                "Hesaba giriş",
+                "Kart bloklanıb"
+              ],
+              [
+                "Kart bloklanıb",
+                "Invalid: giriş rədd edilir",
+                "Invalid: giriş rədd edilir"
+              ]
+            ]
+          },
+          "id": "cmve390p71f3af04c1ec4"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "State table diaqramın görmədiyi **invalid keçidləri** də göstərir: bloklanmış kartla düzgün PIN heç vaxt girişə aparmamalıdır.\n\nISTQB v4.0-da üç coverage növü var:\n- **All states**: hər vəziyyətə ən azı bir dəfə çat\n- **Valid transitions** (0-switch): hər valid keçidi ən azı bir dəfə icra et\n- **All transitions**: valid keçidlər və invalid keçid cəhdləri",
+            "highlight": "normal"
+          },
+          "id": "cmve390p712dab8ad30f1"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "Bütün valid keçidləri 4 testlə əhatə et",
+          "content": {
+            "description": "Diaqramda 6 valid keçid var.\n\n1. Düzgün PIN → S0→OK\n2. Səhv, düzgün → S0→S1, S1→OK\n3. Səhv, səhv, düzgün → S1→S2, S2→OK\n4. Səhv, səhv, səhv → S2→BL\n5. (Invalid) Bloklanmış kart + düzgün PIN → giriş rədd edilir",
+            "takeaway": "1–4 valid transitions coverage-ı 100% edir, 5 isə invalid keçidi yoxlayır."
+          },
+          "id": "cmve390p75343d89b4c75"
+        },
+        {
+          "type": "TASK",
+          "title": "Login kilidi üçün state model",
+          "content": {
+            "instructions": "Tələb: “5 ardıcıl səhv şifrədən sonra hesab 30 dəqiqəlik kilidlənir. Düzgün şifrə səhv cəhd sayğacını sıfırlayır. 30 dəqiqədən sonra hesab yenidən aktiv olur.”\n\nVəziyyətləri və hadisələri yaz. Bütün valid keçidləri əhatə edən test case-ləri sadala və ən azı bir invalid keçid testi əlavə et.",
+            "placeholder": "Vəziyyətlər: ...\nHadisələr: ...\nTest case-lər: ...\nInvalid keçid: ...",
+            "required": true
+          },
+          "id": "cmve390p7bd18d9f9b6ce"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Decision table şərtlərin kombinasiyasını yoxlayır: n Bəli/Xeyr şərti 2ⁿ qayda verir, hər qayda bir test case-dir.",
+              "Mümkün olmayan qaydaları sil, nəticəsi eyni olan qaydaları birləşdirə bilərsən.",
+              "State Transition nəticəsi indiki vəziyyətdən asılı olan sistemlər üçündür: bankomat, login kilidi, sifariş statusu.",
+              "State table invalid keçidləri görünən edir. Onları da test et."
+            ]
+          },
+          "id": "cmve390p7ba70057749fb"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Decision table-da bir sütun (rule) nəyi təmsil edir?",
+                "options": [
+                  "Bir şərti",
+                  "Şərtlərin bir kombinasiyasını və onun nəticəsini",
+                  "Bütün mümkün nəticələri",
+                  "Bir baq report-u"
+                ],
+                "correctIndex": 1,
+                "explanation": "Hər sütun şərtlərin konkret kombinasiyası və gözlənilən hərəkətdir. Ondan bir test case çıxır."
+              },
+              {
+                "id": "q2",
+                "text": "Endirim cədvəlinə görə tələbə kartı olmayan müştəri 150 AZN-lik sifariş verir. Endirim neçədir?",
+                "options": [
+                  "0%",
+                  "5%",
+                  "10%",
+                  "15%"
+                ],
+                "correctIndex": 1,
+                "explanation": "Tələbə: Xeyr, sifariş ≥ 100: Bəli. Bu, R3 qaydasıdır: 5%."
+              },
+              {
+                "id": "q3",
+                "text": "Hansı tələb üçün State Transition ən uyğundur?",
+                "options": [
+                  "Ad sahəsi 2–30 simvol olmalıdır",
+                  "Sifariş statusu: Yaradıldı → Ödənildi → Göndərildi → Çatdırıldı",
+                  "Ödəniş üsulu: kart və ya nağd",
+                  "Tələbəyə və 100 AZN-dən çox sifarişə endirim"
+                ],
+                "correctIndex": 1,
+                "explanation": "Sifariş vəziyyətdən vəziyyətə hadisələrlə keçir. Digərləri EP, BVA və decision table üçün uyğundur."
+              },
+              {
+                "id": "q4",
+                "text": "Bankomat modelində hansı test invalid keçidi yoxlayır?",
+                "options": [
+                  "Birinci cəhddə düzgün PIN",
+                  "İki səhv, sonra düzgün PIN",
+                  "Bloklanmış kartla düzgün PIN daxil etmək",
+                  "Üç ardıcıl səhv PIN"
+                ],
+                "correctIndex": 2,
+                "explanation": "Bloklanmış vəziyyətdən girişə keçid olmamalıdır. Sistemin bu cəhdi rədd etdiyini yoxlamaq invalid keçid testidir."
+              },
+              {
+                "id": "q5",
+                "text": "Hər valid keçidi ən azı bir dəfə icra etmək hansı coverage-dir?",
+                "options": [
+                  "All states coverage",
+                  "Valid transitions coverage (0-switch)",
+                  "Branch coverage",
+                  "Statement coverage"
+                ],
+                "correctIndex": 1,
+                "explanation": "Valid transitions coverage bütün valid keçidləri tələb edir. All states yalnız hər vəziyyətə çatmağı tələb edir və daha zəifdir."
+              }
+            ]
+          },
+          "id": "cmve390p740bb8f4f8bf1"
+        }
+      ]
+    },
+    {
+      "slug": "exploratory-testing-error-guessing",
+      "title": "Exploratory testing və Error Guessing",
+      "shortDescription": "Təcrübəyə əsaslanan texnikalarla, charter və session ilə strukturlu araşdırma aparmağı öyrən.",
+      "estimatedMinutes": 14,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Experience-based texnikaların nə vaxt faydalı olduğunu izah edə biləcəksən",
+              "Tipik developer səhvlərinə əsasən error guessing ideyaları yarada biləcəksən",
+              "Test charter yazıb session-based exploratory testing apara biləcəksən"
+            ]
+          },
+          "id": "cmve390p7bf9e802ed61a"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Experience-based testing",
+                "az": "təcrübəyə əsaslanan test",
+                "definition": "Testerin bilik, təcrübə və intuisiyasından istifadə edən texnikalar."
+              },
+              {
+                "term": "Error guessing",
+                "az": "səhvi təxmin etmək",
+                "definition": "Developerin hansı səhvlərə yol verə biləcəyini təxmin edib onları hədəfləyən testlər."
+              },
+              {
+                "term": "Exploratory testing",
+                "az": "araşdırma testi",
+                "definition": "Test dizaynı, icrası və öyrənmənin eyni vaxtda getdiyi, əvvəlcədən skript olmayan test."
+              },
+              {
+                "term": "Test charter",
+                "az": "test xartiyası",
+                "definition": "Session-un məqsədini, hədəfini və resurslarını təsvir edən qısa təlimat."
+              },
+              {
+                "term": "Session-based testing",
+                "az": "sessiya əsaslı test",
+                "definition": "Exploratory testi timebox-lu sessiyalarla, charter və debrief ilə idarə etmək."
+              }
+            ]
+          },
+          "id": "cmve390p743913efb86a7"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Experience-based texnikalar",
+            "level": 2
+          },
+          "id": "cmve390p7cf4a27872f5e"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "ISTQB v4.0 üç experience-based texnika göstərir: **error guessing**, **exploratory testing** və **checklist-based testing** (checklist-ləri “Test sənədləri” modulunda keçəcəksən).\n\nBu texnikalar black-box və white-box-u əvəz etmir, tamamlayır. Spesifikasiya zəif olanda, vaxt az olanda və ya formal testlərin qaçırdığı baqları tapmaq lazım olanda faydalıdır. Zəif tərəfi: coverage-ı ölçmək çətindir və nəticə testerin bacarığından asılıdır.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p7d2234dc462bb"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Error Guessing",
+            "level": 2
+          },
+          "id": "cmve390p756107b25742e"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Özünə sual ver: “Developer burada nəyi unuda bilərdi?” Mənbələr: bu sistemdə əvvəl tapılmış baqlar, oxşar tətbiqlərdəki problemlər, tipik proqramlaşdırma səhvləri.\n\nSistemli forması **fault attack**-dır: mümkün səhvlərin siyahısını hazırlayıb hər birini hədəfləyən testlər yazırsan.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p79cec9edc68a1"
+        },
+        {
+          "type": "TABLE",
+          "title": "Tipik səhvlər və onları yoxlayan input-lar",
+          "content": {
+            "headers": [
+              "Sahə",
+              "Nəyi sına"
+            ],
+            "rows": [
+              [
+                "Mətn",
+                "Boş, yalnız boşluq, 1000+ simvol, `ə ş ğ ç ö ü ı`, emoji, `<script>`, `' OR 1=1 --`"
+              ],
+              [
+                "Rəqəm",
+                "0, mənfi ədəd, onluq kəsr, hərf, çox böyük ədəd"
+              ],
+              [
+                "Tarix",
+                "29 fevral, 31 aprel, gələcək tarix, fərqli format"
+              ],
+              [
+                "Telefon",
+                "`+994 50 123 45 67`, `0501234567`, boşluqlu, çatışmayan rəqəm"
+              ],
+              [
+                "Forma göndərmə",
+                "Düyməyə iki dəfə tez klik, internet kəsilməsi, “Geri” düyməsi"
+              ]
+            ]
+          },
+          "id": "cmve390p7e2c5a1d6a2dc"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Exploratory testing",
+            "level": 2
+          },
+          "id": "cmve390p7f3dfdf97719c"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Exploratory testing təsadüfi klik deyil. Məqsədin var, amma addımları əvvəlcədən yazmırsan: sistemi öyrəndikcə növbəti testi seçirsən.\n\nNəzarətli olması üçün **session-based** yanaşma işlənir: hər sessiyanın charter-i, timebox-u (adətən 60–120 dəqiqə) və sonunda debrief-i olur.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p70db171ba7305"
+        },
+        {
+          "type": "STEPPER",
+          "title": "Session-based exploratory testing",
+          "content": {
+            "steps": [
+              {
+                "title": "Charter yaz",
+                "description": "Nəyi, nə ilə, nə tapmaq üçün araşdıracağını bir cümlədə yaz."
+              },
+              {
+                "title": "Timebox qoy",
+                "description": "Sessiyanın müddətini müəyyən et, məs. 60 dəqiqə. Diqqətini dağıtma."
+              },
+              {
+                "title": "Araşdır və qeyd et",
+                "description": "Nə sınadığını, tapdığın baqları, sualları və riskləri session notes-a yaz."
+              },
+              {
+                "title": "Debrief et",
+                "description": "Nəticələri test lead ilə müzakirə et: nə əhatə olundu, nə qaldı, növbəti charter nədir."
+              }
+            ]
+          },
+          "id": "cmve390p74053f2069248"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "Charter nümunəsi",
+          "content": {
+            "description": "Format: **Explore** <hədəf> **with** <resurslar> **to discover** <məlumat>.\n\n“Qeydiyyat formasını araşdır, müxtəlif email, telefon və şifrə formatları ilə, validasiya və xəta mesajı baqlarını aşkar etmək üçün. Timebox: 45 dəqiqə.”",
+            "takeaway": "Charter fokus verir, amma addımları diktə etmir."
+          },
+          "id": "cmve390p7c1dd5dc8bfb8"
+        },
+        {
+          "type": "CATEGORIZE",
+          "title": "Hansı yanaşmadır?",
+          "content": {
+            "instructions": "Hər fəaliyyəti aid olduğu yanaşmaya yerləşdir.",
+            "categories": [
+              {
+                "id": "eg",
+                "label": "Error guessing"
+              },
+              {
+                "id": "exp",
+                "label": "Exploratory testing"
+              },
+              {
+                "id": "scr",
+                "label": "Scripted testing (test case ilə)"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "Keçən release-də tarix sahəsində baq olub, ona görə 29 fevralı daxil edirəm",
+                "categoryId": "eg"
+              },
+              {
+                "id": "i2",
+                "text": "Sahəyə `' OR 1=1 --` yazıram, çünki bu yoxlama tez-tez unudulur",
+                "categoryId": "eg"
+              },
+              {
+                "id": "i3",
+                "text": "45 dəqiqəlik charter üzrə yeni ödəniş səhifəsini araşdırır, növbəti addımı tapdıqlarıma görə seçirəm",
+                "categoryId": "exp"
+              },
+              {
+                "id": "i4",
+                "text": "Spesifikasiya yoxdur, tətbiqi öyrənə-öyrənə test ideyaları yaradıram",
+                "categoryId": "exp"
+              },
+              {
+                "id": "i5",
+                "text": "TC-014-ün addımlarını ardıcıl icra edib actual result-u expected ilə müqayisə edirəm",
+                "categoryId": "scr"
+              },
+              {
+                "id": "i6",
+                "text": "Hər build-də regression suite-dəki 120 test case-i icra edirəm",
+                "categoryId": "scr"
+              }
+            ],
+            "explanation": "Error guessing konkret səhv növünü hədəfləyir. Exploratory testing-də dizayn və icra eyni vaxtda gedir. Scripted testing-də addımlar əvvəlcədən yazılıb."
+          },
+          "id": "cmve390p772687ebd16f7"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Praktika: qeydiyyat formasını araşdır",
+            "level": 2
+          },
+          "id": "cmve390p7057b0586e858"
+        },
+        {
+          "type": "BUG_HUNT",
+          "content": {
+            "scenario": "registration",
+            "instructions": "Charter: qeydiyyat formasını müxtəlif input-larla araşdır, validasiya və məntiq baqlarını aşkar etmək üçün. Timebox: 15 dəqiqə.\n\n1. Əvvəl tələblər siyahısını oxu. Expected result oradan gəlir.\n2. Hər sahə üçün error guessing cədvəlindəki ideyaları sına: boş dəyər, yanlış format, sərhəd dəyərləri, çox uzun mətn.\n3. Sahələr arası əlaqələri yoxla, məs. şifrə və onun təkrarı.\n4. Hər baqı tapan kimi qeyd et: hansı input, hansı nəticə gözlənilirdi, nə baş verdi."
+          },
+          "id": "cmve390p7ae370f13ca9b"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "remember",
+            "body": "Session notes olmadan exploratory testing-i report etmək olmur. Qısa yaz: nəyi əhatə etdin, nə tapdın, hansı suallar və risklər qaldı."
+          },
+          "id": "cmve390p741e02e8f5dc1"
+        },
+        {
+          "type": "TASK",
+          "title": "Charter və error guessing ideyaları",
+          "content": {
+            "instructions": "Onlayn market tətbiqində “Promo kod” funksiyası var. Bu funksiya üçün Explore / with / to discover formatında bir test charter yaz və 5 error guessing ideyası sadala.",
+            "placeholder": "Charter: Explore ... with ... to discover ...\nError guessing:\n1) ...\n2) ...\n3) ...\n4) ...\n5) ...",
+            "required": true
+          },
+          "id": "cmve390p79d40f3f0ab7b"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Experience-based texnikalar: error guessing, exploratory testing, checklist-based testing.",
+              "Error guessing keçmiş baqlara və tipik developer səhvlərinə əsaslanır. Fault attack onun sistemli formasıdır.",
+              "Exploratory testing-də dizayn, icra və öyrənmə eyni vaxtda gedir. Bu, təsadüfi test demək deyil.",
+              "Session-based testing charter, timebox, session notes və debrief ilə araşdırmanı idarə olunan edir."
+            ]
+          },
+          "id": "cmve390p7c5b6736a0e7f"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Exploratory testing-in düzgün tərifi hansıdır?",
+                "options": [
+                  "Əvvəlcədən yazılmış test case-lərin icrası",
+                  "Test dizaynı, icrası və öyrənmənin eyni vaxtda getdiyi test",
+                  "Məqsədsiz, təsadüfi klikləmə",
+                  "Yalnız avtomatlaşdırılmış testlər"
+                ],
+                "correctIndex": 1,
+                "explanation": "Exploratory testing-də skript yoxdur, amma məqsəd var. Tester sistemi öyrəndikcə növbəti testi seçir."
+              },
+              {
+                "id": "q2",
+                "text": "Test charter nədir?",
+                "options": [
+                  "Bütün test case-lərin siyahısı",
+                  "Session-un məqsədini, hədəfini və resurslarını təsvir edən qısa təlimat",
+                  "Baq report şablonu",
+                  "Test mühitinin konfiqurasiyası"
+                ],
+                "correctIndex": 1,
+                "explanation": "Charter, məsələn “Explore X with Y to discover Z”, sessiyaya fokus verir."
+              },
+              {
+                "id": "q3",
+                "text": "Error guessing ən çox nəyə əsaslanır?",
+                "options": [
+                  "Kod coverage hesabatına",
+                  "Testerin təcrübəsinə, keçmiş baqlara və tipik səhvlərə",
+                  "Decision table-a",
+                  "Test planındakı cədvələ"
+                ],
+                "correctIndex": 1,
+                "explanation": "Tester developerin hansı səhvlərə yol verə biləcəyini əvvəlki təcrübəsinə əsasən təxmin edir."
+              },
+              {
+                "id": "q4",
+                "text": "Exploratory testing hansı vəziyyətdə ən faydalıdır?",
+                "options": [
+                  "Spesifikasiya zəifdir və vaxt azdır",
+                  "Audit üçün hər addımın sənədləşməsi tələb olunur",
+                  "Testlər hər gecə avtomatik işləməlidir",
+                  "Tələblər tam və dəqiqdir, test case-lər hazırdır"
+                ],
+                "correctIndex": 0,
+                "explanation": "Spesifikasiya zəif olanda və vaxt az olanda exploratory testing tez məlumat verir. Audit və avtomatlaşdırma scripted test tələb edir."
+              },
+              {
+                "id": "q5",
+                "text": "Session-based testing-də debrief nədir?",
+                "options": [
+                  "Sessiyadan əvvəl test datanın hazırlanması",
+                  "Sessiyadan sonra nəticələrin test lead ilə müzakirəsi",
+                  "Baqın developerə təyin edilməsi",
+                  "Timebox-un uzadılması"
+                ],
+                "correctIndex": 1,
+                "explanation": "Debrief-də nəyin əhatə olunduğu, tapılan baqlar, risklər və növbəti charter müzakirə olunur."
+              },
+              {
+                "id": "q6",
+                "text": "Experience-based texnikaların əsas zəif tərəfi hansıdır?",
+                "options": [
+                  "Baq tapmırlar",
+                  "Coverage-ı ölçmək çətindir və nəticə testerin bacarığından asılıdır",
+                  "Yalnız white-box səviyyəsində işləyirlər",
+                  "Tələblər olmadan istifadə oluna bilməzlər"
+                ],
+                "correctIndex": 1,
+                "explanation": "Formal model olmadığı üçün nə qədər əhatə olunduğunu dəqiq ölçmək çətindir. Təcrübəsiz tester az şey tapır."
+              }
+            ]
+          },
+          "id": "cmve390p7f05d21075263"
+        }
+      ]
+    },
+    {
+      "id": "cmn4jn92q002bxbrdyh12y08q",
+      "slug": "white-box-testing-1",
+      "title": "White Box testing (ağ qutu testi)",
+      "shortDescription": "Kodun strukturuna baxaraq statement və branch coverage ilə test dizayn etməyi öyrən.",
+      "estimatedMinutes": 14,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "White-box testing-i black-box-dan fərqləndirə biləcəksən",
+              "Kiçik kod parçası üçün statement və branch coverage hesablaya biləcəksən",
+              "100% branch coverage verən minimum test dəstini seçə biləcəksən"
+            ]
+          },
+          "id": "cmve390p7e0e1f4920ffa"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "White-box testing",
+                "az": "ağ qutu testi",
+                "definition": "Test obyektinin daxili strukturuna (kod, məntiq) əsaslanan test."
+              },
+              {
+                "term": "Statement",
+                "az": "əmr",
+                "definition": "Kodda icra olunan bir əmr, məs. `fee = 0;`."
+              },
+              {
+                "term": "Branch",
+                "az": "budaq",
+                "definition": "Decision-dan (if, switch, loop) çıxan yol. `if`-in iki budağı var: true və false."
+              },
+              {
+                "term": "Statement coverage",
+                "az": "əmr əhatəsi",
+                "definition": "Testlərin icra etdiyi əmrlər / bütün əmrlər × 100%."
+              },
+              {
+                "term": "Branch coverage",
+                "az": "budaq əhatəsi",
+                "definition": "Testlərin icra etdiyi budaqlar / bütün budaqlar × 100%."
+              }
+            ]
+          },
+          "id": "cmve390p7dedaa46ba38d"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "White-box testing nədir?",
+            "level": 2
+          },
+          "id": "cmve390p74deaa5817297"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "**White-box testing** kodun içinə baxır: hansı şərtlər, hansı budaqlar var və testlər onların hamısını icra edirmi?\n\nƏsasən component (unit) testing səviyyəsində developer və ya SDET edir. Amma kodu oxuya bilən QA da test olunmamış budaqları tapa bilər. White-box black-box-un görmədiyini tapır: tələbdə olmayan, amma kodda olan məntiqi.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p7d17d2073193a"
+        },
+        {
+          "type": "TABLE",
+          "title": "Black-box və white-box müqayisəsi",
+          "content": {
+            "headers": [
+              "Faktor",
+              "Black-box",
+              "White-box"
+            ],
+            "rows": [
+              [
+                "Test basis",
+                "Tələblər, spesifikasiya",
+                "Kod, arxitektura"
+              ],
+              [
+                "Kim edir",
+                "QA, analitik, istifadəçi",
+                "Developer, SDET, automation QA"
+              ],
+              [
+                "Nəyi tapır",
+                "Çatışmayan və səhv funksionallıq",
+                "Test olunmamış kod və məntiq səhvləri"
+              ],
+              [
+                "Coverage",
+                "Partition, qayda, keçid",
+                "Statement və branch faizi"
+              ]
+            ]
+          },
+          "id": "cmve390p7840bcb514156"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Statement coverage",
+            "level": 2
+          },
+          "id": "cmve390p72218879d3c65"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Statement coverage soruşur: “Hər sətir ən azı bir dəfə icra olundumu?” Aşağıdakı funksiyada 4 əmr var. Bir test hamısını icra edir.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p7c8069a5a9f0d"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "function applyDiscount(price, isStudent) {\n  let finalPrice = price;        // 1\n  if (isStudent) {               // 2\n    finalPrice = price * 0.9;    // 3\n  }\n  return finalPrice;             // 4\n}\n\n// Test A: applyDiscount(100, true) → 90\n// 4 əmrin hamısı icra olundu → 100% statement coverage",
+            "language": "javascript",
+            "caption": "Bir test 100% statement coverage verir."
+          },
+          "id": "cmve390p7aea4789c9b98"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Amma Test A `isStudent = false` halını heç yoxlamadı. Developer 1-ci sətirdə səhvən `let finalPrice = 0` yazsaydı, Test A yenə keçərdi, çünki 3-cü sətir dəyəri yenidən yazır. Bu baqı yalnız false budağını icra edən test tapır: `applyDiscount(100, false)` 100 əvəzinə 0 qaytarar.",
+            "highlight": "warning"
+          },
+          "id": "cmve390p7c87d147fb86d"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Branch coverage",
+            "level": 2
+          },
+          "id": "cmve390p73a0e70122a27"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Branch coverage hər decision-un hər nəticəsini tələb edir. `if`-in `else`-i yazılmasa belə, false budağı mövcuddur.\n\nISTQB v4.0: **100% branch coverage 100% statement coverage-ı təmin edir, tərsi isə doğru deyil.** Ona görə branch coverage daha güclü kriteriyadır.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p785df32218f4b"
+        },
+        {
+          "type": "TABLE",
+          "title": "applyDiscount üçün coverage",
+          "content": {
+            "headers": [
+              "Test dəsti",
+              "Statement coverage",
+              "Branch coverage"
+            ],
+            "rows": [
+              [
+                "A: (100, true)",
+                "100%",
+                "50%"
+              ],
+              [
+                "A + B: (100, true), (100, false)",
+                "100%",
+                "100%"
+              ]
+            ]
+          },
+          "id": "cmve390p74b54f8152df0"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Coverage-ı hesabla",
+          "content": {
+            "questions": [
+              {
+                "id": "m1",
+                "text": "`if (total >= 50) { fee = 0; }` kodu üçün 100% branch coverage-a minimum neçə test lazımdır?",
+                "options": [
+                  "1",
+                  "2",
+                  "3",
+                  "4"
+                ],
+                "correctIndex": 1,
+                "explanation": "Biri `total >= 50` (true budağı), biri `total < 50` (false budağı) üçün."
+              },
+              {
+                "id": "m2",
+                "text": "Hansı ifadə doğrudur?",
+                "options": [
+                  "100% statement coverage 100% branch coverage-ı təmin edir",
+                  "100% branch coverage 100% statement coverage-ı təmin edir",
+                  "İkisi həmişə eyni nəticə verir",
+                  "Branch coverage yalnız else olan kodda ölçülür"
+                ],
+                "correctIndex": 1,
+                "explanation": "Bütün budaqlar icra olunursa, bütün əmrlər də icra olunur. Tərsi doğru deyil: Test A buna nümunədir."
+              }
+            ]
+          },
+          "id": "cmve390p73e0d177fff01"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "warning",
+            "body": "100% coverage “baq yoxdur” demək deyil. Coverage yalnız mövcud kodu ölçür: tələbdə olub kodda unudulmuş funksiyanı göstərmir. Path coverage (bütün yollar) isə mürəkkəb kodda praktik deyil və CTFL v4.0-a daxil deyil."
+          },
+          "id": "cmve390p77af41b6419b7"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Praktika: branch coverage üçün test yaz",
+            "level": 2
+          },
+          "id": "cmve390p74fd5a4f4930a"
+        },
+        {
+          "type": "CODE_EXERCISE",
+          "content": {
+            "language": "javascript",
+            "instructions": "Funksiya çatdırılma haqqını hesablayır. Ən çoxu 2 test ilə **100% branch coverage** əldə et.\n\n`testInputs` massivinə hər test üçün `{ total, isPremium, expected }` obyekti əlavə et. `expected` funksiyanın qaytarmalı olduğu düzgün dəyərdir. Hər iki `if`-in həm true, həm false budağı icra olunmalıdır.",
+            "starterCode": "function deliveryFee(total, isPremium) {\n  let fee = 5;\n  if (isPremium) {\n    fee = 0;\n  }\n  if (total >= 50) {\n    fee = 0;\n  }\n  return fee;\n}\n\n// Ən çoxu 2 test yaz\nconst testInputs = [\n  // { total: ..., isPremium: ..., expected: ... },\n];\n",
+            "solution": "function deliveryFee(total, isPremium) {\n  let fee = 5;\n  if (isPremium) {\n    fee = 0;\n  }\n  if (total >= 50) {\n    fee = 0;\n  }\n  return fee;\n}\n\nconst testInputs = [\n  { total: 60, isPremium: true, expected: 0 },\n  { total: 20, isPremium: false, expected: 5 },\n];\n",
+            "tests": [
+              {
+                "name": "1 və ya 2 test var",
+                "assert": "Array.isArray(testInputs) && testInputs.length >= 1 && testInputs.length <= 2"
+              },
+              {
+                "name": "Hər testin expected dəyəri düzgündür",
+                "assert": "testInputs.every(t => typeof t.total === 'number' && typeof t.isPremium === 'boolean' && t.expected === ((t.isPremium || t.total >= 50) ? 0 : 5))"
+              },
+              {
+                "name": "`if (isPremium)` — true və false budaqları icra olunur",
+                "assert": "testInputs.some(t => t.isPremium === true) && testInputs.some(t => t.isPremium === false)"
+              },
+              {
+                "name": "`if (total >= 50)` — true və false budaqları icra olunur",
+                "assert": "testInputs.some(t => t.total >= 50) && testInputs.some(t => t.total < 50)"
+              }
+            ],
+            "hints": [
+              "Hər `if` üçün bir test true, bir test false budağına getməlidir.",
+              "Bir testdə hər iki şərti true, digərində hər ikisini false et.",
+              "Premium istifadəçi və ya 50 AZN-dən çox sifariş üçün haqq 0, qalan hallarda 5-dir."
+            ]
+          },
+          "id": "cmve390p7588c210a113c"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "White-box testing kodun strukturuna əsaslanır və test olunmamış məntiqi tapır.",
+              "Statement coverage hər əmrin icrasını, branch coverage hər decision-un hər nəticəsini tələb edir.",
+              "100% branch coverage 100% statement coverage-ı təmin edir, tərsi yox.",
+              "Yüksək coverage tələbdə olub kodda unudulmuş funksiyanı göstərmir."
+            ]
+          },
+          "id": "cmve390p75685d47fe4da"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "White-box testing-in test basis-i nədir?",
+                "options": [
+                  "İstifadəçi rəyləri",
+                  "Kod və proqramın daxili strukturu",
+                  "Marketinq materialları",
+                  "Yalnız UI maketləri"
+                ],
+                "correctIndex": 1,
+                "explanation": "White-box testlər kodun və məntiqin quruluşundan çıxarılır."
+              },
+              {
+                "id": "q2",
+                "text": "Test dəsti 100% statement coverage, amma 50% branch coverage verir. Bu necə mümkündür?",
+                "options": [
+                  "Kodda heç bir if yoxdur",
+                  "if-in yalnız true budağı icra olunub, false budağında ayrıca əmr yoxdur",
+                  "Testlər fail olub",
+                  "Coverage aləti səhv işləyir"
+                ],
+                "correctIndex": 1,
+                "explanation": "else olmayan if-də bütün əmrlər true budağında icra olunur, amma false budağı heç yoxlanmayıb."
+              },
+              {
+                "id": "q3",
+                "text": "Funksiyada 3 ardıcıl, bir-birindən asılı olmayan if var. Hər biri ayrı parametrdən asılıdır. 100% branch coverage-a minimum neçə test lazımdır?",
+                "options": [
+                  "1",
+                  "2",
+                  "3",
+                  "6"
+                ],
+                "correctIndex": 1,
+                "explanation": "Bir testdə üç şərtin hamısı true, digərində hamısı false olarsa, 6 budağın hamısı icra olunur."
+              },
+              {
+                "id": "q4",
+                "text": "Code coverage praktikada necə ölçülür?",
+                "options": [
+                  "Tester sətirləri əl ilə sayır",
+                  "Coverage aləti (məs. Istanbul/nyc, JaCoCo) testlər işləyəndə icra olunan sətir və budaqları qeyd edir",
+                  "Test planından hesablanır",
+                  "Baq sayına bölünür"
+                ],
+                "correctIndex": 1,
+                "explanation": "Coverage alətləri kodu instrumentləşdirir və test icrası zamanı hansı hissələrin işlədiyini avtomatik ölçür."
+              },
+              {
+                "id": "q5",
+                "text": "100% branch coverage nəyə zəmanət VERMİR?",
+                "options": [
+                  "Hər if-in true və false budağının icra olunmasına",
+                  "Hər əmrin icra olunmasına",
+                  "Tələbdə olub kodda unudulmuş funksiyanın tapılmasına",
+                  "Hər decision-un yoxlanmasına"
+                ],
+                "correctIndex": 2,
+                "explanation": "Coverage yalnız mövcud kodu ölçür. Yazılmamış kodun coverage-ı olmur, onu black-box testlər tapır."
+              }
+            ]
+          },
+          "id": "cmve390p7e6bf04fd9d68"
+        }
+      ]
+    },
+    {
+      "id": "cmn4jonph002vxbrdg5hfzvy6",
+      "slug": "grey-box-testing-1",
+      "title": "Grey Box testing (boz qutu testi)",
+      "shortDescription": "Sistemin daxili quruluşu haqqında qismən biliklə UI, API, DB və logları birlikdə yoxlamağı öyrən.",
+      "estimatedMinutes": 10,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Grey-box testing-i black-box və white-box-dan fərqləndirə biləcəksən",
+              "UI testini API, DB və log yoxlamaları ilə tamamlaya biləcəksən",
+              "Grey-box yanaşmasının ən faydalı olduğu halları tanıya biləcəksən"
+            ]
+          },
+          "id": "cmve390p794079b9ef76e"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Grey-box testing",
+                "az": "boz qutu testi",
+                "definition": "Daxili quruluş haqqında qismən biliklə, xarici interfeysdən aparılan test."
+              },
+              {
+                "term": "API",
+                "az": "proqram interfeysi",
+                "definition": "Frontend və backend-in və ya servislərin bir-biri ilə danışdığı interfeys."
+              },
+              {
+                "term": "Database (DB)",
+                "az": "verilənlər bazası",
+                "definition": "Tətbiqin məlumatları saxladığı yer. Grey-box-da nəticə orada yoxlanır."
+              },
+              {
+                "term": "Log",
+                "az": "jurnal",
+                "definition": "Serverin hadisə və xətaları yazdığı qeydlər."
+              }
+            ]
+          },
+          "id": "cmve390p72d9992cbb3ed"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Grey-box testing nədir?",
+            "level": 2
+          },
+          "id": "cmve390p7bf09ad4e97ac"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "**Grey-box testing**-də tester sistemin daxili quruluşu haqqında **qismən** bilir: arxitekturanı, DB sxemini, API kontraktlarını, logları. Testi yenə xaricdən, UI və ya API vasitəsilə aparır, amma nəticəni daha dərindən yoxlayır.\n\nISTQB v4.0 grey-box-u ayrıca texnika ailəsi kimi vermir. Bu, sənayedə geniş işlənən yanaşmadır: black-box texnikaları + daxili bilik.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p734be3d59ccec"
+        },
+        {
+          "type": "TABLE",
+          "title": "Üç yanaşmanın müqayisəsi",
+          "content": {
+            "headers": [
+              "Faktor",
+              "Black-box",
+              "Grey-box",
+              "White-box"
+            ],
+            "rows": [
+              [
+                "Daxili bilik",
+                "Yoxdur",
+                "Qismən: arxitektura, DB, API",
+                "Tam: kod"
+              ],
+              [
+                "Nəyi yoxlayır",
+                "UI və ya API cavabı",
+                "UI/API + DB, loglar, network",
+                "Kodun budaqları"
+              ],
+              [
+                "Tipik səviyyə",
+                "System, acceptance",
+                "Integration, system",
+                "Component"
+              ],
+              [
+                "Kim edir",
+                "QA",
+                "QA, SDET",
+                "Developer"
+              ]
+            ]
+          },
+          "id": "cmve390p73f1ad9bb3eb7"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Real nümunə: sifariş yaratmaq",
+            "level": 2
+          },
+          "id": "cmve390p728c9dbfe2674"
+        },
+        {
+          "type": "STEPPER",
+          "title": "Bir sifarişi dörd qatda yoxla",
+          "content": {
+            "steps": [
+              {
+                "title": "UI",
+                "description": "Saytda sifariş ver. “Sifarişiniz qəbul olundu” mesajı görünür."
+              },
+              {
+                "title": "API",
+                "description": "Brauzerin DevTools → Network tab-ında `POST /orders` sorğusuna bax: status 201, cavabda `orderId` var."
+              },
+              {
+                "title": "Database",
+                "description": "DB-də sifarişin düzgün məbləğ və `NEW` statusu ilə yazıldığını yoxla."
+              },
+              {
+                "title": "Loglar",
+                "description": "Server loglarında bu sorğu üçün error və ya exception yoxdur."
+              }
+            ]
+          },
+          "id": "cmve390p790bd1fa94184"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "SELECT id, status, total\nFROM orders\nWHERE user_id = 42\nORDER BY created_at DESC\nLIMIT 1;",
+            "language": "sql",
+            "caption": "Test istifadəçisinin son sifarişini yoxlayan sorğu. Gözlənilən: status = 'NEW', total səbətdəki məbləğə bərabərdir."
+          },
+          "id": "cmve390p72b08b26245ea"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "UI “uğurlu” deyir, amma sifariş yoxdur",
+          "content": {
+            "description": "UI uğur mesajı göstərir, amma DB-də sifariş yazılmayıb, çünki backend xətanı tutub UI-a yenə də 200 qaytarır. Black-box test bunu yalnız sifariş tarixçəsi yoxlananda görər. Grey-box test isə dərhal görür.",
+            "takeaway": "Grey-box UI-da görünməyən baqları tapır: səhv yazılmış data, artıq qaytarılan şəxsi məlumat, gizli server xətaları."
+          },
+          "id": "cmve390p7462dc240fe9b"
+        },
+        {
+          "type": "CATEGORIZE",
+          "title": "Black, grey, yoxsa white?",
+          "content": {
+            "instructions": "Hər fəaliyyəti aid olduğu yanaşmaya yerləşdir.",
+            "categories": [
+              {
+                "id": "black",
+                "label": "Black-box"
+              },
+              {
+                "id": "grey",
+                "label": "Grey-box"
+              },
+              {
+                "id": "white",
+                "label": "White-box"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "Tester yalnız tələblərə baxaraq login formasını yoxlayır",
+                "categoryId": "black"
+              },
+              {
+                "id": "i2",
+                "text": "Tester BVA ilə yaş sahəsinə 17 və 18 daxil edir",
+                "categoryId": "black"
+              },
+              {
+                "id": "i3",
+                "text": "QA qeydiyyatdan sonra DB-də şifrənin açıq mətn yox, hash kimi saxlandığını yoxlayır",
+                "categoryId": "grey"
+              },
+              {
+                "id": "i4",
+                "text": "QA Network tab-ında API cavabında lazımsız şəxsi məlumatın gəlmədiyini yoxlayır",
+                "categoryId": "grey"
+              },
+              {
+                "id": "i5",
+                "text": "Developer `calculateTax()` funksiyasının hər if budağına unit test yazır",
+                "categoryId": "white"
+              },
+              {
+                "id": "i6",
+                "text": "Developer coverage report-a baxıb test olunmamış budaq üçün test əlavə edir",
+                "categoryId": "white"
+              }
+            ],
+            "explanation": "Grey-box-da test xaricdən aparılır, amma daxili biliklə (DB, API, loglar) yoxlanır. White-box birbaşa kodu hədəfləyir."
+          },
+          "id": "cmve390p7e615d49495f5"
+        },
+        {
+          "type": "TASK",
+          "title": "Səbətə əlavə et: grey-box test ideyaları",
+          "content": {
+            "instructions": "Onlayn mağazada “Səbətə əlavə et” funksiyası üçün grey-box test ideyaları yaz: UI-da nəyi, API sorğusunda nəyi, DB-də nəyi yoxlayırsan? Hər qat üçün ən azı bir ideya yaz.",
+            "placeholder": "UI: ...\nAPI: ...\nDB: ...\nLoglar: ...",
+            "required": true
+          },
+          "id": "cmve390p752a46501e391"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Grey-box-da tester daxili quruluşu qismən bilir, testi isə xaricdən aparır.",
+              "UI nəticəsini API cavabı, DB qeydləri və loglarla təsdiqləyirsən.",
+              "Ən çox integration, API, data düzgünlüyü və təhlükəsizlik yoxlamalarında işlənir.",
+              "ISTQB v4.0-da rəsmi ailələr black-box, white-box və experience-based-dir. Grey-box sənaye yanaşmasıdır."
+            ]
+          },
+          "id": "cmve390p7a931c45b6a46"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Grey-box testing-də tester sistem haqqında nə bilir?",
+                "options": [
+                  "Heç nə",
+                  "Qismən: arxitektura, DB, API",
+                  "Kodun hər sətrini",
+                  "Yalnız UI dizaynını"
+                ],
+                "correctIndex": 1,
+                "explanation": "Grey-box qismən biliyə əsaslanır. Tester kodu tam bilmir, amma sistemin quruluşundan xəbərdardır."
+              },
+              {
+                "id": "q2",
+                "text": "Hansı fəaliyyət grey-box nümunəsidir?",
+                "options": [
+                  "UI-dan qeydiyyat edib DB-də yazılan qeydi yoxlamaq",
+                  "Yalnız düymənin rəngini yoxlamaq",
+                  "Funksiyanın hər budağına unit test yazmaq",
+                  "Tələb sənədini oxumaq"
+                ],
+                "correctIndex": 0,
+                "explanation": "Test UI-dan aparılır, nəticə DB-də daxili biliklə yoxlanır. Bu, grey-box-dur."
+              },
+              {
+                "id": "q3",
+                "text": "Grey-box ən çox hansı test səviyyələrində işlənir?",
+                "options": [
+                  "Yalnız component",
+                  "Integration və system",
+                  "Yalnız acceptance",
+                  "Heç bir səviyyədə"
+                ],
+                "correctIndex": 1,
+                "explanation": "Servislər və DB arasındakı data axını integration və system səviyyələrində yoxlanır."
+              },
+              {
+                "id": "q4",
+                "text": "Grey-box hansı baqı black-box-dan tez tapır?",
+                "options": [
+                  "Düymənin səhv rəngi",
+                  "UI uğur göstərir, amma data DB-yə yazılmayıb",
+                  "Mətndəki orfoqrafik səhv",
+                  "Səhifənin yavaş açılması"
+                ],
+                "correctIndex": 1,
+                "explanation": "Uğur mesajı UI-da görünür. Problemi yalnız DB-yə və ya API cavabına baxan tester dərhal görür."
+              },
+              {
+                "id": "q5",
+                "text": "ISTQB CTFL v4.0-da test texnikalarının üç ailəsi hansılardır?",
+                "options": [
+                  "Black-box, grey-box, white-box",
+                  "Black-box, white-box, experience-based",
+                  "Manual, automated, exploratory",
+                  "Static, dynamic, regression"
+                ],
+                "correctIndex": 1,
+                "explanation": "ISTQB v4.0 black-box, white-box və experience-based ailələrini verir. Grey-box ayrıca ailə deyil."
+              }
+            ]
+          },
+          "id": "cmve390p72b160560e544"
+        }
+      ]
+    }
+  ]
+}

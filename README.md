@@ -1,161 +1,86 @@
-# Narix Academy 🎓
+# Narix Academy
 
-**Manual QA üzrə professional təhsil platforması**
+Manual QA və test avtomatlaşdırmasını qısa, interaktiv dərslərlə öyrədən platforma.
 
-## Tech Stack
+## Stack
 
-- **Framework:** Next.js 15 (App Router)
-- **Database:** PostgreSQL (NeonDB)
-- **ORM:** Prisma
-- **Auth:** JWT (jose) + bcrypt
-- **Styling:** Tailwind CSS + Plus Jakarta Sans
-- **Language:** TypeScript
+- **Next.js 16** (App Router, Turbopack), **React 19**, TypeScript
+- **Tailwind CSS 4**: tokenlər `src/app/globals.css` faylındadır, light və dark rejim
+- **PostgreSQL** (Neon) + **Prisma 5**
+- Auth: JWT (`jose`) + bcrypt, `src/proxy.ts`
+- CodeMirror 6: kod tapşırıqları, Web Worker-də sandbox-lanmış işə salınma
+- Motion, canvas-confetti, Mermaid, Radix UI, dnd-kit
+- Şriftlər: Bricolage Grotesque AZ (ə/Ə qlifləri əlavə edilmiş versiya, `src/app/fonts/README.md`), JetBrains Mono (kod).
 
-## Xüsusiyyətlər
+## Tələbə tərəfi
 
-### Tələbə tərəfi
-- 📚 Modullar və dərslər (blok əsaslı)
-- ✅ Quiz sistemi (min keçid balı)
-- 📝 Şəxsi qeydlər (hər dərs üçün)
-- 💬 Sual-cavab sistemi (Q&A)
-- 📋 Ev tapşırıqları
-- 🏆 Liderboard
-- 📅 Təqvim (dərslər, imtahanlar, deadlinelər)
-- 🎓 Sertifikat sistemi
-- 🌐 Dil seçimi (AZ / EN)
-- 👤 Profil idarəetməsi
+- **Öyrənmə yolu:** 9 modul, 49 dərs. Hər dərs növbətini açır.
+- **Dərs pleyeri** (`/learn/[slug]`): focus rejimi, dərs planı, qeydlər, suallar, irəliləyiş.
+- **İnteraktiv bloklar:**
+  - Quiz (hər sualdan sonra izah ilə)
+  - Sırala, Qruplaşdır
+  - Kod tapşırığı (JS)
+  - Bug Hunt (3 mini tətbiq)
+  - Test Case və Bug Report builder-ləri
+  - API Playground
+- **Gamification:** XP, səviyyələr, streak, gündəlik hədəf, 14 nailiyyət, həftəlik və ümumi liderlər.
+- **Təkrar:** quizdə səhv cavablanan suallar Leitner sistemi ilə qayıdır.
+- **Digər:** ev tapşırıqları, qeydlər, suallar, təqvim, sertifikat (çap / PDF və `/verify/[code]` yoxlama səhifəsi).
 
-### Müəllim tərəfi (Admin Panel)
-- 📖 Modul və dərs idarəetməsi
-- 🧱 Dərs blok redaktoru
-- 👥 Tələbə idarəetməsi
-- 📋 Tapşırıqları qiymətləndirmə
-- 💬 Sualları cavablandırma
-- 📅 Təqvim hadisələri yaratmaq
-- 📊 Ümumi statistika
+## Müəllim tərəfi (`/admin`)
 
-## Qurulum
+Statistika, modul və dərs idarəetməsi, blok redaktoru (auto-save, sürüklə-burax, JSON import), tələbələr, tapşırıqların qiymətləndirilməsi, suallar və təqvim. Önizləmə: `/preview/[lessonId]`.
 
-### 1. Klonlayın
+## Kurikulum
+
+Dərslərin məzmunu `content/modules/*.json` fayllarındadır (format üçün: `content/README.md`). Blok sxemi `src/types/blocks.ts` və `src/lib/block-schema.ts` (zod) fayllarında təyin olunub.
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/narix-academy.git
-cd narix-academy
+npm run content:check   # yoxla və planı göstər, heç nə dəyişmir
+npm run content:sync    # bazanın ehtiyat nüsxəsini çıxar, sonra yaz
 ```
 
-### 2. Asılılıqları quraşdırın
+Sync necə işləyir:
+
+- Modul və dərs ID-lərini saxlayır, ona görə tələbə irəliləyişi itmir.
+- Yeni bloklara sabit ID verir və həmin ID-ni JSON-a geri yazır.
+- Dərs silmir.
+- Fayllarda olmayan modulları silmir, sadəcə gizlədir.
+
+> **Diqqət:** admin redaktorunda edilən dəyişikliklər bazaya yazılır, JSON fayllarına yox. `content:sync` faylları əsas götürür və o dərslərdəki redaktələri əzir. İlk köçürmədən sonra ya yalnız redaktordan, ya da yalnız fayllardan istifadə et.
+
+## Lokal qurulum
 
 ```bash
 npm install
-```
-
-### 3. Mühit dəyişənlərini konfiqurasiya edin
-
-```bash
-cp .env.example .env
-```
-
-`.env` faylını doldurun:
-
-```env
-DATABASE_URL="postgresql://..."   # NeonDB connection string
-JWT_SECRET="min-32-char-secret"
-
-# Cloudflare R2 (şəkil və video yükləmələri üçün)
-R2_ACCOUNT_ID="..."
-R2_ACCESS_KEY_ID="..."
-R2_SECRET_ACCESS_KEY="..."
-R2_BUCKET_NAME="narix-academy-uploads"
-R2_PUBLIC_URL="https://pub-xxxxxxxx.r2.dev"
-```
-
-R2 bucket yaratmaq üçün: Cloudflare Dashboard → R2 → "Create bucket", sonra
-R2 → "Manage API Tokens" → "Object Read & Write" icazəli token yaradın. Bucket-in
-"Public Access" bölməsindən `R2_PUBLIC_URL`-i əldə edin (R2.dev domeni və ya öz
-custom domeniniz).
-
-### 4. Database-i yaradın
-
-```bash
-npm run db:push
-```
-
-Layihə Prisma Migrate tarixçəsi istifadə edir (`prisma/migrations/`). Mövcud bir
-verilənlər bazasına ilk dəfə qoşulursunuzsa, baseline migration-ı tətbiq olunmuş
-kimi işarələyin ki, Prisma onu yenidən icra etməyə çalışmasın:
-
-```bash
-npx prisma migrate resolve --applied 20260707234313_baseline
-```
-
-Yeni (boş) verilənlər bazası üçün isə sadəcə:
-
-```bash
+cp .env.example .env          # DATABASE_URL, JWT_SECRET, R2_*
 npx prisma migrate deploy
-```
-
-### 5. İlk müəllim hesabını əlavə edin
-
-Neon dashboard-da SQL Editor-da icra edin:
-
-```sql
-INSERT INTO "User" (id, email, "passwordHash", name, role, language, "createdAt", "updatedAt")
-VALUES (
-  gen_random_uuid(),
-  'teacher@qaacademy.local',
-  '$2b$12$tASblnG4PIpoqOOdnlSUIuCq0hBCv.RKVnAie3LX/je7zjGP7G8Lq', -- Teacher123!
-  'Müəllim',
-  'TEACHER',
-  'az',
-  NOW(),
-  NOW()
-);
-```
-
-> Və ya mövcud `User.json`-dan import edin.
-
-### 6. İşə salın
-
-```bash
+npx tsx prisma/seed.ts        # yalnız lokal baza üçün: demo hesablar
+npm run content:sync
 npm run dev
 ```
 
-Açın: [http://localhost:3000](http://localhost:3000)
+Demo hesablar (seed): `teacher@narix.local` və `student@narix.local`, şifrə: `narix123`.
 
-## Dərs Blok Növləri
+## Produksiyaya keçid (bir dəfə)
 
-| Növ | Təsvir |
-|-----|--------|
-| `HEADING` | Başlıq (H2/H3/H4) |
-| `TEXT` | Mətn (normal/info/warning/success) |
-| `NOTE` | Qeyd (important/tip/warning/remember) |
-| `CALLOUT` | Rəngli vurğulanmış qeyd qutusu |
-| `EXAMPLE` | Nümunə bloku |
-| `STEPPER` | Nömrələnmiş addımlar |
-| `TABLE` | Cədvəl |
-| `IMAGE` | Şəkil (R2-yə yüklənir) |
-| `VIDEO` | Video — fayl yükləməklə (R2, presigned URL) və ya YouTube/Loom keçidi ilə |
-| `CODE` | Kod bloku (sintaksis vurğusu + kopyalama) |
-| `DIAGRAM` | Mermaid diaqramı |
-| `CHECKLIST` | İnteraktiv siyahı |
-| `QUIZ` | Test sualları |
-| `TASK` | Tapşırıq (tələbə cavab yazır) |
-| `DIVIDER` | Ayırıcı xətt |
+Ardıcıllıq vacibdir. Məzmun yeni kod deploy olunmazdan **əvvəl** sync olunarsa, köhnə sayt yeni blokları göstərə bilməz.
 
-## Deployment (Vercel)
+1. `JWT_SECRET` produksiyada mütləq təyin olunmalıdır (yoxdursa tətbiq işə düşmür).
+2. `npx prisma migrate deploy` işə sal. Gamification migration-ı yalnız yeni cədvəl və sütunlar əlavə edir.
+3. Yeni kodu deploy et.
+4. `npm run content:check`, sonra `npm run content:sync` işə sal.
+5. `npx tsx scripts/backfill-xp.ts`: əvvəl bitirilmiş dərslər üçün XP verir. Təkrar işə salmaq təhlükəsizdir.
 
-1. GitHub-a push edin
-2. [vercel.com](https://vercel.com)-da yeni proje yaradın
-3. Environment variables əlavə edin:
-   - `DATABASE_URL`
-   - `JWT_SECRET`
-   - `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET_NAME`, `R2_PUBLIC_URL`
-   - (isteğe bağlı) `MAX_VIDEO_SIZE_MB`
-4. Deploy edin
+## Skriptlər
 
-## Mövcud Məlumatları İdxal Etmək
-
-Köhnə platformadan JSON ixrac etmisinizsə, Neon Dashboard → SQL Editor-dan import edə bilərsiniz.
+| Əmr | Nə edir |
+|---|---|
+| `npm run dev` | Dev server |
+| `npm run build` | Prisma generate + production build |
+| `npm run lint` | ESLint |
+| `npm run content:check` / `content:sync` | Kurikulumu yoxla / bazaya yaz |
+| `npx tsx scripts/backfill-xp.ts` | Köhnə irəliləyiş üçün XP |
 
 ---
 

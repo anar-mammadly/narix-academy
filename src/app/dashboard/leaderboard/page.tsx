@@ -1,110 +1,105 @@
-import { getSession } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
+import Link from "next/link";
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { Trophy, Medal } from "lucide-react";
-import { getInitials, calculateProgress } from "@/lib/utils";
+import { Crown, Flame, Zap } from "lucide-react";
+import { getSession } from "@/lib/auth";
+import { leaderboard, type BoardRow } from "@/lib/stats";
 import { cn } from "@/lib/utils";
+import { PageHeader } from "@/components/layout/PageHeader";
+import { Avatar } from "@/components/ui/Avatar";
+import { EmptyState } from "@/components/ui/EmptyState";
 
-export default async function LeaderboardPage() {
+export const metadata: Metadata = { title: "Liderlər" };
+
+export default async function LeaderboardPage({ searchParams }: { searchParams: Promise<{ range?: string }> }) {
   const session = await getSession();
   if (!session) redirect("/login");
-
-  const [students, allProgress, totalLessons] = await Promise.all([
-    prisma.user.findMany({ where: { role: "STUDENT" }, select: { id: true, name: true, createdAt: true } }),
-    prisma.progress.findMany({ where: { user: { role: "STUDENT" } } }),
-    prisma.lesson.count({ where: { published: true } }),
-  ]);
-
-  const board = students.map(s => {
-    const prog = allProgress.filter(p => p.userId === s.id);
-    const completed = prog.filter(p => p.completed).length;
-    const passed = prog.filter(p => p.quizPassed);
-    const avgScore = passed.length ? Math.round(passed.reduce((a, p) => a + (p.quizScore ?? 0), 0) / passed.length) : 0;
-    const points = completed * 10 + passed.length * 5 + avgScore;
-    return { ...s, completed, avgScore, points, pct: calculateProgress(completed, totalLessons) };
-  }).sort((a, b) => b.points - a.points);
-
-  const rankColors = ["text-yellow-500", "text-gray-400", "text-amber-700"];
-  const rankBg = ["bg-yellow-50 border-yellow-200", "bg-gray-50 border-gray-200", "bg-amber-50 border-amber-200"];
+  const range = (await searchParams).range === "all" ? "all" : "week";
+  const rows = await leaderboard(range);
+  const me = rows.find((r) => r.userId === session.userId);
+  const podium = rows.slice(0, 3).filter((r) => r.xp > 0);
 
   return (
-    <div className="space-y-6 fade-in">
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-          <Trophy size={24} className="text-yellow-500" /> Liderboard
-        </h1>
-        <p className="text-muted mt-1">Ən çox dərs tamamlayan tələbələr</p>
-      </div>
-
-      {/* Top 3 */}
-      {board.length >= 3 && (
-        <div className="grid grid-cols-3 gap-3">
-          {[board[1], board[0], board[2]].map((s, i) => {
-            const realRank = i === 0 ? 2 : i === 1 ? 1 : 3;
-            return (
-              <div key={s.id} className={cn("card text-center border", rankBg[realRank - 1], realRank === 1 && "scale-105")}>
-                <div className={`text-2xl font-bold ${rankColors[realRank - 1]} mb-2`}>
-                  {realRank === 1 ? "🥇" : realRank === 2 ? "🥈" : "🥉"}
-                </div>
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center text-white font-bold mx-auto mb-2">
-                  {getInitials(s.name)}
-                </div>
-                <div className="font-semibold text-gray-900 text-sm">{s.name}</div>
-                <div className="text-2xl font-bold text-blue-700 mt-1">{s.points}</div>
-                <div className="text-xs text-muted">xal</div>
-              </div>
-            );
-          })}
-        </div>
-      )}
-
-      {/* Full table */}
-      <div className="card overflow-hidden p-0">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="bg-gray-50 border-b border-gray-100">
-              <th className="px-4 py-3 text-left text-xs font-semibold text-muted">Yer</th>
-              <th className="px-4 py-3 text-left text-xs font-semibold text-muted">Tələbə</th>
-              <th className="px-4 py-3 text-center text-xs font-semibold text-muted">Tamamlanan</th>
-              <th className="px-4 py-3 text-center text-xs font-semibold text-muted">Ortalama bal</th>
-              <th className="px-4 py-3 text-center text-xs font-semibold text-muted">Xal</th>
-            </tr>
-          </thead>
-          <tbody>
-            {board.map((s, i) => (
-              <tr key={s.id} className={cn(
-                "border-b border-gray-50 hover:bg-blue-50/30 transition-colors",
-                s.id === session.userId && "bg-blue-50/50"
-              )}>
-                <td className="px-4 py-3">
-                  <span className={cn("font-bold", i < 3 ? rankColors[i] : "text-gray-400")}>
-                    {i < 3 ? ["🥇","🥈","🥉"][i] : `#${i + 1}`}
-                  </span>
-                </td>
-                <td className="px-4 py-3">
-                  <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center text-white text-xs font-bold shrink-0">
-                      {getInitials(s.name)}
-                    </div>
-                    <span className="font-medium text-gray-900">{s.name}</span>
-                    {s.id === session.userId && <span className="badge badge-blue text-xs">Sən</span>}
-                  </div>
-                </td>
-                <td className="px-4 py-3 text-center">
-                  <span className="font-semibold">{s.completed}</span>
-                  <span className="text-muted">/{totalLessons}</span>
-                </td>
-                <td className="px-4 py-3 text-center">
-                  {s.avgScore > 0 ? <span className="font-semibold text-blue-700">{s.avgScore}%</span> : <span className="text-muted">—</span>}
-                </td>
-                <td className="px-4 py-3 text-center">
-                  <span className="font-bold text-gray-900">{s.points}</span>
-                </td>
-              </tr>
+    <div className="mx-auto max-w-3xl">
+      <PageHeader
+        title="Liderlər"
+        description={range === "week" ? "Son 7 gündə qazanılan XP — hər gün öyrənən önə keçir." : "Bütün zamanlar üzrə ümumi XP."}
+        actions={
+          <div role="tablist" aria-label="Dövr" className="inline-flex rounded-lg bg-surface-2 p-1">
+            {[{ v: "week", l: "Bu həftə" }, { v: "all", l: "Ümumi" }].map((t) => (
+              <Link
+                key={t.v}
+                role="tab"
+                aria-selected={range === t.v}
+                href={t.v === "week" ? "/dashboard/leaderboard" : "/dashboard/leaderboard?range=all"}
+                className={cn("flex h-9 items-center rounded-md px-4 text-sm font-medium", range === t.v ? "bg-surface text-ink shadow-pop" : "text-muted hover:text-ink")}
+              >
+                {t.l}
+              </Link>
             ))}
-          </tbody>
-        </table>
-      </div>
+          </div>
+        }
+      />
+
+      {rows.length === 0 ? (
+        <EmptyState title="Hələ heç kim yoxdur" description="İlk XP-ni qazan və cədvəlin başına keç." />
+      ) : (
+        <>
+          {podium.length === 3 && (
+            <ol className="mb-6 grid grid-cols-3 items-end gap-2 sm:gap-4" aria-label="İlk üçlük">
+              {[podium[1], podium[0], podium[2]].map((r) => (
+                <li key={r.userId} className="flex flex-col items-center text-center">
+                  <div className="relative">
+                    {r.rank === 1 && <Crown className="absolute -top-6 left-1/2 h-6 w-6 -translate-x-1/2 fill-xp-bright text-xp" aria-hidden />}
+                    <Avatar name={r.name} src={r.avatarUrl} size={r.rank === 1 ? "xl" : "lg"} className="ring-4 ring-surface" />
+                  </div>
+                  <p className="mt-2 max-w-full truncate text-sm font-semibold text-ink">{r.name}</p>
+                  <p className="flex items-center gap-1 text-xs font-semibold text-xp"><Zap className="h-3.5 w-3.5 fill-current" aria-hidden /> {r.xp}</p>
+                  <div
+                    className={cn(
+                      "mt-2 grid w-full place-items-center rounded-t-xl font-display text-xl font-semibold",
+                      r.rank === 1 ? "h-24 bg-xp-bright text-[#3a2500]" : r.rank === 2 ? "h-16 bg-surface-3 text-ink" : "h-12 bg-flame-soft text-flame"
+                    )}
+                  >
+                    {r.rank}
+                  </div>
+                </li>
+              ))}
+            </ol>
+          )}
+
+          <ol className="overflow-clip rounded-2xl border border-line bg-surface" aria-label="Reytinq">
+            {rows.map((r) => <Row key={r.userId} r={r} me={r.userId === session.userId} />)}
+          </ol>
+
+          {me && me.rank > 10 && (
+            <div className="sticky bottom-20 mt-4 lg:bottom-4">
+              <ol className="overflow-clip rounded-2xl border border-iris/40 bg-surface shadow-lift"><Row r={me} me /></ol>
+            </div>
+          )}
+        </>
+      )}
     </div>
+  );
+}
+
+function Row({ r, me }: { r: BoardRow; me: boolean }) {
+  return (
+    <li className={cn("flex items-center gap-3 border-b border-line px-4 py-3 last:border-0", me && "bg-iris-soft/60")}>
+      <span className={cn("w-7 shrink-0 text-center font-display text-sm font-semibold", r.rank <= 3 ? "text-xp" : "text-muted")}>{r.rank}</span>
+      <Avatar name={r.name} src={r.avatarUrl} size="sm" />
+      <div className="min-w-0 flex-1">
+        <p className="truncate font-semibold text-ink">{r.name}{me && <span className="ml-1.5 text-xs font-medium text-iris">(sən)</span>}</p>
+        <p className="text-xs text-muted">Səviyyə {r.level}</p>
+      </div>
+      {r.streak > 0 && (
+        <span className="hidden items-center gap-1 text-sm font-medium text-flame xs:flex" title="Ardıcıl günlər">
+          <Flame className="h-4 w-4" aria-hidden /> {r.streak}
+        </span>
+      )}
+      <span className="flex w-20 items-center justify-end gap-1 font-semibold tabular-nums text-ink">
+        <Zap className="h-4 w-4 fill-xp-bright text-xp-bright" aria-hidden /> {r.xp}
+      </span>
+    </li>
   );
 }

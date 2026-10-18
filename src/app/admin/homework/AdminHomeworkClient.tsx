@@ -1,176 +1,282 @@
 "use client";
 
-import { useState } from "react";
-import { ClipboardList, Plus, ChevronDown, ChevronUp, Check } from "lucide-react";
+import { useId, useMemo, useState } from "react";
+import { format, formatDistanceToNowStrict } from "date-fns";
+import { az } from "date-fns/locale";
+import { CalendarClock, Check, ChevronDown, ClipboardList, FileText, Inbox, Paperclip, Plus } from "lucide-react";
+import { PageHeader } from "@/components/layout/PageHeader";
+import { Button } from "@/components/ui/Button";
+import { Badge } from "@/components/ui/Badge";
+import { Avatar } from "@/components/ui/Avatar";
+import { EmptyState } from "@/components/ui/EmptyState";
+import { Field, Input, Label, Textarea } from "@/components/ui/Input";
+import { Modal } from "@/components/ui/Modal";
+import { Select } from "@/components/ui/Select";
+import { Tabs } from "@/components/ui/Tabs";
+import { useToast } from "@/components/ui/Toast";
+import { errorMessage, requestJson } from "@/components/admin/request";
 import { cn } from "@/lib/utils";
 
-export default function AdminHomeworkClient({ homeworks: init, lessons }: { homeworks: any[]; lessons: any[] }) {
-  const [homeworks, setHomeworks] = useState(init);
-  const [showNew, setShowNew] = useState(false);
-  const [form, setForm] = useState({ lessonId: "", title: "", description: "", dueDate: "" });
-  const [expanded, setExpanded] = useState<string | null>(null);
-  const [grades, setGrades] = useState<Record<string, { grade: string; feedback: string }>>({});
+export type Submit = {
+  id: string;
+  content: string;
+  fileUrl: string | null;
+  grade: number | null;
+  feedback: string | null;
+  status: string;
+  submittedAt: string;
+  user: { name: string; avatarUrl: string | null };
+};
+export type HomeworkItem = { id: string; title: string; description: string; dueDate: string | null; lessonTitle: string; submits: Submit[] };
 
-  async function createHomework() {
-    if (!form.lessonId || !form.title.trim()) return;
-    const res = await fetch("/api/homework", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
-    const hw = await res.json();
-    const lesson = lessons.find(l => l.id === form.lessonId);
-    setHomeworks([{ ...hw, lesson, submits: [] }, ...homeworks]);
-    setForm({ lessonId: "", title: "", description: "", dueDate: "" });
-    setShowNew(false);
-  }
+const isPending = (s: Submit) => s.grade === null;
+const ago = (iso: string) => formatDistanceToNowStrict(new Date(iso), { addSuffix: true, locale: az });
+const fmt = (iso: string) => format(new Date(iso), "d MMM yyyy, HH:mm", { locale: az });
 
-  async function gradeSubmit(submitId: string, homeworkId: string) {
-    const g = grades[submitId];
-    if (!g?.grade) return;
-    await fetch(`/api/homework/grade`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ submitId, grade: parseInt(g.grade), feedback: g.feedback ?? "" }),
-    });
-    setHomeworks(homeworks.map(hw =>
-      hw.id === homeworkId ? {
-        ...hw,
-        submits: hw.submits.map((s: any) =>
-          s.id === submitId ? { ...s, grade: parseInt(g.grade), feedback: g.feedback, status: "GRADED" } : s
-        )
-      } : hw
-    ));
+function GradeForm({ submit, onGraded }: { submit: Submit; onGraded: (s: Submit) => void }) {
+  const toast = useToast();
+  const id = useId();
+  const [grade, setGrade] = useState(submit.grade?.toString() ?? "");
+  const [feedback, setFeedback] = useState(submit.feedback ?? "");
+  const [error, setError] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
+
+  async function save(e: React.FormEvent) {
+    e.preventDefault();
+    const n = Number(grade);
+    if (grade.trim() === "" || !Number.isInteger(n) || n < 0 || n > 100) {
+      setError("0–100 arası tam ədəd daxil edin");
+      return;
+    }
+    setSaving(true);
+    setError(null);
+    try {
+      await requestJson("/api/homework/grade", "POST", { submitId: submit.id, grade: n, feedback: feedback.trim() });
+      onGraded({ ...submit, grade: n, feedback: feedback.trim() || null, status: "GRADED" });
+      toast({ title: "Qiymət yazıldı", description: `${submit.user.name}: ${n}/100`, variant: "success" });
+    } catch (err) {
+      setError(errorMessage(err));
+    } finally {
+      setSaving(false);
+    }
   }
 
   return (
-    <div className="space-y-6 fade-in">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-            <ClipboardList size={24} className="text-blue-600" /> Tapşırıqlar
-          </h1>
-          <p className="text-muted mt-1">Ev tapşırıqlarını idarə et və qiymətləndir</p>
-        </div>
-        <button onClick={() => setShowNew(!showNew)} className="btn-primary">
-          <Plus size={16} /> Tapşırıq əlavə et
-        </button>
+    <form onSubmit={save} noValidate className="grid gap-3 sm:grid-cols-[7rem_1fr_auto] sm:items-end">
+      <div>
+        <Label htmlFor={`${id}-g`}>Qiymət (/100)</Label>
+        <Input
+          id={`${id}-g`}
+          type="number"
+          inputMode="numeric"
+          min={0}
+          max={100}
+          value={grade}
+          onChange={(e) => setGrade(e.target.value)}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={error ? `${id}-e` : undefined}
+          placeholder="85"
+        />
       </div>
+      <div>
+        <Label htmlFor={`${id}-f`}>Rəy</Label>
+        <Textarea id={`${id}-f`} rows={1} className="min-h-11" value={feedback} onChange={(e) => setFeedback(e.target.value)} placeholder="Güclü tərəflər və nəyi yaxşılaşdırmaq olar…" />
+      </div>
+      <Button type="submit" loading={saving}><Check className="h-4 w-4" aria-hidden /> {submit.grade === null ? "Qiymətləndir" : "Yenilə"}</Button>
+      {error && <p id={`${id}-e`} role="alert" className="text-sm text-bug sm:col-span-3">{error}</p>}
+    </form>
+  );
+}
 
-      {/* New homework form */}
-      {showNew && (
-        <div className="card space-y-4 border-blue-200 slide-up">
-          <h2 className="font-bold text-gray-900">Yeni tapşırıq</h2>
-          <div>
-            <label className="label">Dərs</label>
-            <select className="input" value={form.lessonId} onChange={e => setForm({ ...form, lessonId: e.target.value })}>
-              <option value="">Dərs seç...</option>
-              {lessons.map(l => <option key={l.id} value={l.id}>{l.title}</option>)}
-            </select>
-          </div>
-          <div>
-            <label className="label">Başlıq</label>
-            <input className="input" placeholder="Tapşırığın adı" value={form.title}
-              onChange={e => setForm({ ...form, title: e.target.value })} />
-          </div>
-          <div>
-            <label className="label">Təsvir</label>
-            <textarea className="textarea h-24" placeholder="Tapşırığın şərtləri..."
-              value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} />
-          </div>
-          <div>
-            <label className="label">Son tarix (isteğe bağlı)</label>
-            <input type="datetime-local" className="input" value={form.dueDate}
-              onChange={e => setForm({ ...form, dueDate: e.target.value })} />
-          </div>
-          <div className="flex gap-2">
-            <button onClick={createHomework} disabled={!form.lessonId || !form.title.trim()} className="btn-primary">
-              Yarat
-            </button>
-            <button onClick={() => setShowNew(false)} className="btn-secondary">Ləğv et</button>
-          </div>
+function SubmitCard({ submit, homeworkTitle, onGraded }: { submit: Submit; homeworkTitle?: string; onGraded: (s: Submit) => void }) {
+  const [editing, setEditing] = useState(false);
+  const pending = isPending(submit);
+  return (
+    <article className={cn("rounded-xl border bg-surface p-4", pending ? "border-xp/40" : "border-line")}>
+      <header className="flex flex-wrap items-center gap-3">
+        <Avatar name={submit.user.name} src={submit.user.avatarUrl} size="sm" />
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-sm font-semibold text-ink">{submit.user.name}</p>
+          <p className="text-xs text-muted">
+            {homeworkTitle && <>{homeworkTitle} · </>}
+            <time dateTime={submit.submittedAt} title={fmt(submit.submittedAt)}>{ago(submit.submittedAt)}</time>
+          </p>
         </div>
+        {pending ? <Badge tone="xp">Yoxlanılmayıb</Badge> : <Badge tone="pass">{submit.grade}/100</Badge>}
+      </header>
+      <div className="mt-3 whitespace-pre-wrap break-words rounded-lg bg-surface-2 p-3 text-sm text-ink-2">{submit.content || "—"}</div>
+      {submit.fileUrl && (
+        <a href={submit.fileUrl} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex items-center gap-1.5 text-sm font-medium text-iris hover:underline">
+          <Paperclip className="h-4 w-4" aria-hidden /> Əlavə fayl
+        </a>
       )}
+      {!pending && submit.feedback && !editing && <p className="mt-3 text-sm text-ink-2"><span className="font-semibold text-ink">Rəy:</span> {submit.feedback}</p>}
+      <div className="mt-3">
+        {pending || editing ? (
+          <GradeForm submit={submit} onGraded={(s) => { setEditing(false); onGraded(s); }} />
+        ) : (
+          <Button variant="ghost" size="sm" onClick={() => setEditing(true)}>Qiyməti dəyiş</Button>
+        )}
+      </div>
+    </article>
+  );
+}
 
-      {/* Homeworks list */}
-      {homeworks.length === 0 ? (
-        <div className="card text-center text-muted py-10">Hələ tapşırıq yoxdur</div>
+export default function AdminHomeworkClient({ homeworks: init, lessons }: { homeworks: HomeworkItem[]; lessons: { id: string; title: string }[] }) {
+  const toast = useToast();
+  const [homeworks, setHomeworks] = useState(init);
+  const [tab, setTab] = useState<"queue" | "all">("queue");
+  const [open, setOpen] = useState<string | null>(null);
+
+  const [createOpen, setCreateOpen] = useState(false);
+  const [form, setForm] = useState({ lessonId: "", title: "", description: "", dueDate: "" });
+  const [creating, setCreating] = useState(false);
+  const [createError, setCreateError] = useState<string | null>(null);
+  const lessonFieldId = useId();
+
+  const queue = useMemo(
+    () =>
+      homeworks
+        .flatMap((h) => h.submits.filter(isPending).map((s) => ({ s, h })))
+        .sort((a, b) => a.s.submittedAt.localeCompare(b.s.submittedAt)),
+    [homeworks]
+  );
+
+  function updateSubmit(homeworkId: string, s: Submit) {
+    setHomeworks((prev) => prev.map((h) => (h.id === homeworkId ? { ...h, submits: h.submits.map((x) => (x.id === s.id ? s : x)) } : h)));
+  }
+
+  async function create(e: React.FormEvent) {
+    e.preventDefault();
+    if (!form.lessonId) return setCreateError("Dərs seçin");
+    if (!form.title.trim()) return setCreateError("Başlıq tələb olunur");
+    setCreating(true);
+    setCreateError(null);
+    try {
+      const hw = await requestJson<{ id: string; title: string; description: string; dueDate: string | null; lesson: { title: string } }>("/api/homework", "POST", {
+        lessonId: form.lessonId,
+        title: form.title.trim(),
+        description: form.description.trim(),
+        dueDate: form.dueDate ? new Date(form.dueDate).toISOString() : null,
+      });
+      setHomeworks((prev) => [{ id: hw.id, title: hw.title, description: hw.description, dueDate: hw.dueDate, lessonTitle: hw.lesson.title, submits: [] }, ...prev]);
+      setForm({ lessonId: "", title: "", description: "", dueDate: "" });
+      setCreateOpen(false);
+      setTab("all");
+      toast({ title: "Tapşırıq yaradıldı", variant: "success" });
+    } catch (err) {
+      setCreateError(errorMessage(err));
+    } finally {
+      setCreating(false);
+    }
+  }
+
+  return (
+    <div>
+      <PageHeader
+        title="Tapşırıqlar"
+        description="Ev tapşırıqlarını yaradın və tələbə cavablarını qiymətləndirin."
+        actions={<Button onClick={() => setCreateOpen(true)}><Plus className="h-4 w-4" aria-hidden /> Tapşırıq yarat</Button>}
+      />
+
+      <Tabs
+        className="mb-5"
+        label="Görünüş"
+        value={tab}
+        onValueChange={(v) => setTab(v as "queue" | "all")}
+        items={[
+          { value: "queue", label: "Yoxlanılacaq", count: queue.length },
+          { value: "all", label: "Bütün tapşırıqlar", count: homeworks.length },
+        ]}
+      />
+
+      {tab === "queue" ? (
+        queue.length === 0 ? (
+          <EmptyState icon={<Inbox className="h-6 w-6" />} title="Yoxlanılacaq cavab yoxdur" description="Yeni cavablar gəldikdə burada, ən köhnəsi əvvəldə görünəcək." />
+        ) : (
+          <div className="space-y-3">
+            {queue.map(({ s, h }) => <SubmitCard key={s.id} submit={s} homeworkTitle={h.title} onGraded={(x) => updateSubmit(h.id, x)} />)}
+          </div>
+        )
+      ) : homeworks.length === 0 ? (
+        <EmptyState
+          icon={<ClipboardList className="h-6 w-6" />}
+          title="Hələ tapşırıq yoxdur"
+          description="Dərsə bağlı ilk ev tapşırığını yaradın."
+          action={<Button onClick={() => setCreateOpen(true)}><Plus className="h-4 w-4" aria-hidden /> Tapşırıq yarat</Button>}
+        />
       ) : (
-        <div className="space-y-4">
-          {homeworks.map(hw => {
-            const pending = hw.submits.filter((s: any) => s.status === "SUBMITTED" && s.grade === null);
+        <ul className="space-y-3">
+          {homeworks.map((h) => {
+            const pending = h.submits.filter(isPending).length;
+            const graded = h.submits.length - pending;
+            const expanded = open === h.id;
+            const overdue = h.dueDate && new Date(h.dueDate) < new Date();
             return (
-              <div key={hw.id} className="card space-y-3">
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <div className="font-bold text-gray-900">{hw.title}</div>
-                    <div className="text-xs text-muted mt-0.5">Dərs: {hw.lesson?.title}</div>
-                    {hw.dueDate && (
-                      <div className="text-xs text-muted mt-0.5">
-                        Son tarix: {new Date(hw.dueDate).toLocaleDateString("az-AZ")}
-                      </div>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-2 shrink-0">
-                    {pending.length > 0 && (
-                      <div className="badge badge-yellow">{pending.length} gözlənilir</div>
-                    )}
-                    <span className="text-xs text-muted">{hw.submits.length} cavab</span>
-                    <button onClick={() => setExpanded(expanded === hw.id ? null : hw.id)} className="btn-ghost btn-sm">
-                      {expanded === hw.id ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
-                    </button>
-                  </div>
+              <li key={h.id} className="rounded-xl border border-line bg-surface">
+                <button
+                  type="button"
+                  onClick={() => setOpen(expanded ? null : h.id)}
+                  aria-expanded={expanded}
+                  aria-controls={`hw-${h.id}`}
+                  className="flex w-full items-start gap-3 rounded-xl p-4 text-left hover:bg-surface-2/50"
+                >
+                  <span aria-hidden className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-sky-soft text-sky"><FileText className="h-5 w-5" /></span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block font-semibold text-ink">{h.title}</span>
+                    <span className="mt-0.5 block truncate text-xs text-muted">{h.lessonTitle}</span>
+                    <span className="mt-2 flex flex-wrap items-center gap-2">
+                      {pending > 0 && <Badge tone="xp">{pending} gözləyir</Badge>}
+                      <Badge tone="pass">{graded} qiymətləndirilib</Badge>
+                      {h.dueDate && (
+                        <span className={cn("inline-flex items-center gap-1 text-xs", overdue ? "text-bug" : "text-muted")}>
+                          <CalendarClock className="h-3.5 w-3.5" aria-hidden /> {fmt(h.dueDate)}
+                        </span>
+                      )}
+                    </span>
+                  </span>
+                  <ChevronDown aria-hidden className={cn("mt-1 h-4 w-4 shrink-0 text-muted transition-transform", expanded && "rotate-180")} />
+                </button>
+                <div id={`hw-${h.id}`} hidden={!expanded} className="border-t border-line p-4">
+                  {expanded && (
+                    <div className="space-y-3">
+                      {h.description && <p className="whitespace-pre-wrap text-sm text-ink-2">{h.description}</p>}
+                      {h.submits.length === 0 ? (
+                        <p className="rounded-lg bg-surface-2 p-4 text-center text-sm text-muted">Hələ cavab yoxdur</p>
+                      ) : (
+                        h.submits.map((s) => <SubmitCard key={s.id} submit={s} onGraded={(x) => updateSubmit(h.id, x)} />)
+                      )}
+                    </div>
+                  )}
                 </div>
-
-                {expanded === hw.id && (
-                  <div className="border-t border-gray-100 pt-3 space-y-3">
-                    {hw.submits.length === 0 ? (
-                      <div className="text-sm text-muted text-center py-4">Hələ cavab yoxdur</div>
-                    ) : (
-                      hw.submits.map((sub: any) => (
-                        <div key={sub.id} className={cn("rounded-xl p-4 space-y-3", sub.grade !== null ? "bg-green-50" : "bg-gray-50")}>
-                          <div className="flex items-center justify-between">
-                            <div className="font-semibold text-sm text-gray-900">{sub.user.name}</div>
-                            {sub.grade !== null ? (
-                              <div className="badge badge-green">{sub.grade}/100</div>
-                            ) : (
-                              <div className="badge badge-yellow">Qiymətləndirilməyib</div>
-                            )}
-                          </div>
-                          <div className="text-sm text-gray-700 bg-white rounded-lg p-3">{sub.content}</div>
-                          {sub.feedback && (
-                            <div className="text-xs text-gray-600 italic">💬 {sub.feedback}</div>
-                          )}
-                          {sub.grade === null && (
-                            <div className="flex gap-2 items-end">
-                              <div className="w-24">
-                                <label className="label text-xs">Qiymət (/100)</label>
-                                <input type="number" min="0" max="100" className="input text-sm py-1.5"
-                                  placeholder="85"
-                                  value={grades[sub.id]?.grade ?? ""}
-                                  onChange={e => setGrades({ ...grades, [sub.id]: { ...grades[sub.id], grade: e.target.value } })} />
-                              </div>
-                              <div className="flex-1">
-                                <label className="label text-xs">Rəy</label>
-                                <input className="input text-sm py-1.5" placeholder="Gözəl iş..."
-                                  value={grades[sub.id]?.feedback ?? ""}
-                                  onChange={e => setGrades({ ...grades, [sub.id]: { ...grades[sub.id], feedback: e.target.value } })} />
-                              </div>
-                              <button onClick={() => gradeSubmit(sub.id, hw.id)} className="btn-primary btn-sm shrink-0">
-                                <Check size={13} /> Qiymətləndir
-                              </button>
-                            </div>
-                          )}
-                        </div>
-                      ))
-                    )}
-                  </div>
-                )}
-              </div>
+              </li>
             );
           })}
-        </div>
+        </ul>
       )}
+
+      <Modal open={createOpen} onOpenChange={(o) => !creating && setCreateOpen(o)} title="Yeni tapşırıq">
+        <form onSubmit={create} noValidate className="space-y-4">
+          <div>
+            <Label htmlFor={lessonFieldId}>Dərs *</Label>
+            <Select id={lessonFieldId} value={form.lessonId} onValueChange={(lessonId) => setForm({ ...form, lessonId })} options={lessons.map((l) => ({ value: l.id, label: l.title }))} placeholder="Dərs seçin" />
+          </div>
+          <Field label="Başlıq *">
+            {(p) => <Input {...p} value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} maxLength={200} />}
+          </Field>
+          <Field label="Şərt">
+            {(p) => <Textarea {...p} rows={4} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} placeholder="Tələbə nə etməlidir, nəticəni necə təqdim etməlidir…" />}
+          </Field>
+          <Field label="Son tarix (istəyə bağlı)">
+            {(p) => <Input {...p} type="datetime-local" value={form.dueDate} onChange={(e) => setForm({ ...form, dueDate: e.target.value })} />}
+          </Field>
+          {createError && <p role="alert" className="rounded-lg bg-bug-soft p-3 text-sm text-bug">{createError}</p>}
+          <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+            <Button variant="secondary" onClick={() => setCreateOpen(false)} disabled={creating}>Ləğv et</Button>
+            <Button type="submit" loading={creating}>Yarat</Button>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 }

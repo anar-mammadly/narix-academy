@@ -1,8 +1,12 @@
 import { cookies } from "next/headers";
 import { SignJWT, jwtVerify } from "jose";
 
+if (!process.env.JWT_SECRET && process.env.NODE_ENV === "production") {
+  throw new Error("JWT_SECRET must be set in production");
+}
+
 const SECRET = new TextEncoder().encode(
-  process.env.JWT_SECRET ?? "narix-academy-secret-change-in-prod-min-32-chars!!"
+  process.env.JWT_SECRET ?? "narix-academy-dev-only-secret-min-32-chars!!"
 );
 
 export type SessionPayload = {

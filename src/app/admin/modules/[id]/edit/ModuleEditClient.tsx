@@ -1,218 +1,273 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Plus, Edit, Trash2, GripVertical, Eye, EyeOff } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Clock, ExternalLink, Eye, EyeOff, Layers, Pencil, Plus, Trash2, Users } from "lucide-react";
+import { PageHeader } from "@/components/layout/PageHeader";
+import { Card, CardHeader, CardTitle } from "@/components/ui/Card";
+import { Button, buttonStyles } from "@/components/ui/Button";
+import { Badge } from "@/components/ui/Badge";
+import { EmptyState } from "@/components/ui/EmptyState";
+import { Field, Input, Textarea } from "@/components/ui/Input";
+import { Modal } from "@/components/ui/Modal";
+import { Tooltip } from "@/components/ui/Tooltip";
+import { useToast } from "@/components/ui/Toast";
+import { BackLink } from "@/components/admin/BackLink";
+import { ConfirmModal } from "@/components/admin/ConfirmModal";
+import { ModuleFields, moduleBody, type ModuleDraft } from "@/components/admin/ModuleForm";
+import { SortableList } from "@/components/admin/SortableList";
+import { errorMessage, requestJson } from "@/components/admin/request";
 import { cn } from "@/lib/utils";
 
-export default function ModuleEditClient({ module: mod }: { module: any }) {
-  const router = useRouter();
-  const [form, setForm] = useState({
-    title: mod.title,
-    titleEn: mod.titleEn ?? "",
-    description: mod.description ?? "",
-    descriptionEn: mod.descriptionEn ?? "",
-    published: mod.published,
-  });
-  const [lessons, setLessons] = useState(mod.lessons);
-  const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState(false);
-  const [showNewLesson, setShowNewLesson] = useState(false);
-  const [newLesson, setNewLesson] = useState({ title: "", titleEn: "", shortDescription: "", estimatedMinutes: 30, quizEnabled: false, published: false });
-  const [creatingLesson, setCreatingLesson] = useState(false);
+type ModuleData = ModuleDraft & { id: string };
+type LessonRow = { id: string; title: string; published: boolean; minutes: number; blocks: number; learners: number };
 
-  async function saveModule() {
+const same = (a: ModuleDraft, b: ModuleDraft) => (Object.keys(a) as (keyof ModuleDraft)[]).every((k) => a[k] === b[k]);
+
+export default function ModuleEditClient({ module: mod, lessons: initialLessons, openNewLesson }: { module: ModuleData; lessons: LessonRow[]; openNewLesson: boolean }) {
+  const router = useRouter();
+  const toast = useToast();
+
+  const [saved, setSaved] = useState<ModuleDraft>(mod);
+  const [form, setForm] = useState<ModuleDraft>(mod);
+  const [saving, setSaving] = useState(false);
+  const [titleError, setTitleError] = useState<string>();
+  const dirty = !same(form, saved);
+
+  const [lessons, setLessons] = useState(initialLessons);
+  const [busyLesson, setBusyLesson] = useState<string | null>(null);
+
+  const [confirmModule, setConfirmModule] = useState(false);
+  const [deletingModule, setDeletingModule] = useState(false);
+  const [lessonToDelete, setLessonToDelete] = useState<LessonRow | null>(null);
+  const [deletingLesson, setDeletingLesson] = useState(false);
+
+  const [newOpen, setNewOpen] = useState(openNewLesson);
+  const [newLesson, setNewLesson] = useState({ title: "", shortDescription: "", minutes: "30" });
+  const [creating, setCreating] = useState(false);
+  const [newError, setNewError] = useState<string | null>(null);
+
+  async function saveModule(e: React.FormEvent) {
+    e.preventDefault();
+    if (!form.title.trim()) {
+      setTitleError("Başlıq tələb olunur");
+      return;
+    }
     setSaving(true);
-    await fetch(`/api/modules/${mod.id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
-    setSaving(false);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
+    try {
+      await requestJson(`/api/modules/${mod.id}`, "PATCH", moduleBody(form));
+      setSaved(form);
+      toast({ title: "Modul saxlanıldı", variant: "success" });
+      router.refresh();
+    } catch (err) {
+      toast({ title: "Saxlanmadı", description: errorMessage(err), variant: "error" });
+    } finally {
+      setSaving(false);
+    }
   }
 
   async function deleteModule() {
-    if (!confirm(`"${mod.title}" modulunu silmək istədiyinizdən əminsiniz? Bütün dərslər də silinəcək!`)) return;
-    await fetch(`/api/modules/${mod.id}`, { method: "DELETE" });
-    router.push("/admin/modules");
+    setDeletingModule(true);
+    try {
+      await requestJson(`/api/modules/${mod.id}`, "DELETE");
+      toast({ title: "Modul silindi", variant: "success" });
+      router.push("/admin/modules");
+      router.refresh();
+    } catch (err) {
+      toast({ title: "Silinmədi", description: errorMessage(err), variant: "error" });
+      setDeletingModule(false);
+    }
   }
 
-  async function createLesson() {
-    if (!newLesson.title.trim()) return;
-    setCreatingLesson(true);
-    const res = await fetch("/api/lessons", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...newLesson, moduleId: mod.id }),
-    });
-    const lesson = await res.json();
-    setLessons([...lessons, lesson]);
-    setNewLesson({ title: "", titleEn: "", shortDescription: "", estimatedMinutes: 30, quizEnabled: false, published: false });
-    setShowNewLesson(false);
-    setCreatingLesson(false);
+  async function togglePublish(l: LessonRow) {
+    setBusyLesson(l.id);
+    try {
+      await requestJson(`/api/lessons/${l.id}`, "PATCH", { published: !l.published });
+      setLessons((prev) => prev.map((x) => (x.id === l.id ? { ...x, published: !l.published } : x)));
+      toast({ title: l.published ? "Dərs qaralamaya qaytarıldı" : "Dərs yayımlandı", variant: "success" });
+    } catch (err) {
+      toast({ title: "Dəyişmədi", description: errorMessage(err), variant: "error" });
+    } finally {
+      setBusyLesson(null);
+    }
   }
 
-  async function toggleLessonPublish(lessonId: string, published: boolean) {
-    await fetch(`/api/lessons/${lessonId}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ published: !published }),
-    });
-    setLessons(lessons.map((l: any) => l.id === lessonId ? { ...l, published: !published } : l));
+  async function deleteLesson() {
+    if (!lessonToDelete) return;
+    setDeletingLesson(true);
+    try {
+      await requestJson(`/api/lessons/${lessonToDelete.id}`, "DELETE");
+      setLessons((prev) => prev.filter((x) => x.id !== lessonToDelete.id));
+      setLessonToDelete(null);
+      toast({ title: "Dərs silindi", variant: "success" });
+    } catch (err) {
+      toast({ title: "Silinmədi", description: errorMessage(err), variant: "error" });
+    } finally {
+      setDeletingLesson(false);
+    }
   }
 
-  async function deleteLesson(lessonId: string, title: string) {
-    if (!confirm(`"${title}" dərsini silmək istədiyinizdən əminsiniz?`)) return;
-    await fetch(`/api/lessons/${lessonId}`, { method: "DELETE" });
-    setLessons(lessons.filter((l: any) => l.id !== lessonId));
+  async function createLesson(e: React.FormEvent) {
+    e.preventDefault();
+    const minutes = Number(newLesson.minutes);
+    if (!newLesson.title.trim()) return setNewError("Başlıq tələb olunur");
+    if (!Number.isInteger(minutes) || minutes < 1 || minutes > 600) return setNewError("Müddət 1–600 dəqiqə olmalıdır");
+    setCreating(true);
+    setNewError(null);
+    try {
+      const lesson = await requestJson<{ id: string }>("/api/lessons", "POST", {
+        moduleId: mod.id,
+        title: newLesson.title.trim(),
+        shortDescription: newLesson.shortDescription.trim() || null,
+        estimatedMinutes: minutes,
+      });
+      router.push(`/admin/lessons/${lesson.id}/edit`);
+    } catch (err) {
+      setNewError(errorMessage(err));
+      setCreating(false);
+    }
   }
+
+  const totalBlocks = lessons.reduce((s, l) => s + l.blocks, 0);
+  const totalLearners = lessons.reduce((s, l) => s + l.learners, 0);
 
   return (
-    <div className="max-w-3xl space-y-6 fade-in">
+    <div className="space-y-6">
       <div>
-        <Link href="/admin/modules" className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-gray-700 mb-4">
-          <ArrowLeft size={15} /> Modullara qayıt
-        </Link>
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-gray-900">Modulu düzəlt</h1>
-          <button onClick={deleteModule} className="btn-danger btn-sm">
-            <Trash2 size={14} /> Sil
-          </button>
-        </div>
+        <BackLink href="/admin/modules">Modullar</BackLink>
+        <PageHeader
+          className="mb-0 sm:mb-0"
+          title={saved.title || "Modul"}
+          description={<span className="inline-flex flex-wrap items-center gap-2"><Badge tone={saved.published ? "pass" : "neutral"}>{saved.published ? "Yayımlanıb" : "Qaralama"}</Badge> {lessons.length} dərs · {totalBlocks} blok</span>}
+          actions={
+            <>
+              <Button variant="danger-ghost" onClick={() => setConfirmModule(true)}><Trash2 className="h-4 w-4" aria-hidden /> Modulu sil</Button>
+              <Button onClick={() => setNewOpen(true)}><Plus className="h-4 w-4" aria-hidden /> Dərs əlavə et</Button>
+            </>
+          }
+        />
       </div>
 
-      {/* Module form */}
-      <div className="card space-y-5">
-        <h2 className="font-bold text-gray-900">Modul məlumatları</h2>
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="label">Başlıq (AZ) *</label>
-            <input className="input" value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} />
-          </div>
-          <div>
-            <label className="label">Başlıq (EN)</label>
-            <input className="input" value={form.titleEn} onChange={e => setForm({ ...form, titleEn: e.target.value })} />
-          </div>
-        </div>
-        <div>
-          <label className="label">Təsvir (AZ)</label>
-          <textarea className="textarea h-20" value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} />
-        </div>
-        <div>
-          <label className="label">Təsvir (EN)</label>
-          <textarea className="textarea h-20" value={form.descriptionEn} onChange={e => setForm({ ...form, descriptionEn: e.target.value })} />
-        </div>
-        <div className="flex items-center gap-3">
-          <input type="checkbox" id="pub" className="w-4 h-4 rounded"
-            checked={form.published} onChange={e => setForm({ ...form, published: e.target.checked })} />
-          <label htmlFor="pub" className="text-sm font-medium text-gray-700 cursor-pointer">Yayımlanıb</label>
-        </div>
-        <div className="flex items-center gap-3">
-          <button onClick={saveModule} disabled={saving} className="btn-primary">
-            {saving ? "Saxlanılır..." : "Saxla"}
-          </button>
-          {saved && <span className="text-sm text-green-600 font-medium fade-in">✓ Saxlanıldı</span>}
-        </div>
-      </div>
-
-      {/* Lessons */}
-      <div className="space-y-3">
-        <div className="flex items-center justify-between">
-          <h2 className="font-bold text-gray-900">Dərslər ({lessons.length})</h2>
-          <button onClick={() => setShowNewLesson(!showNewLesson)} className="btn-primary btn-sm">
-            <Plus size={14} /> Dərs əlavə et
-          </button>
-        </div>
-
-        {/* New lesson form */}
-        {showNewLesson && (
-          <div className="card border-blue-200 space-y-4 slide-up">
-            <h3 className="font-semibold text-gray-900">Yeni dərs</h3>
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="label">Başlıq (AZ) *</label>
-                <input className="input" placeholder="Dərsin adı..."
-                  value={newLesson.title} onChange={e => setNewLesson({ ...newLesson, title: e.target.value })} />
-              </div>
-              <div>
-                <label className="label">Başlıq (EN)</label>
-                <input className="input" placeholder="Lesson title..."
-                  value={newLesson.titleEn} onChange={e => setNewLesson({ ...newLesson, titleEn: e.target.value })} />
-              </div>
-            </div>
-            <div>
-              <label className="label">Qısa təsvir</label>
-              <input className="input" placeholder="Dərs nə haqqındadır..."
-                value={newLesson.shortDescription} onChange={e => setNewLesson({ ...newLesson, shortDescription: e.target.value })} />
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="label">Təxmini müddət (dəq)</label>
-                <input type="number" className="input" min={5} max={300}
-                  value={newLesson.estimatedMinutes} onChange={e => setNewLesson({ ...newLesson, estimatedMinutes: parseInt(e.target.value) })} />
-              </div>
-              <div className="flex flex-col gap-2 pt-6">
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" className="w-4 h-4 rounded"
-                    checked={newLesson.quizEnabled} onChange={e => setNewLesson({ ...newLesson, quizEnabled: e.target.checked })} />
-                  <span className="text-sm font-medium text-gray-700">Quiz aktiv</span>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" className="w-4 h-4 rounded"
-                    checked={newLesson.published} onChange={e => setNewLesson({ ...newLesson, published: e.target.checked })} />
-                  <span className="text-sm font-medium text-gray-700">Dərhal yayımla</span>
-                </label>
-              </div>
-            </div>
-            <div className="flex gap-2">
-              <button onClick={createLesson} disabled={creatingLesson || !newLesson.title.trim()} className="btn-primary">
-                {creatingLesson ? "Yaradılır..." : "Dərs yarat"}
-              </button>
-              <button onClick={() => setShowNewLesson(false)} className="btn-secondary">Ləğv et</button>
-            </div>
-          </div>
-        )}
-
-        {/* Lessons list */}
-        {lessons.length === 0 ? (
-          <div className="card text-center text-muted py-8">Hələ dərs yoxdur</div>
-        ) : (
-          <div className="space-y-2">
-            {lessons.map((lesson: any, i: number) => (
-              <div key={lesson.id} className="card flex items-center gap-3 py-3 px-4">
-                <GripVertical size={16} className="text-gray-300 shrink-0" />
-                <div className="w-6 h-6 rounded-lg bg-blue-100 flex items-center justify-center text-xs font-bold text-blue-700 shrink-0">
-                  {i + 1}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="font-medium text-gray-900 truncate">{lesson.title}</div>
-                  <div className="flex items-center gap-2 mt-0.5">
-                    <span className="text-xs text-muted">{lesson.estimatedMinutes} dəq</span>
-                    {lesson.quizEnabled && <span className="badge badge-blue text-xs">Quiz</span>}
-                    {!lesson.published && <span className="badge badge-gray text-xs">Qaralama</span>}
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,24rem)]">
+        <section aria-labelledby="lessons-h" className="min-w-0">
+          <h2 id="lessons-h" className="mb-3 font-display text-base font-semibold text-ink">Dərslər</h2>
+          {lessons.length === 0 ? (
+            <EmptyState
+              icon={<Layers className="h-6 w-6" />}
+              title="Hələ dərs yoxdur"
+              description="İlk dərsi yaradın, sonra redaktorda bloklar əlavə edin."
+              action={<Button onClick={() => setNewOpen(true)}><Plus className="h-4 w-4" aria-hidden /> Dərs əlavə et</Button>}
+            />
+          ) : (
+            <SortableList
+              items={lessons}
+              onItemsChange={setLessons}
+              endpoint={`/api/modules/${mod.id}/lessons`}
+              itemName={(l, i) => `Dərs ${i + 1}: ${l.title}`}
+              className="space-y-2"
+              render={(l, i, handle) => (
+                <div className="flex items-center gap-2 rounded-xl border border-line bg-surface p-2 pr-1.5 sm:gap-3 sm:p-3">
+                  {handle}
+                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-surface-2 text-xs font-semibold tabular-nums text-ink-2">{i + 1}</span>
+                  <div className="min-w-0 flex-1">
+                    <Link href={`/admin/lessons/${l.id}/edit`} className={cn("block truncate text-sm font-semibold hover:text-iris", l.published ? "text-ink" : "text-ink-2")}>{l.title}</Link>
+                    <div className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-muted">
+                      <span className="inline-flex items-center gap-1"><Layers className="h-3.5 w-3.5" aria-hidden /> {l.blocks}</span>
+                      <span className="inline-flex items-center gap-1"><Clock className="h-3.5 w-3.5" aria-hidden /> {l.minutes} dəq</span>
+                      <span className="inline-flex items-center gap-1"><Users className="h-3.5 w-3.5" aria-hidden /> {l.learners}</span>
+                      <Badge tone={l.published ? "pass" : "neutral"} className="px-2 py-0 text-[0.7rem]">{l.published ? "Yayımda" : "Qaralama"}</Badge>
+                    </div>
+                  </div>
+                  <div className="flex shrink-0 items-center">
+                    <Tooltip label={l.published ? "Qaralamaya qaytar" : "Yayımla"}>
+                      <Button
+                        variant="ghost"
+                        size="icon-sm"
+                        loading={busyLesson === l.id}
+                        aria-label={l.published ? `“${l.title}” dərsini qaralamaya qaytar` : `“${l.title}” dərsini yayımla`}
+                        onClick={() => void togglePublish(l)}
+                        className={l.published ? "text-pass" : undefined}
+                      >
+                        {busyLesson !== l.id && (l.published ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />)}
+                      </Button>
+                    </Tooltip>
+                    <Tooltip label="Önizlə">
+                      <a href={`/preview/${l.id}`} target="_blank" rel="noopener noreferrer" aria-label={`“${l.title}” dərsini önizlə (yeni pəncərə)`} className={buttonStyles({ variant: "ghost", size: "icon-sm", className: "hidden xs:inline-flex" })}>
+                        <ExternalLink className="h-4 w-4" />
+                      </a>
+                    </Tooltip>
+                    <Tooltip label="Redaktə et">
+                      <Link href={`/admin/lessons/${l.id}/edit`} aria-label={`“${l.title}” dərsini redaktə et`} className={buttonStyles({ variant: "ghost", size: "icon-sm" })}>
+                        <Pencil className="h-4 w-4" />
+                      </Link>
+                    </Tooltip>
+                    <Tooltip label="Sil">
+                      <Button variant="danger-ghost" size="icon-sm" aria-label={`“${l.title}” dərsini sil`} onClick={() => setLessonToDelete(l)}>
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </Tooltip>
                   </div>
                 </div>
-                <div className="flex items-center gap-1 shrink-0">
-                  <button onClick={() => toggleLessonPublish(lesson.id, lesson.published)}
-                    className={cn("btn-ghost btn-sm", lesson.published ? "text-green-600" : "text-gray-400")}
-                    title={lesson.published ? "Geri çək" : "Yayımla"}>
-                    {lesson.published ? <Eye size={15} /> : <EyeOff size={15} />}
-                  </button>
-                  <Link href={`/admin/lessons/${lesson.id}/edit`} className="btn-ghost btn-sm text-blue-600">
-                    <Edit size={15} />
-                  </Link>
-                  <button onClick={() => deleteLesson(lesson.id, lesson.title)} className="btn-ghost btn-sm text-red-400 hover:text-red-600">
-                    <Trash2 size={15} />
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+              )}
+            />
+          )}
+        </section>
+
+        <Card className="h-fit">
+          <CardHeader><CardTitle className="font-display">Modul məlumatları</CardTitle></CardHeader>
+          <form onSubmit={saveModule} noValidate className="space-y-5">
+            <ModuleFields value={form} onChange={(d) => { setForm(d); setTitleError(undefined); }} titleError={titleError} />
+            <div className="flex gap-2 border-t border-line pt-4">
+              <Button type="submit" loading={saving} disabled={!dirty} block>{dirty ? "Dəyişiklikləri saxla" : "Saxlanılıb"}</Button>
+              {dirty && <Button variant="ghost" onClick={() => setForm(saved)} disabled={saving}>Geri qaytar</Button>}
+            </div>
+          </form>
+        </Card>
       </div>
+
+      <Modal open={newOpen} onOpenChange={(o) => !creating && setNewOpen(o)} title="Yeni dərs" description="Yaratdıqdan sonra redaktor açılacaq. Dərs qaralama kimi saxlanılır.">
+        <form onSubmit={createLesson} noValidate className="space-y-4">
+          <Field label="Başlıq *">
+            {(p) => <Input {...p} autoFocus value={newLesson.title} onChange={(e) => setNewLesson({ ...newLesson, title: e.target.value })} placeholder="Məs.: Ekvivalent bölmə" maxLength={200} />}
+          </Field>
+          <Field label="Qısa təsvir">
+            {(p) => <Textarea {...p} rows={2} value={newLesson.shortDescription} onChange={(e) => setNewLesson({ ...newLesson, shortDescription: e.target.value })} maxLength={500} />}
+          </Field>
+          <Field label="Təxmini müddət (dəq)" className="max-w-40">
+            {(p) => <Input {...p} type="number" inputMode="numeric" min={1} max={600} value={newLesson.minutes} onChange={(e) => setNewLesson({ ...newLesson, minutes: e.target.value })} />}
+          </Field>
+          {newError && <p role="alert" className="rounded-lg bg-bug-soft p-3 text-sm text-bug">{newError}</p>}
+          <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+            <Button variant="secondary" onClick={() => setNewOpen(false)} disabled={creating}>Ləğv et</Button>
+            <Button type="submit" loading={creating}>Yarat və redaktə et</Button>
+          </div>
+        </form>
+      </Modal>
+
+      <ConfirmModal
+        open={confirmModule}
+        onOpenChange={setConfirmModule}
+        title="Modul silinsin?"
+        confirmLabel="Modulu sil"
+        loading={deletingModule}
+        onConfirm={() => void deleteModule()}
+      >
+        “{saved.title}” modulu, içindəki <strong>{lessons.length} dərs</strong> və onların bütün blokları silinəcək.
+        {totalLearners > 0 && <> Tələbələrin bu dərslər üzrə irəliləyişi və cavabları da itəcək.</>} Bu əməliyyatı geri qaytarmaq olmur.
+      </ConfirmModal>
+
+      <ConfirmModal
+        open={!!lessonToDelete}
+        onOpenChange={(o) => !o && setLessonToDelete(null)}
+        title="Dərs silinsin?"
+        confirmLabel="Dərsi sil"
+        loading={deletingLesson}
+        onConfirm={() => void deleteLesson()}
+      >
+        “{lessonToDelete?.title}” dərsi və onun {lessonToDelete?.blocks ?? 0} bloku silinəcək.
+        {lessonToDelete && lessonToDelete.learners > 0 && <> <strong>{lessonToDelete.learners} tələbənin</strong> irəliləyişi və cavabları da itəcək.</>}
+      </ConfirmModal>
     </div>
   );
 }

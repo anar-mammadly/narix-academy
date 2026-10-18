@@ -1,0 +1,1189 @@
+{
+  "id": "cmn4dsy6l0073vkfi4dqb03na",
+  "key": "telebler",
+  "order": 3,
+  "title": "Tələblər (Requirements)",
+  "description": "Tələblərin növləri, acceptance criteria, Gherkin, requirement analizi və traceability: test burada başlayır.",
+  "icon": "ClipboardList",
+  "color": "#10C98F",
+  "lessons": [
+    {
+      "id": "cmn5qa51z001tw80a4l6hkqos",
+      "slug": "requirements-basics",
+      "title": "Tələblər: SRS, Epic, User Story",
+      "shortDescription": "Functional və non-functional tələblər, SRS sənədi, epic → user story iyerarxiyası və INVEST.",
+      "estimatedMinutes": 12,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Functional və non-functional tələbləri fərqləndirə biləcəksən",
+              "SRS-in əsas bölmələrini və QA üçün dəyərini izah edə biləcəksən",
+              "Epic → User Story → Task iyerarxiyasını qura biləcəksən",
+              "User story-ni INVEST meyarları ilə yoxlaya biləcəksən"
+            ]
+          },
+          "id": "cmve390p59248bea54339"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Requirement",
+                "az": "tələb",
+                "definition": "Sistemin nə etməli olduğunu və hansı şərtlərlə işləməli olduğunu təsvir edən ifadə."
+              },
+              {
+                "term": "Functional requirement",
+                "az": "funksional tələb",
+                "definition": "Sistemin nə etdiyini təsvir edir: funksiya, biznes qaydası, data emalı."
+              },
+              {
+                "term": "Non-functional requirement",
+                "az": "qeyri-funksional tələb",
+                "definition": "Sistemin necə işlədiyini təsvir edir: sürət, təhlükəsizlik, rahatlıq, uyğunluq."
+              },
+              {
+                "term": "SRS",
+                "az": "proqram tələbləri spesifikasiyası",
+                "definition": "Software Requirements Specification — bütün tələbləri bir yerdə toplayan rəsmi sənəd."
+              },
+              {
+                "term": "Epic",
+                "az": "epik",
+                "definition": "Bir neçə sprintə yayılan böyük iş; kiçik user story-lərə bölünür."
+              },
+              {
+                "term": "User Story",
+                "az": "istifadəçi hekayəsi",
+                "definition": "İstifadəçi baxışından yazılmış, bir sprintə sığan qısa tələb."
+              }
+            ]
+          },
+          "id": "cmve390p5ca2268bcde1c"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Tələb nədir və QA üçün niyə vacibdir",
+            "level": 2
+          },
+          "id": "cmve390p501c6bf9309fe"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "**Requirement** — sistemin nə etməli olduğunu deyən ifadədir. ISTQB-də tələblər **test basis**-in (test əsasının) əsas hissəsidir: test şərtləri və test case-lər onlardan çıxarılır.\n\nTələb yoxdursa və ya qeyri-dəqiqdirsə, **expected result** də yoxdur. O zaman tester nəyin düzgün, nəyin baq olduğunu bilmir və mübahisə \"məncə belə olmalıdır\" səviyyəsində qalır."
+          },
+          "id": "cmve390p595a91527b87c"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Functional və non-functional tələblər",
+            "level": 2
+          },
+          "id": "cmve390p59f3d3e869b64"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "**Functional** tələb sistemin *nə etdiyini* deyir: köçürmə etmək, sifariş vermək, endirim hesablamaq. **Non-functional** tələb sistemin *necə işlədiyini* deyir: nə qədər sürətli, təhlükəsiz, rahat, hansı cihazlarda. Non-functional tələb də ölçülə bilən olmalıdır: \"sürətli\" yox, \"2 saniyədən tez\"."
+          },
+          "id": "cmve390p5ed6a2ef84579"
+        },
+        {
+          "type": "TABLE",
+          "title": "Bank tətbiqində tələb nümunələri",
+          "content": {
+            "headers": [
+              "Növ",
+              "Cavab verdiyi sual",
+              "Nümunə"
+            ],
+            "rows": [
+              [
+                "Functional",
+                "Sistem nə edir?",
+                "Müştəri öz kartları arasında köçürmə edə bilir"
+              ],
+              [
+                "Functional",
+                "Hansı qayda işləyir?",
+                "Gündəlik köçürmə limiti 5 000 AZN-dir; limit aşılarsa əməliyyat rədd edilir"
+              ],
+              [
+                "Non-functional",
+                "Nə qədər sürətli?",
+                "Köçürmə sorğularının 95%-i 2 saniyədən tez cavablanır"
+              ],
+              [
+                "Non-functional",
+                "Nə qədər təhlükəsiz?",
+                "3 uğursuz PIN cəhdindən sonra giriş 15 dəqiqə bloklanır"
+              ],
+              [
+                "Non-functional",
+                "Kim istifadə edə bilir?",
+                "Tətbiq ekran oxuyucu (VoiceOver, TalkBack) ilə istifadə oluna bilir"
+              ]
+            ]
+          },
+          "id": "cmve390p5247cd419955c"
+        },
+        {
+          "type": "CATEGORIZE",
+          "title": "Tələbi növünə görə ayır",
+          "content": {
+            "instructions": "Hər tələbi düzgün qrupa sürüklə.",
+            "categories": [
+              {
+                "id": "func",
+                "label": "Functional"
+              },
+              {
+                "id": "nonfunc",
+                "label": "Non-functional"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "İstifadəçi sifarişi restoran təsdiqləyənə qədər ləğv edə bilir",
+                "categoryId": "func"
+              },
+              {
+                "id": "i2",
+                "text": "Kataloq səhifəsi 4G şəbəkədə 3 saniyədən tez açılır",
+                "categoryId": "nonfunc"
+              },
+              {
+                "id": "i3",
+                "text": "Sifariş 20 AZN-dən çox olduqda çatdırılma pulsuzdur",
+                "categoryId": "func"
+              },
+              {
+                "id": "i4",
+                "text": "Sistem eyni anda 10 000 aktiv istifadəçiyə dözür",
+                "categoryId": "nonfunc"
+              },
+              {
+                "id": "i5",
+                "text": "Kart məlumatları ötürülərkən TLS 1.2+ ilə şifrələnir",
+                "categoryId": "nonfunc"
+              },
+              {
+                "id": "i6",
+                "text": "Kuryer sifarişi təhvil verəndə müştəriyə push bildiriş gedir",
+                "categoryId": "func"
+              },
+              {
+                "id": "i7",
+                "text": "Tətbiq Android 10 və iOS 15-dən yuxarı versiyalarda işləyir",
+                "categoryId": "nonfunc"
+              },
+              {
+                "id": "i8",
+                "text": "Admin istənilən məhsulun qiymətini dəyişə bilir",
+                "categoryId": "func"
+              }
+            ],
+            "explanation": "Functional tələb davranışı (nə baş verir) təsvir edir. Sürət, yük, təhlükəsizlik və uyğunluq isə keyfiyyət xüsusiyyətləridir — non-functional."
+          },
+          "id": "cmve390p515652eabe059"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "SRS — tələblər sənədi",
+            "level": 2
+          },
+          "id": "cmve390p5b3210ff2e75c"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "**SRS** bütün tələbləri bir sənəddə toplayır. Ən çox Waterfall layihələrində və tənzimlənən sahələrdə (bank, dövlət, səhiyyə) yazılır, çünki orada müqavilə və audit üçün rəsmi sənəd lazımdır. Agile komandalarda eyni məlumat çox vaxt **backlog**-da epic və user story-lər şəklində yaşayır."
+          },
+          "id": "cmve390p561a96d76f8d0"
+        },
+        {
+          "type": "TABLE",
+          "title": "SRS-in tipik bölmələri və QA-nın onlardan istifadəsi",
+          "content": {
+            "headers": [
+              "Bölmə",
+              "Nə yazılır",
+              "QA üçün dəyəri"
+            ],
+            "rows": [
+              [
+                "Introduction",
+                "Məqsəd, scope, terminlər lüğəti",
+                "Nəyin test scope-una daxil olduğunu göstərir"
+              ],
+              [
+                "Overall description",
+                "İstifadəçi rolları, iş mühiti, fərziyyələr",
+                "Rollara görə test ssenariləri"
+              ],
+              [
+                "Functional requirements",
+                "Funksiyalar və biznes qaydaları",
+                "Test case-lərin əsas mənbəyi"
+              ],
+              [
+                "Non-functional requirements",
+                "Performans, təhlükəsizlik, usability",
+                "Performance və security testlərinin meyarları"
+              ],
+              [
+                "External interfaces",
+                "API-lər, ödəniş sistemi, SMS provayder",
+                "Integration test nöqtələri"
+              ],
+              [
+                "Constraints",
+                "Texnologiya, qanun, büdcə məhdudiyyətləri",
+                "Test mühiti və uyğunluq yoxlamaları"
+              ]
+            ]
+          },
+          "id": "cmve390p51e310b4969a1"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Epic, User Story və Task",
+            "level": 2
+          },
+          "id": "cmve390p5ca7e6ca62e2e"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "**Epic** — böyük məqsəd, bir neçə sprintə yayılır. **User story** — epic-in istifadəçiyə dəyər verən kiçik hissəsi, bir sprintə sığır. **Task** — story-ni reallaşdırmaq üçün texniki iş (backend endpoint, UI, test).\n\nUser story formatı:\n`As a [rol], I want [istək], so that [fayda].`\n\"So that\" hissəsi vacibdir: o, tester-ə istifadəçinin *niyə* bunu istədiyini və nəyin həqiqətən vacib olduğunu deyir."
+          },
+          "id": "cmve390p5c0a64c5de878"
+        },
+        {
+          "type": "DIAGRAM",
+          "content": {
+            "code": "graph TD\n  E[\"Epic: Sifarişin onlayn ödənişi\"] --> S1[\"Story: Kartla ödəmək\"]\n  E --> S2[\"Story: Kartı yadda saxlamaq\"]\n  E --> S3[\"Story: Promo kod tətbiq etmək\"]\n  S2 --> T1[\"Task: Kart tokenləşdirmə API\"]\n  S2 --> T2[\"Task: Saxlanmış kartlar ekranı\"]\n  S2 --> T3[\"Task: Test case-lər\"]",
+            "caption": "Çatdırılma tətbiqində epic → story → task iyerarxiyası"
+          },
+          "id": "cmve390p50450b9f82d23"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "Yaxşı yazılmış user story",
+          "content": {
+            "description": "**As a** müntəzəm sifariş verən müştəri,\n**I want** bank kartımı tətbiqdə yadda saxlamaq,\n**so that** növbəti sifarişi kart məlumatlarını yenidən yazmadan 30 saniyədə verim.",
+            "takeaway": "Story bir rolu, bir istəyi və ölçülə bilən faydanı göstərir. Tester buradan dərhal sual çıxarır: neçə kart saxlamaq olar? Kartı necə silmək olar?"
+          },
+          "id": "cmve390p521f89aee2db1"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "INVEST: yaxşı user story-nin yoxlanışı",
+            "level": 2
+          },
+          "id": "cmve390p5ceef55ac2436"
+        },
+        {
+          "type": "TABLE",
+          "title": "INVEST meyarları",
+          "content": {
+            "headers": [
+              "Hərf",
+              "Meyar",
+              "Mənası"
+            ],
+            "rows": [
+              [
+                "I",
+                "Independent",
+                "Başqa story-dən asılı olmadan reallaşdırıla bilir"
+              ],
+              [
+                "N",
+                "Negotiable",
+                "Detallar komanda ilə müzakirə oluna bilər, müqavilə deyil"
+              ],
+              [
+                "V",
+                "Valuable",
+                "İstifadəçiyə və ya biznesə real dəyər verir"
+              ],
+              [
+                "E",
+                "Estimable",
+                "Komanda həcmini qiymətləndirə bilir"
+              ],
+              [
+                "S",
+                "Small",
+                "Bir sprintə sığır"
+              ],
+              [
+                "T",
+                "Testable",
+                "Bitib-bitmədiyini yoxlamaq mümkündür"
+              ]
+            ]
+          },
+          "id": "cmve390p53e5e226a9cce"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "tip",
+            "body": "QA üçün ən vacib hərf **T (Testable)**-dir. Story-ni necə test edəcəyini bilmirsənsə, refinement görüşündə sual ver. Story-ni test edilə bilən edən şey **acceptance criteria**-dır — növbəti dərsin mövzusu."
+          },
+          "id": "cmve390p5cbfeb7e8a047"
+        },
+        {
+          "type": "TASK",
+          "title": "Epic-i story-lərə böl",
+          "content": {
+            "instructions": "Çatdırılma tətbiqi üçün \"Sifarişi real vaxtda izləmək\" epic-i altında 2 user story yaz (As a / I want / so that formatında). Hər story üçün 1 non-functional tələb əlavə et və onun ölçülə bilən olduğuna əmin ol.",
+            "placeholder": "Story 1: As a ..., I want ..., so that ...\nNon-functional: ...\n\nStory 2: As a ..., I want ..., so that ...\nNon-functional: ...",
+            "required": true
+          },
+          "id": "cmve390p54bb2c53fe0fb"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Tələb test basis-dir: expected result tələbdən gəlir.",
+              "Functional tələb sistemin nə etdiyini, non-functional necə işlədiyini təsvir edir; hər ikisi ölçülə bilən olmalıdır.",
+              "SRS bütün tələbləri toplayan rəsmi sənəddir; Agile-da eyni məlumat backlog-da saxlanır.",
+              "Epic böyük məqsəddir, user story bir sprintə sığan dəyərdir, task isə texniki işdir.",
+              "INVEST yaxşı story-ni yoxlayır; QA üçün əsas meyar Testable-dır."
+            ]
+          },
+          "id": "cmve390p59b01c087f93e"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yoxlama testi",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Hansı tələb non-functional-dır?",
+                "options": [
+                  "Müştəri sifarişi ləğv edə bilir",
+                  "Admin məhsul əlavə edə bilir",
+                  "Ödəniş səhifəsi 2 saniyədən tez açılır",
+                  "Endirim 10% hesablanır"
+                ],
+                "correctIndex": 2,
+                "explanation": "Sürət sistemin necə işlədiyini təsvir edir, buna görə non-functional tələbdir. Digərləri sistemin davranışıdır."
+              },
+              {
+                "id": "q2",
+                "text": "\"Sistem sürətli işləməlidir\" tələbinin əsas problemi nədir?",
+                "options": [
+                  "Ölçülə bilmir, ona görə test edilə bilmir",
+                  "Functional tələbdir",
+                  "Çox texnikidir",
+                  "SRS-ə yazıla bilməz"
+                ],
+                "correctIndex": 0,
+                "explanation": "\"Sürətli\" heç bir ölçü vermir. Test etmək üçün rəqəm lazımdır: məsələn, \"95% sorğu 2 saniyədən tez\"."
+              },
+              {
+                "id": "q3",
+                "text": "User story formatında \"so that\" hissəsi tester-ə nə verir?",
+                "options": [
+                  "Story-nin həcmini",
+                  "Developer-in adını",
+                  "Test mühitini",
+                  "İstifadəçinin məqsədini və faydanı"
+                ],
+                "correctIndex": 3,
+                "explanation": "\"So that\" faydanı göstərir. Tester ondan nəyin həqiqətən vacib olduğunu anlayır və test prioritetini müəyyən edir."
+              },
+              {
+                "id": "q4",
+                "text": "Epic, User Story və Task düzgün ardıcıllıqla (böyükdən kiçiyə) hansıdır?",
+                "options": [
+                  "Task → Story → Epic",
+                  "Epic → Story → Task",
+                  "Story → Epic → Task",
+                  "Epic → Task → Story"
+                ],
+                "correctIndex": 1,
+                "explanation": "Epic böyük məqsəddir, story-lərə bölünür; story isə texniki task-larla reallaşdırılır."
+              },
+              {
+                "id": "q5",
+                "text": "INVEST-də \"T\" hərfi nəyi bildirir və QA üçün niyə vacibdir?",
+                "options": [
+                  "Timely — vaxtında bitir",
+                  "Technical — texniki detallıdır",
+                  "Testable — bitib-bitmədiyini yoxlamaq mümkündür",
+                  "Tracked — Jira-da izlənir"
+                ],
+                "correctIndex": 2,
+                "explanation": "Testable story-nin tamamlandığını yoxlamağa imkan verir. Test edilə bilməyən story-ni QA refinement-də geri qaytarmalıdır."
+              }
+            ]
+          },
+          "id": "cmve390p58ddb4ee86142"
+        }
+      ]
+    },
+    {
+      "slug": "acceptance-criteria-gherkin",
+      "title": "Acceptance Criteria və Gherkin",
+      "shortDescription": "Yaxşı acceptance criteria yazmaq, Given/When/Then formatı və kriteriyalardan test şərtləri çıxarmaq.",
+      "estimatedMinutes": 12,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Acceptance criteria-nın rolunu və Definition of Done-dan fərqini izah edə biləcəksən",
+              "Given/When/Then formatında ssenari yaza biləcəksən",
+              "Pis acceptance criteria-nı tanıyıb düzəldə biləcəksən",
+              "Acceptance criteria-dan test şərtləri və test case çıxara biləcəksən"
+            ]
+          },
+          "id": "cmve390p568c914a751b7"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Acceptance criteria",
+                "az": "qəbul meyarları",
+                "definition": "User story-nin qəbul edilməsi üçün ödənməli olan konkret şərtlər."
+              },
+              {
+                "term": "Definition of Done (DoD)",
+                "az": "hazırlıq tərifi",
+                "definition": "Bütün story-lərə aid ümumi \"bitdi\" siyahısı: kod review olunub, testlər keçib və s."
+              },
+              {
+                "term": "Gherkin",
+                "az": "Gherkin dili",
+                "definition": "Given/When/Then açar sözləri ilə ssenari yazmaq üçün strukturlaşdırılmış dil."
+              },
+              {
+                "term": "BDD",
+                "az": "davranışa əsaslanan inkişaf",
+                "definition": "Behavior-Driven Development — tələbləri nümunə ssenarilər kimi birlikdə yazmaq yanaşması."
+              },
+              {
+                "term": "Test condition",
+                "az": "test şərti",
+                "definition": "Test ediləcək konkret aspekt: funksiya, qayda, sərhəd və ya keyfiyyət xüsusiyyəti."
+              }
+            ]
+          },
+          "id": "cmve390p57c51bf3df666"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Acceptance criteria nədir",
+            "level": 2
+          },
+          "id": "cmve390p5c47bb2eac870"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "**Acceptance criteria (AC)** — story-nin \"hazırdır\" sayılması üçün ödənməli şərtlərdir. Onları adətən Product Owner yazır, amma refinement-də developer və QA ilə birlikdə dəqiqləşdirilir.\n\nQA üçün AC **test oracle**-dır: hər kriteriya ən azı bir testlə yoxlanır. Fərqə diqqət et: **DoD** bütün story-lərə aid ümumi siyahıdır, AC isə konkret bir story-yə aiddir."
+          },
+          "id": "cmve390p5f213349fded1"
+        },
+        {
+          "type": "TABLE",
+          "title": "Acceptance criteria-nın iki yazılış forması",
+          "content": {
+            "headers": [
+              "Forma",
+              "Necə görünür",
+              "Nə vaxt uyğundur"
+            ],
+            "rows": [
+              [
+                "Rule-oriented (qayda siyahısı)",
+                "\"Şifrə ən azı 8 simvol olmalıdır\" kimi bənd-bənd siyahı",
+                "Sadə qaydalar, validasiya, UI tələbləri"
+              ],
+              [
+                "Scenario-oriented (Gherkin)",
+                "Given / When / Then ssenariləri",
+                "Addımlı axınlar, fərqli nəticəli hallar, BDD avtomatlaşdırması"
+              ]
+            ]
+          },
+          "id": "cmve390p5003470b6f896"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Gherkin: Given / When / Then",
+            "level": 2
+          },
+          "id": "cmve390p5edd7d56a0804"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "- **Given** — başlanğıc vəziyyət (precondition)\n- **When** — istifadəçinin hərəkəti və ya hadisə\n- **Then** — gözlənilən, yoxlanıla bilən nəticə\n- **And / But** — əvvəlki addımı davam etdirir\n\nHər ssenari bir davranışı yoxlayır. Gherkin BDD-nin dilidir: Cucumber kimi alətlər bu mətnləri avtomatlaşdırılmış testə çevirir (Modul 9)."
+          },
+          "id": "cmve390p557b3e85be6b1"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "Feature: Səbətə promo kod tətbiqi\n\n  Scenario: Etibarlı promo kod endirim verir\n    Given müştərinin səbətində 40 AZN-lik məhsul var\n    And \"YAZ10\" kodu aktivdir və 10% endirim verir\n    When müştəri \"YAZ10\" kodunu daxil edib \"Tətbiq et\" düyməsinə basır\n    Then səbətin cəmi 36 AZN olur\n    And \"Promo kod tətbiq edildi\" mesajı görünür\n\n  Scenario: Müddəti bitmiş promo kod rədd edilir\n    Given müştərinin səbətində 40 AZN-lik məhsul var\n    And \"QIS20\" kodunun müddəti bitib\n    When müştəri \"QIS20\" kodunu daxil edir\n    Then səbətin cəmi 40 AZN olaraq qalır\n    And \"Promo kodun müddəti bitib\" xətası görünür",
+            "language": "gherkin",
+            "caption": "Bir feature, iki ssenari: pozitiv və neqativ hal"
+          },
+          "id": "cmve390p5b3c2972f874f"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Yaxşı və pis acceptance criteria",
+            "level": 2
+          },
+          "id": "cmve390p556228f47bf84"
+        },
+        {
+          "type": "TABLE",
+          "title": "Pis AC-ni necə düzəltmək olar",
+          "content": {
+            "headers": [
+              "Pis AC",
+              "Problem",
+              "Yaxşı AC"
+            ],
+            "rows": [
+              [
+                "Səhifə sürətli açılmalıdır",
+                "Ölçülə bilmir",
+                "Kataloq səhifəsi 4G-də 3 saniyədən tez açılır"
+              ],
+              [
+                "Şifrə güclü olmalıdır",
+                "\"Güclü\" hər kəs üçün fərqlidir",
+                "Şifrə ən azı 8 simvol, 1 rəqəm və 1 böyük hərf ehtiva edir"
+              ],
+              [
+                "Xəta olanda istifadəçiyə xəbər ver",
+                "Hansı xəta? Hansı mesaj?",
+                "Kart rədd edildikdə \"Ödəniş alınmadı\" mesajı görünür və səbət saxlanılır"
+              ],
+              [
+                "Login düyməsi React komponenti ilə qurulur",
+                "Davranış yox, həll yolu (implementation) təsvir edir",
+                "İstifadəçi email və şifrə ilə daxil ola bilir"
+              ]
+            ]
+          },
+          "id": "cmve390p5111ff80c050c"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "remember",
+            "body": "Yaxşı AC: **konkret** (rəqəm, mesaj mətni), **yoxlanıla bilən** (pass/fail aydındır), **davranışı** təsvir edir (texniki həlli yox) və **neqativ halları** da əhatə edir."
+          },
+          "id": "cmve390p5d270e8cdfefb"
+        },
+        {
+          "type": "CATEGORIZE",
+          "title": "Bu acceptance criteria test edilə bilərmi?",
+          "content": {
+            "instructions": "Hər kriteriyanı qiymətləndir: test edilə bilən yaxşı AC-dir, yoxsa düzəldilməlidir?",
+            "categories": [
+              {
+                "id": "good",
+                "label": "Yaxşı AC"
+              },
+              {
+                "id": "bad",
+                "label": "Düzəldilməlidir"
+              }
+            ],
+            "items": [
+              {
+                "id": "a1",
+                "text": "Sifariş 20 AZN və ya daha çox olduqda çatdırılma haqqı 0 AZN göstərilir",
+                "categoryId": "good"
+              },
+              {
+                "id": "a2",
+                "text": "Axtarış nəticələri istifadəçi üçün rahat olmalıdır",
+                "categoryId": "bad"
+              },
+              {
+                "id": "a3",
+                "text": "3 dəfə səhv OTP daxil edildikdə hesab 15 dəqiqə bloklanır",
+                "categoryId": "good"
+              },
+              {
+                "id": "a4",
+                "text": "Sistem bütün brauzerlərdə işləməlidir",
+                "categoryId": "bad"
+              },
+              {
+                "id": "a5",
+                "text": "Qeydiyyat formasında email boş qaldıqda \"Email tələb olunur\" xətası görünür",
+                "categoryId": "good"
+              },
+              {
+                "id": "a6",
+                "text": "Ödəniş modulu və s. funksiyalar düzgün işləməlidir",
+                "categoryId": "bad"
+              }
+            ],
+            "explanation": "\"Rahat\", \"bütün brauzerlər\", \"və s.\" kimi ifadələr ölçülə bilmir və sonsuz scope yaradır. Yaxşı AC-də rəqəm, konkret mesaj və aydın nəticə var."
+          },
+          "id": "cmve390p5f0096f3014c0"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "AC-dən test şərtlərinə",
+            "level": 2
+          },
+          "id": "cmve390p56c02255278d5"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Hər AC-dən ən azı bir **pozitiv** və bir **neqativ** test şərti çıxar. Sonra sərhədlərə bax: rəqəm varsa, tam o rəqəm nə olur? (BVA texnikası Modul 5-də.)\n\nAC-ni oxuyanda cavabsız sual tapırsansa, bu artıq tapıntıdır — test yazmadan əvvəl PO-dan soruş."
+          },
+          "id": "cmve390p599272ed3e3df"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "Bir AC → dörd test şərti",
+          "content": {
+            "description": "AC: \"Sifariş 20 AZN-dən yuxarı olduqda çatdırılma pulsuzdur.\"\n\n- TC1: 25 AZN → çatdırılma 0 AZN (pozitiv)\n- TC2: 15 AZN → çatdırılma haqqı tutulur (neqativ)\n- TC3: tam 20.00 AZN → ? \"yuxarı\" 20-ni daxil edirmi?\n- TC4: 25 AZN, sonra məhsul silinir və 15 AZN qalır → haqq yenidən hesablanırmı?",
+            "takeaway": "TC3 tələbdə qeyri-müəyyənlik tapdı. PO \"20 daxil\" desə, AC \"20 AZN və ya daha çox\" kimi yenidən yazılır."
+          },
+          "id": "cmve390p50b8ea5d717fc"
+        },
+        {
+          "type": "TEST_CASE_BUILDER",
+          "title": "Gherkin ssenarisindən test case yaz",
+          "content": {
+            "feature": "Səbətə promo kod tətbiqi",
+            "requirement": "Given müştərinin səbətində 40 AZN-lik məhsul var və \"YAZ10\" kodu 10% endirim verir. When müştəri \"YAZ10\" kodunu daxil edib \"Tətbiq et\" düyməsinə basır. Then səbətin cəmi 36 AZN olur və \"Promo kod tətbiq edildi\" mesajı görünür.",
+            "minSteps": 4,
+            "expectedKeywords": [
+              "promo",
+              "kod",
+              "səbət",
+              "36",
+              "endirim",
+              "mesaj"
+            ],
+            "sampleSolution": {
+              "title": "Etibarlı promo kod (YAZ10) səbətə 10% endirim tətbiq edir",
+              "preconditions": "Müştəri daxil olub; səbətdə 40 AZN-lik məhsul var; \"YAZ10\" kodu aktivdir (10%).",
+              "steps": [
+                "Səbət səhifəsini aç və cəmin 40 AZN olduğunu yoxla",
+                "Promo kod sahəsinə \"YAZ10\" yaz",
+                "\"Tətbiq et\" düyməsinə bas",
+                "Səbətin cəmini və endirim sətrini yoxla",
+                "Görünən mesajı yoxla"
+              ],
+              "expected": "Endirim sətrində -4 AZN, səbətin cəmi 36 AZN göstərilir; \"Promo kod tətbiq edildi\" mesajı görünür."
+            }
+          },
+          "id": "cmve390p584f5969e04e9"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Acceptance criteria konkret story-nin qəbul şərtləridir; DoD isə bütün story-lərə aid ümumi siyahıdır.",
+              "AC iki formada yazılır: qayda siyahısı və ya Given/When/Then ssenariləri.",
+              "Given vəziyyəti, When hərəkəti, Then yoxlanıla bilən nəticəni təsvir edir.",
+              "Yaxşı AC konkret, ölçülə bilən və davranış yönümlüdür, neqativ halları da əhatə edir.",
+              "Hər AC-dən pozitiv, neqativ və sərhəd test şərtləri çıxar; cavabsız sual da tapıntıdır."
+            ]
+          },
+          "id": "cmve390p5a1078bd7a979"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yoxlama testi",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Acceptance criteria ilə Definition of Done arasındakı əsas fərq nədir?",
+                "options": [
+                  "AC konkret story-yə aiddir, DoD bütün story-lərə aid ümumi siyahıdır",
+                  "AC-ni QA, DoD-ni developer yazır",
+                  "DoD yalnız Waterfall-da istifadə olunur",
+                  "Heç bir fərq yoxdur, sinonimdirlər"
+                ],
+                "correctIndex": 0,
+                "explanation": "AC hər story üçün fərqlidir. DoD isə komandanın bütün işlərə tətbiq etdiyi ümumi keyfiyyət siyahısıdır."
+              },
+              {
+                "id": "q2",
+                "text": "Gherkin-də \"When\" açar sözü nəyi təsvir edir?",
+                "options": [
+                  "Başlanğıc vəziyyəti",
+                  "Gözlənilən nəticəni",
+                  "Test mühitini",
+                  "İstifadəçinin hərəkətini və ya hadisəni"
+                ],
+                "correctIndex": 3,
+                "explanation": "Given vəziyyəti, When hərəkəti, Then nəticəni təsvir edir."
+              },
+              {
+                "id": "q3",
+                "text": "Hansı acceptance criteria ən yaxşı yazılıb?",
+                "options": [
+                  "Ödəniş tez keçməlidir",
+                  "Kart rədd edildikdə \"Ödəniş alınmadı\" mesajı görünür və səbət saxlanılır",
+                  "Ödəniş modulu Stripe SDK ilə yazılır",
+                  "Ödəniş istifadəçi üçün rahat olmalıdır"
+                ],
+                "correctIndex": 1,
+                "explanation": "Bu variant konkret hadisəni, konkret mesajı və yoxlanıla bilən nəticəni göstərir. \"Tez\" və \"rahat\" ölçülmür, SDK isə implementation detalıdır."
+              },
+              {
+                "id": "q4",
+                "text": "AC: \"Sifariş 20 AZN-dən yuxarı olduqda çatdırılma pulsuzdur.\" Hansı test ən çox qeyri-müəyyənlik üzə çıxarır?",
+                "options": [
+                  "Sifariş 50 AZN",
+                  "Sifariş 5 AZN",
+                  "Sifariş tam 20.00 AZN",
+                  "Sifariş 100 AZN"
+                ],
+                "correctIndex": 2,
+                "explanation": "\"Yuxarı\" sözü 20-nin özünü daxil edib-etmədiyini demir. Sərhəd dəyəri bu qeyri-müəyyənliyi dərhal üzə çıxarır."
+              },
+              {
+                "id": "q5",
+                "text": "Then addımı necə olmalıdır?",
+                "options": [
+                  "Yoxlanıla bilən, konkret nəticə",
+                  "Developer-ə texniki göstəriş",
+                  "Bir neçə ehtimallı nəticə",
+                  "İstifadəçinin hərəkəti"
+                ],
+                "correctIndex": 0,
+                "explanation": "Then addımı pass/fail qərarı verməyə imkan verməlidir: konkret məbləğ, mesaj və ya vəziyyət."
+              }
+            ]
+          },
+          "id": "cmve390p5476b8e8c843f"
+        }
+      ]
+    },
+    {
+      "slug": "requirement-analysis-rtm",
+      "title": "Requirement analizi və Traceability Matrix (RTM)",
+      "shortDescription": "Tələbləri kod yazılmadan yoxlamaq: qeyri-müəyyənlik, test edilə bilmə və tələb-test əlaqəsini RTM ilə izləmək.",
+      "estimatedMinutes": 13,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Tələbi aydınlıq, tamlıq, ardıcıllıq və test edilə bilmə baxımından yoxlaya biləcəksən",
+              "Qeyri-müəyyən ifadələri tapıb dəqiq tələbə çevirə biləcəksən",
+              "Requirement Traceability Matrix qura və oxuya biləcəksən",
+              "RTM-dən coverage boşluğunu və dəyişikliyin təsirini tapa biləcəksən"
+            ]
+          },
+          "id": "cmve390p555812dc374d5"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Requirement review",
+                "az": "tələblərin nəzərdən keçirilməsi",
+                "definition": "Tələblərin kod yazılmadan defekt baxımından yoxlanması; static testing növüdür."
+              },
+              {
+                "term": "Ambiguity",
+                "az": "qeyri-müəyyənlik",
+                "definition": "Tələbin birdən çox cür başa düşülə bilməsi."
+              },
+              {
+                "term": "Testability",
+                "az": "test edilə bilmə",
+                "definition": "Tələbin yerinə yetirildiyini obyektiv yoxlamağın mümkünlüyü."
+              },
+              {
+                "term": "Traceability",
+                "az": "izlənə bilmə",
+                "definition": "Tələb, test case, test nəticəsi və defekt arasında əlaqə."
+              },
+              {
+                "term": "RTM",
+                "az": "tələblərin izlənmə matrisi",
+                "definition": "Requirement Traceability Matrix — tələbləri testlərə və defektlərə bağlayan cədvəl."
+              },
+              {
+                "term": "Impact analysis",
+                "az": "təsir analizi",
+                "definition": "Dəyişikliyin hansı tələb və testlərə toxunduğunu müəyyən etmək."
+              }
+            ]
+          },
+          "id": "cmve390p5d3baf47097c5"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Tələbi kod yazılmadan yoxla",
+            "level": 2
+          },
+          "id": "cmve390p5110ba38569b3"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Requirement review **static testing**-in bir növüdür: heç nə işə salınmır, sənəd oxunur və təhlil olunur (review növləri Modul 4-də). Tələbdə tapılan defekt ən ucuz defektdir: indi bir cümləni dəyişirsən, production-da isə hotfix, müştəri şikayəti və pul itkisi ilə ödəyirsən.\n\nQA tələbi oxuyanda bir sual verir: **\"Bunu necə test edəcəm?\"** Cavab yoxdursa, tələbdə problem var."
+          },
+          "id": "cmve390p5fe8c253441c5"
+        },
+        {
+          "type": "TABLE",
+          "title": "Tələbin keyfiyyət meyarları",
+          "content": {
+            "headers": [
+              "Meyar",
+              "Yoxlama sualı",
+              "Defekt nümunəsi"
+            ],
+            "rows": [
+              [
+                "Aydınlıq (Unambiguous)",
+                "Bunu hamı eyni cür başa düşürmü?",
+                "\"Sifariş tez çatdırılır\""
+              ],
+              [
+                "Tamlıq (Complete)",
+                "Bütün hallar, o cümlədən xəta halları yazılıbmı?",
+                "Ödəniş uğursuz olanda nə baş verdiyi yazılmayıb"
+              ],
+              [
+                "Ardıcıllıq (Consistent)",
+                "Başqa tələblə ziddiyyət varmı?",
+                "REQ-3: limit 5 000 AZN, REQ-9: limit 3 000 AZN"
+              ],
+              [
+                "Test edilə bilmə (Testable)",
+                "Pass/fail qərarı vermək olarmı?",
+                "\"İnterfeys müasir görünməlidir\""
+              ],
+              [
+                "Mümkünlük (Feasible)",
+                "Real şərtlərdə reallaşdırmaq olarmı?",
+                "\"Sistem 100% vaxt əlçatan olmalıdır\""
+              ]
+            ]
+          },
+          "id": "cmve390p56d8dc504ec4a"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Qeyri-müəyyənlik tələləri",
+            "level": 2
+          },
+          "id": "cmve390p522acd4a0bbef"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Bu sözləri görəndə dayan: **sürətli, tez, rahat, user-friendly, adətən, lazım olduqda, və s., bütün, dəstəkləyir, optimal**. Hər biri ya ölçü, ya siyahı, ya da şərt tələb edir.\n\nNümunə: \"və s.\" sonsuz scope yaradır, \"dəstəkləyir\" isə nə dərəcədə dəstəklədiyini demir."
+          },
+          "id": "cmve390p5b3c492fb6d39"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "Qeyri-müəyyən tələbi düzəltmək",
+          "content": {
+            "description": "Əvvəl: \"Müştəri sifarişi tez bir zamanda ləğv edə bilər.\"\n\nQA-nın sualları:\n- \"Tez\" nə deməkdir: 2 dəqiqə, yoxsa restoran təsdiqləyənə qədər?\n- Kuryer yola düşəndən sonra ləğv etmək olarmı?\n- Pul geri qayıdırmı? Nə vaxt?\n\nSonra: \"Müştəri sifarişi restoran təsdiqləyənə qədər ləğv edə bilər. Kartla ödənilmiş məbləğ 3 iş günü ərzində karta qaytarılır.\"",
+            "takeaway": "Yaxşı sual tələbi dəqiqləşdirir və test şərtlərini özü yaradır."
+          },
+          "id": "cmve390p5ea5c67fd954d"
+        },
+        {
+          "type": "CATEGORIZE",
+          "title": "Tələbdəki defektin növünü tap",
+          "content": {
+            "instructions": "Hər tələbin əsas problemini müəyyən et.",
+            "categories": [
+              {
+                "id": "amb",
+                "label": "Qeyri-müəyyən"
+              },
+              {
+                "id": "inc",
+                "label": "Natamam"
+              },
+              {
+                "id": "con",
+                "label": "Ziddiyyətli"
+              },
+              {
+                "id": "unt",
+                "label": "Test edilə bilməz"
+              }
+            ],
+            "items": [
+              {
+                "id": "d1",
+                "text": "Axtarış nəticələri sürətli göstərilməlidir",
+                "categoryId": "amb"
+              },
+              {
+                "id": "d2",
+                "text": "İstifadəçi şifrəni bərpa edə bilər (bərpa linkinin müddəti və kanalı göstərilməyib)",
+                "categoryId": "inc"
+              },
+              {
+                "id": "d3",
+                "text": "Story A: qonaq sifariş verə bilər. Story B: sifariş üçün qeydiyyat məcburidir",
+                "categoryId": "con"
+              },
+              {
+                "id": "d4",
+                "text": "Tətbiq istifadəçiləri xoşbəxt etməlidir",
+                "categoryId": "unt"
+              },
+              {
+                "id": "d5",
+                "text": "Kart ilə ödəniş edilə bilər (rədd edilən kartda nə olacağı yazılmayıb)",
+                "categoryId": "inc"
+              },
+              {
+                "id": "d6",
+                "text": "Endirim adətən səbətə avtomatik tətbiq olunur",
+                "categoryId": "amb"
+              }
+            ],
+            "explanation": "\"Sürətli\" və \"adətən\" müxtəlif cür şərh olunur. Natamam tələbdə alternativ və xəta halları yoxdur. Ziddiyyətli tələblər bir-birini istisna edir. \"Xoşbəxt etmək\" isə heç bir obyektiv ölçü ilə yoxlanmır."
+          },
+          "id": "cmve390p5662e155eccab"
+        },
+        {
+          "type": "STEPPER",
+          "title": "Requirement analizi addımları",
+          "content": {
+            "steps": [
+              {
+                "title": "Oxu və qeyd et",
+                "description": "Tələbi oxu, qeyri-müəyyən sözləri və cavabsız halları işarələ."
+              },
+              {
+                "title": "Sual siyahısı hazırla",
+                "description": "Hər problem üçün konkret sual yaz: \"20 AZN daxildir?\""
+              },
+              {
+                "title": "Refinement-də müzakirə et",
+                "description": "Sualları PO, BA və developer-lə birlikdə cavablandır."
+              },
+              {
+                "title": "Tələb yenilənir",
+                "description": "Cavablar AC-yə və ya SRS-ə yazılır, şifahi qalmır."
+              },
+              {
+                "title": "Test şərtlərini çıxar",
+                "description": "Dəqiqləşmiş tələbdən test şərtləri və RTM sətirləri yarat."
+              }
+            ]
+          },
+          "id": "cmve390p5aed635652ec3"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Traceability Matrix (RTM)",
+            "level": 2
+          },
+          "id": "cmve390p5d84cda082325"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "**Traceability** — tələb ilə test case, test nəticəsi və defekt arasındakı əlaqədir. **RTM** bu əlaqəni cədvəldə göstərir.\n\n- **Forward** (tələb → test): hər tələbin testi varmı?\n- **Backward** (test → tələb): hər test bir tələbə bağlıdırmı?\n\nRTM coverage boşluqlarını göstərir, dəyişikliyin təsirini (impact analysis) tapmağa kömək edir və release qərarı üçün fakt verir."
+          },
+          "id": "cmve390p5ab1a338a3e5d"
+        },
+        {
+          "type": "TABLE",
+          "title": "Qeydiyyat funksiyası üçün RTM",
+          "content": {
+            "headers": [
+              "Req ID",
+              "Tələb",
+              "Test case",
+              "Status",
+              "Defekt"
+            ],
+            "rows": [
+              [
+                "REQ-01",
+                "Email ilə qeydiyyat",
+                "TC-01, TC-02",
+                "Passed",
+                "—"
+              ],
+              [
+                "REQ-02",
+                "Şifrə ən azı 8 simvol",
+                "TC-03, TC-04",
+                "Failed",
+                "BUG-112"
+              ],
+              [
+                "REQ-03",
+                "SMS OTP ilə telefon təsdiqi",
+                "TC-05",
+                "Not run",
+                "—"
+              ],
+              [
+                "REQ-04",
+                "İstifadəçi şərtləri ilə razılıq checkbox-u",
+                "—",
+                "—",
+                "—"
+              ],
+              [
+                "—",
+                "—",
+                "TC-09 (Facebook ilə giriş)",
+                "Passed",
+                "—"
+              ]
+            ]
+          },
+          "id": "cmve390p53c9fb8520750"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "warning",
+            "body": "Bu RTM üç risk göstərir: **REQ-04**-ün testi yoxdur (coverage boşluğu); **REQ-02**-də açıq baq var; **TC-09** heç bir tələbə bağlı deyil (orphan test) — ya tələb unudulub, ya da test artıqdır. RTM-i Excel, Jira (Xray, Zephyr) və ya TestRail-də aparmaq olar."
+          },
+          "id": "cmve390p57e6fcc3d25c3"
+        },
+        {
+          "type": "TASK",
+          "title": "Tələbi analiz et və mini RTM qur",
+          "content": {
+            "instructions": "Tələb: \"İstifadəçi profil şəklini yükləyə bilər. Şəkil uyğun formatda və ölçüdə olmalıdır.\"\n\n1. Ən azı 3 dəqiqləşdirici sual yaz.\n2. Tələbi PO-nun cavab verdiyini fərz edərək yenidən yaz.\n3. 2 tələb sətri və onlara bağlı test case ID-ləri olan mini RTM qur.",
+            "placeholder": "Suallar:\n1) ...\n\nYeni tələb:\n...\n\nRTM:\nREQ-01 | ... | TC-01, TC-02\nREQ-02 | ... | TC-03",
+            "required": true
+          },
+          "id": "cmve390p5023e15021908"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Requirement review static testing-dir; tələbdə tapılan defekt ən ucuz defektdir.",
+              "Yaxşı tələb aydın, tam, ardıcıl, test edilə bilən və reallaşdırıla biləndir.",
+              "\"Sürətli\", \"rahat\", \"və s.\" kimi sözlər qeyri-müəyyənlik siqnalıdır; sual verib ölçüyə çevir.",
+              "RTM tələbləri test case, nəticə və defektlərlə bağlayır: forward və backward traceability.",
+              "RTM coverage boşluğunu, orphan testləri və dəyişikliyin təsirini göstərir."
+            ]
+          },
+          "id": "cmve390p5cf20991bbc50"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yoxlama testi",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Requirement review hansı test növünə aiddir?",
+                "options": [
+                  "Dynamic testing",
+                  "Regression testing",
+                  "Performance testing",
+                  "Static testing"
+                ],
+                "correctIndex": 3,
+                "explanation": "Review zamanı proqram işə salınmır, sənəd təhlil olunur — bu static testing-dir."
+              },
+              {
+                "id": "q2",
+                "text": "\"Sistem bütün populyar ödəniş üsullarını dəstəkləməlidir\" tələbinin əsas problemi nədir?",
+                "options": [
+                  "Ziddiyyətlidir",
+                  "Qeyri-müəyyəndir: hansı üsullar nəzərdə tutulur?",
+                  "Non-functional tələbdir",
+                  "Reallaşdırıla bilməz"
+                ],
+                "correctIndex": 1,
+                "explanation": "\"Bütün populyar\" siyahı vermir. Tester nəyi test edəcəyini bilmir; konkret siyahı lazımdır (məs. Visa, Mastercard, Apple Pay)."
+              },
+              {
+                "id": "q3",
+                "text": "RTM-də bir tələbin qarşısında heç bir test case yoxdursa, bu nəyi göstərir?",
+                "options": [
+                  "Tələb artıq test edilib",
+                  "Orphan test var",
+                  "Coverage boşluğu var",
+                  "Tələb non-functional-dır"
+                ],
+                "correctIndex": 2,
+                "explanation": "Forward traceability pozulub: tələb var, amma onu yoxlayan test yoxdur. Bu release üçün riskdir."
+              },
+              {
+                "id": "q4",
+                "text": "Heç bir tələbə bağlı olmayan test case necə adlanır və nə göstərir?",
+                "options": [
+                  "Orphan test: ya tələb unudulub, ya test artıqdır",
+                  "Regression test: köhnə funksiyanı yoxlayır",
+                  "Smoke test: əsas axını yoxlayır",
+                  "Negative test: xəta halını yoxlayır"
+                ],
+                "correctIndex": 0,
+                "explanation": "Backward traceability belə testləri tapır. Ya tələblərə əlavə etmək lazımdır, ya da test scope-dan çıxarılmalıdır."
+              },
+              {
+                "id": "q5",
+                "text": "PO şifrə qaydasını dəyişdi (8 simvoldan 12 simvola). RTM bu anda nəyə kömək edir?",
+                "options": [
+                  "Developer-in vaxtını ölçməyə",
+                  "Baqın severity-sini təyin etməyə",
+                  "Hansı test case-lərin yenilənməli və yenidən icra edilməli olduğunu tapmağa",
+                  "Test mühitini qurmağa"
+                ],
+                "correctIndex": 2,
+                "explanation": "Bu impact analysis-dir: dəyişən tələbə bağlı bütün test case-ləri RTM-də dərhal görürsən."
+              }
+            ]
+          },
+          "id": "cmve390p5ef8e53b35b87"
+        }
+      ]
+    }
+  ]
+}

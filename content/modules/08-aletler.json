@@ -1,0 +1,2994 @@
+{
+  "id": "cmn1x0zv0005avkfiv38cp57e",
+  "key": "aletler",
+  "order": 8,
+  "title": "Alətlər və praktik sahələr",
+  "description": "Jira, HTTP və API testing, DevTools, mobil test və SQL — gündəlik QA işinin əsas alətləri.",
+  "icon": "Wrench",
+  "color": "#14B8A6",
+  "lessons": [
+    {
+      "id": "cmn5q84fk001cw80adadfrmre",
+      "slug": "jira-test-management",
+      "title": "Jira ilə test idarəetməsi",
+      "shortDescription": "Issue tipləri, workflow, JQL filtrləri, bug-ların story-lərə bağlanması və Xray/Zephyr ilə test idarəetməsi.",
+      "estimatedMinutes": 12,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Jira issue tiplərini (Epic, Story, Task, Sub-task, Bug) fərqləndirə biləcəksən",
+              "Workflow statuslarında QA-nın rolunu izah edə biləcəksən",
+              "Sadə JQL sorğuları ilə lazım olan bug-ları tapa biləcəksən",
+              "Bug-u story-yə düzgün link tipi ilə bağlaya biləcəksən"
+            ]
+          },
+          "id": "cmve390p99a2d665c1ea3"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Issue",
+                "az": "iş vahidi",
+                "definition": "Jira-da izlənən istənilən iş: story, task, bug və s. Hər issue-nun açarı var, məsələn SHOP-245."
+              },
+              {
+                "term": "Workflow",
+                "az": "iş axını",
+                "definition": "Issue-nun keçə biləcəyi statuslar və onlar arasındakı keçidlər (transitions)."
+              },
+              {
+                "term": "JQL (Jira Query Language)",
+                "az": "Jira sorğu dili",
+                "definition": "Issue-ları sahələrə görə axtarmaq üçün sorğu dili."
+              },
+              {
+                "term": "Board",
+                "az": "lövhə",
+                "definition": "Issue-ların statuslara görə sütunlarda göstərildiyi Scrum və ya Kanban görünüşü."
+              },
+              {
+                "term": "Issue link",
+                "az": "əlaqə",
+                "definition": "İki issue arasındakı bağlantı: relates to, blocks, duplicates və s."
+              }
+            ]
+          },
+          "id": "cmve390p90fa07c774a33"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Jira-da issue tipləri",
+            "level": 2
+          },
+          "id": "cmve390p9bf73a58ed827"
+        },
+        {
+          "type": "TABLE",
+          "title": "Əsas issue tipləri",
+          "content": {
+            "headers": [
+              "Tip",
+              "Nədir",
+              "Nümunə"
+            ],
+            "rows": [
+              [
+                "Epic",
+                "Bir neçə sprintə yayılan böyük funksionallıq",
+                "Onlayn ödəniş sistemi"
+              ],
+              [
+                "Story",
+                "İstifadəçi baxımından bir tələb, adətən bir sprintə sığır",
+                "İstifadəçi kartla ödəniş edə bilməlidir"
+              ],
+              [
+                "Task",
+                "İstifadəçi dəyəri birbaşa olmayan texniki iş",
+                "Test serverinə yeni SSL sertifikatı qurmaq"
+              ],
+              [
+                "Sub-task",
+                "Story və ya task-ın kiçik hissəsi",
+                "Ödəniş formu üçün test case-ləri yazmaq"
+              ],
+              [
+                "Bug",
+                "Gözlənilən və faktiki nəticə arasında fərq",
+                "Kartla ödənişdə 500 xətası qayıdır"
+              ]
+            ]
+          },
+          "id": "cmve390p973d5e0d3b747"
+        },
+        {
+          "type": "CATEGORIZE",
+          "title": "Hansı issue tipi?",
+          "content": {
+            "instructions": "Hər iş üçün ən uyğun Jira issue tipini seç.",
+            "categories": [
+              {
+                "id": "epic",
+                "label": "Epic"
+              },
+              {
+                "id": "story",
+                "label": "Story"
+              },
+              {
+                "id": "task",
+                "label": "Task"
+              },
+              {
+                "id": "bug",
+                "label": "Bug"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "Mobil tətbiqdə tam sadiqlik (loyalty) proqramı",
+                "categoryId": "epic"
+              },
+              {
+                "id": "i2",
+                "text": "İstifadəçi sifariş tarixçəsini PDF kimi yükləyə bilməlidir",
+                "categoryId": "story"
+              },
+              {
+                "id": "i3",
+                "text": "CI pipeline-a yeni test mühitini əlavə etmək",
+                "categoryId": "task"
+              },
+              {
+                "id": "i4",
+                "text": "Sifariş tarixçəsində tarixlər UTC ilə göstərilir, Bakı vaxtı ilə yox",
+                "categoryId": "bug"
+              },
+              {
+                "id": "i5",
+                "text": "İstifadəçi şifrəsini SMS kodu ilə bərpa edə bilməlidir",
+                "categoryId": "story"
+              },
+              {
+                "id": "i6",
+                "text": "\"Şifrəni unutdum\" linki 404 səhifəsinə aparır",
+                "categoryId": "bug"
+              }
+            ],
+            "explanation": "Epic böyük məqsəddir, story istifadəçi tələbidir, task texniki işdir, bug isə tələbdən kənara çıxan davranışdır."
+          },
+          "id": "cmve390p9f28a7fa2cb18"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Workflow: statuslar və QA-nın yeri",
+            "level": 2
+          },
+          "id": "cmve390p9e5c0ea926ab9"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Standart Jira workflow-u sadədir: **To Do → In Progress → Done**. Komandalar adətən QA üçün ayrıca sütunlar əlavə edir. Status dəyişmək üçün issue-da transition düyməsinə basırsan (məsələn, \"Start testing\").\n\nBug-lar üçün isə əvvəlki modulda öyrəndiyin bug life cycle statusları (Open, Fixed, Reopened, Closed və s.) ayrıca workflow kimi qurulur."
+          },
+          "id": "cmve390p984c9e00fe339"
+        },
+        {
+          "type": "TABLE",
+          "title": "Scrum board-da tipik sütunlar",
+          "content": {
+            "headers": [
+              "Sütun",
+              "Nə baş verir",
+              "QA nə edir"
+            ],
+            "rows": [
+              [
+                "To Do",
+                "Story sprintə götürülüb",
+                "Acceptance criteria-nı oxuyur, test case hazırlayır"
+              ],
+              [
+                "In Progress",
+                "Developer kod yazır",
+                "Test data və mühiti hazırlayır"
+              ],
+              [
+                "Code Review",
+                "Digər developer kodu yoxlayır",
+                "Suallarını developer-ə verir"
+              ],
+              [
+                "Ready for QA / In Testing",
+                "Build test mühitindədir",
+                "Test edir, bug açır və story-yə bağlayır"
+              ],
+              [
+                "Done",
+                "Definition of Done ödənilib",
+                "Bütün kritik bug-ların bağlandığını təsdiqləyir"
+              ]
+            ]
+          },
+          "id": "cmve390p93c83b1ba854d"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Bug yaradanda Jira sahələri",
+            "level": 2
+          },
+          "id": "cmve390p969eb0d130a65"
+        },
+        {
+          "type": "TABLE",
+          "title": "Bug issue-nun əsas sahələri",
+          "content": {
+            "headers": [
+              "Sahə",
+              "Nə yazılır"
+            ],
+            "rows": [
+              [
+                "Summary",
+                "Bug başlığı: harada + nə + hansı şərtdə"
+              ],
+              [
+                "Description",
+                "Environment, preconditions, steps, expected, actual"
+              ],
+              [
+                "Priority",
+                "Default dəyərlər: Highest, High, Medium, Low, Lowest"
+              ],
+              [
+                "Severity",
+                "Default sahə deyil — komandalar onu custom field kimi əlavə edir"
+              ],
+              [
+                "Affects Version / Fix Version",
+                "Bug-un tapıldığı və düzəldiləcəyi versiya"
+              ],
+              [
+                "Component, Labels",
+                "Modul (Checkout) və etiketlər (regression, mobile)"
+              ],
+              [
+                "Attachment",
+                "Screenshot, video, log faylları"
+              ]
+            ]
+          },
+          "id": "cmve390p9a379951753bc"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Filters və JQL əsasları",
+            "level": 2
+          },
+          "id": "cmve390p9174c2cdd0dd1"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "JQL sorğusu üç hissədən ibarətdir: **sahə operator dəyər**. Şərtləri `AND`, `OR` ilə birləşdirir, nəticəni `ORDER BY` ilə sıralayırsan. Yaxşı sorğunu **Save as filter** ilə saxla — onu dashboard-a və ya board-a qoşmaq olur."
+          },
+          "id": "cmve390p9698999d9c269"
+        },
+        {
+          "type": "CODE",
+          "title": "JQL nümunələri",
+          "content": {
+            "code": "-- SHOP layihəsində bağlanmamış bütün bug-lar, ən vaciblər yuxarıda\nproject = SHOP AND issuetype = Bug AND resolution = Unresolved ORDER BY priority DESC\n\n-- Mənə təyin olunmuş açıq işlər\nassignee = currentUser() AND resolution = Unresolved\n\n-- Son 7 gündə mənim açdığım bug-lar\nreporter = currentUser() AND issuetype = Bug AND created >= -7d\n\n-- Cari sprintdə yüksək prioritetli bug-lar\nissuetype = Bug AND priority in (Highest, High) AND sprint in openSprints()\n\n-- Mətnində \"ödəniş\" sözü olan regression bug-ları\ntext ~ \"ödəniş\" AND labels = regression",
+            "language": "jql",
+            "caption": "Tez-tez istifadə olunan JQL sorğuları"
+          },
+          "id": "cmve390p9783c6a2ca266"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Sürətli yoxlama",
+          "content": {
+            "questions": [
+              {
+                "id": "mq1",
+                "text": "Cari sprintdə hələ həll olunmamış bug-ları hansı sorğu qaytarır?",
+                "options": [
+                  "issuetype = Bug AND sprint in openSprints() AND resolution = Unresolved",
+                  "type is bug sprint now",
+                  "issuetype = Bug OR sprint in openSprints()",
+                  "SELECT * FROM bugs WHERE sprint = current"
+                ],
+                "correctIndex": 0,
+                "explanation": "AND hər üç şərtin eyni vaxtda ödənməsini tələb edir. OR isə sprintdəki bütün issue-ları da qaytarardı."
+              }
+            ]
+          },
+          "id": "cmve390p9dda9c227a180"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Bug-ları story-lərə bağlamaq",
+            "level": 2
+          },
+          "id": "cmve390p95ea655b91d88"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Story test edilərkən tapılan bug-u həmin story-yə **link** et. Belə olanda PO story-nin niyə Done olmadığını görür, komanda isə hansı tələbdə nə qədər problem olduğunu izləyir (traceability).\n\nTez-tez istifadə olunan link tipləri:\n- **relates to** — ümumi əlaqə\n- **blocks / is blocked by** — bug story-nin bağlanmasını bloklayır\n- **duplicates / is duplicated by** — eyni problem\n- **is caused by** — bug başqa dəyişiklikdən yaranıb"
+          },
+          "id": "cmve390p966eec5019318"
+        },
+        {
+          "type": "NOTE",
+          "title": "Test case-lər harada saxlanır?",
+          "content": {
+            "variant": "tip",
+            "body": "Jira özü test case saxlamaq üçün nəzərdə tutulmayıb. Bunun üçün plaginlər istifadə olunur:\n- **Xray** — Test, Test Set, Test Plan, Test Execution kimi yeni issue tipləri əlavə edir; Test-i story-yə \"tests\" linki ilə bağlayırsan.\n- **Zephyr Scale** — test case, test cycle və icra nəticələrini ayrıca bölmədə saxlayır.\nHər ikisi tələb əhatəsi (requirement coverage) hesabatı verir: hansı story test olunub, hansında failed test var."
+          },
+          "id": "cmve390p9b025163415c3"
+        },
+        {
+          "type": "TASK",
+          "title": "Praktika: JQL yaz",
+          "content": {
+            "instructions": "PAY layihəsi üçün iki JQL sorğusu yaz:\n1. Son 14 gündə yaradılmış, priority-si High və ya Highest olan və hələ həll olunmamış bütün bug-lar, ən yenilər yuxarıda.\n2. Sənə təyin olunmuş və statusu \"In Testing\" olan bütün issue-lar.",
+            "placeholder": "1) project = PAY AND ...\n2) ...",
+            "required": true
+          },
+          "id": "cmve390p99464951a88ed"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Əsas issue tipləri: Epic, Story, Task, Sub-task, Bug.",
+              "Workflow statusları göstərir ki, iş hazırda kimdədir; QA adətən \"In Testing\" mərhələsinə cavabdehdir.",
+              "JQL: sahə operator dəyər, AND/OR ilə birləşmə, ORDER BY ilə sıralama; yaxşı sorğunu filter kimi saxla.",
+              "Bug-u story-yə link et ki, traceability qorunsun.",
+              "Test case idarəetməsi üçün Xray və ya Zephyr Scale plaginlərindən istifadə olunur."
+            ]
+          },
+          "id": "cmve390p91b320a3300f3"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "\"İstifadəçi sifarişini ləğv edə bilməlidir\" — bu hansı issue tipidir?",
+                "options": [
+                  "Bug",
+                  "Story",
+                  "Epic",
+                  "Sub-task"
+                ],
+                "correctIndex": 1,
+                "explanation": "Bu, istifadəçi baxımından yazılmış və bir sprintə sığan tələbdir — story."
+              },
+              {
+                "id": "q2",
+                "text": "Jira-da severity sahəsi haqqında hansı ifadə düzgündür?",
+                "options": [
+                  "Hər layihədə default sahədir",
+                  "Default sahə deyil, komandalar onu custom field kimi əlavə edir",
+                  "Priority ilə eyni sahədir",
+                  "Yalnız Epic-lərdə olur"
+                ],
+                "correctIndex": 1,
+                "explanation": "Jira-nın default sahəsi Priority-dir. Severity lazım olanda custom field kimi yaradılır."
+              },
+              {
+                "id": "q3",
+                "text": "Hansı JQL sorğusu mənə təyin olunmuş açıq işləri qaytarır?",
+                "options": [
+                  "assignee = currentUser() AND resolution = Unresolved",
+                  "reporter = currentUser()",
+                  "assignee = me OR status = Open",
+                  "owner = currentUser() AND done = false"
+                ],
+                "correctIndex": 0,
+                "explanation": "assignee təyin olunan şəxsi, resolution = Unresolved isə hələ həll olunmamış işləri seçir."
+              },
+              {
+                "id": "q4",
+                "text": "Bug story-nin Done olmasına mane olur. Hansı link tipi daha dəqiqdir?",
+                "options": [
+                  "relates to",
+                  "blocks",
+                  "duplicates",
+                  "clones"
+                ],
+                "correctIndex": 1,
+                "explanation": "\"blocks\" asılılığı açıq göstərir: bug düzəlməyincə story bağlana bilməz."
+              },
+              {
+                "id": "q5",
+                "text": "Jira-da test case və test icralarını idarə etmək üçün nə istifadə olunur?",
+                "options": [
+                  "JQL",
+                  "Xray və ya Zephyr Scale kimi plaginlər",
+                  "Yalnız Labels",
+                  "Confluence səhifəsi"
+                ],
+                "correctIndex": 1,
+                "explanation": "Xray və Zephyr Scale test case, test icrası və requirement coverage funksiyalarını əlavə edir."
+              }
+            ]
+          },
+          "id": "cmve390p997a4d8b59ccb"
+        }
+      ]
+    },
+    {
+      "slug": "http-esaslari",
+      "title": "HTTP əsasları: request, response, status code",
+      "shortDescription": "Client və server necə danışır: method, URL, header, body, JSON və status code ailələri.",
+      "estimatedMinutes": 11,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "HTTP request və response-un hissələrini adlandıra biləcəksən",
+              "GET, POST, PUT, PATCH və DELETE metodlarının məqsədini fərqləndirə biləcəksən",
+              "JSON cavabını oxuyub data tiplərini yoxlaya biləcəksən",
+              "Status code-u ailəsinə görə təsnif edə və 4xx ilə 5xx fərqini izah edə biləcəksən"
+            ]
+          },
+          "id": "cmve390p9e70ac91d78a1"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "HTTP",
+                "az": "HyperText Transfer Protocol",
+                "definition": "Client (browser, mobil tətbiq) ilə server arasında məlumat mübadiləsi qaydası. HTTPS — onun şifrələnmiş versiyası."
+              },
+              {
+                "term": "Request",
+                "az": "sorğu",
+                "definition": "Client-in serverə göndərdiyi mesaj: method, URL, headers, body."
+              },
+              {
+                "term": "Response",
+                "az": "cavab",
+                "definition": "Serverin qaytardığı mesaj: status code, headers, body."
+              },
+              {
+                "term": "Header",
+                "az": "başlıq",
+                "definition": "Mesaj haqqında əlavə məlumat, məsələn `Content-Type` və ya `Authorization`."
+              },
+              {
+                "term": "JSON",
+                "az": "JavaScript Object Notation",
+                "definition": "API-lərdə ən çox istifadə olunan mətn formatı: açar–dəyər cütləri."
+              },
+              {
+                "term": "Status code",
+                "az": "status kodu",
+                "definition": "Nəticəni bildirən üçrəqəmli kod: 200, 404, 500 və s."
+              }
+            ]
+          },
+          "id": "cmve390p978463a99d8a0"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Client və server danışığı",
+            "level": 2
+          },
+          "id": "cmve390p9e627812065e9"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Mobil bank tətbiqində \"Köçür\" düyməsinə basanda tətbiq serverə **request** göndərir. Server əməliyyatı yerinə yetirir və **response** qaytarır. Ekranda gördüyün hər şey bu cavaba əsaslanır.\n\nQA üçün vacib nəticə: ekrandakı xəta mesajı səbəbi gizlədə bilər. Request və response-u görə bilsən, problemin frontend-də, yoxsa backend-də olduğunu tez müəyyən edirsən."
+          },
+          "id": "cmve390p9a1d4a34502a6"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Request-in hissələri",
+            "level": 2
+          },
+          "id": "cmve390p95d5b2ff7ac82"
+        },
+        {
+          "type": "TABLE",
+          "title": "HTTP request-in hissələri",
+          "content": {
+            "headers": [
+              "Hissə",
+              "Nədir",
+              "Nümunə"
+            ],
+            "rows": [
+              [
+                "Method",
+                "Nə etmək istədiyin",
+                "POST"
+              ],
+              [
+                "URL",
+                "Base URL + path + query parametrləri",
+                "https://api.narixmarket.az/v1/products?category=audio&page=2"
+              ],
+              [
+                "Headers",
+                "Əlavə məlumat: format, autentifikasiya",
+                "Content-Type: application/json, Authorization: Bearer <token>"
+              ],
+              [
+                "Body",
+                "Göndərilən data (adətən POST, PUT, PATCH-də)",
+                "{ \"productId\": 42, \"quantity\": 1 }"
+              ]
+            ]
+          },
+          "id": "cmve390p991d9e2df43a6"
+        },
+        {
+          "type": "CODE",
+          "title": "Request nümunəsi",
+          "content": {
+            "code": "POST /v1/orders HTTP/1.1\nHost: api.narixmarket.az\nContent-Type: application/json\nAuthorization: Bearer eyJhbGciOiJIUzI1NiJ9...\n\n{\n  \"productId\": 42,\n  \"quantity\": 2,\n  \"deliveryCity\": \"Bakı\"\n}",
+            "language": "http",
+            "caption": "Sifariş yaradan request: method + path, headers, boş sətir, body"
+          },
+          "id": "cmve390p9ab9be509f7e0"
+        },
+        {
+          "type": "TABLE",
+          "title": "HTTP metodları",
+          "content": {
+            "headers": [
+              "Method",
+              "Məqsəd",
+              "Nümunə"
+            ],
+            "rows": [
+              [
+                "GET",
+                "Data oxumaq, serverdə heç nə dəyişmir",
+                "GET /products/42"
+              ],
+              [
+                "POST",
+                "Yeni resurs yaratmaq",
+                "POST /orders"
+              ],
+              [
+                "PUT",
+                "Resursu tam əvəz etmək (bütün sahələr göndərilir)",
+                "PUT /users/7"
+              ],
+              [
+                "PATCH",
+                "Resursun bir hissəsini yeniləmək",
+                "PATCH /users/7 { \"city\": \"Gəncə\" }"
+              ],
+              [
+                "DELETE",
+                "Resursu silmək",
+                "DELETE /cart/items/15"
+              ]
+            ]
+          },
+          "id": "cmve390p9f48b42c48aa4"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Response və JSON",
+            "level": 2
+          },
+          "id": "cmve390p9cf2e1362358a"
+        },
+        {
+          "type": "CODE",
+          "title": "Response nümunəsi",
+          "content": {
+            "code": "HTTP/1.1 201 Created\nContent-Type: application/json\n\n{\n  \"id\": 10571,\n  \"status\": \"pending\",\n  \"total\": 70.0,\n  \"currency\": \"AZN\",\n  \"items\": [\n    { \"productId\": 42, \"quantity\": 2 }\n  ],\n  \"promoCode\": null,\n  \"paid\": false\n}",
+            "language": "http",
+            "caption": "Status line, headers və JSON body"
+          },
+          "id": "cmve390p98343a81de018"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "JSON-da dəyər tipləri: **string** (`\"pending\"`), **number** (`70.0`), **boolean** (`false`), **null**, **object** (`{ }`) və **array** (`[ ]`). Açarlar həmişə cüt dırnaqda yazılır.\n\nQA tipi də yoxlayır: `\"total\": 70.0` düzgündür, `\"total\": \"70.0\"` isə string-dir — frontend-də hesablama səhvinə səbəb ola bilər."
+          },
+          "id": "cmve390p922225fdca937"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Status code ailələri",
+            "level": 2
+          },
+          "id": "cmve390p976b8ed2bfaed"
+        },
+        {
+          "type": "TABLE",
+          "title": "Status code ailələri",
+          "content": {
+            "headers": [
+              "Ailə",
+              "Mənası",
+              "Tipik kodlar"
+            ],
+            "rows": [
+              [
+                "1xx",
+                "Məlumat: sorğu qəbul olunub, davam edilir",
+                "100, 101"
+              ],
+              [
+                "2xx",
+                "Uğur",
+                "200 OK, 201 Created, 204 No Content"
+              ],
+              [
+                "3xx",
+                "Yönləndirmə",
+                "301 Moved Permanently, 302 Found, 304 Not Modified"
+              ],
+              [
+                "4xx",
+                "Client xətası: sorğuda problem var",
+                "400, 401, 403, 404, 409, 422, 429"
+              ],
+              [
+                "5xx",
+                "Server xətası: sorğu düzgündür, server uğursuz oldu",
+                "500, 502, 503, 504"
+              ]
+            ]
+          },
+          "id": "cmve390p96117c527eb1e"
+        },
+        {
+          "type": "TABLE",
+          "title": "QA-nın ən çox gördüyü kodlar",
+          "content": {
+            "headers": [
+              "Kod",
+              "Mənası",
+              "Nümunə vəziyyət"
+            ],
+            "rows": [
+              [
+                "200 OK",
+                "Sorğu uğurludur",
+                "Məhsul siyahısı qaytarıldı"
+              ],
+              [
+                "201 Created",
+                "Yeni resurs yaradıldı",
+                "Sifariş yaradıldı"
+              ],
+              [
+                "204 No Content",
+                "Uğurlu, body yoxdur",
+                "Səbətdən məhsul silindi"
+              ],
+              [
+                "400 Bad Request",
+                "Sorğu səhv formatdadır və ya validasiyadan keçmir",
+                "quantity: 0 göndərildi"
+              ],
+              [
+                "401 Unauthorized",
+                "Autentifikasiya yoxdur: token yoxdur və ya vaxtı bitib",
+                "Login olmadan sifarişlərə baxmaq"
+              ],
+              [
+                "403 Forbidden",
+                "Kim olduğun bəllidir, amma icazən yoxdur",
+                "Adi istifadəçi admin panelini açır"
+              ],
+              [
+                "404 Not Found",
+                "Resurs tapılmadı",
+                "GET /products/99999"
+              ],
+              [
+                "409 Conflict",
+                "Mövcud vəziyyətlə ziddiyyət",
+                "Bu email ilə istifadəçi artıq var"
+              ],
+              [
+                "500 Internal Server Error",
+                "Serverdə gözlənilməz xəta",
+                "Backend-də exception"
+              ],
+              [
+                "503 Service Unavailable",
+                "Server müvəqqəti əlçatan deyil",
+                "Texniki işlər və ya həddindən artıq yük"
+              ]
+            ]
+          },
+          "id": "cmve390p94e5332e8cc3d"
+        },
+        {
+          "type": "NOTE",
+          "title": "4xx yoxsa 5xx?",
+          "content": {
+            "variant": "important",
+            "body": "İstifadəçi səhv data göndərəndə server **4xx** qaytarmalıdır. Server səhv inputa **500** ilə cavab verirsə, bu özü bug-dur: backend validasiyanı düzgün etmir."
+          },
+          "id": "cmve390p93080348c7c25"
+        },
+        {
+          "type": "CATEGORIZE",
+          "title": "Status code-ları ailələrinə ayır",
+          "content": {
+            "instructions": "Hər kodu düzgün ailəyə yerləşdir.",
+            "categories": [
+              {
+                "id": "s2",
+                "label": "2xx Uğur"
+              },
+              {
+                "id": "s3",
+                "label": "3xx Yönləndirmə"
+              },
+              {
+                "id": "s4",
+                "label": "4xx Client xətası"
+              },
+              {
+                "id": "s5",
+                "label": "5xx Server xətası"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "201 Created",
+                "categoryId": "s2"
+              },
+              {
+                "id": "i2",
+                "text": "204 No Content",
+                "categoryId": "s2"
+              },
+              {
+                "id": "i3",
+                "text": "301 Moved Permanently",
+                "categoryId": "s3"
+              },
+              {
+                "id": "i4",
+                "text": "304 Not Modified",
+                "categoryId": "s3"
+              },
+              {
+                "id": "i5",
+                "text": "403 Forbidden",
+                "categoryId": "s4"
+              },
+              {
+                "id": "i6",
+                "text": "409 Conflict",
+                "categoryId": "s4"
+              },
+              {
+                "id": "i7",
+                "text": "429 Too Many Requests",
+                "categoryId": "s4"
+              },
+              {
+                "id": "i8",
+                "text": "502 Bad Gateway",
+                "categoryId": "s5"
+              },
+              {
+                "id": "i9",
+                "text": "503 Service Unavailable",
+                "categoryId": "s5"
+              }
+            ],
+            "explanation": "Birinci rəqəm ailəni göstərir: 2 — uğur, 3 — yönləndirmə, 4 — client tərəfdə səhv, 5 — server tərəfdə səhv."
+          },
+          "id": "cmve390p95ecf94d3c944"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Request: method, URL, headers, body. Response: status code, headers, body.",
+              "GET oxuyur, POST yaradır, PUT tam əvəz edir, PATCH qismən yeniləyir, DELETE silir.",
+              "JSON cavabında həm dəyəri, həm də tipi yoxla: number və string fərqlidir.",
+              "4xx — client sorğusunda problem, 5xx — server problemi; səhv inputa 500 cavabı bug-dur.",
+              "401 — autentifikasiya yoxdur, 403 — icazə yoxdur."
+            ]
+          },
+          "id": "cmve390p93d387c0323e6"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Mövcud istifadəçinin yalnız şəhərini dəyişmək üçün ən uyğun method hansıdır?",
+                "options": [
+                  "GET",
+                  "POST",
+                  "PATCH",
+                  "DELETE"
+                ],
+                "correctIndex": 2,
+                "explanation": "PATCH resursun bir hissəsini yeniləyir. PUT isə adətən resursun bütün sahələrini əvəz edir."
+              },
+              {
+                "id": "q2",
+                "text": "Token göndərilmədən sifariş siyahısı istənildi. Gözlənilən status code hansıdır?",
+                "options": [
+                  "200",
+                  "401",
+                  "403",
+                  "404"
+                ],
+                "correctIndex": 1,
+                "explanation": "Autentifikasiya yoxdursa, server 401 Unauthorized qaytarır. 403 isə kim olduğun bəlli olanda, amma icazən olmayanda qaytarılır."
+              },
+              {
+                "id": "q3",
+                "text": "Qeydiyyat formunda email boş göndərildi və server 500 qaytardı. Bu nədir?",
+                "options": [
+                  "Normal davranış",
+                  "Bug: server validasiya xətasına 400 qaytarmalı idi",
+                  "Client-in problemi, bug deyil",
+                  "Şəbəkə problemi"
+                ],
+                "correctIndex": 1,
+                "explanation": "Səhv input client xətasıdır və 4xx ilə cavablandırılmalıdır. 500 serverin bu halı idarə etmədiyini göstərir."
+              },
+              {
+                "id": "q4",
+                "text": "JSON cavabında `\"price\": \"35\"` gəlir, sənəddə isə price number tipindədir. Nə deyə bilərsən?",
+                "options": [
+                  "Hər şey düzgündür",
+                  "Tip uyğunsuzluğu var: price string kimi qayıdır",
+                  "Bu, status code problemidir",
+                  "JSON belə yazıla bilməz"
+                ],
+                "correctIndex": 1,
+                "explanation": "Dırnaq içində dəyər string-dir. Sənəddə number tələb olunursa, bu, sxem uyğunsuzluğu — bug-dur."
+              },
+              {
+                "id": "q5",
+                "text": "Hansı kod uğurla yeni resursun yaradıldığını bildirir?",
+                "options": [
+                  "200 OK",
+                  "201 Created",
+                  "204 No Content",
+                  "304 Not Modified"
+                ],
+                "correctIndex": 1,
+                "explanation": "201 Created yeni resurs yaradılanda qaytarılır, adətən POST sorğusundan sonra."
+              }
+            ]
+          },
+          "id": "cmve390p9d864745c1086"
+        }
+      ]
+    },
+    {
+      "id": "cmn1x27fj005cvkfiml8bpfx1",
+      "slug": "what-is-api-testing",
+      "title": "API testing və Postman",
+      "shortDescription": "API cavabında nəyi yoxlamaq lazımdır: status, body, sxem, headers, neqativ hallar, auth və Postman ilə praktika.",
+      "estimatedMinutes": 14,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "API testing-in UI testing-dən üstünlüklərini izah edə biləcəksən",
+              "API cavabında status, body, sxem və header-ləri yoxlaya biləcəksən",
+              "Neqativ və autentifikasiya hallarını planlaya biləcəksən",
+              "Postman-da request göndərib sadə avtomatik yoxlama yaza biləcəksən"
+            ]
+          },
+          "id": "cmve390p9dc69a3d52441"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "API",
+                "az": "Application Programming Interface",
+                "definition": "Proqramların bir-biri ilə danışdığı interfeys. Frontend backend-lə API vasitəsilə əlaqə saxlayır."
+              },
+              {
+                "term": "Endpoint",
+                "az": "son nöqtə",
+                "definition": "Method və path cütü, məsələn `POST /orders`."
+              },
+              {
+                "term": "Schema",
+                "az": "sxem",
+                "definition": "Cavabın strukturu: hansı sahələr məcburidir və hansı tipdədir."
+              },
+              {
+                "term": "Authentication / Authorization",
+                "az": "autentifikasiya / avtorizasiya",
+                "definition": "Sən kimsən (login, token) / nəyə icazən var (rol, hüquq)."
+              },
+              {
+                "term": "Collection",
+                "az": "kolleksiya",
+                "definition": "Postman-da bir-biri ilə əlaqəli request-lərin qovluğu."
+              },
+              {
+                "term": "Environment variable",
+                "az": "mühit dəyişəni",
+                "definition": "Postman-da `{{baseUrl}}` kimi dəyişən: test və staging arasında keçidi asanlaşdırır."
+              }
+            ]
+          },
+          "id": "cmve390p9cde0cfe4303a"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "API testing nədir və niyə vacibdir?",
+            "level": 2
+          },
+          "id": "cmve390p9a4c80e6d7f0f"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "API testing — UI olmadan backend-i birbaşa yoxlamaqdır. Düyməyə basmaq əvəzinə request göndərir və cavabı yoxlayırsan.\n\nÜstünlükləri:\n- UI hazır olmamışdan əvvəl test etmək olur.\n- Testlər sürətli və stabildir.\n- Frontend-in gizlətdiyi bug-lar üzə çıxır."
+          },
+          "id": "cmve390p933780123d284"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "Frontend validasiyası backend-i qorumur",
+          "content": {
+            "description": "Səbət formunda frontend mənfi miqdar yazmağa imkan vermir. QA isə Postman-dan birbaşa göndərir:\n`POST /cart/items { \"productId\": 42, \"quantity\": -3 }`\n\nServer **201** qaytarır və səbətin məbləği mənfi olur.",
+            "takeaway": "Validasiya backend-də də olmalıdır. Bu bug-ı yalnız API səviyyəsində tapmaq mümkündür."
+          },
+          "id": "cmve390p960bc245ff758"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "API cavabında nəyi yoxlayırsan?",
+            "level": 2
+          },
+          "id": "cmve390p98e5aa7fca15a"
+        },
+        {
+          "type": "TABLE",
+          "title": "API yoxlama siyahısı",
+          "content": {
+            "headers": [
+              "Nə",
+              "Sual",
+              "Nümunə"
+            ],
+            "rows": [
+              [
+                "Status code",
+                "Kod gözləniləndirmi?",
+                "Sifariş yaradılanda 201, 200 yox"
+              ],
+              [
+                "Body dəyərləri",
+                "Data düzgündürmü?",
+                "total = price × quantity"
+              ],
+              [
+                "Schema",
+                "Məcburi sahələr var, tiplər düzgündür?",
+                "id number, status string, email boş deyil"
+              ],
+              [
+                "Headers",
+                "Format və təhlükəsizlik header-ləri",
+                "Content-Type: application/json"
+              ],
+              [
+                "Response time",
+                "Cavab qəbul olunan müddətdədir?",
+                "GET /products 1 saniyədən tez"
+              ],
+              [
+                "Data persistence",
+                "Dəyişiklik həqiqətən saxlanıldı?",
+                "POST-dan sonra GET /orders/:id yeni sifarişi qaytarır"
+              ],
+              [
+                "Xəta mesajı",
+                "Aydın və təhlükəsizdir?",
+                "Stack trace və SQL mətni göstərilmir"
+              ]
+            ]
+          },
+          "id": "cmve390p9b482a09e690c"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Neqativ və autentifikasiya halları",
+            "level": 2
+          },
+          "id": "cmve390p97fde012bd9df"
+        },
+        {
+          "type": "TABLE",
+          "title": "Tipik neqativ testlər",
+          "content": {
+            "headers": [
+              "Hal",
+              "Request",
+              "Gözlənilən cavab"
+            ],
+            "rows": [
+              [
+                "Məcburi sahə yoxdur",
+                "POST /users email olmadan",
+                "400, hansı sahənin səhv olduğu göstərilir"
+              ],
+              [
+                "Səhv tip",
+                "quantity: \"iki\"",
+                "400 və ya 422"
+              ],
+              [
+                "Mövcud olmayan resurs",
+                "GET /orders/999999",
+                "404"
+              ],
+              [
+                "Token yoxdur",
+                "GET /users/me/orders Authorization olmadan",
+                "401"
+              ],
+              [
+                "Başqasının resursu",
+                "User A token-i ilə User B-nin sifarişi",
+                "403 (və ya məlumat sızmasın deyə 404)"
+              ],
+              [
+                "Təkrar data",
+                "Mövcud email ilə qeydiyyat",
+                "409"
+              ],
+              [
+                "Sərhəd dəyərləri",
+                "quantity: 0, 1, maksimum, maksimum+1",
+                "Sərhəddən kənarda 400"
+              ]
+            ]
+          },
+          "id": "cmve390p98d2c73ae0e75"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Sürətli yoxlama",
+          "content": {
+            "questions": [
+              {
+                "id": "mq1",
+                "text": "User A öz token-i ilə User B-nin sifarişini GET edir və server 200 ilə sifariş məlumatını qaytarır. Bu nədir?",
+                "options": [
+                  "Normal davranış",
+                  "Ciddi təhlükəsizlik bug-u: avtorizasiya yoxlanmır",
+                  "Performance problemi",
+                  "Frontend bug-u"
+                ],
+                "correctIndex": 1,
+                "explanation": "İstifadəçi yalnız öz resurslarını görməlidir. Gözlənilən cavab 403 və ya 404-dür."
+              }
+            ]
+          },
+          "id": "cmve390p9388a1080f527"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Postman ilə işləmək",
+            "level": 2
+          },
+          "id": "cmve390p9a831801a3535"
+        },
+        {
+          "type": "STEPPER",
+          "title": "Postman-da ilk request",
+          "content": {
+            "steps": [
+              {
+                "title": "Collection yarat",
+                "description": "New → Collection, məsələn \"Narix Market API\". Bütün request-lər burada qruplaşır."
+              },
+              {
+                "title": "Environment qur",
+                "description": "Environments → `baseUrl = https://api.narixmarket.az/v1` və `token` dəyişənlərini əlavə et."
+              },
+              {
+                "title": "Request əlavə et",
+                "description": "Method seç (GET, POST...), URL-ə `{{baseUrl}}/products` yaz."
+              },
+              {
+                "title": "Headers və body",
+                "description": "Authorization-da Bearer `{{token}}`, Body → raw → JSON."
+              },
+              {
+                "title": "Send və oxu",
+                "description": "Status, Time, Size və Body-yə bax. Cavabı gözlənilən nəticə ilə müqayisə et."
+              },
+              {
+                "title": "Yoxlamanı avtomatlaşdır",
+                "description": "Tests (yeni versiyalarda Scripts → Post-response) bölməsinə `pm.test` yaz və request-i saxla."
+              }
+            ]
+          },
+          "id": "cmve390p9eebeeeb8ab62"
+        },
+        {
+          "type": "CODE",
+          "title": "Postman testləri",
+          "content": {
+            "code": "pm.test(\"Status 201 Created\", () => {\n  pm.response.to.have.status(201);\n});\n\npm.test(\"Sifarişin sxemi düzgündür\", () => {\n  const body = pm.response.json();\n  pm.expect(body.id).to.be.a(\"number\");\n  pm.expect(body.status).to.eql(\"pending\");\n  pm.expect(body.currency).to.eql(\"AZN\");\n});\n\n// Növbəti request-də istifadə etmək üçün id-ni saxla\npm.environment.set(\"orderId\", pm.response.json().id);",
+            "language": "javascript",
+            "caption": "Collection Runner bütün kolleksiyanı ardıcıl işə salır, Newman isə eyni testləri CI-da əmr sətrindən icra edir."
+          },
+          "id": "cmve390p92c6ec1564ec8"
+        },
+        {
+          "type": "API_PLAYGROUND",
+          "title": "Praktika: Narix Market API",
+          "content": {
+            "instructions": "Narix Market onlayn mağazasının test API-si qarşındadır. Endpoint-lərə request göndər, cavabları oxu və hər suala cavab ver. Hər cavabda status code-a, body-yə və data tiplərinə diqqət et.",
+            "baseUrl": "https://api.narixmarket.az/v1",
+            "endpoints": [
+              {
+                "method": "GET",
+                "path": "/products",
+                "status": 200,
+                "description": "Məhsul siyahısı. Sənədə görə price number tipində olmalıdır.",
+                "body": {
+                  "items": [
+                    {
+                      "id": 42,
+                      "name": "Simsiz qulaqlıq",
+                      "price": 35,
+                      "currency": "AZN",
+                      "stock": 12
+                    },
+                    {
+                      "id": 43,
+                      "name": "Powerbank 10000 mAh",
+                      "price": "29.90",
+                      "currency": "AZN",
+                      "stock": 0
+                    }
+                  ],
+                  "total": 2
+                }
+              },
+              {
+                "method": "GET",
+                "path": "/products/:id",
+                "status": 200,
+                "description": "Bir məhsulun məlumatı",
+                "body": {
+                  "id": 42,
+                  "name": "Simsiz qulaqlıq",
+                  "price": 35,
+                  "currency": "AZN",
+                  "stock": 12
+                }
+              },
+              {
+                "method": "POST",
+                "path": "/auth/login",
+                "status": 200,
+                "description": "Body: { \"email\": \"test.user@narix.az\", \"password\": \"Test1234!\" }",
+                "body": {
+                  "token": "eyJhbGciOiJIUzI1NiJ9.demo",
+                  "expiresIn": 3600
+                }
+              },
+              {
+                "method": "GET",
+                "path": "/users/me/orders",
+                "status": 401,
+                "description": "Authorization header-i olmadan göndərilən sorğu",
+                "body": {
+                  "error": "UNAUTHORIZED",
+                  "message": "Token göndərilməyib və ya vaxtı bitib"
+                }
+              },
+              {
+                "method": "POST",
+                "path": "/cart/items",
+                "status": 400,
+                "description": "Body: { \"productId\": 42, \"quantity\": 0 }",
+                "body": {
+                  "error": "VALIDATION_ERROR",
+                  "details": [
+                    {
+                      "field": "quantity",
+                      "message": "quantity 1 və ya daha böyük olmalıdır"
+                    }
+                  ]
+                }
+              },
+              {
+                "method": "POST",
+                "path": "/orders",
+                "status": 201,
+                "description": "Body: { \"productId\": 42, \"quantity\": 1 }",
+                "body": {
+                  "id": 10571,
+                  "status": "pending",
+                  "total": 35,
+                  "currency": "AZN",
+                  "createdAt": "2026-10-18T10:15:00Z"
+                }
+              },
+              {
+                "method": "GET",
+                "path": "/coupons/:id",
+                "status": 404,
+                "description": "Kupon kodunu yoxlamaq, məsələn /coupons/YAY2026",
+                "body": {
+                  "error": "COUPON_NOT_FOUND",
+                  "message": "Kupon tapılmadı"
+                }
+              },
+              {
+                "method": "POST",
+                "path": "/payments",
+                "status": 500,
+                "description": "Body: { \"orderId\": 10571, \"cardToken\": \"tok_test_4111\" }",
+                "body": {
+                  "error": "INTERNAL_SERVER_ERROR",
+                  "message": "Unexpected error",
+                  "traceId": "a91f-22c0"
+                }
+              }
+            ],
+            "tasks": [
+              {
+                "id": "t1",
+                "question": "GET /products cavabında hansı məhsulun sxemi sənədə uyğun deyil?",
+                "options": [
+                  "Simsiz qulaqlıq",
+                  "Powerbank 10000 mAh — price string kimi qayıdır",
+                  "Hər ikisi — stock sahəsi yoxdur",
+                  "Heç biri, cavab düzgündür"
+                ],
+                "correctIndex": 1,
+                "explanation": "\"29.90\" dırnaq içindədir, yəni string-dir. Sənədə görə price number olmalıdır."
+              },
+              {
+                "id": "t2",
+                "question": "POST /orders hansı status code qaytarır və yeni sifarişin id-si nədir?",
+                "options": [
+                  "200, id 42",
+                  "201, id 10571",
+                  "201, id 42",
+                  "204, id qaytarılmır"
+                ],
+                "correctIndex": 1,
+                "explanation": "Yeni resurs yaradıldığı üçün 201 Created qayıdır. 42 məhsulun id-sidir, sifarişin id-si 10571-dir."
+              },
+              {
+                "id": "t3",
+                "question": "POST /cart/items 400 qaytarır. Hansı sahə validasiyadan keçmədi?",
+                "options": [
+                  "productId",
+                  "quantity",
+                  "currency",
+                  "token"
+                ],
+                "correctIndex": 1,
+                "explanation": "details massivində field: \"quantity\" göstərilib — 0 göndərilib, minimum 1 olmalıdır."
+              },
+              {
+                "id": "t4",
+                "question": "GET /users/me/orders 401 qaytarır. Bu nə deməkdir?",
+                "options": [
+                  "İstifadəçinin sifarişi yoxdur",
+                  "Sorğu autentifikasiya olunmayıb — token yoxdur və ya vaxtı bitib",
+                  "Serverdə xəta baş verib",
+                  "İstifadəçinin bu resursa icazəsi yoxdur"
+                ],
+                "correctIndex": 1,
+                "explanation": "401 autentifikasiyanın olmadığını bildirir. İcazə çatışmazlığı 403 ilə ifadə olunur."
+              },
+              {
+                "id": "t5",
+                "question": "GET /coupons/YAY2026 göndər. Cavabda hansı error kodu qayıdır?",
+                "options": [
+                  "NOT_FOUND",
+                  "COUPON_NOT_FOUND",
+                  "VALIDATION_ERROR",
+                  "UNAUTHORIZED"
+                ],
+                "correctIndex": 1,
+                "explanation": "Body-də error: \"COUPON_NOT_FOUND\" qayıdır, status code isə 404-dür."
+              },
+              {
+                "id": "t6",
+                "question": "POST /payments 500 qaytarır. Bug report üçün ən faydalı məlumat hansıdır?",
+                "options": [
+                  "\"Ödəniş işləmir\" yazmaq kifayətdir",
+                  "Endpoint, request body, status 500 və traceId a91f-22c0",
+                  "Yalnız frontend-in screenshot-u",
+                  "Heç nə, 500 normal cavabdır"
+                ],
+                "correctIndex": 1,
+                "explanation": "traceId backend developer-ə server log-unda konkret xətanı tapmağa imkan verir. Endpoint və body isə problemi təkrarlamağa kömək edir."
+              }
+            ]
+          },
+          "id": "cmve390p90a7dd3ecda60"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "API testing backend-i UI-dan asılı olmadan, sürətli və erkən yoxlayır.",
+              "Hər cavabda status code, body dəyərləri, sxem, headers və response time-a bax.",
+              "Neqativ hallar: məcburi sahə yoxdur, səhv tip, mövcud olmayan id, token yoxdur, başqasının resursu.",
+              "Postman-da collection, environment variable və pm.test ilə yoxlamaları təkrar istifadə olunan edirsən.",
+              "500 cavabını report edəndə endpoint, request body və traceId əlavə et."
+            ]
+          },
+          "id": "cmve390p92fc82cab4195"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "API testing-in əsas üstünlüyü hansıdır?",
+                "options": [
+                  "UI dizaynını yoxlayır",
+                  "UI hazır olmamış backend məntiqini sürətli yoxlamağa imkan verir",
+                  "Kod yazmağı tələb etmir, ona görə daha dəqiqdir",
+                  "Yalnız performance üçün istifadə olunur"
+                ],
+                "correctIndex": 1,
+                "explanation": "API testləri UI-dan asılı deyil, buna görə daha erkən başlayır və daha stabil işləyir."
+              },
+              {
+                "id": "q2",
+                "text": "POST /orders 201 qaytardı. Sifarişin həqiqətən saxlandığını necə yoxlayarsan?",
+                "options": [
+                  "Status code kifayətdir",
+                  "Qaytarılan id ilə GET /orders/:id göndərib datanı müqayisə edərəm",
+                  "POST-u yenidən göndərərəm",
+                  "Postman-ı bağlayıb açaram"
+                ],
+                "correctIndex": 1,
+                "explanation": "Data persistence yoxlaması: yaradılan resursu ayrıca GET ilə oxuyub dəyərləri müqayisə etmək."
+              },
+              {
+                "id": "q3",
+                "text": "Hansı neqativ test autentifikasiyanı yoxlayır?",
+                "options": [
+                  "quantity: 0 göndərmək",
+                  "Authorization header-i olmadan sorğu göndərmək",
+                  "Mövcud olmayan məhsul id-si istəmək",
+                  "Uzun ad göndərmək"
+                ],
+                "correctIndex": 1,
+                "explanation": "Token olmadan sorğu autentifikasiyanı yoxlayır, gözlənilən cavab 401-dir."
+              },
+              {
+                "id": "q4",
+                "text": "Postman-da `{{baseUrl}}` nədir?",
+                "options": [
+                  "Request-in body-si",
+                  "Environment variable — mühitə görə dəyişən dəyər",
+                  "Status code",
+                  "Postman-ın versiyası"
+                ],
+                "correctIndex": 1,
+                "explanation": "Environment variable eyni kolleksiyanı test, staging və digər mühitlərdə işə salmağa imkan verir."
+              },
+              {
+                "id": "q5",
+                "text": "Bu Postman testi nəyi yoxlayır: `pm.response.to.have.status(404)`?",
+                "options": [
+                  "Cavabın body-sini",
+                  "Cavabın status code-unun 404 olmasını",
+                  "Response time-ı",
+                  "Header-ləri"
+                ],
+                "correctIndex": 1,
+                "explanation": "Test status code-un 404 olduğunu təsdiqləyir — məsələn, mövcud olmayan resurs üçün neqativ test."
+              },
+              {
+                "id": "q6",
+                "text": "Xəta cavabında SQL sorğusu və stack trace göstərilir. Bu niyə problemdir?",
+                "options": [
+                  "Problem deyil, developer üçün faydalıdır",
+                  "Daxili məlumat sızır və hücumçuya kömək edə bilər",
+                  "Cavab çox uzun olur",
+                  "JSON formatını pozur"
+                ],
+                "correctIndex": 1,
+                "explanation": "Xəta mesajı istifadəçi üçün aydın olmalı, sistemin daxili quruluşunu isə açmamalıdır."
+              }
+            ]
+          },
+          "id": "cmve390p971f5792b202f"
+        }
+      ]
+    },
+    {
+      "slug": "web-ui-testing-devtools",
+      "title": "Web UI testing və Browser DevTools",
+      "shortDescription": "Cross-browser və responsive yoxlama, DevTools-un Elements, Console və Network tab-ları ilə bug-un mənbəyini tapmaq.",
+      "estimatedMinutes": 13,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Cross-browser testing üçün browser seçimini əsaslandıra biləcəksən",
+              "Responsive dizaynı Device Toolbar ilə yoxlaya biləcəksən",
+              "Elements, Console və Network tab-larının QA üçün istifadəsini göstərə biləcəksən",
+              "Uğursuz request-i tapıb bug report-a sübut kimi əlavə edə biləcəksən"
+            ]
+          },
+          "id": "cmve390p904b75222ef32"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Cross-browser testing",
+                "az": "browserlərarası test",
+                "definition": "Saytın fərqli browser-lərdə və versiyalarda eyni işlədiyini yoxlamaq."
+              },
+              {
+                "term": "Responsive design",
+                "az": "adaptiv dizayn",
+                "definition": "Səhifənin ekran ölçüsünə uyğunlaşması."
+              },
+              {
+                "term": "Breakpoint",
+                "az": "keçid nöqtəsi",
+                "definition": "Layout-un dəyişdiyi ekran eni, məsələn 768 px."
+              },
+              {
+                "term": "DevTools",
+                "az": "developer alətləri",
+                "definition": "Browser-ə daxil olan alətlər dəsti. F12 və ya Cmd+Option+I ilə açılır."
+              },
+              {
+                "term": "Network tab",
+                "az": "şəbəkə paneli",
+                "definition": "Səhifənin göndərdiyi bütün request-ləri və cavabları göstərir."
+              }
+            ]
+          },
+          "id": "cmve390p92424f2661063"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Cross-browser testing",
+            "level": 2
+          },
+          "id": "cmve390p975599d93c165"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Browser-lər səhifəni fərqli mühərriklərlə (rendering engine) göstərir: Chrome və Edge — **Blink**, Safari — **WebKit**, Firefox — **Gecko**. Buna görə eyni CSS və JavaScript fərqli nəticə verə bilər. iOS-da isə bütün browser-lər WebKit üzərində işləyir.\n\nHansı browser-ləri test etməyi analitikaya görə seç: məsələn, istifadəçilərin 65%-i Chrome, 25%-i Safari istifadə edirsə, bu ikisi məcburidir."
+          },
+          "id": "cmve390p9812d95656e6a"
+        },
+        {
+          "type": "TABLE",
+          "title": "Tipik cross-browser problemləri",
+          "content": {
+            "headers": [
+              "Problem",
+              "Nümunə"
+            ],
+            "rows": [
+              [
+                "CSS fərqləri",
+                "Safari-də flex elementləri arasında boşluq fərqli görünür"
+              ],
+              [
+                "Form elementləri",
+                "Date picker hər browser-də fərqli açılır, birində tarix formatı səhv saxlanılır"
+              ],
+              [
+                "Autofill",
+                "Browser avtomatik doldurduqda validasiya işə düşmür"
+              ],
+              [
+                "Şriftlər",
+                "Azərbaycan hərfləri (ə, ğ, ş) bəzi şriftlərdə fərqli göstərilir"
+              ],
+              [
+                "JavaScript dəstəyi",
+                "Yeni API köhnə Safari versiyasında yoxdur və düymə işləmir"
+              ]
+            ]
+          },
+          "id": "cmve390p9e5a94dc61438"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Responsive testing",
+            "level": 2
+          },
+          "id": "cmve390p99e6664f40f56"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "DevTools-da **Device Toolbar** (Ctrl+Shift+M, Mac-da Cmd+Shift+M) ilə ekran enini dəyiş. Ən azı tipik breakpoint-ləri yoxla: **360 px** (telefon), **768 px** (planşet), **1280 px və yuxarı** (desktop).\n\nNəyə bax:\n- üfüqi scroll yaranmır,\n- mətn və düymələr üst-üstə düşmür,\n- menyu burger menyuya çevrilir,\n- düymələr barmaqla basmaq üçün kifayət qədər böyükdür.\n\nEmulyasiya real cihazı tam əvəz etmir — vacib axınları real telefonda da yoxla."
+          },
+          "id": "cmve390p937c1a032e96e"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "DevTools: QA-nın əsas tab-ları",
+            "level": 2
+          },
+          "id": "cmve390p9257a7fef5072"
+        },
+        {
+          "type": "TABLE",
+          "title": "DevTools tab-ları və QA üçün istifadəsi",
+          "content": {
+            "headers": [
+              "Tab",
+              "Nə göstərir",
+              "QA nə üçün istifadə edir"
+            ],
+            "rows": [
+              [
+                "Elements",
+                "HTML və CSS",
+                "Elementin mətnini, gizli olub-olmadığını yoxlamaq; uzun mətni müvəqqəti yazıb layout-u sınamaq"
+              ],
+              [
+                "Console",
+                "JavaScript xətaları və mesajlar",
+                "Düymə heç nə etmirsə, qırmızı xətanı tapmaq"
+              ],
+              [
+                "Network",
+                "Bütün request və response-lar",
+                "Status code, payload və cavabı görmək; yavaş sorğunu tapmaq"
+              ],
+              [
+                "Application",
+                "Cookies, Local Storage, Session Storage",
+                "Sessiyanı təmizləmək, token-in saxlanmasını yoxlamaq"
+              ]
+            ]
+          },
+          "id": "cmve390p9c9a8f72acae7"
+        },
+        {
+          "type": "CATEGORIZE",
+          "title": "Hansı tab-a baxarsan?",
+          "content": {
+            "instructions": "Hər vəziyyət üçün ilk baxacağın DevTools tab-ını seç.",
+            "categories": [
+              {
+                "id": "elements",
+                "label": "Elements"
+              },
+              {
+                "id": "console",
+                "label": "Console"
+              },
+              {
+                "id": "network",
+                "label": "Network"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "\"Yadda saxla\" düyməsinə basırsan, ekranda \"Xəta\" yazılır, serverin nə qaytardığını bilmək istəyirsən",
+                "categoryId": "network"
+              },
+              {
+                "id": "i2",
+                "text": "Səhifə 8 saniyəyə açılır, hansı sorğunun yavaş olduğunu tapmaq lazımdır",
+                "categoryId": "network"
+              },
+              {
+                "id": "i3",
+                "text": "Düyməyə basırsan, heç bir sorğu getmir və heç nə baş vermir",
+                "categoryId": "console"
+              },
+              {
+                "id": "i4",
+                "text": "Səhifədə qırmızı \"Uncaught TypeError\" mesajını görmək istəyirsən",
+                "categoryId": "console"
+              },
+              {
+                "id": "i5",
+                "text": "Düymənin mətni dizayndakı ilə eyni olub-olmadığını və hansı CSS-in tətbiq olunduğunu yoxlayırsan",
+                "categoryId": "elements"
+              },
+              {
+                "id": "i6",
+                "text": "Məhsul adının 80 simvol olduqda kartın necə görünəcəyini müvəqqəti sınamaq istəyirsən",
+                "categoryId": "elements"
+              }
+            ],
+            "explanation": "Server cavabı və sürət — Network, JavaScript xətaları — Console, HTML/CSS və layout — Elements."
+          },
+          "id": "cmve390p9ebe494a75edf"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Uğursuz request-i tapmaq",
+            "level": 2
+          },
+          "id": "cmve390p9276d88bfa7b9"
+        },
+        {
+          "type": "STEPPER",
+          "title": "Network tab ilə bug-un mənbəyini tap",
+          "content": {
+            "steps": [
+              {
+                "title": "DevTools-u aç",
+                "description": "F12 və ya Cmd+Option+I, sonra Network tab-ı."
+              },
+              {
+                "title": "Hazırlıq",
+                "description": "\"Preserve log\" seç ki, səhifə yenilənəndə sorğular silinməsin. Filtrdə Fetch/XHR seç."
+              },
+              {
+                "title": "Bug-u təkrarla",
+                "description": "Problemi yaradan addımları yenidən et."
+              },
+              {
+                "title": "Qırmızı sətri tap",
+                "description": "Status sütununda 4xx və ya 5xx olan sorğunu seç."
+              },
+              {
+                "title": "Detallara bax",
+                "description": "Headers — URL, method, status; Payload — göndərilən data; Response — serverin cavabı."
+              },
+              {
+                "title": "Sübutu saxla",
+                "description": "Screenshot, \"Copy as cURL\" və ya HAR faylını bug report-a əlavə et."
+              }
+            ]
+          },
+          "id": "cmve390p91041a023b3ed"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "Frontend, yoxsa backend bug-u?",
+          "content": {
+            "description": "- Request **500** qaytarır → backend bug-u, report-a response və traceId əlavə et.\n- Request **200** və düzgün data qaytarır, amma ekranda səhv rəqəm görünür → frontend bug-u.\n- Request ümumiyyətlə **göndərilmir** → Console-a bax, çox güman JavaScript xətasıdır.",
+            "takeaway": "Network tab sənə bug-u düzgün komandaya yönləndirməyə kömək edir."
+          },
+          "id": "cmve390p93b3bb0d4fd7d"
+        },
+        {
+          "type": "NOTE",
+          "title": "Zəif internet simulyasiyası",
+          "content": {
+            "variant": "tip",
+            "body": "Network tab-da **Throttling** (məsələn, Slow 3G) seçərək zəif internetdə loading göstəricilərini və ikiqat klik problemlərini yoxla. \"Disable cache\" isə köhnə faylların testinə mane olmasının qarşısını alır."
+          },
+          "id": "cmve390p95279430a186a"
+        },
+        {
+          "type": "BUG_HUNT",
+          "title": "Praktika: səbətdəki baqları tap",
+          "content": {
+            "scenario": "cart",
+            "instructions": "Qarşında Narix Market-in səbət səhifəsi və onun tələbləri var. Tələbləri diqqətlə oxu, sonra səbəti test et: miqdarı artır və azalt, məhsulu sil, endirim kodu tətbiq et və yekun məbləği əl ilə hesabla. Sərhəd dəyərlərini (0, 1, maksimum miqdar) və gözlənilməz hərəkətləri də sına. Tələbə uyğun gəlməyən hər davranışı bug kimi qeyd et."
+          },
+          "id": "cmve390p91437f7ef03c2"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Browser-lər fərqli mühərriklərlə işləyir: Blink, WebKit, Gecko; test ediləcək browser-ləri analitikaya görə seç.",
+              "Responsive testdə ən azı 360, 768 və 1280 px enlərini yoxla, vacib axınları real cihazda təkrarla.",
+              "Elements — HTML/CSS, Console — JavaScript xətaları, Network — request və response-lar.",
+              "Network tab-da status, payload və response-a baxaraq bug-un frontend-də, yoxsa backend-də olduğunu müəyyən et.",
+              "Bug report-a screenshot ilə yanaşı response, cURL və ya HAR əlavə et."
+            ]
+          },
+          "id": "cmve390p93d9127d8aa1f"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "iPhone-da Chrome browser hansı mühərriklə işləyir?",
+                "options": [
+                  "Blink",
+                  "Gecko",
+                  "WebKit",
+                  "V8"
+                ],
+                "correctIndex": 2,
+                "explanation": "iOS-da bütün browser-lər WebKit üzərində işləyir. Buna görə iPhone-da Chrome testi Safari-yə bənzər nəticə verir."
+              },
+              {
+                "id": "q2",
+                "text": "\"Göndər\" düyməsinə basırsan, heç bir request getmir. İlk harada baxarsan?",
+                "options": [
+                  "Network",
+                  "Console",
+                  "Application",
+                  "Elements"
+                ],
+                "correctIndex": 1,
+                "explanation": "Request yoxdursa, çox güman JavaScript xətası düyməni işləməyə qoymur — bu Console-da görünür."
+              },
+              {
+                "id": "q3",
+                "text": "Network tab-da sorğu 200 və düzgün məbləğ qaytarır, amma ekranda başqa məbləğ görünür. Bu hansı bug-dur?",
+                "options": [
+                  "Backend bug-u",
+                  "Frontend bug-u",
+                  "Şəbəkə problemi",
+                  "Bug deyil"
+                ],
+                "correctIndex": 1,
+                "explanation": "Server düzgün data verir, problem həmin datanın ekranda göstərilməsindədir — frontend."
+              },
+              {
+                "id": "q4",
+                "text": "Səhifə yenilənəndə sorğuların Network tab-dan silinməməsi üçün nə seçilir?",
+                "options": [
+                  "Disable cache",
+                  "Preserve log",
+                  "Throttling",
+                  "Fetch/XHR"
+                ],
+                "correctIndex": 1,
+                "explanation": "Preserve log yönləndirmə və yenilənmədən sonra da sorğuları saxlayır."
+              },
+              {
+                "id": "q5",
+                "text": "Responsive testdə hansı nəticə bug sayılır?",
+                "options": [
+                  "360 px-də menyu burger menyuya çevrilir",
+                  "360 px-də səhifədə üfüqi scroll yaranır və düymə ekrandan çıxır",
+                  "1280 px-də məzmun mərkəzdə göstərilir",
+                  "768 px-də kartlar iki sütunda düzülür"
+                ],
+                "correctIndex": 1,
+                "explanation": "Üfüqi scroll və ekrandan kənara çıxan elementlər layout-un uyğunlaşmadığını göstərir."
+              }
+            ]
+          },
+          "id": "cmve390p912afa34aeddd"
+        }
+      ]
+    },
+    {
+      "id": "cmn5q5rmp000fw80ah8gn6xgi",
+      "slug": "mobile-testing",
+      "title": "Mobile testing",
+      "shortDescription": "Native, hybrid və web tətbiqlər, cihaz müxtəlifliyi, kəsintilər, icazələr və emulator ilə real cihaz fərqi.",
+      "estimatedMinutes": 13,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Native, hybrid və mobile web tətbiqləri və onların test fokusunu fərqləndirə biləcəksən",
+              "Cihaz və OS müxtəlifliyinə görə test cihaz matrisini qura biləcəksən",
+              "Kəsinti (interruption), şəbəkə və icazə ssenarilərini planlaya biləcəksən",
+              "Emulator və real cihazdan nə vaxt istifadə edildiyini əsaslandıra biləcəksən"
+            ]
+          },
+          "id": "cmve390p93b853a87215d"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Native app",
+                "az": "native tətbiq",
+                "definition": "Konkret platforma üçün yazılan tətbiq (iOS — Swift, Android — Kotlin), store-dan yüklənir."
+              },
+              {
+                "term": "Hybrid app",
+                "az": "hibrid tətbiq",
+                "definition": "Web texnologiyaları ilə yazılıb native \"qabıq\" içində işləyən tətbiq."
+              },
+              {
+                "term": "Mobile web app",
+                "az": "mobil web tətbiq",
+                "definition": "Browser-də açılan sayt; PWA versiyası ana ekrana əlavə oluna bilər."
+              },
+              {
+                "term": "Fragmentation",
+                "az": "parçalanma",
+                "definition": "Çoxlu cihaz modeli, OS versiyası və ekran ölçüsünün eyni vaxtda istifadədə olması."
+              },
+              {
+                "term": "Emulator / Simulator",
+                "az": "emulyator / simulyator",
+                "definition": "Kompüterdə mobil cihazı təqlid edən proqram: Android Emulator, iOS Simulator."
+              },
+              {
+                "term": "Interruption testing",
+                "az": "kəsinti testi",
+                "definition": "Zəng, bildiriş, şəbəkə itkisi kimi kəsintilər zamanı tətbiqin davranışını yoxlamaq."
+              }
+            ]
+          },
+          "id": "cmve390p9d51a9f5ffd3b"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Mobil tətbiq növləri",
+            "level": 2
+          },
+          "id": "cmve390p9d962c476b582"
+        },
+        {
+          "type": "TABLE",
+          "title": "Tətbiq növləri və test fokusu",
+          "content": {
+            "headers": [
+              "Növ",
+              "Xüsusiyyət",
+              "Nəyə xüsusi diqqət"
+            ],
+            "rows": [
+              [
+                "Native",
+                "Cihaz funksiyalarına tam çıxış (kamera, biometrik giriş), ən yaxşı performans",
+                "Hər platformanı ayrıca test etmək, OS versiyaları, store yeniləmələri"
+              ],
+              [
+                "Hybrid",
+                "Bir web kodu WebView içində iki platformada işləyir",
+                "WebView fərqləri, native funksiyalarla əlaqə, performans"
+              ],
+              [
+                "Mobile web / PWA",
+                "Quraşdırma tələb etmir, browser-də açılır",
+                "Mobil browser-lər, responsive layout, offline davranış (PWA)"
+              ]
+            ]
+          },
+          "id": "cmve390p981e6ae2b8261"
+        },
+        {
+          "type": "NOTE",
+          "title": "Cross-platform tətbiqlər",
+          "content": {
+            "variant": "remember",
+            "body": "React Native və Flutter kimi cross-platform framework-lər bir koddan iki platforma üçün tətbiq yaradır. Kod bir olsa da, iOS və Android-də davranış fərqlənə bilər — hər iki platformanı test et."
+          },
+          "id": "cmve390p9e06cc544ccf1"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Fragmentation: cihaz və OS müxtəlifliyi",
+            "level": 2
+          },
+          "id": "cmve390p9b47368938c25"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Android-də onlarla istehsalçı (Samsung, Xiaomi, Honor), fərqli OS versiyaları və istehsalçının öz interfeysi var. iOS-da cihaz azdır, amma bir neçə iOS versiyası eyni vaxtda istifadədədir.\n\nBütün cihazları test etmək mümkün deyil. Analitikadan istifadə et: ən çox istifadə olunan cihaz və OS-ları seç, ən köhnə dəstəklənən versiyanı və ən kiçik ekranı mütləq daxil et."
+          },
+          "id": "cmve390p906129d18c487"
+        },
+        {
+          "type": "TABLE",
+          "title": "Nümunə test cihaz matrisi",
+          "content": {
+            "headers": [
+              "Cihaz",
+              "OS",
+              "Niyə seçilib"
+            ],
+            "rows": [
+              [
+                "Samsung Galaxy A54",
+                "Android 14",
+                "İstifadəçilər arasında ən populyar model"
+              ],
+              [
+                "Xiaomi Redmi Note 12",
+                "Android 13 (HyperOS/MIUI)",
+                "İstehsalçı interfeysi fon proseslərini məhdudlaşdırır"
+              ],
+              [
+                "Köhnə Android cihaz",
+                "Android 10",
+                "Dəstəklənən minimum versiya, zəif RAM"
+              ],
+              [
+                "iPhone 15",
+                "iOS 18",
+                "Ən yeni iOS"
+              ],
+              [
+                "iPhone SE",
+                "iOS 16",
+                "Kiçik ekran, köhnə dəstəklənən versiya"
+              ]
+            ]
+          },
+          "id": "cmve390p9a1ddc189c8f8"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Kəsintilər və şəbəkə",
+            "level": 2
+          },
+          "id": "cmve390p947c8f164a3df"
+        },
+        {
+          "type": "TABLE",
+          "title": "Kəsinti ssenariləri və gözlənilən davranış",
+          "content": {
+            "headers": [
+              "Kəsinti",
+              "Gözlənilən davranış"
+            ],
+            "rows": [
+              [
+                "Gələn zəng və ya SMS",
+                "Tətbiq fona keçir, geri qayıdanda ekran və daxil edilmiş data qorunur"
+              ],
+              [
+                "Push bildiriş",
+                "Bildiriş axını pozmur, ona basanda düzgün ekran açılır"
+              ],
+              [
+                "Wi-Fi → mobil data keçidi",
+                "Sorğu təkrarlanır və ya aydın mesaj göstərilir, ikiqat əməliyyat yaranmır"
+              ],
+              [
+                "Təyyarə rejimi / offline",
+                "\"İnternet yoxdur\" mesajı, tətbiq çökmür"
+              ],
+              [
+                "Aşağı batareya, enerji qənaəti",
+                "Tətbiq işləməyə davam edir, fon sinxronizasiyası düzgün idarə olunur"
+              ],
+              [
+                "Ekranın fırlanması, kilidlənməsi",
+                "Layout uyğunlaşır, data itmir"
+              ]
+            ]
+          },
+          "id": "cmve390p9c954ece65fff"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "İcazələr, quraşdırma və yeniləmə",
+            "level": 2
+          },
+          "id": "cmve390p94026a8943603"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Kamera, məkan, bildiriş, kontaktlar kimi icazələr üçün bütün yolları yoxla:\n- **Allow**, **Deny** və birdəfəlik icazə (Android: \"Only this time\", iOS: \"Allow Once\").\n- İcazə rədd edildikdə tətbiq çökmür və istifadəçiyə nə üçün lazım olduğunu izah edir.\n- İcazəni sonradan Settings-də ləğv etdikdə tətbiq düzgün reaksiya verir.\n\nQuraşdırma testində təmiz quraşdırmanı, köhnə versiyadan **yeniləməni** (data və login qorunur) və silinməni yoxla."
+          },
+          "id": "cmve390p9b0f15d2eb8c7"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Emulator, simulator və real cihaz",
+            "level": 2
+          },
+          "id": "cmve390p98ce721b317d7"
+        },
+        {
+          "type": "TABLE",
+          "title": "Emulator və real cihazın müqayisəsi",
+          "content": {
+            "headers": [
+              "Meyar",
+              "Emulator / Simulator",
+              "Real cihaz"
+            ],
+            "rows": [
+              [
+                "Qiymət və sürət",
+                "Pulsuz, tez yaradılır",
+                "Alış və ya cloud device farm (BrowserStack, Sauce Labs) xərci"
+              ],
+              [
+                "Layout və əsas axınlar",
+                "Yaxşıdır",
+                "Yaxşıdır"
+              ],
+              [
+                "Kamera, biometrik giriş, sensorlar",
+                "Məhdud və ya təqlid",
+                "Real davranış"
+              ],
+              [
+                "Performans, batareya, istilik",
+                "Etibarlı deyil",
+                "Etibarlıdır"
+              ],
+              [
+                "Real şəbəkə və zənglər",
+                "Simulyasiya",
+                "Real şərait"
+              ]
+            ]
+          },
+          "id": "cmve390p99631b973246a"
+        },
+        {
+          "type": "CATEGORIZE",
+          "title": "Emulator kifayətdir, yoxsa real cihaz lazımdır?",
+          "content": {
+            "instructions": "Hər yoxlama üçün minimum lazım olan mühiti seç.",
+            "categories": [
+              {
+                "id": "emulator",
+                "label": "Emulator kifayətdir"
+              },
+              {
+                "id": "real",
+                "label": "Real cihaz lazımdır"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "Qeydiyyat formunun 360 px enində düzgün göründüyünü yoxlamaq",
+                "categoryId": "emulator"
+              },
+              {
+                "id": "i2",
+                "text": "Android 10 və 14-də menyu naviqasiyasını müqayisə etmək",
+                "categoryId": "emulator"
+              },
+              {
+                "id": "i3",
+                "text": "Formadakı validasiya mesajlarının mətnini yoxlamaq",
+                "categoryId": "emulator"
+              },
+              {
+                "id": "i4",
+                "text": "Face ID ilə bank tətbiqinə girişi yoxlamaq",
+                "categoryId": "real"
+              },
+              {
+                "id": "i5",
+                "text": "Tətbiqin 30 dəqiqəlik istifadədə batareyanı nə qədər sərf etdiyini ölçmək",
+                "categoryId": "real"
+              },
+              {
+                "id": "i6",
+                "text": "QR kodu kamera ilə skan edib ödəniş etmək",
+                "categoryId": "real"
+              }
+            ],
+            "explanation": "Layout və məntiq üçün emulator kifayətdir. Hardware, sensorlar, performans və batareya isə real cihaz tələb edir."
+          },
+          "id": "cmve390p9df5971b1548b"
+        },
+        {
+          "type": "TEST_CASE_BUILDER",
+          "title": "Praktika: köçürmə zamanı zəng",
+          "content": {
+            "feature": "Mobil bank tətbiqində kartdan karta köçürmə",
+            "requirement": "Köçürmə ekranında məlumatlar daxil edilərkən zəng gəlsə, zəng bitib tətbiqə qayıtdıqdan sonra köçürmə ekranı və daxil edilmiş məlumatlar (kart nömrəsi, məbləğ) qorunmalıdır. Təsdiq bir dəfə basıldıqda yalnız bir köçürmə yaranmalıdır.",
+            "minSteps": 4,
+            "expectedKeywords": [
+              "zəng",
+              "köçürmə",
+              "məbləğ",
+              "kart",
+              "qayıt",
+              "bir"
+            ],
+            "sampleSolution": {
+              "title": "Köçürmə: gələn zəngdən sonra daxil edilmiş məlumatlar qorunur",
+              "preconditions": "İstifadəçi tətbiqə daxil olub, balansda ən azı 50 AZN var, ikinci test telefonu zəng etmək üçün hazırdır",
+              "steps": [
+                "\"Köçürmələr\" → \"Kartdan karta\" ekranını aç",
+                "Alıcı kart nömrəsini və 20 AZN məbləğ daxil et",
+                "İkinci telefondan bu cihaza zəng et və zəngi qəbul et",
+                "Zəngi bitir və tətbiqə qayıt",
+                "Kart nömrəsi və məbləğin yerində olduğunu yoxla, \"Təsdiq et\" düyməsinə bir dəfə bas",
+                "Əməliyyat tarixçəsini aç"
+              ],
+              "expected": "Köçürmə ekranı və daxil edilmiş məlumatlar qorunur, tarixçədə yalnız bir 20 AZN köçürmə görünür"
+            }
+          },
+          "id": "cmve390p923f24363280d"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Native, hybrid və mobile web tətbiqlərin test fokusu fərqlidir; cross-platform tətbiqdə də hər iki platformanı test et.",
+              "Fragmentation səbəbindən cihaz matrisini analitikaya, minimum dəstəklənən versiyaya və ən kiçik ekrana görə qur.",
+              "Kəsintilər, şəbəkə keçidləri və icazələrin bütün yolları mobil testin məcburi hissəsidir.",
+              "Yeniləmə testində köhnə versiyadan keçid zamanı data və login qorunmalıdır.",
+              "Emulator layout və məntiq üçün, real cihaz hardware, performans və batareya üçün lazımdır."
+            ]
+          },
+          "id": "cmve390p980a997c10742"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Web kodu WebView içində işləyən və store-dan yüklənən tətbiq hansı növdür?",
+                "options": [
+                  "Native",
+                  "Hybrid",
+                  "Mobile web",
+                  "Desktop"
+                ],
+                "correctIndex": 1,
+                "explanation": "Hybrid tətbiq web texnologiyalarını native qabıq içində işlədir və store-dan paylanır."
+              },
+              {
+                "id": "q2",
+                "text": "Test cihazlarını seçərkən ən düzgün yanaşma hansıdır?",
+                "options": [
+                  "Yalnız ən yeni iPhone",
+                  "Komandadakı telefonlar",
+                  "Analitikaya görə populyar cihazlar, minimum dəstəklənən OS və ən kiçik ekran",
+                  "Bazardakı bütün cihazlar"
+                ],
+                "correctIndex": 2,
+                "explanation": "Bütün cihazları test etmək mümkün deyil. Real istifadəçi datası və risklər seçimin əsasıdır."
+              },
+              {
+                "id": "q3",
+                "text": "İstifadəçi kamera icazəsini rədd edir və tətbiq çökür. Bu nədir?",
+                "options": [
+                  "Normal davranış",
+                  "Bug: tətbiq rədd halını idarə etməli və izah verməlidir",
+                  "OS problemi",
+                  "Emulator problemi"
+                ],
+                "correctIndex": 1,
+                "explanation": "Deny yolu da test olunmalıdır: tətbiq çökməməli, funksiyanın niyə işləmədiyini izah etməlidir."
+              },
+              {
+                "id": "q4",
+                "text": "Batareya sərfiyyatını ölçmək üçün nə lazımdır?",
+                "options": [
+                  "Android Emulator",
+                  "iOS Simulator",
+                  "Real cihaz",
+                  "Browser-in Device Toolbar-ı"
+                ],
+                "correctIndex": 2,
+                "explanation": "Emulator kompüterin resurslarından istifadə edir, ona görə batareya və performans ölçmələri etibarlı deyil."
+              },
+              {
+                "id": "q5",
+                "text": "Tətbiq yeni versiyaya yeniləndikdən sonra istifadəçi yenidən login etməli olur və saxlanmış kartları itir. Bu hansı testlə tapılır?",
+                "options": [
+                  "Upgrade (yeniləmə) testi",
+                  "Interruption testi",
+                  "Responsive test",
+                  "Cross-browser test"
+                ],
+                "correctIndex": 0,
+                "explanation": "Yeniləmə testi köhnə versiyadan keçid zamanı data və sessiyanın qorunduğunu yoxlayır."
+              }
+            ]
+          },
+          "id": "cmve390p9ab697f6115c3"
+        }
+      ]
+    },
+    {
+      "slug": "qa-ucun-sql-esaslari",
+      "title": "QA üçün SQL əsasları",
+      "shortDescription": "SELECT, WHERE, ORDER BY, COUNT və JOIN ilə UI hərəkətindən sonra datanın düzgün saxlandığını yoxla.",
+      "estimatedMinutes": 14,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "SELECT, WHERE və ORDER BY ilə lazım olan sətirləri seçə biləcəksən",
+              "COUNT və GROUP BY ilə sadə saylar hesablaya biləcəksən",
+              "INNER JOIN və LEFT JOIN ilə iki cədvəli birləşdirə biləcəksən",
+              "UI hərəkətindən sonra datanın düzgün saxlandığını SQL ilə yoxlaya biləcəksən"
+            ]
+          },
+          "id": "cmve390p9046eab0dd752"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Database",
+                "az": "verilənlər bazası",
+                "definition": "Tətbiqin datasını cədvəllərdə saxlayan sistem: PostgreSQL, MySQL, SQL Server."
+              },
+              {
+                "term": "Table, row, column",
+                "az": "cədvəl, sətir, sütun",
+                "definition": "Cədvəl bir obyekt növünü saxlayır, sətir — bir qeyd, sütun — bir sahə."
+              },
+              {
+                "term": "Query",
+                "az": "sorğu",
+                "definition": "Bazaya verilən SQL əmri."
+              },
+              {
+                "term": "Primary key / Foreign key",
+                "az": "əsas açar / xarici açar",
+                "definition": "Sətrin unikal id-si / başqa cədvəlin id-sinə istinad, məsələn `orders.user_id`."
+              },
+              {
+                "term": "JOIN",
+                "az": "birləşdirmə",
+                "definition": "Əlaqəli cədvəlləri açar üzrə birləşdirib bir nəticədə göstərmək."
+              }
+            ]
+          },
+          "id": "cmve390p916476ebde7df"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "QA niyə SQL bilməlidir?",
+            "level": 2
+          },
+          "id": "cmve390p932da850f63ff"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Ekranda \"Uğurla saxlanıldı\" yazılması datanın düzgün saxlandığını sübut etmir. SQL ilə:\n- UI və API hərəkətinin nəticəsini bazada yoxlayırsan,\n- test üçün lazım olan istifadəçi və sifarişləri tapırsan,\n- bug-un səbəbini dəqiqləşdirirsən: data səhv saxlanıb, yoxsa səhv göstərilir.\n\nBu dərsdə iki cədvəldən istifadə edəcəyik: `users` və `orders`."
+          },
+          "id": "cmve390p9d941504b2244"
+        },
+        {
+          "type": "TABLE",
+          "title": "users cədvəli",
+          "content": {
+            "headers": [
+              "id",
+              "full_name",
+              "email",
+              "city",
+              "status",
+              "created_at"
+            ],
+            "rows": [
+              [
+                "1",
+                "Aysel Məmmədova",
+                "aysel@narix.az",
+                "Bakı",
+                "active",
+                "2026-09-01"
+              ],
+              [
+                "2",
+                "Rəşad Əliyev",
+                "reshad@narix.az",
+                "Gəncə",
+                "active",
+                "2026-09-15"
+              ],
+              [
+                "3",
+                "Nigar Həsənli",
+                "nigar@narix.az",
+                "NULL",
+                "blocked",
+                "2026-10-02"
+              ]
+            ]
+          },
+          "id": "cmve390p9edb236c851f4"
+        },
+        {
+          "type": "TABLE",
+          "title": "orders cədvəli",
+          "content": {
+            "headers": [
+              "id",
+              "user_id",
+              "total",
+              "status",
+              "created_at"
+            ],
+            "rows": [
+              [
+                "101",
+                "1",
+                "35.00",
+                "paid",
+                "2026-10-10"
+              ],
+              [
+                "102",
+                "1",
+                "120.50",
+                "pending",
+                "2026-10-12"
+              ],
+              [
+                "103",
+                "2",
+                "15.00",
+                "cancelled",
+                "2026-10-14"
+              ]
+            ]
+          },
+          "id": "cmve390p95c2acfa5b727"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "SELECT və WHERE: lazım olan sətirləri seç",
+            "level": 2
+          },
+          "id": "cmve390p9f6ea4ff5196c"
+        },
+        {
+          "type": "CODE",
+          "title": "SELECT və WHERE",
+          "content": {
+            "code": "-- Bütün sütunlar\nSELECT * FROM users;\n\n-- Yalnız lazım olan sütunlar\nSELECT id, email, status FROM users;\n\n-- Şərtlə: bloklanmış istifadəçilər\nSELECT id, email FROM users WHERE status = 'blocked';\n\n-- Bir neçə şərt\nSELECT * FROM orders WHERE status = 'paid' AND total > 30;\n\n-- Şəhəri boş qalan istifadəçilər\nSELECT id, email FROM users WHERE city IS NULL;",
+            "language": "sql",
+            "caption": "Mətn dəyərləri tək dırnaqda yazılır"
+          },
+          "id": "cmve390p940a6a161814b"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "WHERE-də tez-tez istifadə olunan operatorlar:\n- `=`, `<>` (bərabər deyil), `>`, `<`, `>=`, `<=`\n- `BETWEEN 10 AND 50` — aralıq\n- `IN ('paid', 'pending')` — siyahıdan biri\n- `LIKE '%@narix.az'` — nümunəyə uyğun mətn\n- `IS NULL` / `IS NOT NULL` — boş dəyər (`= NULL` işləmir)"
+          },
+          "id": "cmve390p9b45afa814070"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "ORDER BY, LIMIT və COUNT",
+            "level": 2
+          },
+          "id": "cmve390p94ef3d4daeb84"
+        },
+        {
+          "type": "CODE",
+          "title": "Sıralama və saymaq",
+          "content": {
+            "code": "-- Ən son 5 sifariş\nSELECT * FROM orders ORDER BY created_at DESC LIMIT 5;\n\n-- Neçə aktiv istifadəçi var?\nSELECT COUNT(*) FROM users WHERE status = 'active';\n\n-- Hər statusda neçə sifariş var?\nSELECT status, COUNT(*) AS order_count\nFROM orders\nGROUP BY status;",
+            "language": "sql",
+            "caption": "LIMIT PostgreSQL və MySQL-də işləyir; SQL Server-də onun əvəzinə SELECT TOP 5 yazılır."
+          },
+          "id": "cmve390p9e7565b723cc1"
+        },
+        {
+          "type": "ORDERING",
+          "title": "SQL hissələrinin sırası",
+          "content": {
+            "instructions": "Sorğunun hissələrini SQL-də yazıldığı ardıcıllıqla düz.",
+            "items": [
+              "SELECT",
+              "FROM",
+              "WHERE",
+              "GROUP BY",
+              "ORDER BY",
+              "LIMIT"
+            ],
+            "explanation": "Yazılış sırası: SELECT ... FROM ... WHERE ... GROUP BY ... ORDER BY ... LIMIT. Sıranı pozsan, sorğu syntax xətası verir."
+          },
+          "id": "cmve390p965c0470b9022"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "JOIN: cədvəlləri birləşdirmək",
+            "level": 2
+          },
+          "id": "cmve390p971ef2f0aae24"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "`orders.user_id` sütunu `users.id`-yə istinad edir. JOIN bu açar üzrə iki cədvəli birləşdirir:\n- **INNER JOIN** — yalnız hər iki cədvəldə uyğunluğu olan sətirlər.\n- **LEFT JOIN** — sol cədvəlin bütün sətirləri, sağda uyğunluq yoxdursa NULL."
+          },
+          "id": "cmve390p9249ebd692012"
+        },
+        {
+          "type": "CODE",
+          "title": "INNER JOIN və LEFT JOIN",
+          "content": {
+            "code": "-- Sifarişlər və onların sahibinin email-i\nSELECT o.id, o.total, o.status, u.email\nFROM orders o\nINNER JOIN users u ON u.id = o.user_id;\n\n-- Heç sifarişi olmayan istifadəçilər\nSELECT u.id, u.email\nFROM users u\nLEFT JOIN orders o ON o.user_id = u.id\nWHERE o.id IS NULL;",
+            "language": "sql",
+            "caption": "o və u cədvəllərin qısa adlarıdır (alias)"
+          },
+          "id": "cmve390p93b702c09ac00"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "UI hərəkətindən sonra datanı yoxlamaq",
+            "level": 2
+          },
+          "id": "cmve390p9b88a3a4baa6c"
+        },
+        {
+          "type": "CODE",
+          "title": "Yoxlama sorğusu",
+          "content": {
+            "code": "SELECT id, full_name, email, city, status, password_hash\nFROM users\nWHERE email = 'elvin.q@narix.az';",
+            "language": "sql",
+            "caption": "Qeydiyyatdan sonra yeni istifadəçini tapmaq"
+          },
+          "id": "cmve390p9d2defed4935e"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "Qeydiyyatdan sonra bazanı yoxla",
+          "content": {
+            "description": "UI-da qeydiyyat: ad \"Elvin Quliyev\", email `Elvin.Q@Narix.az`, şəhər \"Sumqayıt\". Ekranda \"Qeydiyyat uğurludur\" yazıldı. Yuxarıdakı sorğunu icra et və yoxla:\n- email kiçik hərflərlə saxlanıb (tələb belədirsə),\n- city = 'Sumqayıt', NULL deyil,\n- status = 'active',\n- şifrə açıq mətn yox, hash kimi saxlanıb.\n\nNəticədə `city` NULL çıxdı — UI uğur mesajı göstərsə də, data itib.",
+            "takeaway": "Bug report-a sorğunu və nəticəni əlavə et: developer problemin harada olduğunu dərhal görür."
+          },
+          "id": "cmve390p9bff1275f7c02"
+        },
+        {
+          "type": "NOTE",
+          "title": "Bazada təhlükəsiz işləmək",
+          "content": {
+            "variant": "warning",
+            "body": "- Test mühitində də ehtiyatla işlə: `UPDATE` və `DELETE` digər tester-lərin datasını poza bilər. Mümkünsə yalnız oxuma (read-only) hüququ olan istifadəçi ilə qoşul.\n- Production bazasına icazəsiz qoşulma. Real müştəri datası şəxsi məlumatdır: yalnız lazım olan sütunları seç və onu bug report-lara, çatlara köçürmə."
+          },
+          "id": "cmve390p9d555ada1267f"
+        },
+        {
+          "type": "TASK",
+          "title": "Praktika: SQL sorğuları yaz",
+          "content": {
+            "instructions": "users və orders cədvəlləri üçün üç sorğu yaz:\n1. Gəncədən olan aktiv istifadəçilərin id və email-i.\n2. Statusu 'pending' olan sifarişlərin sayı.\n3. Hər ödənilmiş ('paid') sifarişin id-si, məbləği və sahibinin email-i, məbləğə görə azalan sırada.",
+            "placeholder": "1) SELECT ...\n2) SELECT ...\n3) SELECT ...",
+            "required": true
+          },
+          "id": "cmve390p9a7661caab506"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "SELECT sütunları, FROM cədvəli, WHERE şərti seçir; mətn dəyərləri tək dırnaqda yazılır.",
+              "Boş dəyəri IS NULL ilə yoxla, = NULL ilə yox.",
+              "ORDER BY sıralayır, LIMIT nəticəni məhdudlaşdırır, COUNT və GROUP BY sayır.",
+              "INNER JOIN uyğun sətirləri, LEFT JOIN sol cədvəlin bütün sətirlərini qaytarır.",
+              "UI uğur mesajından sonra datanı bazada yoxla; şəxsi dataya ehtiyatla yanaş."
+            ]
+          },
+          "id": "cmve390p9712606aea641"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Bloklanmış istifadəçiləri hansı sorğu qaytarır?",
+                "options": [
+                  "SELECT * FROM users WHERE status = 'blocked';",
+                  "SELECT users WHERE blocked;",
+                  "SELECT * FROM users ORDER BY 'blocked';",
+                  "GET users WHERE status = blocked;"
+                ],
+                "correctIndex": 0,
+                "explanation": "WHERE şərti sətirləri süzür; mətn dəyəri tək dırnaq içində yazılır."
+              },
+              {
+                "id": "q2",
+                "text": "Şəhəri boş olan istifadəçiləri tapmaq üçün hansı şərt düzgündür?",
+                "options": [
+                  "WHERE city = NULL",
+                  "WHERE city IS NULL",
+                  "WHERE city = ''",
+                  "WHERE city == NULL"
+                ],
+                "correctIndex": 1,
+                "explanation": "SQL-də NULL dəyərlə müqayisə IS NULL ilə edilir. = NULL heç vaxt true qaytarmır."
+              },
+              {
+                "id": "q3",
+                "text": "Ən son 10 sifarişi göstərmək üçün nə lazımdır?",
+                "options": [
+                  "ORDER BY created_at ASC LIMIT 10",
+                  "ORDER BY created_at DESC LIMIT 10",
+                  "GROUP BY created_at LIMIT 10",
+                  "WHERE created_at = 10"
+                ],
+                "correctIndex": 1,
+                "explanation": "DESC ən yeni tarixi yuxarı qoyur, LIMIT 10 isə yalnız ilk 10 sətri saxlayır."
+              },
+              {
+                "id": "q4",
+                "text": "Sifarişi olmayan istifadəçiləri də nəticədə saxlamaq üçün hansı JOIN istifadə olunur?",
+                "options": [
+                  "INNER JOIN",
+                  "LEFT JOIN (users solda)",
+                  "JOIN olmadan",
+                  "COUNT JOIN"
+                ],
+                "correctIndex": 1,
+                "explanation": "LEFT JOIN sol cədvəlin (users) bütün sətirlərini qaytarır, sifarişi olmayanlarda orders sütunları NULL olur."
+              },
+              {
+                "id": "q5",
+                "text": "UI \"Profil yeniləndi\" yazır, amma bazada city köhnə dəyərdə qalıb. Nə edirsən?",
+                "options": [
+                  "Bug deyil, UI uğur yazıb",
+                  "Bug report açıram, addımlarla yanaşı SQL sorğusunu və nəticəsini əlavə edirəm",
+                  "Bazada UPDATE ilə düzəldirəm",
+                  "Səhifəni yeniləyib unuduram"
+                ],
+                "correctIndex": 1,
+                "explanation": "Uğur mesajı ilə real data arasında fərq bug-dur. SQL sübutu developer-ə problemi tez tapmağa kömək edir."
+              },
+              {
+                "id": "q6",
+                "text": "LEFT JOIN nümunəsindəki sorğu (WHERE o.id IS NULL) dərsdəki datada hansı istifadəçini qaytarır?",
+                "options": [
+                  "Aysel",
+                  "Rəşad",
+                  "Nigar",
+                  "Heç kimi"
+                ],
+                "correctIndex": 2,
+                "explanation": "Nigar-ın (id 3) orders cədvəlində sətri yoxdur, ona görə LEFT JOIN-dən sonra o.id NULL olur."
+              }
+            ]
+          },
+          "id": "cmve390p94f730fe0d97a"
+        }
+      ]
+    },
+    {
+      "id": "cmn5qaui8002cw80ay67f42n9",
+      "slug": "manual-testing-best-practices",
+      "title": "Manual testing best practices",
+      "shortDescription": "Manual QA trekinin yekunu: tester mindset, risk əsaslı prioritet, strukturlaşdırılmış sessiyalar və komanda ilə işləmək.",
+      "estimatedMinutes": 12,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Peşəkar tester mindset-in əsas keyfiyyətlərini izah edə biləcəksən",
+              "Məhdud vaxtda test sahələrini riskə görə prioritetləşdirə biləcəksən",
+              "Test sessiyasını charter və timebox ilə planlaya biləcəksən",
+              "Ən çox rast gəlinən manual QA səhvlərini tanıyıb onlardan qaça biləcəksən"
+            ]
+          },
+          "id": "cmve390p938e7c9e4bb6a"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Tester mindset",
+                "az": "tester düşüncəsi",
+                "definition": "Maraq, peşəkar şübhə, detala diqqət və istifadəçi baxışı ilə məhsula yanaşmaq."
+              },
+              {
+                "term": "Risk-based testing",
+                "az": "risk əsaslı test",
+                "definition": "Test səyini ehtimal və təsirə görə ən riskli sahələrə yönəltmək."
+              },
+              {
+                "term": "Test charter",
+                "az": "test xartiyası",
+                "definition": "Test sessiyasının qısa məqsədi: nəyi, nə ilə, nəyi tapmaq üçün yoxlayırsan."
+              },
+              {
+                "term": "Timebox",
+                "az": "vaxt çərçivəsi",
+                "definition": "Sessiya üçün əvvəlcədən təyin edilmiş müddət, məsələn 60 dəqiqə."
+              },
+              {
+                "term": "Shift-left",
+                "az": "erkən test",
+                "definition": "Testi mümkün qədər erkən, tələb və dizayn mərhələsində başlamaq."
+              }
+            ]
+          },
+          "id": "cmve390p9ba03d056a40f"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Tester mindset",
+            "level": 2
+          },
+          "id": "cmve390p9cee575a03aad"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "ISTQB yaxşı tester-in keyfiyyətləri kimi **marağı**, **peşəkar şübhəni**, **tənqidi baxışı**, **detala diqqəti** və **yaxşı ünsiyyəti** göstərir.\n\nMəqsəd sistemi \"sındırmaq\" yox, keyfiyyət haqqında **dəqiq məlumat** verməkdir: nə işləyir, nə işləmir və risk haradadır. Hər feature-a baxanda soruş: \"İstifadəçi burada səhv nə edə bilər?\" və \"Bu, nəyi poza bilər?\""
+          },
+          "id": "cmve390p919e8e094049f"
+        },
+        {
+          "type": "NOTE",
+          "title": "Erkən başla",
+          "content": {
+            "variant": "tip",
+            "body": "Testi tələb mərhələsində başla: acceptance criteria-nı oxuyanda qeyri-müəyyən sözləri (\"tez\", \"rahat\", \"düzgün\") tap və sual ver. Tələbdə tapılan defekt koddakından qat-qat ucuz başa gəlir."
+          },
+          "id": "cmve390p9ea48b9438fde"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Riskə görə prioritet ver",
+            "level": 2
+          },
+          "id": "cmve390p9f0ce415d3fb6"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Hər şeyi test etmək mümkün deyil (exhaustive testing is impossible). Vaxt məhduddursa, sual budur: **harada problem ehtimalı yüksəkdir və təsiri böyükdür?** Ödəniş, login, şəxsi data və yeni dəyişdirilmiş kod adətən ən riskli sahələrdir."
+          },
+          "id": "cmve390p9c16335b6909e"
+        },
+        {
+          "type": "TABLE",
+          "title": "Nümunə: release-ə 1 gün qalıb",
+          "content": {
+            "headers": [
+              "Sahə",
+              "Ehtimal",
+              "Təsir",
+              "Sıra"
+            ],
+            "rows": [
+              [
+                "Kartla ödəniş (bu sprintdə dəyişib)",
+                "Yüksək",
+                "Yüksək",
+                "1"
+              ],
+              [
+                "Login və şifrə bərpası",
+                "Orta",
+                "Yüksək",
+                "2"
+              ],
+              [
+                "Səbət məbləği və endirim",
+                "Orta",
+                "Orta",
+                "3"
+              ],
+              [
+                "\"Haqqımızda\" səhifəsi (dəyişməyib)",
+                "Aşağı",
+                "Aşağı",
+                "4"
+              ]
+            ]
+          },
+          "id": "cmve390p912de6dd479bf"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Hər test sessiyasını planla",
+            "level": 2
+          },
+          "id": "cmve390p94aaa482c19d5"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Plansız \"klikləmək\" əvəzinə qısa **charter** yaz və **timebox** təyin et. Sessiya boyunca nəyi yoxladığını, sualları və tapılan bug-ları qeyd et. Sonda qısa nəticə yaz: nə əhatə olundu, nə qaldı, hansı risklər göründü."
+          },
+          "id": "cmve390p985270f723efd"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "Charter nümunəsi",
+          "content": {
+            "description": "**Charter:** Səbətdə endirim kodlarını müxtəlif məbləğlər və kod formatları ilə araşdır, məbləğ hesablamasında səhvləri tapmaq üçün.\n**Timebox:** 60 dəqiqə\n**Fikirlər:** boş kod, kiçik hərf, vaxtı bitmiş kod, iki kodu ardıcıl tətbiq etmək, endirimdən sonra məhsulu silmək, səhifəni yeniləmək, iki tabda eyni səbət.",
+            "takeaway": "Charter fokus verir, timebox isə sessiyanın sonsuz uzanmasının qarşısını alır."
+          },
+          "id": "cmve390p9a2490bb9a56d"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Komanda ilə ünsiyyət",
+            "level": 2
+          },
+          "id": "cmve390p992e3b83a9e99"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "- Kritik bug-u dərhal bildir, gün sonunu gözləmə.\n- Faktlarla danış, şəxsə yox: \"kodun səhvdir\" yox, \"bu addımlarla 500 xətası alınır\".\n- Tələb aydın deyilsə, fərz etmə — PO-dan soruş və cavabı tikete yaz.\n- Status verəndə üç şeyi de: nə test olundu, nə test olunmadı, hansı risklər qalır.\n- Developer bug-u təkrarlaya bilmirsə, birlikdə ekran paylaşaraq göstər."
+          },
+          "id": "cmve390p98702c44b5591"
+        },
+        {
+          "type": "CATEGORIZE",
+          "title": "Səhv, yoxsa best practice?",
+          "content": {
+            "instructions": "Hər yanaşmanı düzgün qrupa yerləşdir.",
+            "categories": [
+              {
+                "id": "mistake",
+                "label": "Səhv yanaşma"
+              },
+              {
+                "id": "good",
+                "label": "Best practice"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "Yalnız happy path-i yoxlayıb feature-u Done etmək",
+                "categoryId": "mistake"
+              },
+              {
+                "id": "i2",
+                "text": "Tələbi oxumadan birbaşa test etməyə başlamaq",
+                "categoryId": "mistake"
+              },
+              {
+                "id": "i3",
+                "text": "Bug-u şifahi deyib tiket açmamaq",
+                "categoryId": "mistake"
+              },
+              {
+                "id": "i4",
+                "text": "Düzəlişdən sonra yalnız həmin bug-u yoxlayıb yaxın funksiyalara baxmamaq",
+                "categoryId": "mistake"
+              },
+              {
+                "id": "i5",
+                "text": "Neqativ və sərhəd dəyərlərini də yoxlamaq",
+                "categoryId": "good"
+              },
+              {
+                "id": "i6",
+                "text": "Vaxt az olanda əvvəlcə ən riskli sahələri test etmək",
+                "categoryId": "good"
+              },
+              {
+                "id": "i7",
+                "text": "Aydın olmayan tələbi PO ilə dəqiqləşdirib cavabı tiketdə qeyd etmək",
+                "categoryId": "good"
+              },
+              {
+                "id": "i8",
+                "text": "Status hesabatında test olunmayan sahələri də açıq göstərmək",
+                "categoryId": "good"
+              }
+            ],
+            "explanation": "Yaxşı tester təkcə işləyəni təsdiqləmir: riskləri, sərhədləri və əhatə olunmayan sahələri də görünən edir."
+          },
+          "id": "cmve390p959b36364c971"
+        },
+        {
+          "type": "CHECKLIST",
+          "title": "Feature-u Done etməzdən əvvəl",
+          "content": {
+            "items": [
+              {
+                "id": "c1",
+                "text": "Bütün acceptance criteria yoxlanılıb"
+              },
+              {
+                "id": "c2",
+                "text": "Neqativ və sərhəd halları test olunub"
+              },
+              {
+                "id": "c3",
+                "text": "Critical və Major bug-lar bağlanıb və ya PO ilə razılaşdırılıb"
+              },
+              {
+                "id": "c4",
+                "text": "Düzəlişlərdən sonra retest və qısa regression edilib"
+              },
+              {
+                "id": "c5",
+                "text": "Bug-lar story-yə link edilib"
+              },
+              {
+                "id": "c6",
+                "text": "Test nəticələri və test olunmayan sahələr qeyd olunub"
+              }
+            ]
+          },
+          "id": "cmve390p9290a6aee7d5f"
+        },
+        {
+          "type": "TASK",
+          "id": "cmn5qaui9002ow80a6a3vjedo",
+          "title": "Praktika: test case və bug report",
+          "content": {
+            "instructions": "Sadə login forması üçün (email, şifrə, \"Daxil ol\" düyməsi) iki şey yaz:\n1. **Bir test case** — başlıq, preconditions, nömrələnmiş addımlar, test data və expected result.\n2. **Bir bug report** — login zamanı tapdığın (və ya təsəvvür etdiyin) bir problem üçün: başlıq, environment, steps to reproduce, expected, actual, severity və priority.",
+            "placeholder": "Test case:\nBaşlıq:\nPreconditions:\nAddımlar:\nExpected:\n\nBug report:\nBaşlıq:\nEnvironment:\nSteps:\nExpected:\nActual:\nSeverity / Priority:",
+            "required": true
+          }
+        },
+        {
+          "type": "CALLOUT",
+          "content": {
+            "emoji": "🎓",
+            "title": "Manual testing treki tamamlandı",
+            "body": "Artıq tələbi analiz edə, test dizayn edə, bug-u dəqiq report edə və əsas alətlərlə işləyə bilirsən. Növbəti addım — avtomatlaşdırma modulu.",
+            "color": "green"
+          },
+          "id": "cmve390p984c20579291a"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Tester mindset: maraq, peşəkar şübhə, detala diqqət və aydın ünsiyyət.",
+              "Hər şeyi test etmək mümkün deyil — ehtimal və təsirə görə ən riskli sahələrdən başla.",
+              "Test sessiyasını charter və timebox ilə planla, nəticəni qeyd et.",
+              "Faktlarla danış, aydın olmayanı soruş və test olunmayan sahələri gizlətmə.",
+              "Done-dan əvvəl acceptance criteria, neqativ hallar, retest və regression yoxlanılmalıdır."
+            ]
+          },
+          "id": "cmve390p9655c24bee91c"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Testin əsas məqsədi hansıdır?",
+                "options": [
+                  "Developer-in səhvlərini saymaq",
+                  "Məhsulun keyfiyyəti və riskləri haqqında dəqiq məlumat vermək",
+                  "Mümkün qədər çox test case yazmaq",
+                  "Release-i gecikdirmək"
+                ],
+                "correctIndex": 1,
+                "explanation": "Test keyfiyyət haqqında məlumat verir və qərar qəbulunu dəstəkləyir. Bug sayı özü məqsəd deyil."
+              },
+              {
+                "id": "q2",
+                "text": "Release-ə bir neçə saat qalıb. Nəyi əvvəl test edirsən?",
+                "options": [
+                  "Əlifba sırası ilə bütün səhifələri",
+                  "Bu sprintdə dəyişdirilmiş ödəniş axınını",
+                  "Dəyişməmiş \"Haqqımızda\" səhifəsini",
+                  "Ən asan test case-ləri"
+                ],
+                "correctIndex": 1,
+                "explanation": "Dəyişdirilmiş və yüksək təsirli sahə ən böyük riskdir — risk əsaslı test ondan başlayır."
+              },
+              {
+                "id": "q3",
+                "text": "Test charter nədir?",
+                "options": [
+                  "Test sessiyasının qısa məqsədi və fokusu",
+                  "Bug-ların siyahısı",
+                  "Test mühitinin konfiqurasiyası",
+                  "Developer-lə müqavilə"
+                ],
+                "correctIndex": 0,
+                "explanation": "Charter sessiyada nəyi, nə ilə və nəyi tapmaq üçün araşdırdığını müəyyən edir."
+              },
+              {
+                "id": "q4",
+                "text": "Tələbdə \"səhifə tez açılmalıdır\" yazılıb. Nə edirsən?",
+                "options": [
+                  "Öz fikrimə görə 10 saniyə qəbul edirəm",
+                  "PO-dan konkret dəyər soruşuram, məsələn 2 saniyə, və cavabı tiketə yazıram",
+                  "Bu tələbi test etmirəm",
+                  "Developer nə deyirsə, onu qəbul edirəm"
+                ],
+                "correctIndex": 1,
+                "explanation": "Qeyri-müəyyən tələb yoxlanıla bilməz. Ölçülə bilən dəyəri PO ilə razılaşdırmaq lazımdır."
+              },
+              {
+                "id": "q5",
+                "text": "Status hesabatında hansı məlumat mütləq olmalıdır?",
+                "options": [
+                  "Yalnız tapılan bug sayı",
+                  "Nə test olundu, nə test olunmadı və hansı risklər qalır",
+                  "Hər developer-in səhv sayı",
+                  "Yalnız passed test-lər"
+                ],
+                "correctIndex": 1,
+                "explanation": "Komanda qərarı üçün test olunmayan sahələr və qalan risklər də görünməlidir."
+              }
+            ]
+          },
+          "id": "cmve390p9a88bb4dd5ec8"
+        }
+      ]
+    }
+  ]
+}

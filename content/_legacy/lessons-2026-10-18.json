@@ -1,0 +1,3382 @@
+[
+ {
+  "id": "cmn0fw5bx0000ggbhwa7k6kb6",
+  "title": "Introduction to Software Testing",
+  "titleEn": null,
+  "description": "Proqram Təminatının Testinə Giriş (Introduction to Software Testing) — proqramın düzgün işlədiyini, tələblərə cavab verdiyini və səhvlərin olub-olmadığını yoxlamaq prosesidir. Testin əsas məqsədi proqramdakı xətaları tapmaq və keyfiyyəti artırmaqdır.\n\nTest prosesi proqram hazırlanmasının vacib hissəsidir və istifadəçilərə etibarlı, təhlükəsiz və stabil məhsul təqdim etməyə kömək edir. Testlər manual (əl ilə) və avtomatlaşdırılmış şəkildə aparıla bilər.\n\nQısa olaraq: Proqram testləşdirmə — proqramın keyfiyyətini təmin etmək üçün onun yoxlanılmasıdır.",
+  "descriptionEn": null,
+  "order": 2,
+  "published": true,
+  "coverColor": "#2563eb",
+  "icon": "BookOpen",
+  "createdAt": "2026-03-21T14:44:57.981Z",
+  "updatedAt": "2026-03-21T16:47:16.112Z",
+  "lessons": [
+   {
+    "id": "cmn0lukgu0001cmyrmdt0kxh9",
+    "title": "Software nədir?",
+    "titleEn": null,
+    "slug": "software-nedir",
+    "shortDescription": "Software (Proqram təminatı) — kompüter, telefon və digər cihazların tapşırıqları yerinə yetirməsini təmin edən görünməz hissədir.\n\nMəsələn: WhatsApp, Instagram, bank tətbiqləri — hamısı proqram təminatıdır.",
+    "shortDescriptionEn": null,
+    "moduleId": "cmn0fw5bx0000ggbhwa7k6kb6",
+    "order": 1,
+    "estimatedMinutes": 30,
+    "coverImageUrl": "https://www.testim.io/wp-content/uploads/2020/03/Testim-Hitsubscribe_QA-Metrics_An-Introduction-and-5-Examples-To-Help-You_Square.jpg",
+    "published": true,
+    "quizEnabled": false,
+    "minQuizScore": 8,
+    "createdAt": "2026-03-21T17:31:41.983Z",
+    "updatedAt": "2026-03-25T12:42:10.862Z",
+    "blocks": [
+     {
+      "type": "TABLE",
+      "title": "Proqram təminatı əsasən 2 yerə bölünür:",
+      "content": "{\"headers\":[\"Sistem proqramları – cihazı işlədən proqramlardır.\",\"Tətbiqi proqramlar – istifadəçiyə xidmət edən proqramlardır.\"],\"rows\":[[\"🖥 Windows, macOS, Android, iOS\",\"WhatsApp, Chrome, Word, Zoom\"],[\"\",\"\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "Niyə Test Vacibdir?",
+      "content": "{\"body\":\"\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "Test olunmamış proqram – risklidir.",
+      "content": "{\"body\":\"Səhvlər (bug-lar) istifadəçiyə çatsa, bu:\\n- Pul itkilərinə İstifadəçi narazılığına \\n- Şirkətin nüfuz itirməsinə səbəb ola bilər\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "Software Testing nədir?",
+      "content": "{\"body\":\"Software Testing – proqramın gözlənildiyi kimi işləyib-işləmədiyini yoxlamaq prosesidir.\\nMəqsəd:\\n- Səhvləri tapmaq\\n- Keyfiyyəti yoxlamaq\\n- İstifadəçiyə problemsiz təcrübə təmin etmək\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "Bug nədir?",
+      "content": "{\"body\":\"Bug – proqram təminatında gözlənilən nəticə ilə faktiki nəticə arasında uyğunsuzluqdur.\\n\\n🔍 Gözlənilir: “Login” düyməsi işləsin\\n💥 Əslində: Heç bir reaksiya vermir → Bug\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🐞\"Bug\" sözünün proqramlaşdırmada istifadəsi necə başlayıb?",
+      "content": "{\"body\":\"- 1947-ci ildə kompüter tarixində ilk “real” bug qeydə alınıb. Harvard Universitetində istifadə olunan Mark II adlı elektromexaniki kompüterdə problem yaranır.\\n- Mühəndislər cihazı yoxlayanda böcək tapırlar – böcək relelərin birinin arasına girərək qısaqapanmaya səbəb olmuşdu.\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "Test Case nədir?",
+      "content": "{\"body\":\"Test Case – bir funksiyanın düzgün işləyib-işləmədiyini yoxlamaq üçün yazılmış addım-addım sınaq planıdır.\\nHər test case aşağıdakılardan ibarətdir:\\n\\n- Addımlar (Cases)\\n- Gözlənilən nəticə (Expected Result)\\n- Əsl nəticə (Actual Result)\\n- Status (Keçdi / Kəsildi)\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "Cədvəl",
+      "content": "{\"headers\":[\"Case\",\"Expected Result\",\"Actual Result\",\"Status (Pass/Fail)\"],\"rows\":[[\"Login funskiyası\",\"Ana səhifəyə keçid\",\"Ana səhifə açıldı\",\"✅ Pass\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "Test Scenario nədir?",
+      "content": "{\"body\":\"Test Scenario – proqramın nəyi test edəcəyimizi ümumi şəkildə ifadə edən sınaq təsviridir.\\n\\nTest Case-lər bu ssenarinin ətraflı addımlarıdır.\\n\\n🔹 Sadə dildə: Nəyi test edəcəyik?\\n🔹 Məsələn: “İstifadəçi uğurla sistemə daxil olmalıdır.”\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "EXAMPLE",
+      "title": "🧪 Tapşırıq:",
+      "content": "{\"description\":\"Aşağıdakı login səhifəsində test case yazın və yoxlayın:\\n\\n🌐 https://www.saucedemo.com \\n\\nLogin məlumatları:\\n\\n✅ Pozitiv test: Düzgün username və şifrə ilə giriş edin\\n❌ Neqativ test: Yanlış username və ya şifrə ilə daxil olmağa çalışın\",\"takeaway\":\"\",\"relatedImageUrl\":null}"
+     },
+     {
+      "type": "QUIZ",
+      "title": "Test",
+      "content": "{\"questions\":[{\"id\":\"4a0226be-a026-4731-ac5a-d1b2bd2bc779\",\"text\":\"Keyfiyyətə Nəzarət (QA) nədir?\",\"options\":[\"Proqram yazmaq prosesi\",\"Dizayn hazırlamaq prosesi\",\"Proqramın düzgün işləməsini təmin etmək üçün yoxlama prosesi\",\"Server qurmaq prosesi\"],\"correctIndex\":2,\"explanation\":\"\",\"imageUrl\":null},{\"id\":\"9d7d9859-deca-4eaf-b153-41fa85bca15f\",\"text\":\"QA mühəndisinin əsas məqsədi nədir?\",\"options\":[\"Daha çox kod yazmaq\",\"İstifadəçiyə minimum səhvlə məhsul təqdim etmək\",\"Dizayn yaratmaq\",\"Marketinq etmək\"],\"correctIndex\":1,\"explanation\":\"\",\"imageUrl\":null},{\"id\":\"dbd1efaf-1296-4ff8-9d41-252beeae31d8\",\"text\":\"Software nədir?\",\"options\":[\"Kompüterin fiziki hissələri\",\"Cihazların işləməsini təmin edən görünməz hissə\",\"Yalnız oyun proqramları\",\"İnternet bağlantısı\"],\"correctIndex\":1,\"explanation\":\"\",\"imageUrl\":null},{\"id\":\"451a09f2-f44f-466c-977f-32d93c1d85fd\",\"text\":\"Aşağıdakılardan hansı tətbiqi proqramdır?\",\"options\":[\"Windows\",\"Android\",\"WhatsApp\",\"iOS\"],\"correctIndex\":2,\"explanation\":\"\",\"imageUrl\":null},{\"id\":\"8db42ff8-94af-4abc-ab6a-fc964f597d30\",\"text\":\"Sistem proqramlarının funksiyası nədir?\",\"options\":[\"İstifadəçi ilə chat etmək\",\"Cihazı işlətmək\",\"Oyun oynatmaq\",\"Video izlətmək\"],\"correctIndex\":1,\"explanation\":\"\",\"imageUrl\":null},{\"id\":\"e5c17aae-8dbf-4597-9b43-ed5ae055440b\",\"text\":\"QA mütəxəssisi nə edir?\",\"options\":[\"Yalnız dizayn hazırlayır\",\"Server qurur\",\"Test planı yazır və bug tapır\",\"Satış edir\"],\"correctIndex\":2,\"explanation\":\"\",\"imageUrl\":null},{\"id\":\"a4e77018-4ed9-4423-8738-ca1e28b908f1\",\"text\":\"Test olunmamış proqram nədir?\",\"options\":[\"Təhlükəsizdir\",\"Tam hazırdır\",\"Risklidir\",\"Daha sürətlidir\"],\"correctIndex\":2,\"explanation\":\"\",\"imageUrl\":null},{\"id\":\"7bbc6349-a1fa-4264-98a9-2b3b87727e49\",\"text\":\"Software Testing nədir?\",\"options\":[\"Kod yazmaq prosesi\",\"Proqramın gözlənildiyi kimi işləyib-işləmədiyini yoxlamaq\",\"Server qurmaq\",\"Dizayn etmək\"],\"correctIndex\":1,\"explanation\":\"\",\"imageUrl\":null}]}"
+     },
+     {
+      "type": "CODE",
+      "title": null,
+      "content": "{\"code\":\"# Kodu buraya yazın\\necho 'Hello World'\",\"language\":\"bash\"}"
+     },
+     {
+      "type": "CODE",
+      "title": null,
+      "content": "{\"code\":\"# Kodu buraya yazın\\necho 'Hello World'\",\"language\":\"bash\"}"
+     }
+    ]
+   },
+   {
+    "id": "cmn5tawzj002vw80avz5e307w",
+    "title": "QA və Software Testing əsasları",
+    "titleEn": null,
+    "slug": "qa-software-testing-basics",
+    "shortDescription": "QA, Software Testing və əsas anlayışların izahı.",
+    "shortDescriptionEn": null,
+    "moduleId": "cmn0fw5bx0000ggbhwa7k6kb6",
+    "order": 2,
+    "estimatedMinutes": 35,
+    "coverImageUrl": "https://wolfcareers.com/wp-content/uploads/2022/04/QA-Testing-Training.png",
+    "published": true,
+    "quizEnabled": true,
+    "minQuizScore": 70,
+    "createdAt": "2026-03-25T08:59:12.895Z",
+    "updatedAt": "2026-03-25T12:44:29.180Z",
+    "blocks": [
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"🚀 QA və Software Testing əsasları\",\"level\":2}"
+     },
+     {
+      "type": "TEXT",
+      "title": "📌 QA (Quality Assurance) nədir?",
+      "content": "{\"body\":\"Keyfiyyətə nəzarət — proqramın düzgün işləməsini təmin etmək üçün aparılan planlı və sistemli yoxlama prosesidir.\\n\\nMəqsəd: istifadəçiyə minimum səhvlə, istifadəyə hazır və keyfiyyətli məhsul təqdim etməkdir.\\nQA mühəndisi proqramı istifadəyə verməzdən əvvəl test edir.\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "💡 Yadda saxla",
+      "content": "{\"variant\":\"remember\",\"body\":\"QA → keyfiyyətin təmin olunmasıdır\\nTesting → səhvlərin tapılmasıdır\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "💻 Software nədir?",
+      "content": "{\"body\":\"Software (proqram təminatı) — kompüter və telefon kimi cihazların işləməsini təmin edən görünməz hissədir.\\n\\nMəsələn: WhatsApp, Instagram, bank tətbiqləri.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Proqram təminatı növləri",
+      "content": "{\"headers\":[\"Növ\",\"İzah\",\"Nümunə\"],\"rows\":[[\"Sistem proqramları\",\"Cihazı işlədən proqramlar\",\"Windows, macOS, Android, iOS\"],[\"Tətbiqi proqramlar\",\"İstifadəçiyə xidmət edir\",\"WhatsApp, Chrome, Zoom\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🧑‍💻 Tester kimdir?",
+      "content": "{\"body\":\"Tester — proqramın düzgün işləməsini yoxlayan şəxsdir.\\n\\nMəqsəd: istifadəçi səhvi görməzdən əvvəl problemi tapmaqdır.\\n\\nQA nə edir?\\n- Proqramı analiz edir\\n- Test plan və test case yazır\\n- Bug-ları tapır və qeyd edir\\n- Re-test və regression edir\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "⚠️ Niyə testing vacibdir?",
+      "content": "{\"body\":\"Test olunmamış proqram risklidir.\\n\\nBug-lar istifadəçiyə çatsa:\\n- Pul itkisinə səbəb olar\\n- İstifadəçi narazılığı yaradar\\n- Şirkətin nüfuzunu zədələyər\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🧪 Software Testing nədir?",
+      "content": "{\"body\":\"Software Testing — proqramın gözlənildiyi kimi işləyib-işləmədiyini yoxlama prosesidir.\\n\\nMəqsəd:\\n- Səhvləri tapmaq\\n- Keyfiyyəti yoxlamaq\\n- Problemsiz istifadəçi təcrübəsi təmin etmək\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🐞 Bug nədir?",
+      "content": "{\"body\":\"Bug — gözlənilən nəticə ilə faktiki nəticə arasındakı fərqdir.\\n\\nGözlənilir: Login işləsin\\nƏslində: Heç nə baş vermir → Bug\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "📜 Maraqlı fakt",
+      "content": "{\"variant\":\"tip\",\"body\":\"1947-ci ildə ilk real bug Harvard universitetində aşkar edilib. Kompüterin içində həqiqi böcək tapılıb.\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🧾 Test Case nədir?",
+      "content": "{\"body\":\"Test Case — funksiyanın düzgün işləməsini yoxlamaq üçün yazılan addım-addım test planıdır.\\n\\nDaxildir:\\n- Addımlar\\n- Expected Result\\n- Actual Result\\n- Status (Pass/Fail)\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "📌 Test Scenario nədir?",
+      "content": "{\"body\":\"Test Scenario — nəyi test edəcəyimizi ümumi şəkildə təsvir edir.\\n\\nMəsələn: “İstifadəçi login ola bilməlidir”\\n\\nTest Case-lər isə bunun detallı addımlarıdır.\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "EXAMPLE",
+      "title": "📌 Login nümunəsi",
+      "content": "{\"description\":\"Login ssenarisi üçün testlər\",\"takeaway\":\"Pozitiv və neqativ testlər yazmaq vacibdir\",\"relatedImageUrl\":null}"
+     },
+     {
+      "type": "TASK",
+      "title": "✍️ Praktika",
+      "content": "{\"instructions\":\"https://www.saucedemo.com saytında login üçün 3 test case yaz: 1 pozitiv, 2 neqativ\",\"placeholder\":\"1) ...\\n2) ...\\n3) ...\",\"required\":true}"
+     },
+     {
+      "type": "QUIZ",
+      "title": "🧪 Mini test",
+      "content": "{\"questions\":[{\"id\":\"q1\",\"text\":\"QA nə deməkdir?\",\"options\":[\"Bug tapmaq\",\"Keyfiyyət təminatı\",\"Kod yazmaq\",\"Server qurmaq\"],\"correctIndex\":1,\"explanation\":\"QA məhsulun keyfiyyətini təmin edir.\",\"imageUrl\":null},{\"id\":\"q2\",\"text\":\"Bug nədir?\",\"options\":[\"Kod yazmaq\",\"Dizayn\",\"Gözlənilən və faktiki nəticə fərqi\",\"Test plan\"],\"correctIndex\":2,\"explanation\":\"Bug gözlənilən nəticə ilə real nəticə arasındakı fərqdir.\",\"imageUrl\":null}]}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "NOTE",
+      "title": "🔑 Yekun",
+      "content": "{\"variant\":\"important\",\"body\":\"QA → keyfiyyət təminatı\\nTesting → səhvləri tapmaq\\nBug → problem\\nTest Case → addımlar\\nScenario → ümumi fikir\"}"
+     }
+    ]
+   },
+   {
+    "id": "cmnaaa7vg00028dy15s3aky6y",
+    "title": "Automation QA əsasları (0-dan)",
+    "titleEn": null,
+    "slug": "automation-qa-basics",
+    "shortDescription": "Manual QA-dan Automation QA-ya keçid üçün əsas anlayışlar.",
+    "shortDescriptionEn": null,
+    "moduleId": "cmn0fw5bx0000ggbhwa7k6kb6",
+    "order": 3,
+    "estimatedMinutes": 70,
+    "coverImageUrl": "https://images.unsplash.com/photo-1518779578993-ec3579fee39f?w=1200",
+    "published": false,
+    "quizEnabled": true,
+    "minQuizScore": 60,
+    "createdAt": "2026-03-28T12:05:38.524Z",
+    "updatedAt": "2026-03-28T12:05:38.524Z",
+    "blocks": [
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"Automation QA dərsi\",\"level\":2}"
+     },
+     {
+      "type": "TEXT",
+      "title": "1. What is Software",
+      "content": "{\"body\":\"Software – kompüterə nə etməli olduğunu deyən təlimatlar toplusudur. Kompüter özü heç nə etmir, onu işlədən software-dir.\\n\\nTəsəvvür edin ki aşpaz var amma resept yoxdur. O heç nə bişirə bilməz. Resept burada software-dir.\\n\\nNümunə: WhatsApp, Instagram, Chrome.\\n\\nQısa xülasə: Software cihazın beynidir.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "2. Web Application",
+      "content": "{\"body\":\"Web Application internet üzərindən işləyən proqramdır. Siz onu yükləmirsiniz, sadəcə browser ilə istifadə edirsiniz.\\n\\nTəsəvvür edin kitabxana. Kitabı almırsınız, sadəcə istifadə edirsiniz.\\n\\nNümunə: YouTube.\\n\\nQısa xülasə: Web app browser ilə işləyən proqramdır.\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "3. Client–Server",
+      "content": "{\"body\":\"Client istifadəçidir, Server isə sistemi işlədən tərəfdir.\\n\\nTəsəvvür edin restoran:\\nClient → sifariş verir\\nServer → hazırlayır\\n\\nNümunə: Google search.\\n\\nQısa xülasə: Client istəyir, Server cavab verir.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "Frontend vs Backend",
+      "content": "{\"headers\":[\"Frontend\",\"Backend\"],\"rows\":[[\"İstifadəçinin gördüyü hissə\",\"Arxada işləyən hissə\"],[\"UI, button, dizayn\",\"Database, logic\"],[\"Browser\",\"Server\"]]}"
+     },
+     {
+      "type": "EXAMPLE",
+      "title": "Login nümunəsi",
+      "content": "{\"description\":\"İstifadəçi login düyməsinə basır\",\"takeaway\":\"Frontend düyməni göstərir, Backend isə məlumatı yoxlayır.\",\"relatedImageUrl\":null}"
+     },
+     {
+      "type": "NOTE",
+      "title": null,
+      "content": "{\"variant\":\"important\",\"body\":\"Manual QA eyni testləri təkrar edir, bu isə vaxt itkisinə səbəb olur.\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "6. Automation QA",
+      "content": "{\"body\":\"Automation QA testləri avtomatik edən sistemdir.\\n\\nManual QA → əl ilə test\\nAutomation → script ilə test\\n\\nTəsəvvür edin qab yumaq:\\nManual → əl ilə\\nAutomation → qabyuyan maşın\\n\\nQısa xülasə: Automation QA sürətli və dəqiq test edir.\",\"highlight\":\"success\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "Programming basics",
+      "content": "{\"body\":\"Code kompüterə verilən təlimatdır.\\n\\nJavaScript nümunə:\\n\\nlet username = \\\"admin\\\";\\nlet password = \\\"123\\\";\\n\\nif (username === \\\"admin\\\" && password === \\\"123\\\") {\\n  console.log(\\\"Login successful\\\");\\n} else {\\n  console.log(\\\"Login failed\\\");\\n}\\n\\nQısa xülasə: Code = təlimat.\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "QUIZ",
+      "title": "Yoxlama",
+      "content": "{\"questions\":[{\"id\":\"q1\",\"text\":\"Software nədir?\",\"options\":[\"Hardware\",\"Proqram təminatı\",\"Server\",\"Database\"],\"correctIndex\":1,\"explanation\":\"Software cihazı işlədən proqramdır.\",\"imageUrl\":null},{\"id\":\"q2\",\"text\":\"Client nə edir?\",\"options\":[\"Məlumat saxlayır\",\"Sorğu göndərir\",\"Kod yazır\",\"Server yaradır\"],\"correctIndex\":1,\"explanation\":\"Client request göndərir.\",\"imageUrl\":null},{\"id\":\"q3\",\"text\":\"Automation QA nədir?\",\"options\":[\"Manual test\",\"Dizayn\",\"Testləri avtomatik etmək\",\"Database qurmaq\"],\"correctIndex\":2,\"explanation\":\"Automation QA testləri avtomatlaşdırır.\",\"imageUrl\":null}]}"
+     },
+     {
+      "type": "TASK",
+      "title": "Tapşırıq",
+      "content": "{\"instructions\":\"Login testini addım-addım yaz (manual və automation fərqi ilə).\",\"placeholder\":\"1. Username daxil et...\\n2. Password daxil et...\",\"required\":true}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "cmn0nois30012cmyrrzq5zxsm",
+  "title": "Software Development Life Cycle  (SDLC)",
+  "titleEn": null,
+  "description": "SDLC — Software Development Life Cycle — proqram təminatı yaradılması üçün fəaliyyətlərdən ibarət dövr. Tələblərin yığılması (requirements), Dizayn, Kodun yazılması, Testing, Deployment və Maintainance.",
+  "descriptionEn": null,
+  "order": 3,
+  "published": true,
+  "coverColor": "#2563eb",
+  "icon": "BookOpen",
+  "createdAt": "2026-03-21T18:22:59.091Z",
+  "updatedAt": "2026-03-21T18:23:02.174Z",
+  "lessons": [
+   {
+    "id": "cmn0npqv70014cmyrf9iasaqv",
+    "title": "Software Development Life Cycle  (SDLC)",
+    "titleEn": null,
+    "slug": "softwaredevelopment-life-cycle-sdlc",
+    "shortDescription": "SDLC – proqram təminatının ideyadan istifadəyə qədər keçdiyi bütün mərhələlərdir.",
+    "shortDescriptionEn": null,
+    "moduleId": "cmn0nois30012cmyrrzq5zxsm",
+    "order": 0,
+    "estimatedMinutes": 30,
+    "coverImageUrl": "https://miro.medium.com/v2/resize:fit:1400/format:webp/0*wO81Bodh1Ifqdse8.png",
+    "published": true,
+    "quizEnabled": true,
+    "minQuizScore": 70,
+    "createdAt": "2026-03-21T18:23:56.228Z",
+    "updatedAt": "2026-03-21T18:48:58.311Z",
+    "blocks": [
+     {
+      "type": "TEXT",
+      "title": "Software Development Life Cycle  (SDLC)",
+      "content": "{\"body\":\"SDLC – proqram təminatının ideyadan istifadəyə qədər keçdiyi bütün mərhələlərdir.\\n- Proqramın planlı, keyfiyyətli və düzgün şəkildə yaratmaq.\\n- Mobil bank app\\n- Mobil bank app hazırlanır → əvvəl plan hazırlanır → dizayn olunur → yazılır → test edilir → yayımlanır.\\n- Ev tikmək:\\nPlan → Dizayn → Tikinti → Yoxlama → Köçmək\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "SDLC Phases",
+      "content": "{\"body\":\"- Requirement Gathering\\n- Design\\n- Development\\n- Testing\\n- Deployment\\n- Maintenance\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "Requirements gathering",
+      "content": "{\"variant\":\"remember\",\"body\":\"- Biznes komandası istədiyini bildirir.\\n- Məsələn: Müştəri: \\\"2 otaqlı ev istəyirəm, lakin login edə bilmirəm.\\\"\\n\\nBu şəkildə yazı daha aydın və düzgün olacaq. Sualınız və ya əlavə tələbləriniz varsa, mənə bildirə bilərsiniz!\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "Design",
+      "content": "{\"variant\":\"remember\",\"body\":\"- UI/UX dizayn hazırlanır.\\nMəsələn:\\n- Login səhifəsində Email +\\n- Password sahəsi olacaq.\\n\\nReal həyat:\\nEv planının çəkilməsi\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "Testing",
+      "content": "{\"variant\":\"remember\",\"body\":\"Məhsulun müəyyən edilmiş keyfiyyət standartları əsasında testlərinin edildiyi mərhələdir.\\nMəsələn: Ödəniş sistemi yazılıb hazırdır. Lazımlı testlərlə məhsulun lazımlı standartlara və müştəri tələblərinə cavab verib vermədiyi yoxlanılır.\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "Maintenance",
+      "content": "{\"variant\":\"remember\",\"body\":\"Məhsul sınaqdan keçirildikdən və quraşdırılmağa hazır olduqdan sonra production-a çıxarılır. Bəzən məhsulun yerləşdirilməsi müştərinin iş strategiyasına uyğun olaraq mərhələlərlə baş verir. Məhsul əvvəlcə məhdud bir seqmentdə buraxıla bilər və real iş mühitində sınaqdan keçirilə bilər.\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "Roles in SDLC",
+      "content": "{\"body\":\"- Product Owner\\n- Business Analyst\\n- UI/UX Designer\\n- Developer\\n- QA Engineer (Tester)\\n- DevOps\",\"highlight\":\"success\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "What is Waterfall Model?",
+      "content": "{\"body\":\"Phases ardıcıl gedir.\\n- Bir mərhələ bitmədən digəri başlamır.\\nFlow:\\n- Requirement → Design → Development → Testing → Deployment\\nƏvvəl hamısı planlanır, sonra kod yazılır.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "What is Agile Model?",
+      "content": "{\"body\":\"Agile (Çevik) Model, proqram təminatının hazırlanmasında kiçik, artımlı addımlarla (iterasiyalar) işləyən, dəyişikliklərə sürətli uyğunlaşmanı və müştəri məmnuniyyətini hədəfləyən çevik idarəetmə metodologiyasıdır. Bu model, sənədləşmədən daha çox işlək məhsula, komanda işinə və ardıcıl əks-əlaqəyə üstünlük verir, riskləri azaldır və çatdırılmanı sürətləndirir.\",\"highlight\":\"success\"}"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "cmn1ixb660000vkfiona3qrdr",
+  "title": "Software Testing Life Cycle (STLC)",
+  "titleEn": null,
+  "description": "STLC (Software Testing Life Cycle) — proqram təminatının keyfiyyətini yoxlamaq üçün test mərhələlərinin ardıcıl prosesidir. Bu mərhələlər test planlaşdırmadan başlayır, testlərin icrası və səhvlərin qeyd edilməsi ilə davam edir, və sonda testin bağlanması ilə tamamlanır. Məqsəd: proqramın düzgün işlədiyini və tələblərə uyğun olduğunu təmin etmək.",
+  "descriptionEn": null,
+  "order": 4,
+  "published": true,
+  "coverColor": "#2563eb",
+  "icon": "BookOpen",
+  "createdAt": "2026-03-22T08:57:37.230Z",
+  "updatedAt": "2026-03-22T08:57:39.237Z",
+  "lessons": [
+   {
+    "id": "cmn1iyf640002vkfisphxe5yg",
+    "title": "What is STLC?",
+    "titleEn": null,
+    "slug": "what-is-stlc",
+    "shortDescription": "- STLC (Software Testing Life Cycle) proqram təminatının keyfiyyətini təmin etmək üçün test prosesinin mərhələlər üzrə planlaşdırılması və icra olunmasıdır.\n- Məqsəd səhvləri erkən tapmaq, riskləri azaltmaq və stabil məhsul təqdim etmək.\n- Bir mobil bank tətbiqi hazırlanır → QA komandası bu tətbiqi test etmək üçün STLC mərhələlərindən keçir.",
+    "shortDescriptionEn": null,
+    "moduleId": "cmn1ixb660000vkfiona3qrdr",
+    "order": 0,
+    "estimatedMinutes": 30,
+    "coverImageUrl": "https://images.squarespace-cdn.com/content/v1/639cc2b00e238a7078752259/9f233c8f-47ee-48d5-88d7-ba6c8d66f01d/Software_Testing_Life_Cycle_Inline1_1_c928b66501.png?format=2500w",
+    "published": true,
+    "quizEnabled": true,
+    "minQuizScore": 70,
+    "createdAt": "2026-03-22T08:58:29.068Z",
+    "updatedAt": "2026-03-22T09:57:02.964Z",
+    "blocks": [
+     {
+      "type": "TEXT",
+      "title": "Requirement Analysis",
+      "content": "{\"body\":\"Nə edilir?\\n- Business tələblər oxunur\\n- Acceptance Criteria araşdırılır\\n- Nəyi test edəcəyimizi müəyyən edirik\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "Nəticə",
+      "content": "{\"variant\":\"remember\",\"body\":\"- Test ediləcək funksiyaların siyahısı\\n- Riskli sahələr\"}"
+     },
+     {
+      "type": "EXAMPLE",
+      "title": "Nümunə",
+      "content": "{\"description\":\"Tələb: “İstifadəçi login ola bilməlidir”\\nQA analiz edir:\\n- Düzgün login\\n- Yanlış şifrə\\n- Boş sahə\\n- Bloklanan user\",\"takeaway\":\"\",\"relatedImageUrl\":null}"
+     },
+     {
+      "type": "TEXT",
+      "title": "STLC Phases",
+      "content": "{\"body\":\"- Requirement Analysis\\n- Test Planning\\n- Test Case Design\\n- Test Environment Setup\\n- Test Execution\\n- Test Closure\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "Test Planning",
+      "content": "{\"body\":\"Nə edilir?\\n- Test strategiyası hazırlanır\\n- Hansı test növləri olacaq\\n- Kim test edəcək, nə vaxt\\n\\nNümunə:\\n- Manual testing\\n- Smoke test\\n- Regression test\\n- Test müddəti: 5 gün\\n- Environment: Test\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "Test Case Design",
+      "content": "{\"body\":\"Test Case Design – proqramı test etmək üçün effektiv və düzgün test case-lərin hazırlanması prosesidir.\\nMəqsəd: mümkün qədər az testlə maksimum səhv (bug) tapmaqdır.\\n\\n🧪 Login funksiyası\\n\\nTest Scenario:\\nİstifadəçi sistemə daxil ola bilməlidir.\\n\\nTest Case 1 (Pozitiv):\\n\\nAddımlar:\\n- Sayta daxil ol\\n- Düzgün username daxil et\\n- Düzgün şifrə daxil et\\n- Login düyməsini bas\\n\\nExpected Result: Ana səhifə açılır\\nActual Result: Ana səhifə açıldı\\nStatus: Pass ✅\\n\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "Test Environment Setup",
+      "content": "{\"body\":\"Nə edilir?\\n- Test server hazırdırmı yoxlanır\\n- Build yüklənir\\n- Test account yaradılır\\n\\nNəticə:\\nTest üçün hazır sistem yaranır\\n\\nYekunda:\\n- URL işləyir\\n- Login səhifəsi açılır\\n- Test user var\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "Test Execution",
+      "content": "{\"body\":\"Nə edilir?\\n- Test case-lər icra olunur\\n- Bug tapılarsa report olunur\\n\\nNəticə:\\n- Passed / Failed status\\n- Bug reportlar\\n\\nNümunə:\\n- Test Case: Login\\n- Actual Result: Şifrə səhv olsa belə login olur ➡ Bug yaradılır\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "Test Closure",
+      "content": "{\"variant\":\"important\",\"body\":\"Nə edilir?\\n\\n- Test nəticələri analiz olunur\\n- Statistikalar hazırlanır\\n- Dərslər çıxarılır\\n\\nNəticədə:\\n- Test Summary Report yaranır\\n\\nMəsələn:\\n- 100 test case\\n- 80 Passed\\n- 20 Failed\\n- 15 Bug tapılıb\"}"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "cmn1l6pjb000pvkfi9kr4bc3h",
+  "title": "Bug Reporting & Bug Life Cycle",
+  "titleEn": null,
+  "description": "Bug Reporting – Tapılan səhvlərin (bugların) detallı şəkildə qeyd olunması və developerlərə bildirilməsidir.\n\nBug Life Cycle – Bug-un tapılmasından həll olunmasına qədər keçdiyi mərhələlərdir (məsələn: New → Assigned → Fixed → Retested → Closed).",
+  "descriptionEn": null,
+  "order": 5,
+  "published": true,
+  "coverColor": "#2563eb",
+  "icon": "BookOpen",
+  "createdAt": "2026-03-22T10:00:54.983Z",
+  "updatedAt": "2026-03-22T10:00:55.976Z",
+  "lessons": [
+   {
+    "id": "cmn1l7yeg000rvkfi8doz6m56",
+    "title": "Bug & Defect Basics",
+    "titleEn": null,
+    "slug": "bug-defect-basics",
+    "shortDescription": "Bug & Defect Basics – Proqramda gözlənilən nəticə ilə real nəticə arasındakı fərqləri izah edir.\n\nBug – Test zamanı aşkar olunan səhvdir.\nDefect – Proqramın tələblərə uyğun işləməməsi nəticəsində yaranan problemdir.\nQısaca, hər ikisi proqramdakı xətaları ifadə edir.",
+    "shortDescriptionEn": null,
+    "moduleId": "cmn1l6pjb000pvkfi9kr4bc3h",
+    "order": 0,
+    "estimatedMinutes": 30,
+    "coverImageUrl": "https://testsigma.com/blog/wp-content/uploads/Common-Types-of-Bugs-in-Software-Testing.png",
+    "published": true,
+    "quizEnabled": true,
+    "minQuizScore": 70,
+    "createdAt": "2026-03-22T10:01:53.129Z",
+    "updatedAt": "2026-03-22T10:19:12.437Z",
+    "blocks": [
+     {
+      "type": "TEXT",
+      "title": "📌 What is a Bug / Defect?",
+      "content": "{\"body\":\"- Bug (və ya Defect) — proqramın gözlənilən şəkildə işləməməsidir.\\n- Yəni sistemin davranışı Expected Result (gözlənilən nəticə) ilə uyğun gəlmirsə, bu artıq bug sayılır.\\n📍 Sadə desək:\\n👉 Proqram səhv işləyirsə — bu bug-dur\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Bug vs Defect",
+      "content": "{\"headers\":[\"Bug\",\"Defect\"],\"rows\":[[\"Adətən developer tərəfindən yazılan səhv kod nəticəsində yaranan problem\",\"Sistemin tələbə uyğun işləməməsi (bug + yanlış tələblər də daxil ola bilər)\"]]}"
+     },
+     {
+      "type": "NOTE",
+      "title": "📌 Praktikada",
+      "content": "{\"variant\":\"remember\",\"body\":\"- QA daha çox Defect deyir\\n- Developerlər isə Bug deyir\\n👉 Amma çox vaxt bunlar eyni mənada istifadə olunur\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "Niyə bug-lar yaranır? (Why bugs occur)",
+      "content": "{\"body\":\"📝  Bug-lar əsasən aşağıdakı səbəblərdən yaranır:\\n- səhv kod yazılması\\n- tələblərin düzgün başa düşülməməsi\\n- kompleks sistemlər\\n- insan səhvləri\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Səbəblər cədvəli",
+      "content": "{\"headers\":[\"Səbəb\",\"İzah\",\"Nümunə\"],\"rows\":[[\"Səhv kod\",\"Developer səhv logic yazır\",\"login button işləmir\"],[\"Yanlış tələb\",\"Requirement səhvdir\",\"button yanlış işləyir\"],[\"UI səhvləri\",\"dizayn düzgün tətbiq olunmayıb\",\"düymə görünmür\"]]}"
+     },
+     {
+      "type": "NOTE",
+      "title": "Common Bug Examples",
+      "content": "{\"variant\":\"remember\",\"body\":\"- Login düyməsi işləməməsi\\n- Səhifənin donması\\n- Yanlış error mesajı\\n- Məhsul səbətə əlavə olunmur\\n- Forma boş göndərilir\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "🎯 Expected Result vs Actual Result",
+      "content": "{\"headers\":[\"Termin\",\"İzah\"],\"rows\":[[\"Expected Result\",\"Sistem necə işləməlidir\"],[\"Actual Result\",\"Sistem realda necə işləyir\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🚫 When is something NOT a bug?",
+      "content": "{\"body\":\"📝 Hər problem bug deyil. Bəzən bu hallar bug sayılmır:\\n\\n- Sistem tələblərə uyğun işləyir\\n- İstifadəçi səhv istifadə edir\\n- Feature hələ implement olunmayıb\\n- Dizayn qərarıdır\",\"highlight\":\"warning\"}"
+     }
+    ]
+   },
+   {
+    "id": "cmn1lv8wm001dvkfi9n3yjs95",
+    "title": "Bug Reporting & Bug Life Cycle",
+    "titleEn": null,
+    "slug": "bug-reporting-bug-life-cycle",
+    "shortDescription": "Bug Reporting – Tapılan səhvlərin aydın və detallı şəkildə qeyd olunub komandaya bildirilməsidir.\nBug Life Cycle – Bug-un yaranmasından həll olunmasına qədər keçdiyi mərhələlərdir (məsələn: New → Assigned → Fixed → Retested → Closed).",
+    "shortDescriptionEn": null,
+    "moduleId": "cmn1l6pjb000pvkfi9kr4bc3h",
+    "order": 1,
+    "estimatedMinutes": 30,
+    "coverImageUrl": "https://softwareplanetgroup.co.uk/wp-content/uploads/2018/03/Who-Should-Pay-for-Bug-Fixes.png",
+    "published": true,
+    "quizEnabled": true,
+    "minQuizScore": 70,
+    "createdAt": "2026-03-22T10:19:59.831Z",
+    "updatedAt": "2026-03-22T11:29:40.276Z",
+    "blocks": [
+     {
+      "type": "TEXT",
+      "title": "📝 Why Bug Reporting is Important",
+      "content": "{\"body\":\"Bug reporting — tapılan problemləri düzgün və aydın şəkildə sənədləşdirməkdir.\\n\\nBu çox vacibdir, çünki:\\n- developer problemi tez başa düşür\\n- bug daha tez fix olunur\\n- komanda daxilində kommunikasiya yaxşılaşır\\n- məhsulun keyfiyyəti artır\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Cədvəl",
+      "content": "{\"headers\":[\"Səbəb\",\"İzah\"],\"rows\":[[\"Aydınlıq\",\"Developer problemi düzgün anlayır\"],[\"Sürət\",\"Fix daha tez edilir\"],[\"İzləmə\",\"Bug-lar track olunur\"],[\"Keyfiyyət\",\"Məhsul daha stabil olur\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🧾 Bug Report Structure",
+      "content": "{\"body\":\"Yaxşı bug report strukturlaşdırılmış və detallı olmalıdır\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Bug report strukturu",
+      "content": "{\"headers\":[\"Field\",\"İzah\"],\"rows\":[[\"İzah\",\"Qısa və konkret başlıq\"],[\"Description\",\"Problemin izahı\"],[\"Steps to Reproduce\",\"Addım-addım necə təkrar etmək\"],[\"Expected Result\",\"Gözlənilən nəticə\"],[\"Actual Result\",\"Real nəticə\"],[\"Severity\",\"Problemin ciddiliyi\"],[\"Priority\",\"Nə qədər tez fix olunmalıdır\"],[\"Environment\",\"Browser, device və s.\"],[\"Attachments\",\"Screenshot/video\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "Nümunə",
+      "content": "{\"body\":\"Title: Login button does not work\\nSteps:\\n\\n1. Saytı aç\\n2. Username daxil et\\n3. Password daxil et\\n4. Login klik et\\n\\n- Expected: User daxil olur\\n- Actual: Heç nə baş vermir\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "⚖️ Severity vs Priority",
+      "content": "{\"variant\":\"tip\",\"body\":\"Bu iki anlayış çox qarışdırılır:\\n\\n- Severity → bug nə qədər ciddi problem yaradır\\n- Priority → bug nə qədər tez fix olunmalıdır\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Müqayisə cədvəli",
+      "content": "{\"headers\":[\"Faktor\",\"Severity\",\"Priority\"],\"rows\":[[\"Nəyi ölçür\",\"Problemin təsiri\",\"Fix olunma sürəti\"],[\"Kim qərar verir\",\"QA\",\"PM / Team\"],[\"Fokus\",\"Sistemə təsir\",\"Biznes dəyəri\"]]}"
+     },
+     {
+      "type": "NOTE",
+      "title": "🔄 Bug Life Cycle",
+      "content": "{\"variant\":\"remember\",\"body\":\"Bug life cycle — bug-un tapılmasından fix olunmasına qədər keçdiyi mərhələlərdir.\"}"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "cmn1onmn4001yvkfi2dzr0kyj",
+  "title": "Test Environment Basics and Testing Fundamentals",
+  "titleEn": null,
+  "description": "Bu modul test mühiti və test proseslərinin əsas prinsiplərini əhatə edir. Burada test mühitlərinin növləri, test verilənlərinin idarəsi, test planlaşdırma, test icrası və hesabatlaşdırma kimi əsas anlayışlar öyrədilir. Modul manual testing üçün ən yaxşı təcrübələri də təqdim edir.",
+  "descriptionEn": null,
+  "order": 6,
+  "published": true,
+  "coverColor": "#2563eb",
+  "icon": "BookOpen",
+  "createdAt": "2026-03-22T11:38:03.233Z",
+  "updatedAt": "2026-03-22T11:38:04.270Z",
+  "lessons": [
+   {
+    "id": "cmn1tbhxp0020vkfiidoea1vy",
+    "title": "What is Testing Fundamentals?",
+    "titleEn": null,
+    "slug": "what-is-testing-fundamentals",
+    "shortDescription": "Testing Fundamentals — proqram testinin əsas prinsiplərini və mərhələlərini əhatə edir.",
+    "shortDescriptionEn": null,
+    "moduleId": "cmn1onmn4001yvkfi2dzr0kyj",
+    "order": 0,
+    "estimatedMinutes": 30,
+    "coverImageUrl": "https://helloskillio.com/wp-content/uploads/2024/05/polotno-6.png",
+    "published": true,
+    "quizEnabled": false,
+    "minQuizScore": null,
+    "createdAt": "2026-03-22T13:48:35.341Z",
+    "updatedAt": "2026-03-22T16:44:26.805Z",
+    "blocks": [
+     {
+      "type": "TABLE",
+      "title": "Cədvəl",
+      "content": "{\"headers\":[\"Anlayış\",\"İzah\"],\"rows\":[[\"Testing\",\"Proqramın düzgün işlədiyini yoxlamaq\"],[\"QA\",\"Keyfiyyətin təmin olunması\"],[\"Test Case\",\"Test ssenarisi\"],[\"Bug\",\"Səhv davranış\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "📋 Test Planning Basics",
+      "content": "{\"body\":\"Test Planning — testə başlamazdan əvvəl plan qurmaqdır.\\nBu mərhələdə qərar verilir:\\n- nə test olunacaq\\n- necə test olunacaq\\n- kim test edəcək\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "Cədvəl",
+      "content": "{\"headers\":[\"Element\",\"İzah\"],\"rows\":[[\"Scope\",\"Nə test olunur\"],[\"Resources\",\"Kim test edir\"],[\"Timeline\",\"Nə vaxt test edilir\"],[\"Tools\",\"Hansı alətlər istifadə olunur\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "💡 Nümunə",
+      "content": "{\"body\":\"- Scope: Login + Signup\\n- Timeline: 2 gün\\n- Tester: Turanə\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "▶️ Test Execution Basics",
+      "content": "{\"body\":\"Test Execution — plan əsasında testlərin icra olunmasıdır.\\nBu mərhələdə:\\n- test case-lər icra olunur\\n- bug-lar tapılır\\n- nəticələr qeyd olunur\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "📊 Test Reporting Basics",
+      "content": "{\"variant\":\"remember\",\"body\":\"Test Reporting — test nəticələrinin paylaşılmasıdır.\\nBu mərhələdə:\\n\\n- neçə test keçdi\\n- neçə bug tapıldı\\n- sistemin vəziyyəti nədir\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "⭐ Manual Testing Best Practices",
+      "content": "{\"body\":\"Manual testing zamanı düzgün yanaşma çox vacibdir.\",\"highlight\":\"success\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Best practices cədvəli",
+      "content": "{\"headers\":[\"Practice\",\"İzah\"],\"rows\":[[\"Aydın test case yaz\",\"Qarışıqlıq olmasın\"],[\"Edge case yoxla\",\"Kənar halları unutma\"],[\"Təkrar test et\",\"Bug fix yoxla\"],[\"Düzgün report yaz\",\"Developer başa düşsün\"],[\"Real user kimi düşün\",\"User perspective\"]]}"
+     },
+     {
+      "type": "EXAMPLE",
+      "title": "💡 Nümunələr",
+      "content": "{\"description\":\"✔ Yaxşı yanaşma:\\nyalnız normal input yox, boş input da yoxla\\n❌ Pis yanaşma:\\nsadəcə happy path test etmək\",\"takeaway\":\"Test Planning → Test Execution → Bug Reporting → Retesting → Reporting\",\"relatedImageUrl\":null}"
+     }
+    ]
+   },
+   {
+    "id": "cmn1trutt002kvkfie2b481wi",
+    "title": "What is a Test Environment?",
+    "titleEn": null,
+    "slug": "what-is-a-test-environment",
+    "shortDescription": "Test Environment — proqram təminatının test edilməsi üçün hazırlanmış xüsusi bir mühitdir. Bu mühitdə tətbiq real istifadə şəraitinə bənzər şəkildə işlədilir ki, səhvlər və problemlər aşkar edilsin.\n",
+    "shortDescriptionEn": null,
+    "moduleId": "cmn1onmn4001yvkfi2dzr0kyj",
+    "order": 1,
+    "estimatedMinutes": 30,
+    "coverImageUrl": null,
+    "published": true,
+    "quizEnabled": false,
+    "minQuizScore": null,
+    "createdAt": "2026-03-22T14:01:18.546Z",
+    "updatedAt": "2026-03-22T14:15:37.662Z",
+    "blocks": [
+     {
+      "type": "TEXT",
+      "title": "Test Environment — proqramın test edilməsi üçün hazırlanmış xüsusi mühitdir.",
+      "content": "{\"body\":\"Bu mühitdə:\\n\\n- tətbiq işləyir 🖥️\\n- testlər aparılır 🧪\\n- bug-lar tapılır 🐞\\n\\n👉 Sadə desək:\\n- Test Environment = test etdiyimiz yer\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Cədvəl",
+      "content": "{\"headers\":[\"Environment\",\"İzah\"],\"rows\":[[\"Dev 🛠️\",\"Developer-lərin işlədiyi mühit\"],[\"Test 🧪\",\"QA-nın test etdiyi mühit\"],[\"Staging 🚀\",\"Production-a yaxın mühit\"],[\"Production 🌐\",\"Real istifadəçilərin istifadə etdiyi mühit\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "💡 Nümunə",
+      "content": "{\"body\":\"- Dev → developer feature yazır\\n- Test → QA test edir\\n- Staging → son yoxlama\\n- Production → istifadəçilər istifadə edir\",\"highlight\":\"success\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Müqayisə cədvəli",
+      "content": "{\"headers\":[\"Faktor\",\"Environment 🌍\",\"Build 📦\"],\"rows\":[[\"Nədir\",\"İşləmə mühiti\",\"Proqram versiyası\"],[\"Misal\",\"Test, Dev\",\"v1.0, v1.1\"],[\"Dəyişmə\",\"Nadirdir\",\"Tez-tez dəyişir\"]]}"
+     },
+     {
+      "type": "NOTE",
+      "title": "💡 Nümunə",
+      "content": "{\"variant\":\"remember\",\"body\":\"Test environment-də build v1.2 deploy olunub\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "🌐 Browser & OS Basics",
+      "content": "{\"headers\":[\"Platforma\",\"Nümunə\"],\"rows\":[[\"Browser 🌐\",\"Chrome, Firefox, Safari\"],[\"OS 💻\",\"Windows, macOS, Linux\"],[\"Mobile 📱\",\"Android, iOS\"]]}"
+     },
+     {
+      "type": "EXAMPLE",
+      "title": "💡 Nümunə",
+      "content": "{\"description\":\"- Chrome-da işləyir\\n- Safari-də UI pozulur\\n\",\"takeaway\":\"👉 Bu bug-dur 🐞\",\"relatedImageUrl\":null}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🗂️ Test Data Basics",
+      "content": "{\"body\":\"Test data — test zamanı istifadə olunan məlumatlardır.\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Cədvəl",
+      "content": "{\"headers\":[\"Data tipi\",\"Nümunə\"],\"rows\":[[\"Valid data ✅\",\"düzgün email\"],[\"Invalid data ❌\",\"səhv email\"],[\"Empty data ⚪\",\"boş input\"],[\"Edge case ⚠️\",\"çox uzun text\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "💡 Nümunə",
+      "content": "{\"body\":\"- Email: test@gmail.com → işləyir ✅\\n- Email: test → error verir ❌\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "⚠️ Common Environment Issues",
+      "content": "{\"headers\":[\"Problem\",\"İzah\"],\"rows\":[[\"Server down 🔴\",\"Sistem açılmır\"],[\"Database error 🗄️\",\"Data gəlmir\"],[\"Wrong config ⚙️\",\"səhv ayarlar\"],[\"Cache problemi ♻️\",\"köhnə data qalır\"],[\"Network issue 🌍\",\"API işləməyir\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "💡 Nümunə",
+      "content": "{\"body\":\"Sayt açılmır\\n- səbəb: server down 🔴\\n👉 Bug deyil, environment problemidir\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "EXAMPLE",
+      "title": "🔑 Yekun",
+      "content": "{\"description\":\"- Test Environment testin aparıldığı mühitdir 🌍\\n- Müxtəlif mühitlər var: Dev, Test, Staging, Production 🛠️🧪🚀🌐\\n- Environment və Build fərqli anlayışlardır ⚖️\\n- Browser və OS fərqləri bug yarada bilər 🌐💻\\n- Test data düzgün seçilməlidir 🗂️\\n\",\"takeaway\":\"Hər problem bug deyil — bəzən səbəb environment-dir ⚠️\",\"relatedImageUrl\":null}"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "cmn1ukexq003bvkfig24olril",
+  "title": "Test Planning, Design & Execution",
+  "titleEn": null,
+  "description": "Test Planning, Design & Execution — test prosesinin 3 əsas mərhələsidir:\n\nTest Planning 📋 — nəyi, necə və nə vaxt test edəcəyimizi planlaşdırırıq\nTest Design 🧠 — test case-lər və ssenarilər hazırlayırıq\nTest Execution ▶️ — testləri icra edirik və bug-ları tapırıq",
+  "descriptionEn": null,
+  "order": 7,
+  "published": true,
+  "coverColor": "#2563eb",
+  "icon": "BookOpen",
+  "createdAt": "2026-03-22T14:23:30.975Z",
+  "updatedAt": "2026-03-22T14:23:32.317Z",
+  "lessons": [
+   {
+    "id": "cmn1umc3a003dvkfiubewahuk",
+    "title": "What is a Test Case?",
+    "titleEn": null,
+    "slug": "what-is-a-test-case",
+    "shortDescription": "Test Case — proqram təminatının müəyyən bir funksiyasını yoxlamaq üçün hazırlanmış addımlar və gözlənilən nəticələr toplusudur.",
+    "shortDescriptionEn": null,
+    "moduleId": "cmn1ukexq003bvkfig24olril",
+    "order": 0,
+    "estimatedMinutes": 30,
+    "coverImageUrl": "https://oprimes.com/wp-content/uploads/2022/01/10172-scaled-1.jpg",
+    "published": true,
+    "quizEnabled": true,
+    "minQuizScore": 70,
+    "createdAt": "2026-03-22T14:25:00.599Z",
+    "updatedAt": "2026-03-22T14:59:23.018Z",
+    "blocks": [
+     {
+      "type": "TABLE",
+      "title": "📊 Test Case strukturu",
+      "content": "{\"headers\":[\"Field\",\"İzah\"],\"rows\":[[\"Title 🏷️\",\"Testin adı\"],[\"Steps 🔢\",\"Addımlar\"],[\"Expected ✅\",\"Gözlənilən nəticə\"]]}"
+     },
+     {
+      "type": "EXAMPLE",
+      "title": "✍️ Writing Effective Test Cases",
+      "content": "{\"description\":\"Qaydalar:\\n- Aydın yaz 🧠\\n- Qısa yaz ✂️\\n- Təkrarlana bilən olsun 🔁\\n- Real user kimi düşün 👤\",\"takeaway\":\"Düzgün case yazmaq hərzaman effektivdir.\",\"relatedImageUrl\":null}"
+     },
+     {
+      "type": "TABLE",
+      "title": "⚖️ Positive vs Negative",
+      "content": "{\"headers\":[\"Positive ✅\",\"Positive ✅\"],\"rows\":[[\"Negative ❌\",\"Səhv input\"]]}"
+     },
+     {
+      "type": "EXAMPLE",
+      "title": "💡 Nümunə",
+      "content": "{\"description\":\"Positive: düzgün login\\nNegative: yanlış şifrə\",\"takeaway\":\"QA müxtəlif ssenariləri yoxlamalıdır.\",\"relatedImageUrl\":null}"
+     },
+     {
+      "type": "TEXT",
+      "title": "📦 Test Suites",
+      "content": "{\"body\":\"Test Suite — test case-lərin toplusudur\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Cədvəl",
+      "content": "{\"headers\":[\"Anlayış\",\"İzah\"],\"rows\":[[\"Test Case\",\"Tək test\"],[\"Test Suite\",\"Testlərin qrupu\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🗂️ Managing Test Suites",
+      "content": "{\"body\":\"- Testləri qruplaşdır\\n- Update et\\n- Köhnə testləri sil\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "📌 Test Execution & Reporting",
+      "content": "{\"variant\":\"remember\",\"body\":\"▶️ Test Execution process\\n\\n- Testləri icra edirik\\n- nəticəni yoxlayırıq\\n- bug varsa report edirik\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Statuslar",
+      "content": "{\"headers\":[\"Status\",\"İzah\"],\"rows\":[[\"Pass ✅\",\"Test uğurlu\"],[\"Fail ❌\",\"Test uğursuz\"],[\"Blocked ⛔\",\"Test edilə bilmir\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🔑 Yekun",
+      "content": "{\"body\":\"- Testing müxtəlif səviyyələrdə aparılır 🧩🔗🖥️\\n- Test case-lər testin əsasını təşkil edir 📋\\n- Test suites idarə etməyi asanlaşdırır 📦\\n- Execution və reporting QA-nın əsas işidir ▶️📊\",\"highlight\":\"success\"}"
+     }
+    ]
+   },
+   {
+    "id": "cmn1vv3rd0043vkfinsept456",
+    "title": "Testing Levels",
+    "titleEn": null,
+    "slug": "testing-levels",
+    "shortDescription": "Testing Levels — proqramın müxtəlif səviyyələrdə test edilməsidir.\n👉 Məqsəd: sistemin hissə-hissə və tam şəkildə düzgün işlədiyini yoxlamaqdır.",
+    "shortDescriptionEn": null,
+    "moduleId": "cmn1ukexq003bvkfig24olril",
+    "order": 1,
+    "estimatedMinutes": 30,
+    "coverImageUrl": "https://cdn.prod.website-files.com/619e15d781b21202de206fb5/64ba203842f7724f06314fd6_QA-testing-Everything-you-need-to-know.webp",
+    "published": true,
+    "quizEnabled": true,
+    "minQuizScore": 72,
+    "createdAt": "2026-03-22T14:59:49.321Z",
+    "updatedAt": "2026-03-24T10:47:02.581Z",
+    "blocks": [
+     {
+      "type": "TEXT",
+      "title": "🧩 Unit Testing",
+      "content": "{\"body\":\"- Unit testing — proqramın ən kiçik hissəsinin (funksiya) ayrıca yoxlanmasıdır.\\n👉 Yəni yalnız bir hissə test olunur, bütün sistem yox.\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "💡 Nümunə",
+      "content": "{\"body\":\"- topla(2,3) → nəticə 5 olmalıdır\\n- Əgər 5 deyilsə → ❌ FAIL\\n\\nBank tətbiqi:\\n- Balansa 50 AZN əlavə edilir\\n- Nəticə = köhnə balans + 50 olmalıdır\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Xüsusiyyətlər",
+      "content": "{\"headers\":[\"Faktor\",\"İzah\"],\"rows\":[[\"Scope\",\"Çox kiçik\"],[\"Kim edir\",\"Developer\"],[\"Məqsəd\",\"Kodun düzgünlüyü\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🔗 Integration Testing",
+      "content": "{\"body\":\"- Integration testing — sistemdəki hissələrin birlikdə işləməsini yoxlayır.\\n- 👉 Frontend + Backend + Database əlaqəsi test olunur\",\"highlight\":\"success\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "💡 Nümunə (Login flow)",
+      "content": "{\"body\":\"- User email & password yazır\\n- Frontend → Backend API\\n- Backend → Database\\n- Cavab geri qayıdır\\n\\n👉 Sual:\\n- Frontend-dən gələn sorğu backend-də düzgün işləyir?\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Xüsusiyyətlər",
+      "content": "{\"headers\":[\"Faktor\",\"İzah\"],\"rows\":[[\"Scope\",\"Orta\"],[\"Fokus\",\"Sistem hissələri\"],[\"Məqsəd\",\"Əlaqələri yoxlamaq\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🖥️ System Testing",
+      "content": "{\"body\":\"System testing — bütün sistemin tam şəkildə test edilməsidir.\\n\\n👉 Real istifadəçi mühitinə yaxın şəraitdə aparılır\\n💡 Nümunə:\\nE-commerce saytında:\\n\\n- Login\\n- Məhsul seçimi\\n- Səbətə əlavə\\n- Checkout\\n- Ödəniş\\n- Email\\n👉 Bu prosesin hamısı birlikdə test olunur\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Xüsusiyyətlər",
+      "content": "{\"headers\":[\"Faktor\",\"İzah\"],\"rows\":[[\"Scope\",\"Scope\"],[\"Fokus\",\"End-to-end\"],[\"Məqsəd\",\"Biznes tələbləri\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "👤 User Acceptance Testing (UAT)",
+      "content": "{\"body\":\"UAT — proqramın real istifadəçilər tərəfindən test edilməsidir.\\n👉 Müştəri sistemin hazır olub-olmadığını yoxlayır\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "💡 Məqsəd",
+      "content": "{\"body\":\"- Müştəri proqramı qəbul edəcəkmi?\\n- Real ehtiyacları qarşılayırmı?\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Xüsusiyyətlər",
+      "content": "{\"headers\":[\"Faktor\",\"İzah\"],\"rows\":[[\"Kim edir\",\"Müştəri\"],[\"Nə vaxt\",\"Sonda\"],[\"Məqsəd\",\"Qəbul\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🔥 Smoke Testing",
+      "content": "{\"body\":\"Yeni build gələn kimi aparılan sürətli testdir\\n👉 Əsas funksiyalar işləyir mi?\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "EXAMPLE",
+      "title": "💡 Nümunə",
+      "content": "{\"description\":\"- App açılır?\\n- Login işləyir?\",\"takeaway\":\"👉 Əgər işləmirsə → test dayandırılır\",\"relatedImageUrl\":null}"
+     },
+     {
+      "type": "NOTE",
+      "title": "⚡ Sanity Testing",
+      "content": "{\"variant\":\"remember\",\"body\":\"Bug fix və ya kiçik dəyişiklikdən sonra aparılır\\n👉 Yalnız həmin dəyişiklik test olunur\\n💡 Nümunə:\\n- “Şifrəni unutmuşam” düyməsi fix edilib\\n- Yalnız həmin hissə test edilir\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "🔥 Smoke vs ⚡ Sanity",
+      "content": "{\"headers\":[\"Faktor\",\"Smoke 🔥\",\"Sanity ⚡\"],\"rows\":[[\"Nə vaxt\",\"Yeni build\",\"Bug fix\"],[\"Scope\",\"Geniş\",\"Dar\"],[\"Məqsəd\",\"Sistem işləyir?\",\"Fix işləyir?\"]]}"
+     },
+     {
+      "type": "NOTE",
+      "title": "🔑 Yekun",
+      "content": "{\"variant\":\"important\",\"body\":\"- Unit → kiçik hissə 🧩\\n- Integration → hissələr 🔗\\n- System → bütün sistem 🖥️\\n- UAT → real user 👤\\n- Smoke → sürətli check 🔥\\n- Sanity → fix yoxlama ⚡\"}"
+     }
+    ]
+   },
+   {
+    "id": "cmn1wz0fi0057vkfi9cghix75",
+    "title": "Testing Types (Functional & Non-Functional)",
+    "titleEn": null,
+    "slug": "testing-types-functional-non-functional",
+    "shortDescription": "Funksional test – proqramın nəzərdə tutulmuş funksiyalarının düzgün işlədiyini yoxlayır.\nFunksional olmayan test – proqramın performansı, təhlükəsizliyi və istifadə rahatlığı kimi keyfiyyət göstəricilərini yoxlayır.",
+    "shortDescriptionEn": null,
+    "moduleId": "cmn1ukexq003bvkfig24olril",
+    "order": 2,
+    "estimatedMinutes": 30,
+    "coverImageUrl": "https://blog.moolya.com/wp-content/uploads/2023/06/Non-Fuctional-1.jpg",
+    "published": true,
+    "quizEnabled": true,
+    "minQuizScore": 70,
+    "createdAt": "2026-03-22T15:30:51.247Z",
+    "updatedAt": "2026-03-24T09:28:06.096Z",
+    "blocks": [
+     {
+      "type": "TEXT",
+      "title": "⚙️ Functional Testing",
+      "content": "{\"body\":\"Functional Testing — sistemin düzgün işləyib-işləmədiyini yoxlayır.\\n👉 “Bu feature işləyir mi?” sualına cavab verir\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "EXAMPLE",
+      "title": "💡 Nümunə",
+      "content": "{\"description\":\"- Login işləyir?\\n- Məhsul səbətə əlavə olunur?\\n- Form submit olunur?\",\"takeaway\":\"👉 Əgər işləmirsə → 🐞 Bug\",\"relatedImageUrl\":null}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Cədvəl",
+      "content": "{\"headers\":[\"Fokus\",\"Nümunə\"],\"rows\":[[\"Feature\",\"Login\"],[\"Input/Output\",\"Form\"],[\"Business logic\",\"Ödəniş\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🚀 Non-Functional Testing",
+      "content": "{\"body\":\"📝 Non-Functional Testing — sistemin necə işlədiyini yoxlayır (performans, sürət və s.)\\n👉 “Nə qədər yaxşı işləyir?” sualı\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "💡 Nümunə",
+      "content": "{\"variant\":\"remember\",\"body\":\"- Sayt nə qədər sürətlə açılır ⚡\\n- 1000 user daxil olanda nə olur 👥\\n- Sistem crash edir mi 💥\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Cədvəl",
+      "content": "{\"headers\":[\"Tip\",\"İzah\"],\"rows\":[[\"Performance ⚡\",\"Sürət\"],[\"Load 👥\",\"Yüklənmə\"],[\"Security 🔒\",\"Təhlükəsizlik\"],[\"Usability 🎯\",\"İstifadə rahatlığı\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🔄 Regression Testing",
+      "content": "{\"body\":\"- Regression Testing — yeni dəyişikliklərdən sonra köhnə funksiyaların işlədiyini yoxlamaqdır.\\n\\n💡 Nümunə\\nYeni feature əlavə olundu\\n👉 Köhnə login hələ işləyir?\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "🔁 Re-Testing",
+      "content": "{\"variant\":\"important\",\"body\":\"Re-testing — fix olunmuş bug-u yenidən yoxlamaqdır.\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🎲 Ad-hoc Testing",
+      "content": "{\"body\":\"Ad-hoc Testing — plansız, sərbəst testdir.\\n👉 Test case olmadan edilir\",\"highlight\":\"success\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "💡 Nümunə",
+      "content": "{\"variant\":\"tip\",\"body\":\"- Random klik edirsən\\n- fərqli inputlar yoxlayırsan\\n- “break etməyə” çalışırsan\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "⚖️ Functional vs Non-Functional",
+      "content": "{\"headers\":[\"Faktor\",\"Functional ⚙️\",\"Non-Functional 🚀\"],\"rows\":[[\"Fokus\",\"Nə işləyir\",\"Necə işləyir\"],[\"Misal\",\"Login\",\"Speed\"],[\"Məqsəd\",\"Doğruluq\",\"Keyfiyyət\"]]}"
+     },
+     {
+      "type": "NOTE",
+      "title": "🔑 Yekun",
+      "content": "{\"variant\":\"remember\",\"body\":\"- Functional → feature işləyir mi ⚙️\\n- Non-functional → necə işləyir 🚀\\n- Regression → köhnə şeylər pozulmayıb 🔄\\n- Re-testing → fix yoxlanır 🔁\\n- Ad-hoc → sərbəst test 🎲\"}"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "cmn1x0zv0005avkfiv38cp57e",
+  "title": "API Testing",
+  "titleEn": null,
+  "description": "API Testing – proqramın fərqli komponentləri arasında məlumat mübadiləsini təmin edən API-lərin düzgün işlədiyini yoxlamaq. Məqsəd, sorğu göndərmək və cavabların düzgünlüyünü, performansını və təhlükəsizliyini təsdiqləməkdir.",
+  "descriptionEn": null,
+  "order": 8,
+  "published": true,
+  "coverColor": "#2563eb",
+  "icon": "BookOpen",
+  "createdAt": "2026-03-22T15:32:23.821Z",
+  "updatedAt": "2026-03-22T16:43:44.207Z",
+  "lessons": [
+   {
+    "id": "cmn1x27fj005cvkfiml8bpfx1",
+    "title": "What is API Testing?",
+    "titleEn": null,
+    "slug": "what-is-api-testing",
+    "shortDescription": "API Testi – proqram komponentləri arasında məlumat mübadiləsini təmin edən API-lərin düzgün işlədiyini yoxlamaqdır.",
+    "shortDescriptionEn": null,
+    "moduleId": "cmn1x0zv0005avkfiv38cp57e",
+    "order": 0,
+    "estimatedMinutes": 30,
+    "coverImageUrl": "https://qatestlab.com/assets/Uploads/API-testing.jpg",
+    "published": true,
+    "quizEnabled": true,
+    "minQuizScore": 70,
+    "createdAt": "2026-03-22T15:33:20.288Z",
+    "updatedAt": "2026-03-22T16:43:59.862Z",
+    "blocks": [
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"API Testing — frontend olmadan, birbaşa backend (API) yoxlanmasıdır.\\n👉 Yəni UI yox, sistemin “beyni” test olunur.\\n💡 Misal: Login düyməsinə basmaq əvəzinə → API request göndəririk\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "EXAMPLE",
+      "title": "📌 Nümunə",
+      "content": "{\"description\":\"POST /login\\n{\\n  \\\"email\\\": \\\"test@mail.com\\\",\\n  \\\"password\\\": \\\"123456\\\"\\n}\",\"takeaway\":\"{\\n  \\\"token\\\": \\\"abc123\\\"\\n}\",\"relatedImageUrl\":null}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"🎯 Why API Testing is Important for QA\",\"level\":3}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"⚡ Daha sürətli test\\n🧠 UI-dan asılı deyil\\n🐞 Bug-ları tez tapır\\n🔍 Backend logic yoxlanır\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🧪 Introduction to Postman",
+      "content": "{\"body\":\"Postman — API test etmək üçün istifadə olunan alətdir\\n👉 Kod yazmadan request göndərirsən\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "⚙️ Postman Setup & Workspace",
+      "content": "{\"body\":\"Addımlar:\\n- Postman aç\\n- New → Collection yarat\\n- Request əlavə et\\n- URL yaz\\n- Method seç (GET, POST və s.)\\n- Send bas 🚀\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "🔁 HTTP Methods",
+      "content": "{\"headers\":[\"Method\",\"İzah\",\"Nümunə\"],\"rows\":[[\"GET 📥\",\"Məlumat alır\",\"/users\"],[\"POST ➕\",\"Yeni data yaradır\",\"/register\"],[\"PUT 🔄\",\"Update edir\",\"/user/1\"],[\"DELETE ❌\",\"Silir\",\"/user/1\"],[\"PATCH ✏️\",\"Məlumatın bir hissəsini yeniləyir\",\"/user/1\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "💡 Nümunə",
+      "content": "{\"body\":\"- GET\\nGET /users\\n\\n- POST\\nPOST /users\\n{\\n  \\\"name\\\": \\\"Anar\\\"\\n}\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🔄 Request & Response Handling",
+      "content": "{\"body\":\"📤 Request (sənin göndərdiyin)\\n- URL\\n- Method\\n- Body\\n📥 Response (serverdən gələn)\\n- Status code\\n- Data\\n- Message\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Status Codes",
+      "content": "{\"headers\":[\"Code\",\"İzah\"],\"rows\":[[\"200 ✅\",\"OK\"],[\"201 🆕\",\"Created\"],[\"400 ❌\",\"Bad Request\"],[\"401 🔐\",\"Unauthorized\"],[\"404 🔍\",\"Not Found\"],[\"500 💥\",\"Server Error\"]]}"
+     },
+     {
+      "type": "EXAMPLE",
+      "title": "💡 Nümunə",
+      "content": "{\"description\":\"200 → hər şey yaxşıdır ✅\\n404 → data tapılmadı ❌\\n500 → server problem 💥\",\"takeaway\":\"Status kodlar bizə backend vəya frontend tərəfdə nəyin düzgün getmədiyini göstərir.\",\"relatedImageUrl\":null}"
+     },
+     {
+      "type": "TEXT",
+      "title": "✅ Positive Scenario",
+      "content": "{\"body\":\"- POST /login\\n- email: test@mail.com\\n- password: 123456\\n\\n👉 Expected:\\n- 200 OK\\n- Token gəlir\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "❌ Negative Scenario",
+      "content": "{\"body\":\"- POST /login\\n- email: test@mail.com\\n- password: wrong\\n\\n👉 Expected:\\n- 401 Unauthorized\\n- Error mesajı\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "🔑 Yekun",
+      "content": "{\"variant\":\"remember\",\"body\":\"- API Testing → backend yoxlanır 🧠\\n- Postman → əsas alət ⚙️\\n- HTTP methods → CRUD 🔁\\n- Status codes → nəticə 📊\\n- Scenarios → real testlər 🧪\"}"
+     },
+     {
+      "type": "QUIZ",
+      "title": "Test",
+      "content": "{\"questions\":[{\"id\":\"2392d9b5-c3be-47b9-a396-0d6cf7a5cd96\",\"text\":\"API Testing nədir?\",\"options\":[\"UI test etmək\",\"Backend-i birbaşa test etmək\",\"Dizayn yoxlamaq\",\"Database silmək\"],\"correctIndex\":1,\"explanation\":\"\",\"imageUrl\":null},{\"id\":\"dac2b377-9799-4a93-b99f-a62e7d7478af\",\"text\":\"API testing-in əsas üstünlüyü nədir?\",\"options\":[\"Daha yavaşdır\",\"UI tələb edir\",\"Daha sürətlidir və UI-dan asılı deyil\",\"Yalnız frontend üçündür\"],\"correctIndex\":2,\"explanation\":\"\",\"imageUrl\":null},{\"id\":\"ccd08da5-a9a4-47cb-9027-b8ac63c49c6a\",\"text\":\"Postman nədir?\",\"options\":[\"Database\",\"API test aləti\",\"Browser\",\"Programming dili\"],\"correctIndex\":1,\"explanation\":\"\",\"imageUrl\":null},{\"id\":\"e01c285e-118b-4440-b773-161a0647eace\",\"text\":\"GET metodu nə edir?\",\"options\":[\"Data silir\",\"Data yeniləyir\",\"Data alır\",\"Data yaradır\"],\"correctIndex\":2,\"explanation\":\"\",\"imageUrl\":null},{\"id\":\"db030a55-15ff-4a63-86ae-c1b97bb71f73\",\"text\":\"POST metodu nə üçün istifadə olunur?\",\"options\":[\"Data oxumaq\",\"Data yaratmaq\",\"Data silmək\",\"Data yoxlamaq\"],\"correctIndex\":1,\"explanation\":\"\",\"imageUrl\":null},{\"id\":\"4f6ca3d1-7f65-4460-b182-7300b6588468\",\"text\":\"PUT və PATCH arasındakı fərq nədir?\",\"options\":[\"Heç bir fərq yoxdur\",\"PUT silir, PATCH yaradır\",\"PUT full update, PATCH partial update edir\",\"PATCH yalnız GET üçündür\"],\"correctIndex\":2,\"explanation\":\"\",\"imageUrl\":null},{\"id\":\"e1b5109a-3981-4068-ad2a-0757646196ae\",\"text\":\"404 status code nə deməkdir?\",\"options\":[\"Server error\",\"Unauthorized\",\"Not Found\",\"Success\"],\"correctIndex\":2,\"explanation\":\"\",\"imageUrl\":null},{\"id\":\"c67b73c5-1b53-452d-9984-e3fcc2bb24fe\",\"text\":\"Empty input hansı test növünə aiddir?\",\"options\":[\"Positive\",\"Negative\",\"Edge case\",\"Smoke test\"],\"correctIndex\":2,\"explanation\":\"\",\"imageUrl\":null}]}"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "cmn4dghxi006jvkfidd8ridrc",
+  "title": "Software Testing Methodologies",
+  "titleEn": null,
+  "description": "\"Software testing metodologiyaları\" (proqram təminatının test metodologiyaları) proqram təminatının keyfiyyətini təmin etmək üçün istifadə olunan strategiyalar, proseslər və yanaşmalardır. ",
+  "descriptionEn": null,
+  "order": 9,
+  "published": true,
+  "coverColor": "#2563eb",
+  "icon": "BookOpen",
+  "createdAt": "2026-03-24T08:47:53.287Z",
+  "updatedAt": "2026-03-24T08:47:54.277Z",
+  "lessons": [
+   {
+    "id": "cmn4hjd92000ixbrdvz4mv2ac",
+    "title": "System Testing",
+    "titleEn": null,
+    "slug": "system-testing-1",
+    "shortDescription": "System Testing — bütün sistemin tam şəkildə test edilməsidir.\nBu mərhələdə bütün modullar birlikdə yoxlanılır və sistemin biznes tələblərinə uyğun işlədiyi təsdiqlənir.",
+    "shortDescriptionEn": null,
+    "moduleId": "cmn4dghxi006jvkfidd8ridrc",
+    "order": 6,
+    "estimatedMinutes": 25,
+    "coverImageUrl": "https://www.tutorialspoint.com/software_testing/images/system_testing.jpg",
+    "published": true,
+    "quizEnabled": false,
+    "minQuizScore": 70,
+    "createdAt": "2026-03-24T10:42:05.654Z",
+    "updatedAt": "2026-03-24T10:42:05.654Z",
+    "blocks": [
+     {
+      "type": "TEXT",
+      "title": "🖥️ What is System Testing?",
+      "content": "{\"body\":\"System Testing — bütün sistemin tam şəkildə test edilməsidir.\\n👉 Yəni bütün modullar birlikdə (end-to-end) yoxlanılır.\\n\\nBu mərhələdə sistem real istifadəçi mühitinə yaxın şəraitdə test olunur.\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "EXAMPLE",
+      "title": "💡 Nümunə",
+      "content": "{\"description\":\"- Login 🔐\\n- Məhsul seçimi 🛒\\n- Səbətə əlavə ➕\\n- Ödəniş 💳\\n- Email təsdiqi 📧\",\"takeaway\":\"👉 Bütün bu proses birlikdə test olunursa → bu System Testing-dir\",\"relatedImageUrl\":null}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Xüsusiyyətlər",
+      "content": "{\"headers\":[\"Faktor\",\"İzah\"],\"rows\":[[\"Scope\",\"Bütün sistem\"],[\"Test növü\",\"End-to-End\"],[\"Məqsəd\",\"Sistem düzgün işləyir mi\"],[\"Mühit\",\"Real istifadəçiyə yaxın\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🔄 Types of System Testing",
+      "content": "{\"body\":\"System Testing 2 əsas növə bölünür:\\n\\n⚙️ Functional System Testing\\n🚀 Non-Functional System Testing\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "⚙️ Functional System Testing",
+      "content": "{\"body\":\"Functional System Testing — sistemin funksional olaraq düzgün işlədiyini yoxlayır.\\n👉 “Bu feature işləyir mi?” sualına cavab verir\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "💡 Nümunə",
+      "content": "{\"variant\":\"tip\",\"body\":\"- Login işləyir? 🔐\\n- Checkout tamamlanır? 🛒\\n- Form submit olunur? 📄\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Functional Testing Fokus",
+      "content": "{\"headers\":[\"Fokus\",\"Nümunə\"],\"rows\":[[\"Feature\",\"Login\"],[\"Flow\",\"Checkout\"],[\"Business logic\",\"Payment\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🚀 Non-Functional System Testing",
+      "content": "{\"body\":\"Non-Functional System Testing — sistemin necə işlədiyini yoxlayır.\\n👉 Performans, sürət, təhlükəsizlik kimi faktorlar test olunur\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "💡 Nümunə",
+      "content": "{\"variant\":\"remember\",\"body\":\"- Sayt neçə saniyəyə açılır ⚡\\n- 1000 user daxil olanda nə olur 👥\\n- Sistem crash edir mi 💥\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Non-Functional Testing",
+      "content": "{\"headers\":[\"Tip\",\"İzah\"],\"rows\":[[\"Performance ⚡\",\"Sürət\"],[\"Load 👥\",\"Yüklənmə\"],[\"Security 🔒\",\"Təhlükəsizlik\"],[\"Usability 🎯\",\"İstifadə rahatlığı\"]]}"
+     },
+     {
+      "type": "TABLE",
+      "title": "⚖️ Functional vs Non-Functional",
+      "content": "{\"headers\":[\"Faktor\",\"Functional ⚙️\",\"Non-Functional 🚀\"],\"rows\":[[\"Fokus\",\"Nə işləyir\",\"Necə işləyir\"],[\"Məqsəd\",\"Doğruluq\",\"Keyfiyyət\"],[\"Nümunə\",\"Login\",\"Speed\"]]}"
+     },
+     {
+      "type": "NOTE",
+      "title": "🔑 Yekun",
+      "content": "{\"variant\":\"important\",\"body\":\"- System Testing → bütün sistem test olunur 🖥️\\n- Functional → feature işləyir ⚙️\\n- Non-functional → performans və keyfiyyət 🚀\\n- End-to-end test bu mərhələdə aparılır 🔄\"}"
+     }
+    ]
+   },
+   {
+    "id": "cmn4ho3wc001cxbrdjn28c2rf",
+    "title": "Software Testing Methodologies",
+    "titleEn": null,
+    "slug": "software-testing-methodologies",
+    "shortDescription": "Testing Methodology — test prosesinin necə aparıldığını müəyyən edən yanaşmadır.\nFərqli metodologiyalar layihənin ehtiyacına görə seçilir (Waterfall, Agile və s.).",
+    "shortDescriptionEn": null,
+    "moduleId": "cmn4dghxi006jvkfidd8ridrc",
+    "order": 7,
+    "estimatedMinutes": 25,
+    "coverImageUrl": "https://www.softwaretestinghelp.com/wp-content/qa/uploads/2020/03/software-testing-methodologies.png",
+    "published": true,
+    "quizEnabled": false,
+    "minQuizScore": 70,
+    "createdAt": "2026-03-24T10:45:46.813Z",
+    "updatedAt": "2026-03-24T10:45:46.813Z",
+    "blocks": [
+     {
+      "type": "TEXT",
+      "title": "📌 What is Testing Methodology?",
+      "content": "{\"body\":\"Testing Methodology — test prosesinin necə planlanacağını, icra olunacağını və idarə ediləcəyini müəyyən edən yanaşmadır.\\n\\n👉 Yəni testlər hansı qaydada aparılacaq — bu metodologiya ilə müəyyən olunur.\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "EXAMPLE",
+      "title": "💡 Nümunə",
+      "content": "{\"description\":\"- Layihə mərhələlərlə aparılır → Waterfall\\n- Sprint-lərlə inkişaf edir → Agile\",\"takeaway\":\"👉 Layihənin tipinə görə metodologiya seçilir\",\"relatedImageUrl\":null}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🔄 Types of Testing Methodologies",
+      "content": "{\"body\":\"Ən çox istifadə olunan metodologiyalar:\\n\\n💧 Waterfall\\n⚡ Agile\\n🔁 Iterative\\n🔄 V-Model\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "💧 Waterfall Model",
+      "content": "{\"body\":\"Waterfall — mərhələli inkişaf modelidir.\\n👉 Hər mərhələ bitmədən növbəti mərhələyə keçilmir.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "💡 Nümunə",
+      "content": "{\"variant\":\"tip\",\"body\":\"Requirement → Design → Development → Testing → Release\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "⚡ Agile Model",
+      "content": "{\"body\":\"Agile — iterativ və çevik yanaşmadır.\\n👉 İş kiçik hissələrə bölünür (sprint-lər).\\n👉 Test və development paralel gedir.\",\"highlight\":\"success\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "💡 Xüsusiyyət",
+      "content": "{\"variant\":\"remember\",\"body\":\"- Sprint-based development ⚡\\n- Tez-tez release 🚀\\n- Davamlı test 🧪\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🔄 V-Model",
+      "content": "{\"body\":\"V-Model — development və testing paralel şəkildə aparılır.\\n👉 Hər development mərhələsinin uyğun test mərhələsi var.\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🔁 Iterative Model",
+      "content": "{\"body\":\"Iterative model — sistem hissə-hissə qurulur və təkrar-təkrar inkişaf etdirilir.\\n👉 Hər iterasiyada sistem daha yaxşı olur.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Metodologiyaların Müqayisəsi",
+      "content": "{\"headers\":[\"Metodologiya\",\"Xüsusiyyət\",\"İstifadə sahəsi\"],\"rows\":[[\"Waterfall 💧\",\"Mərhələli\",\"Stabil layihələr\"],[\"Agile ⚡\",\"Çevik, sprint\",\"Startuplar, dinamik layihələr\"],[\"V-Model 🔄\",\"Parallel test\",\"Keyfiyyət kritik layihələr\"],[\"Iterative 🔁\",\"Təkrar inkişaf\",\"Böyük sistemlər\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "⚖️ Advantages & Challenges",
+      "content": "{\"body\":\"Hər metodologiyanın üstünlükləri və çətinlikləri var.\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Üstünlüklər və Çətinliklər",
+      "content": "{\"headers\":[\"Metodologiya\",\"Üstünlük ✅\",\"Çətinlik ❌\"],\"rows\":[[\"Waterfall 💧\",\"Sadə və strukturlaşdırılmış\",\"Dəyişiklik çətindir\"],[\"Agile ⚡\",\"Çevik və sürətli\",\"Planlama çətin ola bilər\"],[\"V-Model 🔄\",\"Yüksək keyfiyyət\",\"Çox rigid struktur\"],[\"Iterative 🔁\",\"Davamlı inkişaf\",\"Daha çox resurs tələb edir\"]]}"
+     },
+     {
+      "type": "NOTE",
+      "title": "🔑 Yekun",
+      "content": "{\"variant\":\"important\",\"body\":\"- Testing Methodology → test prosesinin qaydasıdır 📌\\n- Waterfall → mərhələli 💧\\n- Agile → çevik ⚡\\n- V-Model → paralel 🔄\\n- Iterative → təkrar inkişaf 🔁\\n👉 Doğru metodologiya layihənin uğurunu artırır 🚀\"}"
+     }
+    ]
+   },
+   {
+    "id": "cmn4hv2zr001sxbrd9rujjkgb",
+    "title": "Black Box Testing",
+    "titleEn": null,
+    "slug": "black-box-testing-1",
+    "shortDescription": "Black Box Testing — sistemin daxili kodunu bilmədən yalnız input və output əsasında test edilməsidir.\nQA yalnız istifadəçi kimi davranır və nəticəni yoxlayır.",
+    "shortDescriptionEn": null,
+    "moduleId": "cmn4dghxi006jvkfidd8ridrc",
+    "order": 8,
+    "estimatedMinutes": 30,
+    "coverImageUrl": "https://www.softwaretestinghelp.com/wp-content/qa/uploads/2017/06/Black-Box-Testing.png",
+    "published": true,
+    "quizEnabled": true,
+    "minQuizScore": 70,
+    "createdAt": "2026-03-24T10:51:12.232Z",
+    "updatedAt": "2026-03-24T10:51:12.232Z",
+    "blocks": [
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"📌 Black Box Testing\",\"level\":2}"
+     },
+     {
+      "type": "TEXT",
+      "title": "📝 What is Black Box Testing?",
+      "content": "{\"body\":\"Black Box Testing — sistemin daxili kodunu bilmədən test edilməsidir.\\n👉 QA yalnız input verir və output-u yoxlayır.\\n\\nYəni sistem 'qara qutu' kimi qəbul edilir.\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "💡 Əsas ideya",
+      "content": "{\"variant\":\"remember\",\"body\":\"👉 Input ver → Output yoxla\\n👉 Kod bilmək vacib deyil\\n👉 User perspective ilə test edilir\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Xüsusiyyətlər",
+      "content": "{\"headers\":[\"Faktor\",\"İzah\"],\"rows\":[[\"Kod bilikləri\",\"Tələb olunmur\"],[\"Fokus\",\"Input / Output\"],[\"Perspektiv\",\"User\"],[\"İstifadə\",\"QA testing\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🔄 Types of Black Box Testing",
+      "content": "{\"body\":\"Black Box Testing aşağıdakı texnikaları əhatə edir:\\n\\n- Boundary Value Analysis\\n- Equivalence Partitioning\\n- Decision Table Testing\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "📏 Boundary Value Analysis",
+      "content": "{\"body\":\"Boundary Value Analysis — limit dəyərlərin test edilməsidir.\\n👉 Ən çox bug-lar sərhəd (boundary) nöqtələrində olur.\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "EXAMPLE",
+      "title": "💡 Nümunə",
+      "content": "{\"description\":\"Yaş aralığı: 18–60\\nTest:\\n17 ❌\\n18 ✅\\n60 ✅\\n61 ❌\",\"takeaway\":\"👉 Sərhəd dəyərlər (18 və 60) ən vacibdir\",\"relatedImageUrl\":null}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🧠 Equivalence Partitioning",
+      "content": "{\"body\":\"Equivalence Partitioning — input-ları qruplara bölərək test etməkdir.\\n👉 Hər qrupdan 1 test kifayətdir.\",\"highlight\":\"success\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "💡 Nümunə",
+      "content": "{\"variant\":\"tip\",\"body\":\"0–17 ❌\\n18–60 ✅\\n61+ ❌\\n👉 Hər qrupdan 1 test seçilir\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "📊 Decision Table Testing",
+      "content": "{\"body\":\"Decision Table Testing — müxtəlif şərtlərə görə nəticələri test etməkdir.\\n👉 'If-Else' logic test olunur.\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Nümunə",
+      "content": "{\"headers\":[\"Email\",\"Password\",\"Nəticə\"],\"rows\":[[\"Düzgün\",\"Düzgün\",\"Login success\"],[\"Düzgün\",\"Səhv\",\"Error\"],[\"Boş\",\"Düzgün\",\"Error\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "⭐ Vacib məqamlar",
+      "content": "{\"body\":\"Black Box Testing zamanı diqqət edilməli məqamlar:\\n\\n- Edge case-ləri yoxla ⚠️\\n- Negative testləri unutma ❌\\n- Real user kimi düşün 👤\\n- API və UI birlikdə test edilə bilər 🔗\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "TASK",
+      "title": "✍️ Tapşırıq",
+      "content": "{\"instructions\":\"Login üçün Boundary Value Analysis tətbiq edərək 3 test case yazın.\",\"placeholder\":\"1) ...\\n2) ...\\n3) ...\",\"required\":true}"
+     },
+     {
+      "type": "QUIZ",
+      "title": "🧪 Mini test",
+      "content": "{\"questions\":[{\"id\":\"q1\",\"text\":\"Black Box Testing nəyi yoxlayır?\",\"options\":[\"Kod strukturunu\",\"Input və Output-u\",\"Database dizaynını\",\"Server CPU\"],\"correctIndex\":1,\"explanation\":\"Black Box Testing yalnız input/output əsasında aparılır.\",\"imageUrl\":null},{\"id\":\"q2\",\"text\":\"Boundary Value Analysis nəyi yoxlayır?\",\"options\":[\"Random data\",\"Sərhəd dəyərləri\",\"UI dizaynı\",\"Security\"],\"correctIndex\":1,\"explanation\":\"Bu texnika limit dəyərləri test edir.\",\"imageUrl\":null},{\"id\":\"q3\",\"text\":\"Equivalence Partitioning nədir?\",\"options\":[\"Kod yazmaq\",\"Input-ları qruplaşdırmaq\",\"Server test etmək\",\"Database silmək\"],\"correctIndex\":1,\"explanation\":\"Input-lar qruplara bölünür və hər qrupdan test edilir.\",\"imageUrl\":null},{\"id\":\"q4\",\"text\":\"Decision Table Testing nəyi test edir?\",\"options\":[\"UI\",\"If-Else logic\",\"Speed\",\"Design\"],\"correctIndex\":1,\"explanation\":\"Şərtlərə əsaslanan qərarlar test olunur.\",\"imageUrl\":null},{\"id\":\"q5\",\"text\":\"Black Box Testing-də kod bilmək lazımdır?\",\"options\":[\"Bəli\",\"Xeyr\",\"Yalnız backend üçün\",\"Yalnız API üçün\"],\"correctIndex\":1,\"explanation\":\"Kod bilmək tələb olunmur.\",\"imageUrl\":null}]}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "NOTE",
+      "title": "🔑 Yekun",
+      "content": "{\"variant\":\"important\",\"body\":\"- Black Box → kod bilmədən test 🧠\\n- Fokus → input/output 🔄\\n- Boundary → limitlər 📏\\n- Equivalence → qruplar 🧩\\n- Decision table → logic 📊\"}"
+     }
+    ]
+   },
+   {
+    "id": "cmn4jn92q002bxbrdyh12y08q",
+    "title": "White Box Testing",
+    "titleEn": null,
+    "slug": "white-box-testing-1",
+    "shortDescription": "White Box Testing — proqramın daxili kodunu və məntiqini yoxlayaraq aparılan testdir.\nBu test növündə tester kod strukturunu bilir və ona əsasən test edir.",
+    "shortDescriptionEn": null,
+    "moduleId": "cmn4dghxi006jvkfidd8ridrc",
+    "order": 9,
+    "estimatedMinutes": 30,
+    "coverImageUrl": "https://www.softwaretestinghelp.com/wp-content/qa/uploads/2017/06/White-Box-Testing.png",
+    "published": true,
+    "quizEnabled": true,
+    "minQuizScore": 70,
+    "createdAt": "2026-03-24T11:41:06.099Z",
+    "updatedAt": "2026-03-24T11:41:06.099Z",
+    "blocks": [
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"📌 White Box Testing\",\"level\":2}"
+     },
+     {
+      "type": "TEXT",
+      "title": "📝 What is White Box Testing?",
+      "content": "{\"body\":\"White Box Testing — proqramın daxili kodunu, strukturunu və məntiqini yoxlayaraq aparılan testdir.\\n👉 Tester kodu bilir və ona əsasən test edir.\\n\\nBu test daha çox developer tərəfindən edilir.\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "💡 Əsas ideya",
+      "content": "{\"variant\":\"remember\",\"body\":\"👉 Kod daxili yoxlanır\\n👉 Logic test olunur\\n👉 Developer perspektivi istifadə olunur\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Xüsusiyyətlər",
+      "content": "{\"headers\":[\"Faktor\",\"İzah\"],\"rows\":[[\"Kod bilikləri\",\"Tələb olunur\"],[\"Fokus\",\"Logic və struktur\"],[\"Kim edir\",\"Developer\"],[\"Test növü\",\"Low-level\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🔄 Types of White Box Testing",
+      "content": "{\"body\":\"White Box Testing aşağıdakı texnikaları əhatə edir:\\n\\n- Statement Coverage\\n- Branch Coverage\\n- Path Coverage\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "📍 Statement Coverage",
+      "content": "{\"body\":\"Statement Coverage — kodun bütün sətirlərinin ən azı bir dəfə işlədiyini yoxlayır.\\n👉 Məqsəd: bütün kod icra olunsun.\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "EXAMPLE",
+      "title": "💡 Nümunə",
+      "content": "{\"description\":\"if (x > 0) {\\n  print('positive');\\n}\",\"takeaway\":\"👉 x = 1 verərək bu kod sətiri işlədilir\",\"relatedImageUrl\":null}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🔀 Branch Coverage",
+      "content": "{\"body\":\"Branch Coverage — bütün şərt nəticələrinin (true/false) yoxlanmasıdır.\\n👉 Hər branch test olunmalıdır.\",\"highlight\":\"success\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "💡 Nümunə",
+      "content": "{\"variant\":\"tip\",\"body\":\"if (x > 0)\\n👉 x = 1 (true)\\n👉 x = -1 (false)\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🛣️ Path Coverage",
+      "content": "{\"body\":\"Path Coverage — kodda mümkün olan bütün yolların test edilməsidir.\\n👉 Ən geniş və kompleks test növüdür.\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "EXAMPLE",
+      "title": "💡 Nümunə",
+      "content": "{\"description\":\"if (x > 0) {\\n if (x < 10) {\\n  print('small positive');\\n }\\n}\",\"takeaway\":\"👉 Müxtəlif input-larla bütün yollar test olunur\",\"relatedImageUrl\":null}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Coverage müqayisəsi",
+      "content": "{\"headers\":[\"Coverage\",\"İzah\"],\"rows\":[[\"Statement\",\"Kod sətirləri işləyir\"],[\"Branch\",\"True/False yolları\"],[\"Path\",\"Bütün mümkün yollar\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "⭐ Vacib məqamlar",
+      "content": "{\"body\":\"- Kod coverage artırmaq vacibdir 📈\\n- Testlər logic-i yoxlamalıdır 🧠\\n- Kompleks sistemlərdə path coverage çətindir ⚠️\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "TASK",
+      "title": "✍️ Tapşırıq",
+      "content": "{\"instructions\":\"Sadə if-else kodu yaz və onun üçün 2 test case hazırla.\",\"placeholder\":\"Kod:\\n...\\n\\nTest case 1:\\n...\\nTest case 2:\\n...\",\"required\":true}"
+     },
+     {
+      "type": "QUIZ",
+      "title": "🧪 Mini test",
+      "content": "{\"questions\":[{\"id\":\"q1-whitebox\",\"text\":\"White Box Testing nəyi yoxlayır?\",\"options\":[\"UI dizaynı\",\"Kodun daxili strukturu\",\"Server performansı\",\"Database ölçüsü\"],\"correctIndex\":1,\"explanation\":\"White Box Testing kod və logic yoxlayır.\",\"imageUrl\":null},{\"id\":\"q2-statement\",\"text\":\"Statement Coverage nəyi yoxlayır?\",\"options\":[\"Yolları\",\"Kod sətirlərini\",\"UI\",\"Database\"],\"correctIndex\":1,\"explanation\":\"Bütün kod sətirləri icra olunur.\",\"imageUrl\":null},{\"id\":\"q3-branch\",\"text\":\"Branch Coverage nədir?\",\"options\":[\"Kod yazmaq\",\"True/False yoxlamaq\",\"UI test\",\"Security\"],\"correctIndex\":1,\"explanation\":\"Şərtlərin hər iki nəticəsi test olunur.\",\"imageUrl\":null},{\"id\":\"q4-path\",\"text\":\"Path Coverage nəyi yoxlayır?\",\"options\":[\"Bir sətiri\",\"Bütün yolları\",\"Yalnız UI\",\"Database\"],\"correctIndex\":1,\"explanation\":\"Bütün mümkün yollar test edilir.\",\"imageUrl\":null},{\"id\":\"q5-dev\",\"text\":\"White Box Testing-i kim edir?\",\"options\":[\"Designer\",\"QA yalnız\",\"Developer\",\"User\"],\"correctIndex\":2,\"explanation\":\"Əsasən developer tərəfindən edilir.\",\"imageUrl\":null}]}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "NOTE",
+      "title": "🔑 Yekun",
+      "content": "{\"variant\":\"important\",\"body\":\"- White Box → kod daxili test 🧠\\n- Statement → sətirlər 📍\\n- Branch → şərtlər 🔀\\n- Path → yollar 🛣️\\n👉 Coverage nə qədər çoxdursa, test o qədər güclüdür 📈\"}"
+     }
+    ]
+   },
+   {
+    "id": "cmn4jonph002vxbrdg5hfzvy6",
+    "title": "Grey Box Testing",
+    "titleEn": null,
+    "slug": "grey-box-testing-1",
+    "shortDescription": "Grey Box Testing — həm Black Box, həm də White Box yanaşmasının birləşməsidir.\nTester sistemin daxili strukturu haqqında qismən məlumata malik olur.",
+    "shortDescriptionEn": null,
+    "moduleId": "cmn4dghxi006jvkfidd8ridrc",
+    "order": 10,
+    "estimatedMinutes": 10,
+    "coverImageUrl": "https://www.softwaretestinghelp.com/wp-content/qa/uploads/2017/06/Grey-Box-Testing.png",
+    "published": true,
+    "quizEnabled": true,
+    "minQuizScore": 70,
+    "createdAt": "2026-03-24T11:42:11.717Z",
+    "updatedAt": "2026-03-24T11:42:11.717Z",
+    "blocks": [
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"📌 Grey Box Testing\",\"level\":2}"
+     },
+     {
+      "type": "TEXT",
+      "title": "📝 What is Grey Box Testing?",
+      "content": "{\"body\":\"Grey Box Testing — həm Black Box, həm də White Box testin qarışığıdır.\\n👉 Tester həm istifadəçi kimi test edir, həm də sistem haqqında müəyyən məlumatı olur.\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "💡 Əsas ideya",
+      "content": "{\"variant\":\"remember\",\"body\":\"👉 Input/Output test olunur\\n👉 Daxili struktur qismən bilinir\\n👉 Real bug tapmaq daha asandır\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "⏱️ When to use Grey Box Testing",
+      "content": "{\"body\":\"- API testing zamanı 🔗\\n- Database structure məlumdursa 🗄️\\n- Integration testing zamanı 🔄\\n- Security və performance testlərdə 🔒\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Müqayisə",
+      "content": "{\"headers\":[\"Test tipi\",\"Kod biliyi\"],\"rows\":[[\"Black Box ⚫\",\"Yoxdur\"],[\"White Box ⚪\",\"Tam var\"],[\"Grey Box ⚙️\",\"Qismən var\"]]}"
+     },
+     {
+      "type": "QUIZ",
+      "title": "🧪 Mini test",
+      "content": "{\"questions\":[{\"id\":\"q1-grey\",\"text\":\"Grey Box Testing nədir?\",\"options\":[\"Yalnız UI test\",\"Black və White Box qarışığı\",\"Yalnız backend test\",\"Database test\"],\"correctIndex\":1,\"explanation\":\"Grey Box hər iki yanaşmanın birləşməsidir.\",\"imageUrl\":null},{\"id\":\"q2-when\",\"text\":\"Grey Box Testing nə zaman istifadə olunur?\",\"options\":[\"Yalnız UI testdə\",\"API və integration testdə\",\"Yalnız design üçün\",\"Yalnız manual testdə\"],\"correctIndex\":1,\"explanation\":\"API və integration testlərdə geniş istifadə olunur.\",\"imageUrl\":null},{\"id\":\"q3-knowledge\",\"text\":\"Grey Box Testing-də kod biliyi necədir?\",\"options\":[\"Yoxdur\",\"Tam var\",\"Qismən var\",\"Lazım deyil\"],\"correctIndex\":2,\"explanation\":\"Tester sistem haqqında qismən məlumatlı olur.\",\"imageUrl\":null},{\"id\":\"q4-purpose\",\"text\":\"Grey Box Testing-in üstünlüyü nədir?\",\"options\":[\"Daha az test edir\",\"Bug tapmaq çətindir\",\"Daha effektiv bug tapır\",\"Yalnız UI üçündür\"],\"correctIndex\":2,\"explanation\":\"Qismən bilik daha effektiv test imkanı verir.\",\"imageUrl\":null},{\"id\":\"q5-compare\",\"text\":\"Grey Box hansı testlərin ortasıdır?\",\"options\":[\"Functional və Non-functional\",\"Unit və Integration\",\"Black Box və White Box\",\"Manual və Automation\"],\"correctIndex\":2,\"explanation\":\"Grey Box bu iki yanaşmanın ortasıdır.\",\"imageUrl\":null}]}"
+     }
+    ]
+   },
+   {
+    "id": "cmn4jr1160035xbrdk6h7q1pq",
+    "title": "Static & Dynamic Testing dərsi",
+    "titleEn": null,
+    "slug": "static-dynamic-testing-1",
+    "shortDescription": "Static Testing — kod işlədilmədən aparılan testdir.\nDynamic Testing — kod icra olunaraq aparılan testdir.",
+    "shortDescriptionEn": null,
+    "moduleId": "cmn4dghxi006jvkfidd8ridrc",
+    "order": 11,
+    "estimatedMinutes": 20,
+    "coverImageUrl": "https://www.softwaretestinghelp.com/wp-content/qa/uploads/2018/06/Static-vs-Dynamic-Testing.png",
+    "published": true,
+    "quizEnabled": true,
+    "minQuizScore": 70,
+    "createdAt": "2026-03-24T11:44:02.298Z",
+    "updatedAt": "2026-03-24T11:44:02.298Z",
+    "blocks": [
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"📌 Static & Dynamic Testing\",\"level\":2}"
+     },
+     {
+      "type": "TEXT",
+      "title": "📝 What is Static Testing?",
+      "content": "{\"body\":\"Static Testing — proqramı işə salmadan aparılan testdir.\\n👉 Kod və ya sənədlər analiz olunur.\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "💡 Nümunə",
+      "content": "{\"variant\":\"tip\",\"body\":\"- Requirement review 📄\\n- Document review 📝\\n- Code review 👨‍💻\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Static Testing üstünlükləri",
+      "content": "{\"headers\":[\"Üstünlük\",\"İzah\"],\"rows\":[[\"Erkən bug tapılır\",\"Development-dən əvvəl\"],[\"Vaxt qənaəti\",\"Sonradan fix az olur\"],[\"Keyfiyyət artır\",\"Daha az risk\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "▶️ What is Dynamic Testing?",
+      "content": "{\"body\":\"Dynamic Testing — proqramı işlədərək test etməkdir.\\n👉 Real nəticələr yoxlanılır.\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "💡 Nümunə",
+      "content": "{\"variant\":\"remember\",\"body\":\"- Test case icrası 🧪\\n- Bug tapmaq 🐞\\n- UI test etmək 🌐\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Dynamic Testing üstünlükləri",
+      "content": "{\"headers\":[\"Üstünlük\",\"İzah\"],\"rows\":[[\"Real nəticə\",\"Sistem işləyərkən yoxlanır\"],[\"Bug tapmaq\",\"Real problemlər görünür\"],[\"User experience\",\"İstifadəçi baxışı\"]]}"
+     },
+     {
+      "type": "TABLE",
+      "title": "⚖️ Static vs Dynamic",
+      "content": "{\"headers\":[\"Faktor\",\"Static 🧠\",\"Dynamic ▶️\"],\"rows\":[[\"Kod icrası\",\"Yox\",\"Bəli\"],[\"Mərhələ\",\"Erkən\",\"Sonra\"],[\"Fokus\",\"Sənədlər\",\"İşləyən sistem\"],[\"Bug tapma\",\"Erkən\",\"Real\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "⏱️ When to use?",
+      "content": "{\"body\":\"- Static → development əvvəlində 🧠\\n- Dynamic → development sonrası ▶️\\n👉 Hər ikisi birlikdə istifadə olunmalıdır\",\"highlight\":\"success\"}"
+     },
+     {
+      "type": "QUIZ",
+      "title": "🧪 Mini test",
+      "content": "{\"questions\":[{\"id\":\"q1\",\"text\":\"Static Testing nədir?\",\"options\":[\"Kod işlədilir\",\"Kod analiz edilir\",\"Database test edilir\",\"Server restart olunur\"],\"correctIndex\":1,\"explanation\":\"Static testing kod işləmədən aparılır.\",\"imageUrl\":null},{\"id\":\"q2\",\"text\":\"Dynamic Testing nədir?\",\"options\":[\"Kod oxumaq\",\"Sənəd yoxlamaq\",\"Proqramı işlədərək test etmək\",\"UI dizayn\"],\"correctIndex\":2,\"explanation\":\"Dynamic testing icra zamanı aparılır.\",\"imageUrl\":null},{\"id\":\"q3\",\"text\":\"Requirement review hansı testə aiddir?\",\"options\":[\"Dynamic\",\"Static\",\"Performance\",\"Security\"],\"correctIndex\":1,\"explanation\":\"Bu static testing nümunəsidir.\",\"imageUrl\":null},{\"id\":\"q4\",\"text\":\"Bug tapmaq əsasən hansı testdə olur?\",\"options\":[\"Static\",\"Dynamic\",\"Design\",\"Planning\"],\"correctIndex\":1,\"explanation\":\"Dynamic testing zamanı real bug-lar tapılır.\",\"imageUrl\":null},{\"id\":\"q5\",\"text\":\"Static və Dynamic testing necə istifadə olunur?\",\"options\":[\"Yalnız biri istifadə olunur\",\"Heç biri lazım deyil\",\"Birlikdə istifadə olunur\",\"Yalnız UI üçün\"],\"correctIndex\":2,\"explanation\":\"Hər ikisi birlikdə daha effektivdir.\",\"imageUrl\":null}]}"
+     },
+     {
+      "type": "NOTE",
+      "title": "🔑 Yekun",
+      "content": "{\"variant\":\"important\",\"body\":\"- Static → kod işləmədən 🧠\\n- Dynamic → kod işləyərək ▶️\\n- Ən yaxşı nəticə → hər ikisi birlikdə 🚀\"}"
+     }
+    ]
+   },
+   {
+    "id": "cmn5q3exz0003w80aju063u9g",
+    "title": "Alpha & Beta Testing",
+    "titleEn": null,
+    "slug": "alpha-beta-testing-1",
+    "shortDescription": "Alpha Testing — proqramın daxili komanda tərəfindən test edilməsidir.\nBeta Testing — proqramın real istifadəçilər tərəfindən test edilməsidir.",
+    "shortDescriptionEn": null,
+    "moduleId": "cmn4dghxi006jvkfidd8ridrc",
+    "order": 12,
+    "estimatedMinutes": 15,
+    "coverImageUrl": "https://www.softwaretestinghelp.com/wp-content/qa/uploads/2018/06/Alpha-vs-Beta-Testing.png",
+    "published": true,
+    "quizEnabled": true,
+    "minQuizScore": 70,
+    "createdAt": "2026-03-25T07:29:24.071Z",
+    "updatedAt": "2026-03-25T07:29:24.071Z",
+    "blocks": [
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"📌 Alpha & Beta Testing\",\"level\":2}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🧪 Alpha Testing",
+      "content": "{\"body\":\"Alpha Testing — proqramın daxili komanda (QA və developer) tərəfindən test edilməsidir.\\n👉 Məqsəd: bug-ları erkən tapmaq və düzəltmək.\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "💡 Xüsusiyyətlər",
+      "content": "{\"variant\":\"remember\",\"body\":\"- Daxili mühitdə aparılır 🏢\\n- QA və developer edir 👨‍💻\\n- Erkən mərhələdir ⏱️\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "👤 Beta Testing",
+      "content": "{\"body\":\"Beta Testing — proqramın real istifadəçilər tərəfindən test edilməsidir.\\n👉 Məqsəd: real mühitdə problemləri tapmaq.\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "💡 Xüsusiyyətlər",
+      "content": "{\"variant\":\"tip\",\"body\":\"- Real istifadəçilər edir 👥\\n- Production-a yaxın mühit 🌐\\n- Real feedback alınır 📊\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "⚖️ Alpha vs Beta",
+      "content": "{\"headers\":[\"Faktor\",\"Alpha 🧪\",\"Beta 👤\"],\"rows\":[[\"Kim edir\",\"Daxili komanda\",\"Real istifadəçilər\"],[\"Mühit\",\"Test mühiti\",\"Real mühit\"],[\"Mərhələ\",\"Erkən\",\"Son\"],[\"Məqsəd\",\"Bug tapmaq\",\"Feedback almaq\"]]}"
+     },
+     {
+      "type": "EXAMPLE",
+      "title": "💡 Nümunə",
+      "content": "{\"description\":\"Yeni mobil app hazırlanıb:\\n- Alpha → QA test edir\\n- Beta → istifadəçilərə verilir\",\"takeaway\":\"👉 Beta mərhələdə real istifadəçi problemləri üzə çıxır\",\"relatedImageUrl\":null}"
+     },
+     {
+      "type": "QUIZ",
+      "title": "🧪 Mini test",
+      "content": "{\"questions\":[{\"id\":\"q1-alpha\",\"text\":\"Alpha Testing kim tərəfindən aparılır?\",\"options\":[\"Real istifadəçilər\",\"QA və developer\",\"Designer\",\"Müştəri\"],\"correctIndex\":1,\"explanation\":\"Alpha testing daxili komanda tərəfindən edilir.\",\"imageUrl\":null},{\"id\":\"q2-beta\",\"text\":\"Beta Testing nədir?\",\"options\":[\"Kod yazmaq\",\"Daxili test\",\"Real istifadəçi testidir\",\"Database testidir\"],\"correctIndex\":2,\"explanation\":\"Beta testing real istifadəçilərlə aparılır.\",\"imageUrl\":null},{\"id\":\"q3-stage\",\"text\":\"Beta Testing nə vaxt aparılır?\",\"options\":[\"Əvvəldə\",\"Development zamanı\",\"Sonda\",\"Heç vaxt\"],\"correctIndex\":2,\"explanation\":\"Beta testing son mərhələdə edilir.\",\"imageUrl\":null},{\"id\":\"q4-purpose\",\"text\":\"Alpha Testing-in əsas məqsədi nədir?\",\"options\":[\"Marketing\",\"Bug tapmaq\",\"Dizayn\",\"Satış\"],\"correctIndex\":1,\"explanation\":\"Alpha testing bug-ları erkən tapmaq üçündür.\",\"imageUrl\":null},{\"id\":\"q5-diff\",\"text\":\"Alpha və Beta arasındakı əsas fərq nədir?\",\"options\":[\"Heç bir fərq yoxdur\",\"Kim tərəfindən aparılır\",\"Kod dili\",\"Server növü\"],\"correctIndex\":1,\"explanation\":\"Əsas fərq kim tərəfindən test edilməsidir.\",\"imageUrl\":null}]}"
+     },
+     {
+      "type": "NOTE",
+      "title": "🔑 Yekun",
+      "content": "{\"variant\":\"important\",\"body\":\"- Alpha → daxili test 🧪\\n- Beta → real user test 👤\\n- Alpha → bug tapır\\n- Beta → real feedback verir\"}"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "cmn4dptry006yvkfi5logs9zn",
+  "title": "Mobile Testing",
+  "titleEn": null,
+  "description": "Mobile Testing (Mobil test) mobil tətbiqlərin düzgün, stabil və istifadəçi dostu işləməsini yoxlamaq üçün aparılan test prosesidir. Bu test zamanı tətbiqin müxtəlif cihazlarda, əməliyyat sistemlərində və ekran ölçülərində necə işlədiyi qiymətləndirilir. Məqsəd tətbiqin fərqli şəraitlərdə problemsiz işlədiyini və istifadəçi tələblərinə cavab verdiyini təmin etməkdir.\n\nMobil test zamanı yalnız funksionallıq deyil, həm də performans, batareya istifadəsi, şəbəkə şəraiti (zəif internet və ya offline rejim), təhlükəsizlik və istifadə rahatlığı kimi faktorlar da yoxlanılır. Bu yanaşma tətbiqin real istifadə mühitində etibarlı və effektiv işləməsini təmin etməyə kömək edir.",
+  "descriptionEn": null,
+  "order": 10,
+  "published": true,
+  "coverColor": "#2563eb",
+  "icon": "BookOpen",
+  "createdAt": "2026-03-24T08:55:08.543Z",
+  "updatedAt": "2026-03-24T08:55:09.446Z",
+  "lessons": [
+   {
+    "id": "cmn5q5rmp000fw80ah8gn6xgi",
+    "title": "Mobile Testing",
+    "titleEn": null,
+    "slug": "mobile-testing",
+    "shortDescription": "Mobile Testing — mobil tətbiqlərin müxtəlif cihaz və mühitlərdə düzgün işlədiyini yoxlamaqdır.\nBu testlər funksionallıq, performans və istifadəçi təcrübəsini əhatə edir.",
+    "shortDescriptionEn": null,
+    "moduleId": "cmn4dptry006yvkfi5logs9zn",
+    "order": 2,
+    "estimatedMinutes": 35,
+    "coverImageUrl": "https://www.softwaretestinghelp.com/wp-content/qa/uploads/2018/06/mobile-testing.png",
+    "published": true,
+    "quizEnabled": true,
+    "minQuizScore": 70,
+    "createdAt": "2026-03-25T07:31:13.826Z",
+    "updatedAt": "2026-03-25T07:31:13.826Z",
+    "blocks": [
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"📱 Mobile Testing\",\"level\":2}"
+     },
+     {
+      "type": "TEXT",
+      "title": "📝 What is Mobile Testing?",
+      "content": "{\"body\":\"Mobile Testing — mobil tətbiqlərin fərqli cihazlarda, əməliyyat sistemlərində və şəbəkə şəraitində test edilməsidir.\\n👉 Məqsəd: tətbiq hər yerdə düzgün işləsin.\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "📦 Types of Mobile Applications",
+      "content": "{\"body\":\"Mobil tətbiqlər 3 növə bölünür:\\n\\n📱 Native — yalnız Android/iOS üçün\\n🌐 Web — browser üzərindən işləyir\\n🔄 Hybrid — hər ikisinin qarışığı\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 App Types",
+      "content": "{\"headers\":[\"Tip\",\"İzah\"],\"rows\":[[\"Native 📱\",\"Platformaya xüsusi app\"],[\"Web 🌐\",\"Browser app\"],[\"Hybrid 🔄\",\"Hər iki texnologiya\"]]}"
+     },
+     {
+      "type": "TABLE",
+      "title": "⚖️ Mobile vs Web Testing",
+      "content": "{\"headers\":[\"Faktor\",\"Mobile 📱\",\"Web 🌐\"],\"rows\":[[\"Cihaz\",\"Fərqli cihazlar\",\"Browser\"],[\"OS\",\"Android/iOS\",\"OS fərqi az\"],[\"Screen\",\"Çox müxtəlif\",\"Standart\"],[\"Network\",\"Zəif ola bilər\",\"Stabil\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "📱 Devices & OS Versions",
+      "content": "{\"body\":\"Mobil test zamanı fərqli cihazlar və OS versiyalar yoxlanmalıdır.\\n👉 Android 10, 11, 12 və s.\\n👉 iOS 15, 16 və s.\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "📐 Screen Sizes & Resolutions",
+      "content": "{\"body\":\"Mobil cihazlarda ekran ölçüləri fərqlidir.\\n👉 UI hər ölçüdə düzgün görünməlidir.\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "⚙️ Mobile Functional Testing",
+      "content": "{\"body\":\"- Login işləyir 🔐\\n- Button klik olunur 👆\\n- Navigation düzgündür 🔄\",\"highlight\":\"success\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🚀 Mobile Non-Functional Testing",
+      "content": "{\"body\":\"- Performance ⚡\\n- Usability 🎯\\n- Battery usage 🔋\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "📥 Installation & Upgrade Testing",
+      "content": "{\"body\":\"- App düzgün install olunur?\\n- Update zamanı data silinmir?\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🌐 Network Testing",
+      "content": "{\"body\":\"- Wi-Fi 📶\\n- Mobile Data 📡\\n- Offline mode ❌\\n👉 App hər şəraitdə işləməlidir\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "⚠️ Common Challenges",
+      "content": "{\"headers\":[\"Problem\",\"İzah\"],\"rows\":[[\"Device fragmentation\",\"Çox cihaz\"],[\"OS fərqləri\",\"Android/iOS fərqli\"],[\"Network\",\"Zəif internet\"],[\"Battery\",\"Enerji problemi\"]]}"
+     },
+     {
+      "type": "TASK",
+      "title": "✍️ Tapşırıq",
+      "content": "{\"instructions\":\"Bir mobil app üçün 3 test case yaz (network, UI, functional).\",\"placeholder\":\"1) ...\\n2) ...\\n3) ...\",\"required\":true}"
+     },
+     {
+      "type": "QUIZ",
+      "title": "🧪 Mini test",
+      "content": "{\"questions\":[{\"id\":\"q1\",\"text\":\"Mobile Testing nədir?\",\"options\":[\"Yalnız UI test\",\"Mobil tətbiqlərin testidir\",\"Database test\",\"Server test\"],\"correctIndex\":1,\"explanation\":\"Mobil tətbiqlərin test edilməsidir.\",\"imageUrl\":null},{\"id\":\"q2\",\"text\":\"Native app nədir?\",\"options\":[\"Browser app\",\"Platformaya xüsusi app\",\"Server\",\"Database\"],\"correctIndex\":1,\"explanation\":\"Native yalnız bir platforma üçündür.\",\"imageUrl\":null},{\"id\":\"q3\",\"text\":\"Network testing nəyi yoxlayır?\",\"options\":[\"UI\",\"Şəbəkə şəraiti\",\"Design\",\"Database\"],\"correctIndex\":1,\"explanation\":\"Wi-Fi və mobile data test edilir.\",\"imageUrl\":null},{\"id\":\"q4\",\"text\":\"Mobile testing-də əsas challenge nədir?\",\"options\":[\"Az cihaz\",\"Çox cihaz\",\"Yalnız web\",\"Design\"],\"correctIndex\":1,\"explanation\":\"Device fragmentation böyük problemdir.\",\"imageUrl\":null},{\"id\":\"q5\",\"text\":\"Installation testing nəyi yoxlayır?\",\"options\":[\"Login\",\"App install və update\",\"UI rəng\",\"Server\"],\"correctIndex\":1,\"explanation\":\"App install və update yoxlanır.\",\"imageUrl\":null}]}"
+     },
+     {
+      "type": "NOTE",
+      "title": "🔑 Yekun",
+      "content": "{\"variant\":\"important\",\"body\":\"- Mobile testing → müxtəlif cihazlar 📱\\n- Network → vacibdir 🌐\\n- UI → hər ölçüdə işləməlidir 📐\\n- Challenge → device fərqləri ⚠️\"}"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "cmn4dsy6l0073vkfi4dqb03na",
+  "title": "Agile Methodologies & Testing",
+  "titleEn": null,
+  "description": "Agile Methodologies & Testing proqram təminatının çevik inkişaf yanaşması ilə test prosesinin birləşməsini ifadə edir. Agile metodologiyasında proqram kiçik, idarə olunan hissələrə (sprintlərə) bölünərək inkişaf etdirilir və test prosesi inkişafın hər mərhələsində davam edir.",
+  "descriptionEn": null,
+  "order": 11,
+  "published": true,
+  "coverColor": "#2563eb",
+  "icon": "BookOpen",
+  "createdAt": "2026-03-24T08:57:34.222Z",
+  "updatedAt": "2026-03-24T08:57:34.905Z",
+  "lessons": [
+   {
+    "id": "cmn4hhg7n0002xbrd04n91x7c",
+    "title": "Test",
+    "titleEn": null,
+    "slug": "testing-types-functional-non-functional-1",
+    "shortDescription": "Funksional test – proqramın nəzərdə tutulmuş funksiyalarının düzgün işlədiyini yoxlayır.\nFunksional olmayan test – proqramın performansı, təhlükəsizliyi və istifadə rahatlığı kimi keyfiyyət göstəricilərini yoxlayır.",
+    "shortDescriptionEn": null,
+    "moduleId": "cmn4dsy6l0073vkfi4dqb03na",
+    "order": 3,
+    "estimatedMinutes": 30,
+    "coverImageUrl": "https://blog.moolya.com/wp-content/uploads/2023/06/Non-Fuctional-1.jpg",
+    "published": true,
+    "quizEnabled": true,
+    "minQuizScore": 70,
+    "createdAt": "2026-03-24T10:40:36.179Z",
+    "updatedAt": "2026-03-24T10:40:36.179Z",
+    "blocks": [
+     {
+      "type": "TEXT",
+      "title": "⚙️ Functional Testing",
+      "content": "{\"body\":\"Functional Testing — sistemin düzgün işləyib-işləmədiyini yoxlayır.\\n👉 “Bu feature işləyir mi?” sualına cavab verir\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "EXAMPLE",
+      "title": "💡 Nümunə",
+      "content": "{\"description\":\"- Login işləyir?\\n- Məhsul səbətə əlavə olunur?\\n- Form submit olunur?\",\"takeaway\":\"👉 Əgər işləmirsə → 🐞 Bug\",\"relatedImageUrl\":null}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Cədvəl",
+      "content": "{\"headers\":[\"Fokus\",\"Nümunə\"],\"rows\":[[\"Feature\",\"Login\"],[\"Input/Output\",\"Form\"],[\"Business logic\",\"Ödəniş\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🚀 Non-Functional Testing",
+      "content": "{\"body\":\"📝 Non-Functional Testing — sistemin necə işlədiyini yoxlayır (performans, sürət və s.)\\n👉 “Nə qədər yaxşı işləyir?” sualı\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "💡 Nümunə",
+      "content": "{\"variant\":\"remember\",\"body\":\"- Sayt nə qədər sürətlə açılır ⚡\\n- 1000 user daxil olanda nə olur 👥\\n- Sistem crash edir mi 💥\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Cədvəl",
+      "content": "{\"headers\":[\"Tip\",\"İzah\"],\"rows\":[[\"Performance ⚡\",\"Sürət\"],[\"Load 👥\",\"Yüklənmə\"],[\"Security 🔒\",\"Təhlükəsizlik\"],[\"Usability 🎯\",\"İstifadə rahatlığı\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🔄 Regression Testing",
+      "content": "{\"body\":\"- Regression Testing — yeni dəyişikliklərdən sonra köhnə funksiyaların işlədiyini yoxlamaqdır.\\n\\n💡 Nümunə\\nYeni feature əlavə olundu\\n👉 Köhnə login hələ işləyir?\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "🔁 Re-Testing",
+      "content": "{\"variant\":\"important\",\"body\":\"Re-testing — fix olunmuş bug-u yenidən yoxlamaqdır.\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🎲 Ad-hoc Testing",
+      "content": "{\"body\":\"Ad-hoc Testing — plansız, sərbəst testdir.\\n👉 Test case olmadan edilir\",\"highlight\":\"success\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "💡 Nümunə",
+      "content": "{\"variant\":\"tip\",\"body\":\"- Random klik edirsən\\n- fərqli inputlar yoxlayırsan\\n- “break etməyə” çalışırsan\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "⚖️ Functional vs Non-Functional",
+      "content": "{\"headers\":[\"Faktor\",\"Functional ⚙️\",\"Non-Functional 🚀\"],\"rows\":[[\"Fokus\",\"Nə işləyir\",\"Necə işləyir\"],[\"Misal\",\"Login\",\"Speed\"],[\"Məqsəd\",\"Doğruluq\",\"Keyfiyyət\"]]}"
+     },
+     {
+      "type": "NOTE",
+      "title": "🔑 Yekun",
+      "content": "{\"variant\":\"remember\",\"body\":\"- Functional → feature işləyir mi ⚙️\\n- Non-functional → necə işləyir 🚀\\n- Regression → köhnə şeylər pozulmayıb 🔄\\n- Re-testing → fix yoxlanır 🔁\\n- Ad-hoc → sərbəst test 🎲\"}"
+     }
+    ]
+   },
+   {
+    "id": "cmn5q7jpx000xw80abwsx88od",
+    "title": "Agile Methodologies & Testing",
+    "titleEn": null,
+    "slug": "agile-methodologies-testing",
+    "shortDescription": "Agile — çevik və iterativ inkişaf yanaşmasıdır.\nTest və development paralel gedir və QA komandada aktiv rol oynayır.",
+    "shortDescriptionEn": null,
+    "moduleId": "cmn4dsy6l0073vkfi4dqb03na",
+    "order": 4,
+    "estimatedMinutes": 30,
+    "coverImageUrl": "https://www.softwaretestinghelp.com/wp-content/qa/uploads/2018/06/agile-testing.png",
+    "published": true,
+    "quizEnabled": true,
+    "minQuizScore": 70,
+    "createdAt": "2026-03-25T07:32:36.885Z",
+    "updatedAt": "2026-03-25T07:32:36.885Z",
+    "blocks": [
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"⚡ Agile Methodologies & Testing\",\"level\":2}"
+     },
+     {
+      "type": "TEXT",
+      "title": "📝 What is Agile?",
+      "content": "{\"body\":\"Agile — çevik inkişaf metodologiyasıdır.\\n👉 İş kiçik hissələrə bölünür (sprint-lər) və davamlı inkişaf edilir.\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "💡 Əsas ideya",
+      "content": "{\"variant\":\"remember\",\"body\":\"- Sprint-based development ⚡\\n- Tez-tez release 🚀\\n- Continuous testing 🧪\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "⚖️ Agile vs Waterfall",
+      "content": "{\"headers\":[\"Faktor\",\"Agile ⚡\",\"Waterfall 💧\"],\"rows\":[[\"İnkişaf\",\"Iterativ\",\"Mərhələli\"],[\"Dəyişiklik\",\"Asan\",\"Çətin\"],[\"Test\",\"Davamlı\",\"Sonda\"],[\"Release\",\"Tez-tez\",\"Bir dəfə\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🔄 Scrum Framework",
+      "content": "{\"body\":\"Scrum — Agile-in ən məşhur framework-üdür.\\n👉 İş sprint-lər ilə idarə olunur.\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Scrum elementləri",
+      "content": "{\"headers\":[\"Element\",\"İzah\"],\"rows\":[[\"Sprint\",\"2 həftəlik iş dövrü\"],[\"Daily Standup\",\"Gündəlik meeting\"],[\"Sprint Planning\",\"Planlama\"],[\"Sprint Review\",\"Nəticə yoxlanır\"],[\"Retrospective\",\"Yaxşılaşdırma\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🧪 Agile Testing Principles",
+      "content": "{\"body\":\"- Test və development birlikdə gedir 🔄\\n- Continuous testing 🧪\\n- Early bug detection ⚠️\\n- Automation vacibdir 🤖\",\"highlight\":\"success\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "👨‍💻 QA Role in Agile Team",
+      "content": "{\"body\":\"- QA yalnız test etmir\\n- Requirement review edir 📄\\n- Test case yazır 🧪\\n- Sprint-də aktiv iştirak edir 🔄\\n- Developer ilə birlikdə işləyir 🤝\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "EXAMPLE",
+      "title": "💡 Nümunə",
+      "content": "{\"description\":\"Sprint zamanı:\\n- Developer feature yazır\\n- QA eyni anda test edir\\n- Bug tapılır və dərhal fix olunur\",\"takeaway\":\"👉 Agile-də test gec deyil, dərhal edilir\",\"relatedImageUrl\":null}"
+     },
+     {
+      "type": "TASK",
+      "title": "✍️ Tapşırıq",
+      "content": "{\"instructions\":\"Agile və Waterfall arasında 3 fərq yaz.\",\"placeholder\":\"1) ...\\n2) ...\\n3) ...\",\"required\":true}"
+     },
+     {
+      "type": "QUIZ",
+      "title": "🧪 Mini test",
+      "content": "{\"questions\":[{\"id\":\"q1\",\"text\":\"Agile nədir?\",\"options\":[\"Database\",\"Çevik inkişaf metodologiyası\",\"UI dizayn\",\"Server\"],\"correctIndex\":1,\"explanation\":\"Agile çevik inkişaf yanaşmasıdır.\",\"imageUrl\":null},{\"id\":\"q2\",\"text\":\"Agile-də test nə vaxt edilir?\",\"options\":[\"Sonda\",\"Heç vaxt\",\"Davamlı\",\"Yalnız əvvəl\"],\"correctIndex\":2,\"explanation\":\"Agile-də test davamlı aparılır.\",\"imageUrl\":null},{\"id\":\"q3\",\"text\":\"Scrum-da sprint nədir?\",\"options\":[\"Server\",\"2 həftəlik iş dövrü\",\"Database\",\"UI\"],\"correctIndex\":1,\"explanation\":\"Sprint müəyyən müddətli iş dövrüdür.\",\"imageUrl\":null},{\"id\":\"q4\",\"text\":\"QA Agile-də nə edir?\",\"options\":[\"Yalnız test\",\"Heç nə\",\"Aktiv iştirak edir\",\"Yalnız design\"],\"correctIndex\":2,\"explanation\":\"QA Agile-də aktiv rol oynayır.\",\"imageUrl\":null},{\"id\":\"q5\",\"text\":\"Agile-in üstünlüyü nədir?\",\"options\":[\"Dəyişiklik çətindir\",\"Yavaşdır\",\"Çevik və sürətlidir\",\"Test yoxdur\"],\"correctIndex\":2,\"explanation\":\"Agile çevik və sürətli inkişaf təmin edir.\",\"imageUrl\":null}]}"
+     },
+     {
+      "type": "NOTE",
+      "title": "🔑 Yekun",
+      "content": "{\"variant\":\"important\",\"body\":\"- Agile → çevik inkişaf ⚡\\n- Test → davamlı 🧪\\n- Scrum → sprint sistemi 🔄\\n- QA → aktiv rol 👨‍💻\"}"
+     }
+    ]
+   },
+   {
+    "id": "cmn5q84fk001cw80adadfrmre",
+    "title": "Jira for Test Management",
+    "titleEn": null,
+    "slug": "jira-test-management",
+    "shortDescription": "Jira — bug tracking və task management üçün istifadə olunan alətdir.\nQA komandası Jira vasitəsilə bug-ları idarə edir və test prosesini izləyir.",
+    "shortDescriptionEn": null,
+    "moduleId": "cmn4dsy6l0073vkfi4dqb03na",
+    "order": 5,
+    "estimatedMinutes": 25,
+    "coverImageUrl": "https://www.softwaretestinghelp.com/wp-content/qa/uploads/2018/06/jira-testing.png",
+    "published": true,
+    "quizEnabled": true,
+    "minQuizScore": 70,
+    "createdAt": "2026-03-25T07:33:03.729Z",
+    "updatedAt": "2026-03-25T07:33:03.729Z",
+    "blocks": [
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"🧰 Jira for Test Management\",\"level\":2}"
+     },
+     {
+      "type": "TEXT",
+      "title": "📝 What is Jira?",
+      "content": "{\"body\":\"Jira — layihə idarəetməsi və bug tracking üçün istifadə olunan alətdir.\\n👉 QA və developer komandaları task və bug-ları burada idarə edir.\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "💡 İstifadə sahələri",
+      "content": "{\"variant\":\"remember\",\"body\":\"- Bug tracking 🐞\\n- Task management 📋\\n- Sprint idarəetmə 🔄\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "📌 Jira Issue Types",
+      "content": "{\"body\":\"Jira-da əsas issue tipləri:\\n\\n🐞 Bug — problem\\n📋 Task — iş\\n📖 Story — feature\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Issue Types",
+      "content": "{\"headers\":[\"Type\",\"İzah\"],\"rows\":[[\"Bug 🐞\",\"Xəta\"],[\"Task 📋\",\"Adi iş\"],[\"Story 📖\",\"Feature və ya tələb\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🐞 Creating & Updating Bugs",
+      "content": "{\"body\":\"Bug yaradarkən aşağıdakılar yazılmalıdır:\\n\\n- Title 📌\\n- Description 📝\\n- Steps to reproduce 🔄\\n- Expected vs Actual result ⚖️\\n- Priority & Severity 🚨\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "EXAMPLE",
+      "title": "💡 Bug nümunəsi",
+      "content": "{\"description\":\"Title: Login error\\nSteps: Email daxil et → Login klik et\\nExpected: Dashboard açılır\\nActual: Error mesajı çıxır\",\"takeaway\":\"👉 Bug aydın və detallı yazılmalıdır\",\"relatedImageUrl\":null}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🔄 Jira Workflow",
+      "content": "{\"body\":\"Jira workflow bug-un həyat dövrünü göstərir:\\n\\nTo Do → In Progress → Done\\n\\nQA üçün:\\nOpen → In Progress → Resolved → Closed\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Workflow mərhələləri",
+      "content": "{\"headers\":[\"Status\",\"İzah\"],\"rows\":[[\"Open\",\"Yeni bug\"],[\"In Progress\",\"Üzərində işlənir\"],[\"Resolved\",\"Fix olunub\"],[\"Closed\",\"Tamamlanıb\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "📋 Jira Boards & Filters",
+      "content": "{\"body\":\"Jira board — task və bug-ların vizual görünüşüdür.\\n👉 Kanban və ya Scrum board istifadə olunur.\\n\\nFilter — müəyyən task-ları filtr etməyə kömək edir.\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "💡 Nümunə",
+      "content": "{\"variant\":\"tip\",\"body\":\"- Only bugs filter 🐞\\n- Only assigned tasks 👤\\n- Sprint tasks 🔄\"}"
+     },
+     {
+      "type": "TASK",
+      "title": "✍️ Tapşırıq",
+      "content": "{\"instructions\":\"Login bug-u üçün sadə Jira bug report yaz.\",\"placeholder\":\"Title:\\nSteps:\\nExpected:\\nActual:\",\"required\":true}"
+     },
+     {
+      "type": "QUIZ",
+      "title": "🧪 Mini test",
+      "content": "{\"questions\":[{\"id\":\"q1\",\"text\":\"Jira nədir?\",\"options\":[\"Database\",\"Bug tracking aləti\",\"Browser\",\"UI tool\"],\"correctIndex\":1,\"explanation\":\"Jira bug tracking və task management alətidir.\",\"imageUrl\":null},{\"id\":\"q2\",\"text\":\"Bug nədir?\",\"options\":[\"Yeni feature\",\"Xəta\",\"Database\",\"UI\"],\"correctIndex\":1,\"explanation\":\"Bug sistemdəki xətadır.\",\"imageUrl\":null},{\"id\":\"q3\",\"text\":\"Workflow nədir?\",\"options\":[\"UI design\",\"Bug həyat dövrü\",\"Server\",\"Database\"],\"correctIndex\":1,\"explanation\":\"Workflow bug-un mərhələlərini göstərir.\",\"imageUrl\":null},{\"id\":\"q4\",\"text\":\"Jira board nədir?\",\"options\":[\"Database\",\"Vizual task görünüşü\",\"Server\",\"API\"],\"correctIndex\":1,\"explanation\":\"Board task-ları vizual göstərir.\",\"imageUrl\":null},{\"id\":\"q5\",\"text\":\"Bug report-da nə vacibdir?\",\"options\":[\"Rəng\",\"Steps və nəticə\",\"Font\",\"Logo\"],\"correctIndex\":1,\"explanation\":\"Bug report aydın və detallı olmalıdır.\",\"imageUrl\":null}]}"
+     },
+     {
+      "type": "NOTE",
+      "title": "🔑 Yekun",
+      "content": "{\"variant\":\"important\",\"body\":\"- Jira → bug tracking 🐞\\n- Issue types → Bug, Task, Story 📋\\n- Workflow → bug həyatı 🔄\\n- Board → vizual idarəetmə 📊\"}"
+     }
+    ]
+   },
+   {
+    "id": "cmn5qa51z001tw80a4l6hkqos",
+    "title": "Requirements Basics (SRS, Epic, User Story, Acceptance Criteria)",
+    "titleEn": null,
+    "slug": "requirements-basics",
+    "shortDescription": "Requirement — sistemin nə etməli olduğunu göstərir.\nSRS, Epic, User Story və Acceptance Criteria QA üçün əsas anlayışlardır.",
+    "shortDescriptionEn": null,
+    "moduleId": "cmn4dsy6l0073vkfi4dqb03na",
+    "order": 6,
+    "estimatedMinutes": 35,
+    "coverImageUrl": "https://www.softwaretestinghelp.com/wp-content/qa/uploads/2018/06/software-requirements-specification.png",
+    "published": true,
+    "quizEnabled": true,
+    "minQuizScore": 70,
+    "createdAt": "2026-03-25T07:34:37.847Z",
+    "updatedAt": "2026-03-25T07:34:37.847Z",
+    "blocks": [
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"📌 Requirements Basics\",\"level\":2}"
+     },
+     {
+      "type": "TEXT",
+      "title": "📝 What is a Requirement?",
+      "content": "{\"body\":\"Requirement — sistemin nə etməli olduğunu göstərən tələblərdir.\\n👉 QA bu tələblərə əsasən test edir.\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "📄 What is SRS?",
+      "content": "{\"body\":\"SRS (Software Requirements Specification) — sistemin bütün tələblərini əhatə edən sənəddir.\\n👉 Bu sənəd layihənin əsas bazasıdır.\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 SRS Sections",
+      "content": "{\"headers\":[\"Section\",\"İzah\"],\"rows\":[[\"Introduction\",\"Layihə haqqında məlumat\"],[\"Functional Requirements\",\"Sistem nə edir\"],[\"Non-Functional\",\"Performans və s.\"],[\"Constraints\",\"Limitlər\"]]}"
+     },
+     {
+      "type": "NOTE",
+      "title": "💡 QA necə istifadə edir?",
+      "content": "{\"variant\":\"remember\",\"body\":\"- Test case yazmaq 🧪\\n- Bug tapmaq 🐞\\n- Acceptance yoxlamaq ✔️\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "📦 What is Epic?",
+      "content": "{\"body\":\"Epic — böyük feature və ya məqsəddir.\\n👉 Daha sonra kiçik hissələrə bölünür.\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "⚖️ Epic vs User Story",
+      "content": "{\"headers\":[\"Faktor\",\"Epic 📦\",\"User Story 📝\"],\"rows\":[[\"Ölçü\",\"Böyük\",\"Kiçik\"],[\"Detal\",\"Ümumi\",\"Dəqiq\"],[\"Məqsəd\",\"Feature\",\"Funksiya\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "📝 What is User Story?",
+      "content": "{\"body\":\"User Story — istifadəçi baxışı ilə yazılmış tələblərdir.\\n👉 Kiçik və konkret olur.\",\"highlight\":\"success\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "💡 Format",
+      "content": "{\"variant\":\"tip\",\"body\":\"As a user,\\nI want to login,\\nSo that I can access dashboard.\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "⚖️ User Story vs Task",
+      "content": "{\"headers\":[\"Faktor\",\"User Story\",\"Task\"],\"rows\":[[\"Fokus\",\"User\",\"Texniki iş\"],[\"Məqsəd\",\"Funksiya\",\"İcra\"],[\"Kim üçün\",\"User\",\"Developer\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "✔️ Acceptance Criteria",
+      "content": "{\"body\":\"Acceptance Criteria — user story-nin tamamlandığını göstərən şərtlərdir.\\n👉 QA bu şərtlərə görə test edir.\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "💡 Niyə vacibdir?",
+      "content": "{\"variant\":\"important\",\"body\":\"- Aydınlıq yaradır 📌\\n- Test üçün baza verir 🧪\\n- Yanlış anlaşmanı azaldır ❌\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "⚖️ Acceptance Criteria vs Test Case",
+      "content": "{\"headers\":[\"Faktor\",\"Acceptance Criteria\",\"Test Case\"],\"rows\":[[\"Məqsəd\",\"Şərt\",\"Test\"],[\"Kim yazır\",\"Product Owner\",\"QA\"],[\"Detal\",\"Ümumi\",\"Detallı\"]]}"
+     },
+     {
+      "type": "TASK",
+      "title": "✍️ Tapşırıq",
+      "content": "{\"instructions\":\"Login üçün 1 user story və 2 acceptance criteria yaz.\",\"placeholder\":\"User Story:\\n...\\n\\nAcceptance:\\n1) ...\\n2) ...\",\"required\":true}"
+     },
+     {
+      "type": "QUIZ",
+      "title": "🧪 Mini test",
+      "content": "{\"questions\":[{\"id\":\"q1\",\"text\":\"Requirement nədir?\",\"options\":[\"Kod\",\"Tələb\",\"Server\",\"UI\"],\"correctIndex\":1,\"explanation\":\"Requirement sistemin nə etməli olduğunu göstərir.\",\"imageUrl\":null},{\"id\":\"q2\",\"text\":\"SRS nədir?\",\"options\":[\"Bug\",\"Requirement sənədi\",\"API\",\"UI\"],\"correctIndex\":1,\"explanation\":\"SRS bütün tələbləri əhatə edir.\",\"imageUrl\":null},{\"id\":\"q3\",\"text\":\"Epic nədir?\",\"options\":[\"Kiçik task\",\"Böyük feature\",\"Bug\",\"Test\"],\"correctIndex\":1,\"explanation\":\"Epic böyük feature-dir.\",\"imageUrl\":null},{\"id\":\"q4\",\"text\":\"User Story formatı necədir?\",\"options\":[\"If-Else\",\"As a…, I want…, So that…\",\"SQL\",\"API\"],\"correctIndex\":1,\"explanation\":\"Standart user story formatıdır.\",\"imageUrl\":null},{\"id\":\"q5\",\"text\":\"Acceptance Criteria nədir?\",\"options\":[\"Bug\",\"Test case\",\"Şərtlər\",\"Design\"],\"correctIndex\":2,\"explanation\":\"Acceptance Criteria şərtləri göstərir.\",\"imageUrl\":null}]}"
+     },
+     {
+      "type": "NOTE",
+      "title": "🔑 Yekun",
+      "content": "{\"variant\":\"important\",\"body\":\"- Requirement → tələblər 📌\\n- SRS → əsas sənəd 📄\\n- Epic → böyük feature 📦\\n- User Story → user baxışı 📝\\n- Acceptance → şərtlər ✔️\"}"
+     }
+    ]
+   },
+   {
+    "id": "cmn5qaui8002cw80ay67f42n9",
+    "title": "Best Practices in Manual Testing",
+    "titleEn": null,
+    "slug": "manual-testing-best-practices",
+    "shortDescription": "Manual Testing-də düzgün yanaşmalar QA-nın keyfiyyətini artırır.\nTester mindset, düzgün test case yazımı və effektiv bug reporting əsasdır.",
+    "shortDescriptionEn": null,
+    "moduleId": "cmn4dsy6l0073vkfi4dqb03na",
+    "order": 7,
+    "estimatedMinutes": 25,
+    "coverImageUrl": "https://www.softwaretestinghelp.com/wp-content/qa/uploads/2018/06/manual-testing.png",
+    "published": true,
+    "quizEnabled": true,
+    "minQuizScore": 70,
+    "createdAt": "2026-03-25T07:35:10.832Z",
+    "updatedAt": "2026-03-25T07:35:10.832Z",
+    "blocks": [
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"✅ Best Practices in Manual Testing\",\"level\":2}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🧠 Tester Mindset",
+      "content": "{\"body\":\"Yaxşı QA tester istifadəçi kimi düşünməlidir.\\n👉 Məqsəd: sistemi 'qırmaq' və bug tapmaqdır.\\n\\nTester yalnız işləyəni yox, işləməyəni də tapmalıdır.\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "💡 Vacib yanaşma",
+      "content": "{\"variant\":\"remember\",\"body\":\"- Şübhə ilə yanaş 🤔\\n- Edge case-ləri yoxla ⚠️\\n- Negative test et ❌\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🧪 Writing Clear Test Cases",
+      "content": "{\"body\":\"Test case-lər aydın və başa düşülən olmalıdır.\\n👉 Hər kəs oxuyanda eyni nəticəni əldə etməlidir.\",\"highlight\":\"success\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Yaxşı Test Case",
+      "content": "{\"headers\":[\"Element\",\"İzah\"],\"rows\":[[\"Title\",\"Aydın olmalıdır\"],[\"Steps\",\"Addım-addım\"],[\"Expected\",\"Dəqiq nəticə\"],[\"Data\",\"Test məlumatı\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🐞 Effective Bug Reporting",
+      "content": "{\"body\":\"Bug report aydın və detallı olmalıdır.\\n👉 Developer bug-u asanlıqla anlaya bilməlidir.\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "EXAMPLE",
+      "title": "💡 Nümunə",
+      "content": "{\"description\":\"Title: Login error\\nSteps: Email daxil et → Login klik et\\nExpected: Dashboard açılır\\nActual: Error mesajı çıxır\",\"takeaway\":\"👉 Aydın bug report = tez fix 🚀\",\"relatedImageUrl\":null}"
+     },
+     {
+      "type": "TEXT",
+      "title": "🤝 Communication with Team",
+      "content": "{\"body\":\"QA komandada aktiv ünsiyyət qurmalıdır.\\n👉 Developer və Product Owner ilə əməkdaşlıq vacibdir.\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": "💡 Praktik yanaşma",
+      "content": "{\"variant\":\"tip\",\"body\":\"- Bug-u izah et 🗣️\\n- Problem üzərində müzakirə et 🤝\\n- Feedback ver 📊\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": "⚠️ Common QA Mistakes",
+      "content": "{\"body\":\"Manual QA-da ən çox edilən səhvlər:\\n\\n- Yalnız happy path test etmək 😐\\n- Edge case-ləri yoxlamamaq ⚠️\\n- Aydın olmayan bug report ❌\\n- Requirement oxumamaq 📄\",\"highlight\":\"warning\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "📊 Mistake vs Best Practice",
+      "content": "{\"headers\":[\"Səhv ❌\",\"Düzgün yanaşma ✅\"],\"rows\":[[\"Yalnız positive test\",\"Negative test də et\"],[\"Qısa bug report\",\"Detallı yaz\"],[\"Tələsik test\",\"Planlı test\"],[\"Səthi yoxlama\",\"Dərin analiz\"]]}"
+     },
+     {
+      "type": "TASK",
+      "title": "✍️ Tapşırıq",
+      "content": "{\"instructions\":\"Sadə login üçün 1 test case və 1 bug report yaz.\",\"placeholder\":\"Test Case:\\n...\\n\\nBug:\\n...\",\"required\":true}"
+     },
+     {
+      "type": "QUIZ",
+      "title": "🧪 Mini test",
+      "content": "{\"questions\":[{\"id\":\"q1\",\"text\":\"Tester mindset nədir?\",\"options\":[\"Kod yazmaq\",\"Sistemi yoxlamaq və bug tapmaq\",\"UI dizayn\",\"Server qurmaq\"],\"correctIndex\":1,\"explanation\":\"Tester sistemi analiz edib bug tapmalıdır.\",\"imageUrl\":null},{\"id\":\"q2\",\"text\":\"Yaxşı test case necə olmalıdır?\",\"options\":[\"Qarışıq\",\"Aydın və detallı\",\"Qısa\",\"Kodlu\"],\"correctIndex\":1,\"explanation\":\"Test case aydın və başa düşülən olmalıdır.\",\"imageUrl\":null},{\"id\":\"q3\",\"text\":\"Bug report-da nə vacibdir?\",\"options\":[\"Rəng\",\"Steps və nəticə\",\"Logo\",\"Font\"],\"correctIndex\":1,\"explanation\":\"Bug report detallı olmalıdır.\",\"imageUrl\":null},{\"id\":\"q4\",\"text\":\"Ən böyük QA səhvi nədir?\",\"options\":[\"Test etmək\",\"Yalnız positive test\",\"Bug tapmaq\",\"Login yoxlamaq\"],\"correctIndex\":1,\"explanation\":\"Negative və edge case-lər də test edilməlidir.\",\"imageUrl\":null},{\"id\":\"q5\",\"text\":\"QA komandada nə etməlidir?\",\"options\":[\"Tək işləmək\",\"Ünsiyyət qurmaq\",\"Heç nə\",\"Yalnız test etmək\"],\"correctIndex\":1,\"explanation\":\"Komanda ilə düzgün kommunikasiya vacibdir.\",\"imageUrl\":null}]}"
+     },
+     {
+      "type": "NOTE",
+      "title": "🔑 Yekun",
+      "content": "{\"variant\":\"important\",\"body\":\"- Tester mindset → kritik düşüncə 🧠\\n- Test case → aydın yaz 🧪\\n- Bug report → detallı 🐞\\n- Communication → vacib 🤝\\n- Səhvlərdən qaç → keyfiyyət artır 🚀\"}"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "id": "cmna7zlx90000b9i0lpsnfmjn",
+  "title": "Playwright ilə avtomatlaşdırma",
+  "titleEn": "",
+  "description": "Playwright Automation",
+  "descriptionEn": "",
+  "order": 12,
+  "published": true,
+  "coverColor": "#2563eb",
+  "icon": "BookOpen",
+  "createdAt": "2026-03-28T11:01:24.286Z",
+  "updatedAt": "2026-07-07T20:07:32.270Z",
+  "lessons": [
+   {
+    "id": "cmrb309ji0001r974uzdp7dzv",
+    "title": "Proqramlaşdırma Əsasları (JavaScript)",
+    "titleEn": "",
+    "slug": "proqramlasdirma-esaslari-javascript",
+    "shortDescription": "Proqramlaşdırma Əsasları (JavaScript)",
+    "shortDescriptionEn": null,
+    "moduleId": "cmna7zlx90000b9i0lpsnfmjn",
+    "order": 0,
+    "estimatedMinutes": 90,
+    "coverImageUrl": null,
+    "published": true,
+    "quizEnabled": false,
+    "minQuizScore": 60,
+    "createdAt": "2026-07-07T20:08:32.335Z",
+    "updatedAt": "2026-07-08T18:57:53.685Z",
+    "blocks": [
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"Proqramlaşdırma nədir, kod necə işləyir?\",\"level\":3}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"Kompüter əslində çox \\\"axmaqdır\\\" — o, yalnız verdiyin əmrləri, dəqiq olaraq yazdığın ardıcıllıqla icra edir. Heç nə \\\"təxmin etmir\\\".\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": null,
+      "content": "{\"variant\":\"remember\",\"body\":\"Düşün ki, dostuna resept yazırsan — \\\"yumurta götür, qabığı qır, 2 dəqiqə qızart\\\". Bu, addım-addım təlimatdır. Kod da elə budur — kompüterə addım-addım təlimat yazırsan.\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"Fərq bundadır: insan \\\"yumurta götür\\\" desən başa düşür nə demək olduğunu. Kompüter isə İngilis dilini, Azərbaycan dilini anlamır — o yalnız xüsusi dillərdə yazılan əmrləri anlayır (JavaScript, Python, TypeScript və s.). Bu dillərin çox sərt qaydaları var — bir vergül, bir mötərizə səhv olsa, kompüter \\\"mən başa düşmədim\\\" deyir (buna error/xəta deyilir).\\n\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "STEPPER",
+      "title": "Kod necə işləyir (texniki tərəf, sadə formada):",
+      "content": "{\"steps\":[{\"title\":\"Addım 1\",\"description\":\"Sən kodu yazırsan (məs: .ts uzantılı fayl — TypeScript faylı)\"},{\"title\":\"Addım 2\",\"description\":\"Bu kodu bir proqram oxuyur və \\\"tərcümə edir\\\" kompüterin başa düşdüyü dilə (0 və 1-lər)\"},{\"title\":\"Addım 3\",\"description\":\"Kompüter bu tərcümə olunmuş əmrləri icra edir\"},{\"title\":\"Addım 4\",\"description\":\"Nəticəni sənə göstərir (ekranda, yəni terminalda)\"}]}"
+     },
+     {
+      "type": "CALLOUT",
+      "title": null,
+      "content": "{\"emoji\":\"💡\",\"title\":\"\",\"body\":\"Bu prosesi bizim üçün idarə edəcək alət Node.js-dir — o, TypeScript/JavaScript kodunu kompüterin başa düşdüyü formaya çevirib icra edir.\",\"color\":\"blue\"}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"Node.js Quraşdırılması\",\"level\":2}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"Node.js nədir?\\n\\nNode.js — bizim yazdığımız TypeScript/JavaScript kodunu kompüterin icra edə bilməsi üçün lazım olan mühərrikdir (engine). Onsuz yazdığımız kod \\\"işləməz\\\".\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"Addım 1: Node.js-i yükləmək\",\"level\":3}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"Bu addım Windows və Mac üçün eynidir.\",\"highlight\":\"info\"}"
+     },
+     {
+      "type": "STEPPER",
+      "title": null,
+      "content": "{\"steps\":[{\"title\":\"Saytı aç\",\"description\":\"Brauzerdə https://nodejs.org ünvanına daxil ol.\"},{\"title\":\"Düzgün versiyanı seç\",\"description\":\"Saytda iki versiya görəcəksən: LTS (Long Term Support) və Current. Həmişə LTS seç — bu stabil versiyadır. Current daha yenidir, amma bəzən qeyri-stabil ola bilər.\"},{\"title\":\"Yüklə\",\"description\":\"\\\"LTS\\\" düyməsinə basıb faylı kompüterinə yüklə.\"}]}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"Addım 2: Quraşdırmaq\",\"level\":3}"
+     },
+     {
+      "type": "TABLE",
+      "title": "Sistemə görə quraşdırma addımları",
+      "content": "{\"headers\":[\"Windows\",\"Mac\"],\"rows\":[[\"Yüklənən .msi faylına double-click et\",\"Yüklənən .pkg faylına double-click et\"],[\"\\\"Next\\\" düymələrinə basaraq davam et (default seçimləri dəyişmə)\",\"\\\"Continue\\\" → \\\"Continue\\\" → \\\"Install\\\"\"],[\"\\\"Install\\\" — bitəndə \\\"Finish\\\"\",\"Mac şifrəni (parolunu) daxil et, sonra \\\"Close\\\"\"]]}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"Addım 3: Quraşdırmanın uğurlu olduğunu yoxlamaq\",\"level\":3}"
+     },
+     {
+      "type": "CALLOUT",
+      "title": null,
+      "content": "{\"emoji\":\"⚡\",\"title\":\"Terminal nədir?\",\"body\":\"Terminal — qrafik interfeys (siçanla klik etdiyin) olmadan, kompüterə birbaşa yazılı əmr verdiyin proqramdır. Bu, proqramçıların ən çox istifadə etdiyi alətdir.\",\"color\":\"blue\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "Terminalı açmaq",
+      "content": "{\"headers\":[\"Windows\",\"Mac\"],\"rows\":[[\"Start menyusunda \\\"cmd\\\" və ya \\\"PowerShell\\\" yaz və aç\",\"Cmd+Space bas, \\\"Terminal\\\" yaz və aç\"]]}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"Terminal açılan kimi bunu yaz və Enter bas:\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "CODE",
+      "title": null,
+      "content": "{\"code\":\"node -v\",\"language\":\"bash\",\"caption\":\"Node.js versiyasını yoxlamaq\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"Əgər quraşdırma uğurlu olubsa, bir versiya nömrəsi görəcəksən, məsələn:\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "CODE",
+      "title": null,
+      "content": "{\"code\":\"v20.11.0\",\"language\":\"bash\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"Sonra bunu da yoxla (npm — Node ilə birlikdə gələn paket meneceri, sonrakı dərslərdə lazım olacaq):\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "CODE",
+      "title": null,
+      "content": "{\"code\":\"npm -v\",\"language\":\"bash\",\"caption\":\"npm versiyasını yoxlamaq\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"Bu da versiya göstərməlidir, məsələn: 10.2.4\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": null,
+      "content": "{\"variant\":\"warning\",\"body\":\"Ən çox rast gəlinən problem:\\nƏgər \\\"node -v\\\" yazanda \\\"command not found\\\" (Mac) və ya \\\"'node' is not recognized\\\" (Windows) xətası çıxarsa:\\n- Terminalı bağla, yenidən aç (bəzən quraşdırmadan sonra terminalı restart etmək lazımdır)\\n- Kompüteri restart et\\n- Hələ də işləmirsə — nodejs.org saytından yenidən yüklə, bu dəfə \\\"Repair\\\" seçimi ilə\"}"
+     },
+     {
+      "type": "TASK",
+      "title": null,
+      "content": "{\"instructions\":\"Öz kompüterində \\\"node -v\\\" və \\\"npm -v\\\" əmrlərini terminalda işə sal. Çıxan versiya nömrələrini burada paylaş.\",\"placeholder\":\"Məsələn: node v20.11.0, npm 10.2.4\",\"required\":true}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"VS Code Quraşdırılması və Əsas Parametrlər\",\"level\":2}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"VS Code (Visual Studio Code) nədir?\\n\\nVS Code — kod yazmaq üçün istifadə etdiyimiz proqramdır (buna \\\"kod redaktoru\\\" və ya \\\"IDE\\\" deyilir). Node.js kodu icra etmək üçün mühərrikdirsə, VS Code həmin kodu rahat, səliqəli şəkildə yazmaq üçün alətdir.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "CALLOUT",
+      "title": null,
+      "content": "{\"emoji\":\"💻\",\"title\":\"Niyə məhz VS Code?\",\"body\":\"Pulsuzdur, yüngüldür, dünyada ən çox istifadə olunan kod redaktorudur və Playwright ilə çox rahat inteqrasiya olunur — rəsmi Playwright uzantısı məhz VS Code üçün mövcuddur.\",\"color\":\"purple\"}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"Addım 1: VS Code-u yükləmək\",\"level\":3}"
+     },
+     {
+      "type": "STEPPER",
+      "title": null,
+      "content": "{\"steps\":[{\"title\":\"Saytı aç\",\"description\":\"Brauzerdə https://code.visualstudio.com ünvanına daxil ol.\"},{\"title\":\"Yüklə düyməsini bas\",\"description\":\"Sayt avtomatik sənin əməliyyat sistemini (Windows/Mac) tanıyır və uyğun düyməni göstərir. Sadəcə böyük \\\"Download\\\" düyməsinə bas.\"},{\"title\":\"Faylı aç və quraşdır\",\"description\":\"Windows-da: yüklənən .exe faylına double-click et, \\\"I accept the agreement\\\" seç, \\\"Next\\\" düymələrinə bas, \\\"Install\\\".\\nMac-da: yüklənən .zip fayl açılacaq, çıxan VS Code ikonasını \\\"Applications\\\" qovluğuna sürüşdür (drag).\"}]}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"Addım 2: İlk açılış və interfeys ilə tanışlıq\",\"level\":3}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"VS Code-u açanda əsas hissələr bunlardır:\\n- Sol tərəf (Explorer) — fayl və qovluqlarını göstərir\\n- Orta hissə — kodu yazdığın sahə (editor)\\n- Alt hissə — inteqrasiya olunmuş terminal (Node.js əmrlərini birbaşa buradan yazacağıq)\\n- Sol kənardakı ikonlar — Search, Source Control (Git), Extensions və s.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": null,
+      "content": "{\"variant\":\"tip\",\"body\":\"Terminalı VS Code içindən açmaq üçün: yuxarıdan \\\"Terminal\\\" menyusuna bas → \\\"New Terminal\\\". Beləliklə ayrıca terminal proqramına ehtiyac qalmır — hər şeyi bir yerdə edirik.\"}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"Addım 3: Faydalı Extension-ların (Uzantıların) Quraşdırılması\",\"level\":3}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"Extension-lar VS Code-a əlavə funksiyalar qatan kiçik proqramlardır. Sol kənarda kvadratlardan ibarət ikonaya (Extensions) bas və aşağıdakıları axtarıb quraşdır:\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "Quraşdırılacaq Extension-lar",
+      "content": "{\"headers\":[\"Extension adı\",\"Nə üçün lazımdır\"],\"rows\":[[\"Prettier - Code formatter\",\"Kodu avtomatik səliqəli və oxunaqlı formatda düzür\"],[\"ESLint\",\"Kodda potensial səhvləri əvvəlcədən göstərir\"],[\"Playwright Test for VSCode\",\"Playwright testlərini birbaşa VS Code içindən işə salmağa imkan verir (sonrakı dərslərdə lazım olacaq)\"]]}"
+     },
+     {
+      "type": "STEPPER",
+      "title": null,
+      "content": "{\"steps\":[{\"title\":\"Extensions bölməsini aç\",\"description\":\"Sol kənardakı kvadrat şəklindəki ikonaya bas, və ya Windows-da Ctrl+Shift+X, Mac-da Cmd+Shift+X kombinasiyasını istifadə et.\"},{\"title\":\"Axtar və quraşdır\",\"description\":\"Axtarış qutusuna extension adını yaz, siyahıdan tap və \\\"Install\\\" düyməsinə bas.\"}]}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"Addım 4: Əsas Parametrlərin Tənzimlənməsi\",\"level\":3}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"Faydalı olacaq bir neçə kiçik tənzimləmə:\\n- \\\"Auto Save\\\" aktivləşdirmək — faylı hər dəfə əl ilə saxlamağa (Ctrl/Cmd+S) ehtiyac qalmır\\n- Font ölçüsünü rahat oxumaq üçün artırmaq\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "STEPPER",
+      "title": null,
+      "content": "{\"steps\":[{\"title\":\"Auto Save aktivləşdirmək\",\"description\":\"Yuxarıdan \\\"File\\\" menyusuna bas → \\\"Auto Save\\\" seçiminin üzərinə klik et (qalaq işarəsi düşəcək, deməli aktivdir).\"},{\"title\":\"Font ölçüsünü dəyişmək (istəyə bağlı)\",\"description\":\"Windows-da Ctrl+, Mac-da Cmd+, kombinasiyası ilə Settings-i aç, axtarış qutusuna \\\"font size\\\" yaz və rəqəmi özünə uyğun artır (məsələn 14-dən 16-ya).\"}]}"
+     },
+     {
+      "type": "NOTE",
+      "title": null,
+      "content": "{\"variant\":\"important\",\"body\":\"Bu parametrləri indi əzbərləmək lazım deyil — bir dəfə tənzimləyəndən sonra VS Code onları yadda saxlayır. Məqsəd sadəcə interfeysi ilə tanış olmaqdır.\"}"
+     },
+     {
+      "type": "TASK",
+      "title": null,
+      "content": "{\"instructions\":\"VS Code-u aç, yuxarıda göstərilən 3 extension-u (Prettier, ESLint, Playwright Test for VSCode) quraşdır və Auto Save-i aktivləşdir. Bitəndə burada təsdiqlə.\",\"placeholder\":\"Məsələn: Bütün extension-ları quraşdırdım, Auto Save aktivdir.\",\"required\":true}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"İlk \\\"Hello World\\\" Skripti Yazmaq və İşə Salmaq\",\"level\":2}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"İndi bütün alətlərimiz hazırdır (Node.js + VS Code). Vaxtdır ki, ilk kodumuzu yazaq! Proqramlaşdırmada ənənə var — hər yeni dil/alət öyrənəndə ilk yazılan proqram ekrana \\\"Hello World\\\" (Salam Dünya) sözünü çıxarır. Biz də bu ənənəni davam etdirəcəyik.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"Addım 1: Layihə üçün qovluq yaratmaq\",\"level\":3}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"Əvvəlcə kompüterində fayllarımızı saxlamaq üçün bir qovluq (folder) yaradaq. Məsələn, Desktop-da (masaüstündə) \\\"playwright-course\\\" adlı qovluq yarat.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "STEPPER",
+      "title": null,
+      "content": "{\"steps\":[{\"title\":\"Qovluq yarat\",\"description\":\"Masaüstündə sağ klik et → \\\"New Folder\\\" (Windows) / \\\"New Folder\\\" (Mac) seç, adını \\\"playwright-course\\\" qoy.\"},{\"title\":\"Qovluğu VS Code-da aç\",\"description\":\"VS Code-u aç → \\\"File\\\" menyusu → \\\"Open Folder\\\" (Mac-da \\\"Open\\\") → yaratdığın \\\"playwright-course\\\" qovluğunu seç.\"}]}"
+     },
+     {
+      "type": "NOTE",
+      "title": null,
+      "content": "{\"variant\":\"tip\",\"body\":\"Bu qovluq bizim əsas iş yerimiz olacaq — bütün gələcək dərslərdə yazdığımız kodlar bu qovluğun içində saxlanılacaq.\"}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"Addım 2: Fayl yaratmaq\",\"level\":3}"
+     },
+     {
+      "type": "STEPPER",
+      "title": null,
+      "content": "{\"steps\":[{\"title\":\"Yeni fayl yarat\",\"description\":\"VS Code-da sol tərəfdəki Explorer panelində qovluq adının üzərinə klik et, sonra \\\"New File\\\" ikonasına (vərəq + kimi görünür) bas.\"},{\"title\":\"Fayla ad ver\",\"description\":\"Faylın adını dəqiqliklə belə yaz: hello.js\\n\\nDiqqət: \\\".js\\\" uzantısı vacibdir — bu, kompüterə \\\"bu fayl JavaScript kodudur\\\" deyir.\"}]}"
+     },
+     {
+      "type": "CALLOUT",
+      "title": null,
+      "content": "{\"emoji\":\"❓\",\"title\":\"Bəs niyə .ts yox, .js?\",\"body\":\"Biz kursda TypeScript öyrənəcəyik, amma Node.js əsasında ilk addımı ən sadə formada, xalis JavaScript (.js) ilə atırıq ki, \\\"kod necə icra olunur\\\" məntiqini heç bir əlavə mürəkkəblik olmadan anlayaq. TypeScript-ə keçəndə (növbəti dərslərdə) bu proses bir az fərqlənəcək, onu ayrıca izah edəcəyik.\",\"color\":\"yellow\"}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"Addım 3: Kodu yazmaq\",\"level\":3}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"hello.js faylının içinə bu sətri yaz:\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "CODE",
+      "title": null,
+      "content": "{\"code\":\"console.log(\\\"Salam, Dünya!\\\");\",\"language\":\"javascript\",\"caption\":\"hello.js\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"Bu sətir nə deməkdir?\\n- console.log(...) — kompüterə deyir: \\\"ekrana (konsola) bir şey çap et\\\"\\n- \\\"Salam, Dünya!\\\" — çap olunacaq mətn (buna string deyilir, mətn həmişə dırnaq içində yazılır)\\n- ; (nöqtəli vergül) — bu sətrin bitdiyini bildirir\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"Addım 4: Kodu işə salmaq\",\"level\":3}"
+     },
+     {
+      "type": "STEPPER",
+      "title": null,
+      "content": "{\"steps\":[{\"title\":\"Terminalı aç\",\"description\":\"VS Code-da yuxarıdan \\\"Terminal\\\" → \\\"New Terminal\\\" seç.\"},{\"title\":\"Əmri yaz\",\"description\":\"Terminalda bunu yaz və Enter bas: node hello.js\"}]}"
+     },
+     {
+      "type": "CODE",
+      "title": null,
+      "content": "{\"code\":\"node hello.js\",\"language\":\"bash\",\"caption\":\"Terminalda işə salmaq üçün əmr\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"Əgər hər şey düzgündürsə, terminalda bunu görəcəksən:\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "CODE",
+      "title": null,
+      "content": "{\"code\":\"Salam, Dünya!\",\"language\":\"bash\"}"
+     },
+     {
+      "type": "CALLOUT",
+      "title": null,
+      "content": "{\"emoji\":\"🎉\",\"title\":\"Təbriklər!\",\"body\":\"Bu, sənin yazdığın və kompüterin icra etdiyi ilk kod idi! Nə qədər sadə görünsə də, bütün böyük proqramların əsasında məhz bu məntiq dayanır: kod yaz → işə sal → nəticəyə bax.\",\"color\":\"green\"}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"Ən çox rast gəlinən xətalar\",\"level\":3}"
+     },
+     {
+      "type": "TABLE",
+      "title": "Xəta və həll yolları",
+      "content": "{\"headers\":[\"Xəta\",\"Səbəb və həll\"],\"rows\":[[\"Cannot find module 'hello.js'\",\"Terminal düzgün qovluqda deyil, və ya fayl adını səhv yazmısan. \\\"ls\\\" (Mac) / \\\"dir\\\" (Windows) yazaraq həmin qovluqda hansı faylların olduğunu yoxla.\"],[\"SyntaxError: missing ) after argument list\",\"Kodda mötərizə və ya dırnaq işarəsi unudulub. Kodu diqqətlə yenidən yoxla.\"],[\"Heç nə çap olunmur, boş sətir görünür\",\"console.log() daxilində mətn dırnaq içində deyil, və ya fayl saxlanılmayıb (Ctrl/Cmd+S ilə saxla).\"]]}"
+     },
+     {
+      "type": "QUIZ",
+      "title": null,
+      "content": "{\"questions\":[{\"id\":\"q1\",\"text\":\"console.log() əmrinin vəzifəsi nədir?\",\"options\":[\"Faylı silmək\",\"Ekrana (konsola) məlumat çap etmək\",\"İnternetə qoşulmaq\",\"Yeni fayl yaratmaq\"],\"correctIndex\":1,\"explanation\":\"console.log() Node.js-də ekrana/terminala nəticə çıxarmaq üçün istifadə olunur.\"},{\"id\":\"q2\",\"text\":\"hello.js faylını terminalda işə salmaq üçün hansı əmri yazmalıyıq?\",\"options\":[\"run hello.js\",\"npm hello.js\",\"node hello.js\",\"start hello.js\"],\"correctIndex\":2,\"explanation\":\"Node.js ilə bir faylı icra etmək üçün \\\"node fayl_adi\\\" formatı istifadə olunur.\"},{\"id\":\"q3\",\"text\":\"Kodun sonunda olan \\\";\\\" (nöqtəli vergül) nə üçündür?\",\"options\":[\"Sətri şərhə (comment) çevirir\",\"Sətrin bitdiyini bildirir\",\"Xətanı düzəldir\",\"Faylı saxlayır\"],\"correctIndex\":1,\"explanation\":\"Nöqtəli vergül JavaScript-də bir əmrin (statement) bitdiyini göstərir.\"}]}"
+     },
+     {
+      "type": "TASK",
+      "title": null,
+      "content": "{\"instructions\":\"hello.js faylını yarat, içinə console.log ilə öz adını çap edən kod yaz (məsələn: console.log(\\\"Salam, mən Elvinəm!\\\");), terminalda \\\"node hello.js\\\" ilə işə sal və çıxan nəticəni burada paylaş.\",\"placeholder\":\"Terminalda çıxan nəticəni buraya yapışdır...\",\"required\":true}"
+     }
+    ]
+   },
+   {
+    "id": "cmrcfx3of0001c7wcq759ja75",
+    "title": "Dəyişənlər və məlumat tipləri",
+    "titleEn": "",
+    "slug": "deyisenler-ve-melumat-tipleri",
+    "shortDescription": "",
+    "shortDescriptionEn": null,
+    "moduleId": "cmna7zlx90000b9i0lpsnfmjn",
+    "order": 1,
+    "estimatedMinutes": 90,
+    "coverImageUrl": null,
+    "published": true,
+    "quizEnabled": false,
+    "minQuizScore": 60,
+    "createdAt": "2026-07-08T18:57:45.951Z",
+    "updatedAt": "2026-07-10T05:23:45.558Z",
+    "blocks": [
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"Dəyişənlər və Məlumat Tipləri\",\"level\":2}"
+     },
+     {
+      "type": "IMAGE",
+      "title": null,
+      "content": "{\"url\":\"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgmgdy9FoQeVXGvYhS8bCe1-0DmvYjY6MD_FiwIWZlqBgc9jiQixNlkn4L&s=10\",\"caption\":\"\",\"alt\":\"\",\"alignment\":\"center\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"Bu dərsdə öyrənəcəyik:\\n- let, const, var arasındakı fərq\\n- Əsas məlumat tipləri: String, Number, Boolean, Null, Undefined\\n- Array (massiv) əsasları\\n- Object (obyekt) əsasları\\n\\nBunlar proqramlaşdırmanın \\\"əlifbası\\\" sayılır — demək olar ki, yazacağın hər kod sətrində bu anlayışlardan istifadə edəcəksən.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"Dəyişən (Variable) nədir?\",\"level\":3}"
+     },
+     {
+      "type": "IMAGE",
+      "title": null,
+      "content": "{\"url\":\"https://cdn.prod.website-files.com/6584d3c7e9c648618ca2ec43/65ce2f5c435c07afbc4d7bfc_Variables.png\",\"caption\":\"Variables\",\"alt\":\"\",\"alignment\":\"center\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"Dəyişən — məlumatı yaddaşda saxlamaq üçün istifadə etdiyimiz \\\"qutu\\\"dur. Ona bir ad veririk, içinə bir dəyər qoyuruq, sonra həmin adı istifadə edərək dəyərə istənilən yerdə müraciət edə bilirik.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "EXAMPLE",
+      "title": null,
+      "content": "{\"description\":\"Düşün ki, bir qutuya \\\"yaş\\\" yazıb üzərinə etiket vurursan, içinə 25 rəqəmini qoyursan. Sonra istənilən vaxt \\\"yaş\\\" etiketli qutuya baxıb neçə olduğunu görə bilərsən — bəzən içindəkini dəyişə də bilərsən.\",\"takeaway\":\"Dəyişən = ad (etiket) + saxlanılan dəyər (qutunun içi).\",\"relatedImageUrl\":null}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"let, const, var Fərqi\",\"level\":3}"
+     },
+     {
+      "type": "IMAGE",
+      "title": null,
+      "content": "{\"url\":\"https://i.ytimg.com/vi/9WIJQDvt4Us/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCfyCeOUV8lvv9wtYNY8rvhwt49Dg\",\"caption\":\"let, const, var\",\"alt\":\"\",\"alignment\":\"center\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"JavaScript/TypeScript-də dəyişən yaratmaq üçün 3 açar söz var: var, let və const. Amma bunlardan hamısını eyni dərəcədə istifadə etmirik.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "let, const, var Müqayisəsi",
+      "content": "{\"headers\":[\"Açar söz\",\"Dəyəri dəyişmək olar?\",\"İstifadə tövsiyəsi\"],\"rows\":[[\"const\",\"Xeyr — bir dəfə təyin olunur, dəyişmir\",\"✅ Əsas seçim — dəyər dəyişməyəcəksə həmişə bunu istifadə et\"],[\"let\",\"Bəli — dəyəri sonradan dəyişmək olar\",\"✅ Yalnız dəyər dəyişəcəksə istifadə et\"],[\"var\",\"Bəli, amma köhnə və problemli üsuldur\",\"❌ Müasir kodda istifadə edilmir\"]]}"
+     },
+     {
+      "type": "CODE",
+      "title": null,
+      "content": "{\"code\":\"const adı = \\\"Elvin\\\"; // dəyişməyəcək\\nlet yaş = 25;         // dəyişə bilər\\nyaş = 26;             // bax, dəyişdirdik — const ilə bunu edə bilməzdik\",\"language\":\"javascript\",\"caption\":\"let və const istifadə nümunəsi\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": null,
+      "content": "{\"variant\":\"important\",\"body\":\"Qayda: həmişə əvvəlcə \\\"const\\\" istifadə et. Yalnız dəyəri sonradan dəyişmək lazım gələcəksə \\\"let\\\" işlət. \\\"var\\\" haqqında bilmək kifayətdir, amma bu kursda heç vaxt istifadə etməyəcəyik.\"}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"Məlumat Tipləri (Data Types)\",\"level\":3}"
+     },
+     {
+      "type": "IMAGE",
+      "title": null,
+      "content": "{\"url\":\"https://cdn.sanity.io/images/l5rq9j6r/production/7e0b82393d930a6330d85ac581f4b7ff3670018a-1500x939.jpg\",\"caption\":\"Data Types\",\"alt\":\"\",\"alignment\":\"center\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"Hər dəyişənin içində saxladığı məlumatın \\\"növü\\\" (tipi) var. Əsas 5 tip ilə tanış olaq:\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "Əsas Məlumat Tipləri",
+      "content": "{\"headers\":[\"Tip\",\"Nə deməkdir\",\"Nümunə\"],\"rows\":[[\"String\",\"Mətn (həmişə dırnaq içində)\",\"\\\"Salam\\\", 'Playwright'\"],[\"Number\",\"Ədəd (tam və ya kəsr)\",\"25, 3.14, -10\"],[\"Boolean\",\"Yalnız iki dəyər ola bilər: doğru/yalan\",\"true, false\"],[\"Null\",\"Bilərəkdən \\\"boş\\\" olaraq təyin edilmiş dəyər\",\"null\"],[\"Undefined\",\"Dəyişənə hələ heç bir dəyər verilməyib\",\"undefined\"]]}"
+     },
+     {
+      "type": "CODE",
+      "title": null,
+      "content": "{\"code\":\"const ad = \\\"Ayşə\\\";        // String\\nconst yas = 24;            // Number\\nconst isActive = true;     // Boolean\\nconst netice = null;       // Null - bilərəkdən boş\\nlet netice2;               // Undefined - hələ dəyər verilməyib\\n\\nconsole.log(typeof ad);        // \\\"string\\\"\\nconsole.log(typeof yas);       // \\\"number\\\"\\nconsole.log(typeof isActive);  // \\\"boolean\\\"\",\"language\":\"javascript\",\"caption\":\"Məlumat tipləri nümunəsi\"}"
+     },
+     {
+      "type": "CALLOUT",
+      "title": null,
+      "content": "{\"emoji\":\"🔍\",\"title\":\"typeof nədir?\",\"body\":\"typeof — bir dəyişənin hansı tipdə olduğunu bizə deyən xüsusi əmrdir. Kodda şübhə yarananda \\\"console.log(typeof dəyişən_adı)\\\" yazıb yoxlaya bilərsən.\",\"color\":\"blue\"}"
+     },
+     {
+      "type": "IMAGE",
+      "title": null,
+      "content": "{\"url\":\"https://miro.medium.com/v2/1*2_HFHnNxBPA9vFl_hkllUg.png\",\"caption\":\"Null vs Undefined\",\"alt\":\"\",\"alignment\":\"center\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": null,
+      "content": "{\"variant\":\"remember\",\"body\":\"Null vs Undefined fərqi:\\n- null — sən özün \\\"burda heç nə yoxdur\\\" deyə bilərəkdən təyin edirsən\\n- undefined — dəyişən yaradılıb, amma hələ ona heç bir dəyər verilməyib (JavaScript özü bunu belə göstərir)\"}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"Array (Massiv) Əsasları\",\"level\":3}"
+     },
+     {
+      "type": "IMAGE",
+      "title": null,
+      "content": "{\"url\":\"https://media.geeksforgeeks.org/wp-content/uploads/20240111105218/array.png\",\"caption\":\"\",\"alt\":\"\",\"alignment\":\"center\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"Array — bir dəyişəndə birdən çox dəyəri sırayla saxlamaq üçün istifadə olunur. Düşün ki, tək bir qutu yerinə, nömrələnmiş rəflər sırası var, hər rəfdə bir məlumat.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "CODE",
+      "title": null,
+      "content": "{\"code\":\"const meyveler = [\\\"alma\\\", \\\"armud\\\", \\\"banan\\\"];\\n\\nconsole.log(meyveler[0]); // \\\"alma\\\" - sayma 0-dan başlayır!\\nconsole.log(meyveler[1]); // \\\"armud\\\"\\nconsole.log(meyveler.length); // 3 - massivdə neçə element var\",\"language\":\"javascript\",\"caption\":\"Array nümunəsi\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": null,
+      "content": "{\"variant\":\"important\",\"body\":\"Çox vacib qayda: Array-larda sayma 0-dan başlayır! Yəni ilk element meyveler[0]-dır, meyveler[1] yox. Bu, başlanğıcda çaşdırıcı ola bilər, amma proqramlaşdırmada universal qaydadır.\"}"
+     },
+     {
+      "type": "EXAMPLE",
+      "title": null,
+      "content": "{\"description\":\"Playwright ilə test yazanda tez-tez saytdakı bir neçə düymə və ya elementi array şəklində toplayıb, hər birini sırayla yoxlayacaqsan. Ona görə array anlayışı sənə çox faydalı olacaq.\",\"takeaway\":\"Array = sıralı siyahı, nömrələr 0-dan başlayır.\",\"relatedImageUrl\":null}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"Object (Obyekt) Əsasları\",\"level\":3}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"Object — məlumatları \\\"açar: dəyər\\\" (key: value) cütləri şəklində saxlamaq üçün istifadə olunur. Array-dan fərqli olaraq, elementlərə nömrə ilə deyil, ad (açar) ilə müraciət edirik.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "CODE",
+      "title": null,
+      "content": "{\"code\":\"const isci = {\\n  ad: \\\"Nicat\\\",\\n  yas: 28,\\n  vezife: \\\"SDET\\\",\\n  isAktiv: true\\n};\\n\\nconsole.log(isci.ad);      // \\\"Nicat\\\"\\nconsole.log(isci.vezife);  // \\\"SDET\\\"\",\"language\":\"javascript\",\"caption\":\"Object nümunəsi\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"Diqqət et: \\\"isci\\\" obyektinin daxilində \\\"ad\\\", \\\"yas\\\", \\\"vezife\\\", \\\"isAktiv\\\" — bunlar açarlardır (key), sağ tərəfdəki dəyərlər isə onların qiymətidir. Obyektə müraciət etmək üçün nöqtə (.) işarəsindən istifadə edirik: isci.ad kimi.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "CALLOUT",
+      "title": null,
+      "content": "{\"emoji\":\"📦\",\"title\":\"Array vs Object — Fərq nədir?\",\"body\":\"Array — sıralı siyahı, elementlərə nömrə ilə müraciət edirsən (meyveler[0]).\\nObject — adlandırılmış məlumat toplusu, elementlərə ad ilə müraciət edirsən (isci.ad).\\n\\nSadə qayda: sıralı, oxşar tipli siyahı üçün Array; müxtəlif xüsusiyyətləri olan bir \\\"şey\\\"i təsvir etmək üçün Object istifadə et.\",\"color\":\"purple\"}"
+     },
+     {
+      "type": "IMAGE",
+      "title": null,
+      "content": "{\"url\":\"https://miro.medium.com/v2/1*Rt4TljlpIB5iBjlqTj386Q.png\",\"caption\":\"Array vs Object javascript\",\"alt\":\"\",\"alignment\":\"center\"}"
+     },
+     {
+      "type": "QUIZ",
+      "title": null,
+      "content": "{\"questions\":[{\"id\":\"q1\",\"text\":\"Dəyəri sonradan dəyişməyəcəyini bildiyin bir dəyişən yaradanda hansı açar sözü istifadə etməlisən?\",\"options\":[\"var\",\"let\",\"const\",\"static\"],\"correctIndex\":2,\"explanation\":\"const dəyəri bir dəfə təyin olunduqdan sonra dəyişməyəcəyi vaxt istifadə olunur — bu, müasir kodda əsas seçimdir.\"},{\"id\":\"q2\",\"text\":\"const meyveler = [\\\"alma\\\", \\\"armud\\\", \\\"banan\\\"]; kodunda meyveler[0] nəyi qaytarır?\",\"options\":[\"\\\"armud\\\"\",\"\\\"alma\\\"\",\"\\\"banan\\\"\",\"Xəta verir\"],\"correctIndex\":1,\"explanation\":\"Array-larda sayma 0-dan başlayır, ona görə meyveler[0] ilk elementi, yəni \\\"alma\\\"-nı qaytarır.\"},{\"id\":\"q3\",\"text\":\"null və undefined arasındakı əsas fərq nədir?\",\"options\":[\"Heç bir fərq yoxdur, eynidir\",\"null yalnız Array-larda istifadə olunur\",\"null bilərəkdən boş təyin edilir, undefined isə dəyər verilmədikdə avtomatik yaranır\",\"undefined yalnız Object-lərdə istifadə olunur\"],\"correctIndex\":2,\"explanation\":\"null-u proqramçı özü \\\"burda heç nə yoxdur\\\" mənasında təyin edir, undefined isə dəyişənə hələ dəyər verilmədikdə JavaScript tərəfindən avtomatik göstərilir.\"},{\"id\":\"q4\",\"text\":\"Object-də bir dəyərə müraciət etmək üçün hansı işarədən istifadə olunur?\",\"options\":[\"Kvadrat mötərizə []\",\"Nöqtə (.)\",\"Vergül (,)\",\"Nida işarəsi (!)\"],\"correctIndex\":1,\"explanation\":\"Object-in içindəki dəyərlərə nöqtə işarəsi ilə müraciət olunur, məsələn: isci.ad\"}]}"
+     },
+     {
+      "type": "TASK",
+      "title": null,
+      "content": "{\"instructions\":\"- Yeni bir fayl yarat (məs: variables.js). \\n İçində: \\n- 1) const ilə öz adını saxlayan String dəyişən, \\n- 2) let ilə yaşını saxlayan Number dəyişən, \\n- 3) 3 elementdən ibarət bir Array (sevdiyin şəhərlər və s.), \\n- 4) özünü təsvir edən bir Object (ad, yaş, peşə xüsusiyyətləri ilə) yarat. \\n- Hamısını console.log ilə print et və nəticəni buraya yapışdır.\",\"placeholder\":\"Kodunu və terminal nəticəsini buraya yapışdır...\",\"required\":true}"
+     }
+    ]
+   },
+   {
+    "id": "cmrdwp7c60001r7lmzx40p110",
+    "title": "Operatorlar və şərtlər",
+    "titleEn": "",
+    "slug": "operatorlar-ve-sertler",
+    "shortDescription": "",
+    "shortDescriptionEn": null,
+    "moduleId": "cmna7zlx90000b9i0lpsnfmjn",
+    "order": 2,
+    "estimatedMinutes": 90,
+    "coverImageUrl": null,
+    "published": false,
+    "quizEnabled": false,
+    "minQuizScore": null,
+    "createdAt": "2026-07-09T19:35:17.094Z",
+    "updatedAt": "2026-07-09T19:35:17.094Z",
+    "blocks": [
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"Operatorlar və Şərtlər\",\"level\":2}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"Bu dərsdə öyrənəcəyik:\\n- Riyazi və müqayisə operatorları\\n- if / else / else if şərt strukturları\\n- switch operatoru\\n- Məntiqi operatorlar (&&, ||, !)\\n- Praktiki məşqlər: yaş yoxlayan və tək/cüt rəqəm tapan proqramcıqlar\\n\\nBu mövzu vacibdir, çünki proqramlaşdırmanın \\\"qərar vermə\\\" məntiqi məhz bura əsaslanır — kod şərtlərdən asılı olaraq fərqli davranmalıdır. Playwright testlərində də daim \\\"əgər bu element görünürsə, bunu et, yoxsa başqa şey et\\\" məntiqini istifadə edəcəyik.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"Riyazi Operatorlar\",\"level\":3}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"Riyazi operatorlar ədədlər üzərində hesablama aparmaq üçün istifadə olunur.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "Əsas Riyazi Operatorlar",
+      "content": "{\"headers\":[\"Operator\",\"Mənası\",\"Nümunə\",\"Nəticə\"],\"rows\":[[\"+\",\"Toplama\",\"5 + 3\",\"8\"],[\"-\",\"Çıxma\",\"5 - 3\",\"2\"],[\"*\",\"Vurma\",\"5 * 3\",\"15\"],[\"/\",\"Bölmə\",\"10 / 2\",\"5\"],[\"%\",\"Qalıq (modulo) — bölmədən qalan hissə\",\"10 % 3\",\"1\"]]}"
+     },
+     {
+      "type": "CODE",
+      "title": null,
+      "content": "{\"code\":\"const a = 10;\\nconst b = 3;\\n\\nconsole.log(a + b); // 13\\nconsole.log(a - b); // 7\\nconsole.log(a * b); // 30\\nconsole.log(a / b); // 3.333...\\nconsole.log(a % b); // 1 — 10-u 3-ə böləndə qalan\",\"language\":\"javascript\",\"caption\":\"Riyazi operatorlar nümunəsi\"}"
+     },
+     {
+      "type": "CALLOUT",
+      "title": null,
+      "content": "{\"emoji\":\"🔑\",\"title\":\"% (modulo) operatoru xüsusi diqqətə layiqdir\",\"body\":\"Modulo operatoru bölmədən qalan hissəni verir. Ən çox istifadə sahəsi — bir ədədin tək və ya cüt olduğunu yoxlamaqdır: əgər ədəd % 2 nəticəsi 0-dırsa, ədəd cütdür, əks halda təkdir. Bu məntiqi bir azdan məşqdə istifadə edəcəyik.\",\"color\":\"yellow\"}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"Müqayisə Operatorları\",\"level\":3}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"Müqayisə operatorları iki dəyəri müqayisə edir və nəticə olaraq həmişə Boolean (true/false) qaytarır.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "Müqayisə Operatorları",
+      "content": "{\"headers\":[\"Operator\",\"Mənası\",\"Nümunə\",\"Nəticə\"],\"rows\":[[\"==\",\"Bərabərdir (tipi yoxlamır)\",\"5 == \\\"5\\\"\",\"true\"],[\"===\",\"Tam bərabərdir (tip və dəyər)\",\"5 === \\\"5\\\"\",\"false\"],[\"!=\",\"Bərabər deyil (tipi yoxlamır)\",\"5 != \\\"5\\\"\",\"false\"],[\"!==\",\"Tam bərabər deyil\",\"5 !== \\\"5\\\"\",\"true\"],[\">\",\"Böyükdür\",\"7 > 5\",\"true\"],[\"<\",\"Kiçikdir\",\"7 < 5\",\"false\"],[\">=\",\"Böyük və ya bərabərdir\",\"5 >= 5\",\"true\"],[\"<=\",\"Kiçik və ya bərabərdir\",\"4 <= 5\",\"true\"]]}"
+     },
+     {
+      "type": "NOTE",
+      "title": null,
+      "content": "{\"variant\":\"important\",\"body\":\"Çox vacib qayda: həmişə === və !== istifadə et, == və != yox!\\n\\n== yalnız dəyəri müqayisə edir, tipi yox — bu, gözlənilməz nəticələrə səbəb ola bilər (məsələn 5 == \\\"5\\\" nəticəsi true olur, halbuki biri Number, digəri String-dir). === həm tipi, həm dəyəri yoxlayır və daha etibarlıdır. Playwright testlərində də həmişə === istifadə edəcəyik.\"}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"if / else / else if\",\"level\":3}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"if strukturu koda \\\"əgər bu şərt doğrudursa, bunu et\\\" məntiqini əlavə edir. Bu, proqramlaşdırmanın ən çox istifadə olunan strukturlarından biridir.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "CODE",
+      "title": null,
+      "content": "{\"code\":\"const yas = 20;\\n\\nif (yas >= 18) {\\n  console.log(\\\"Sən yetkinsən.\\\");\\n} else {\\n  console.log(\\\"Sən hələ yetkin deyilsən.\\\");\\n}\",\"language\":\"javascript\",\"caption\":\"Sadə if / else nümunəsi\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"Bir neçə şərti ardıcıl yoxlamaq lazım olanda \\\"else if\\\" istifadə edirik:\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "CODE",
+      "title": null,
+      "content": "{\"code\":\"const qiymet = 85;\\n\\nif (qiymet >= 90) {\\n  console.log(\\\"Əla\\\");\\n} else if (qiymet >= 70) {\\n  console.log(\\\"Yaxşı\\\");\\n} else if (qiymet >= 50) {\\n  console.log(\\\"Kafi\\\");\\n} else {\\n  console.log(\\\"Qeyri-kafi\\\");\\n}\\n// Nəticə: \\\"Yaxşı\\\" çap olunacaq, çünki 85 >= 70 şərti doğrudur\",\"language\":\"javascript\",\"caption\":\"if / else if / else nümunəsi\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": null,
+      "content": "{\"variant\":\"remember\",\"body\":\"if strukturu şərtləri yuxarıdan aşağı, sırayla yoxlayır. İlk doğru olan şərt tapılan kimi, həmin blok icra olunur və qalanlarına baxılmır — hətta onlar da doğru olsa belə.\"}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"switch Operatoru\",\"level\":3}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"switch — bir dəyişənin bir neçə konkret dəyərdən hansına bərabər olduğunu yoxlamaq üçün istifadə olunur. Çoxlu \\\"else if\\\" yazmaq əvəzinə, daha səliqəli alternativdir.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "CODE",
+      "title": null,
+      "content": "{\"code\":\"const gun = \\\"Bazar ertəsi\\\";\\n\\nswitch (gun) {\\n  case \\\"Bazar ertəsi\\\":\\n    console.log(\\\"Həftənin ilk günüdür\\\");\\n    break;\\n  case \\\"Cümə\\\":\\n    console.log(\\\"İş həftəsi bitir\\\");\\n    break;\\n  case \\\"Şənbə\\\":\\n  case \\\"Bazar\\\":\\n    console.log(\\\"Həftəsonudur\\\");\\n    break;\\n  default:\\n    console.log(\\\"Adi iş günüdür\\\");\\n}\\n// Nəticə: \\\"Həftənin ilk günüdür\\\"\",\"language\":\"javascript\",\"caption\":\"switch operatoru nümunəsi\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "switch Strukturunun Hissələri",
+      "content": "{\"headers\":[\"Açar söz\",\"Vəzifəsi\"],\"rows\":[[\"switch(dəyişən)\",\"Hansı dəyişəni yoxlayacağımızı bildirir\"],[\"case \\\"dəyər\\\":\",\"Dəyişən bu konkret dəyərə bərabərdirsə, bu blok icra olunur\"],[\"break;\",\"Uyğun case tapılandan sonra digərlərinə baxmadan çıxmaq üçün — unudulsa, aşağıdakı case-lər də icra olunur!\"],[\"default:\",\"Heç bir case uyğun gəlmirsə icra olunan bloka (if-dəki \\\"else\\\"-yə bənzəyir)\"]]}"
+     },
+     {
+      "type": "NOTE",
+      "title": null,
+      "content": "{\"variant\":\"warning\",\"body\":\"break; yazmağı unutma! Əgər break yoxdursa, uyğun case tapılandan sonra kod aşağıdakı case-lərə də \\\"düşür\\\" (buna \\\"fall-through\\\" deyilir) və gözləmədiyin nəticə ala bilərsən.\"}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"Məntiqi Operatorlar (&&, ||, !)\",\"level\":3}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"Məntiqi operatorlar bir neçə şərti birləşdirməyə imkan verir.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "Məntiqi Operatorlar",
+      "content": "{\"headers\":[\"Operator\",\"Adı\",\"Mənası\"],\"rows\":[[\"&&\",\"VƏ (AND)\",\"Hər iki şərt doğru olmalıdır ki, nəticə true olsun\"],[\"||\",\"VƏ YA (OR)\",\"Şərtlərdən ən azı biri doğru olsa, nəticə true olur\"],[\"!\",\"DEYİL (NOT)\",\"Şərtin əksini qaytarır — true-nu false-a, false-u true-ya çevirir\"]]}"
+     },
+     {
+      "type": "CODE",
+      "title": null,
+      "content": "{\"code\":\"const yas = 25;\\nconst biletVar = true;\\n\\n// && - hər ikisi doğru olmalıdır\\nif (yas >= 18 && biletVar) {\\n  console.log(\\\"Konsertə buraxılırsan\\\");\\n}\\n\\n// || - biri doğru olsa kifayətdir\\nconst heftesonu = false;\\nconst tetil = true;\\nif (heftesonu || tetil) {\\n  console.log(\\\"Bu gün istirahət edə bilərsən\\\");\\n}\\n\\n// ! - əksini yoxlayır\\nconst isLoggedIn = false;\\nif (!isLoggedIn) {\\n  console.log(\\\"Sən daxil olmamısan\\\");\\n}\",\"language\":\"javascript\",\"caption\":\"Məntiqi operatorlar nümunəsi\"}"
+     },
+     {
+      "type": "EXAMPLE",
+      "title": null,
+      "content": "{\"description\":\"Playwright ilə test yazanda tez-tez belə vəziyyətlərlə rastlaşacaqsan: \\\"əgər düymə görünürsə VƏ aktivdirsə, ona klik et\\\". Bu, məhz && operatoru ilə yazılır. Ona görə məntiqi operatorlar sənin gündəlik alətinə çevriləcək.\",\"takeaway\":\"&&, ||, ! — bir neçə şərti birləşdirərək daha dəqiq qərarlar vermək üçün istifadə olunur.\",\"relatedImageUrl\":null}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"Məşqlər\",\"level\":3}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"İndi öyrəndiklərini praktikada tətbiq etmə vaxtıdır. Aşağıdakı iki sadə proqramcığı özün yazmalısan.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "CALLOUT",
+      "title": null,
+      "content": "{\"emoji\":\"1️⃣\",\"title\":\"Məşq 1: Yaş Yoxlayan Proqram\",\"body\":\"Bir dəyişəndə yaşını saxla (məs: const yas = 17;). if/else istifadə edərək yoxla: əgər yaş 18 və ya böyükdürsə \\\"Yetkinsən\\\" çap et, əks halda \\\"Hələ yetkin deyilsən\\\" çap et.\",\"color\":\"blue\"}"
+     },
+     {
+      "type": "CALLOUT",
+      "title": null,
+      "content": "{\"emoji\":\"2️⃣\",\"title\":\"Məşq 2: Tək/Cüt Rəqəm Tapan Proqram\",\"body\":\"Bir dəyişəndə istənilən ədəd saxla (məs: const eded = 7;). Modulo (%) operatorundan istifadə edərək yoxla: əgər eded % 2 === 0-dırsa \\\"Cütdür\\\" çap et, əks halda \\\"Təkdir\\\" çap et.\",\"color\":\"green\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": null,
+      "content": "{\"variant\":\"tip\",\"body\":\"Məşq edərkən müxtəlif dəyərlər sına (məs: yaş üçün həm 17, həm 18, həm 30; ədəd üçün həm cüt, həm tək rəqəmlər) — bu, kodunun bütün halları düzgün idarə etdiyinə əmin olmağın ən yaxşı yoludur. Testçi (SDET) təfəkkürü məhz budur: \\\"bütün ssenariləri yoxla\\\".\"}"
+     },
+     {
+      "type": "QUIZ",
+      "title": null,
+      "content": "{\"questions\":[{\"id\":\"q1\",\"text\":\"10 % 3 ifadəsinin nəticəsi nədir?\",\"options\":[\"3\",\"0\",\"1\",\"3.33\"],\"correctIndex\":2,\"explanation\":\"Modulo operatoru bölmədən qalan hissəni qaytarır. 10-u 3-ə bölsək, 3 dəfə tam bölünür (9), qalan 1 olur.\"},{\"id\":\"q2\",\"text\":\"5 === \\\"5\\\" ifadəsinin nəticəsi nədir?\",\"options\":[\"true\",\"false\",\"5\",\"Xəta verir\"],\"correctIndex\":1,\"explanation\":\"=== həm dəyəri, həm tipi müqayisə edir. 5 (Number) və \\\"5\\\" (String) fərqli tiplərdir, ona görə nəticə false olur.\"},{\"id\":\"q3\",\"text\":\"switch operatorunda break; unudulsa nə baş verir?\",\"options\":[\"Kod xəta verir və dayanır\",\"Yalnız default blok icra olunur\",\"Uyğun case-dən sonra aşağıdakı case-lər də icra olunmağa davam edir\",\"Heç nə baş vermir, hər şey normal işləyir\"],\"correctIndex\":2,\"explanation\":\"break olmadan kod uyğun case tapıldıqdan sonra aşağıdakı case-lərə də \\\"düşür\\\" və onları da icra edir (fall-through).\"},{\"id\":\"q4\",\"text\":\"yas >= 18 && biletVar şərti nə vaxt true olur?\",\"options\":[\"Yalnız yas >= 18 doğru olanda\",\"Yalnız biletVar true olanda\",\"Hər iki şərt (yas >= 18 VƏ biletVar) doğru olanda\",\"Şərtlərdən istənilən biri doğru olanda\"],\"correctIndex\":2,\"explanation\":\"&& (AND) operatoru yalnız hər iki tərəf doğru olduqda true qaytarır.\"}]}"
+     },
+     {
+      "type": "TASK",
+      "title": null,
+      "content": "{\"instructions\":\"conditions.js adlı yeni fayl yarat. İçində: 1) Yaş yoxlayan if/else proqramı yaz (öz yaşınla sına), 2) Tək/cüt rəqəm tapan proqram yaz (ən azı 2 fərqli ədədlə sına — biri tək, biri cüt). Terminalda işə sal və çıxan nəticələri buraya yapışdır.\",\"placeholder\":\"Kodunu və terminal nəticələrini buraya yapışdır...\",\"required\":true}"
+     }
+    ]
+   },
+   {
+    "id": "cms07spdt0001139j363u4acd",
+    "title": "Dövrlər ",
+    "titleEn": "Loops",
+    "slug": "dovrler-",
+    "shortDescription": "",
+    "shortDescriptionEn": null,
+    "moduleId": "cmna7zlx90000b9i0lpsnfmjn",
+    "order": 3,
+    "estimatedMinutes": 30,
+    "coverImageUrl": null,
+    "published": false,
+    "quizEnabled": true,
+    "minQuizScore": 60,
+    "createdAt": "2026-07-25T10:16:52.097Z",
+    "updatedAt": "2026-07-25T10:19:03.423Z",
+    "blocks": [
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"Dövrlər (Loops)\",\"level\":2}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"Bu dərsdə öyrənəcəyik:\\n- for dövrü\\n- while və do-while\\n- for...of və for...in\\n- Array metodları: forEach, map, filter\\n- Praktiki məşqlər: 1-dən 100-ə toplama, array-dəki cüt ədədləri tapmaq\\n\\nDövrlər (loops) bizə eyni əməliyyatı dəfələrlə, əl ilə təkrar-təkrar yazmadan icra etməyə imkan verir. Bu, proqramlaşdırmanın ən güclü alətlərindən biridir.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "CALLOUT",
+      "title": null,
+      "content": "{\"emoji\":\"🔁\",\"title\":\"Niyə dövr lazımdır?\",\"body\":\"Təsəvvür et ki, 1-dən 100-ə qədər bütün ədədləri çap etməlisən. console.log-u 100 dəfə əl ilə yazmaq həm vaxt itkisidir, həm də səhv etmək riski var. Dövr bunu bizim üçün avtomatik edir — bir dəfə \\\"neçə dəfə təkrarla və nə et\\\" deyirik, qalanını kompüter edir.\",\"color\":\"blue\"}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"for Dövrü\",\"level\":3}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"for — ən çox istifadə olunan dövrdür. Xüsusilə \\\"neçə dəfə təkrarlanacağını\\\" əvvəlcədən bildiyimiz hallarda istifadə edirik.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "CODE",
+      "title": null,
+      "content": "{\"code\":\"for (let i = 1; i <= 5; i++) {\\n  console.log(i);\\n}\\n// Nəticə: 1, 2, 3, 4, 5 (hər biri ayrı sətirdə çap olunur)\",\"language\":\"javascript\",\"caption\":\"Sadə for dövrü\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"for dövrünün 3 hissəsi var, bunları ayrıca izah edək:\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "for Dövrünün Hissələri",
+      "content": "{\"headers\":[\"Hissə\",\"Nümunə\",\"Nə edir\"],\"rows\":[[\"Başlanğıc\",\"let i = 1\",\"Sayğacı (counter) yaradır və başlanğıc dəyər verir\"],[\"Şərt\",\"i <= 5\",\"Bu şərt doğru olduğu müddətcə dövr davam edir\"],[\"Addım\",\"i++\",\"Hər dövrədən sonra i-ni 1 artırır (i++ = i-ni 1 vahid artır)\"]]}"
+     },
+     {
+      "type": "EXAMPLE",
+      "title": null,
+      "content": "{\"description\":\"Düşün ki, pilləkənlə 5-ci mərtəbəyə qalxırsan. \\\"i = 1\\\" — 1-ci pillədən başlayırsan. \\\"i <= 5\\\" — 5-ci mərtəbəyə çatana qədər davam edirsən. \\\"i++\\\" — hər addımda bir pillə yuxarı qalxırsan. 5-ci mərtəbəyə çatan kimi dayanırsan.\",\"takeaway\":\"for dövrü = başlanğıc nöqtəsi + davam etmə şərti + hər addımda nə edilməli.\",\"relatedImageUrl\":null}"
+     },
+     {
+      "type": "NOTE",
+      "title": null,
+      "content": "{\"variant\":\"tip\",\"body\":\"i++ yazmaq i = i + 1 yazmaqla eynidir, sadəcə qısa formasıdır. Proqramçılar həmişə bu qısa formanı istifadə edirlər.\"}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"while Dövrü\",\"level\":3}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"while — şərt doğru olduğu müddətcə dövr edir. for-dan fərqi: neçə dəfə təkrarlanacağını əvvəlcədən dəqiq bilmədiyimiz hallarda istifadə edirik.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "CODE",
+      "title": null,
+      "content": "{\"code\":\"let i = 1;\\n\\nwhile (i <= 5) {\\n  console.log(i);\\n  i++; // unutmaq olmaz! yoxsa dövr heç vaxt bitməz\\n}\\n// Nəticə: 1, 2, 3, 4, 5\",\"language\":\"javascript\",\"caption\":\"while dövrü nümunəsi\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": null,
+      "content": "{\"variant\":\"warning\",\"body\":\"Diqqət: while dövründə \\\"i++\\\" yazmağı unutsan, şərt (i <= 5) heç vaxt yalan olmayacaq və dövr sonsuz davam edəcək (buna \\\"infinite loop\\\" deyilir). Bu, proqramı \\\"dondurar\\\". Həmişə dövrün bir yerdə bitəcəyinə əmin ol.\"}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"do-while Dövrü\",\"level\":3}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"do-while — while-a çox bənzəyir, tək fərqi: şərti yoxlamazdan ƏVVƏL bir dəfə blok mütləq icra olunur. Yəni şərt yanlış olsa belə, kod ən azı 1 dəfə işləyir.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "CODE",
+      "title": null,
+      "content": "{\"code\":\"let sayi = 10;\\n\\ndo {\\n  console.log(sayi); // əvvəlcə bu icra olunur\\n  sayi++;\\n} while (sayi <= 5); // sonra şərt yoxlanılır\\n\\n// Nəticə: 10 (bir dəfə çap olunur, çünki do-while əvvəlcə icra edir, sonra yoxlayır)\",\"language\":\"javascript\",\"caption\":\"do-while nümunəsi\"}"
+     },
+     {
+      "type": "CALLOUT",
+      "title": null,
+      "content": "{\"emoji\":\"💡\",\"title\":\"while vs do-while fərqi\",\"body\":\"while — əvvəlcə şərti yoxlayır, doğrudursa icra edir (heç icra olunmaya bilər).\\ndo-while — əvvəlcə icra edir, sonra şərti yoxlayır (həmişə ən azı 1 dəfə icra olunur).\\n\\ndo-while praktikada az istifadə olunur, amma anlayışını bilmək faydalıdır.\",\"color\":\"yellow\"}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"for...of və for...in\",\"level\":3}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"Bunlar for dövrünün xüsusi, daha rahat formalarıdır — Array və Object-lərin içini gəzmək üçün yaradılıb.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "CODE",
+      "title": null,
+      "content": "{\"code\":\"// for...of — Array-in İÇİNDƏKİ DƏYƏRLƏRİ gəzir\\nconst meyveler = [\\\"alma\\\", \\\"armud\\\", \\\"banan\\\"];\\n\\nfor (const meyve of meyveler) {\\n  console.log(meyve);\\n}\\n// Nəticə: \\\"alma\\\", \\\"armud\\\", \\\"banan\\\"\",\"language\":\"javascript\",\"caption\":\"for...of nümunəsi (Array üçün)\"}"
+     },
+     {
+      "type": "CODE",
+      "title": null,
+      "content": "{\"code\":\"// for...in — Object-in AÇARLARINI (key) gəzir\\nconst isci = { ad: \\\"Nicat\\\", yas: 28, vezife: \\\"SDET\\\" };\\n\\nfor (const acar in isci) {\\n  console.log(acar + \\\": \\\" + isci[acar]);\\n}\\n// Nəticə: \\\"ad: Nicat\\\", \\\"yas: 28\\\", \\\"vezife: SDET\\\"\",\"language\":\"javascript\",\"caption\":\"for...in nümunəsi (Object üçün)\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "for...of vs for...in",
+      "content": "{\"headers\":[\"Struktur\",\"Harada istifadə olunur\",\"Nəyi qaytarır\"],\"rows\":[[\"for...of\",\"Array üçün\",\"Elementlərin özünü (dəyərləri)\"],[\"for...in\",\"Object üçün\",\"Açarları (key-ləri)\"]]}"
+     },
+     {
+      "type": "NOTE",
+      "title": null,
+      "content": "{\"variant\":\"remember\",\"body\":\"Yadda saxlamaq üçün sadə üsul: \\\"of\\\" — Array, çünki Array-də elementlərin özü ilə maraqlanırıq. \\\"in\\\" — Object, çünki Object-in İÇİNDƏ hansı açarların olduğu ilə maraqlanırıq.\"}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"Array Metodları: forEach, map, filter\",\"level\":3}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"JavaScript-də Array-lərin öz daxilində hazır \\\"metodları\\\" (funksiyaları) var — bunlar dövr yazmağın daha müasir və qısa yoludur. Playwright ilə işləyəndə bunları çox istifadə edəcəksən.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"forEach — hər element üzərində əməliyyat et\",\"level\":4}"
+     },
+     {
+      "type": "CODE",
+      "title": null,
+      "content": "{\"code\":\"const meyveler = [\\\"alma\\\", \\\"armud\\\", \\\"banan\\\"];\\n\\nmeyveler.forEach(function (meyve) {\\n  console.log(meyve);\\n});\\n// Nəticə: \\\"alma\\\", \\\"armud\\\", \\\"banan\\\"\",\"language\":\"javascript\",\"caption\":\"forEach nümunəsi\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"forEach for...of-a çox bənzəyir — hər elementi sırayla götürüb, üzərində müəyyən əməliyyat edir (məsələn çap etmək), amma yeni array qaytarmır.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"map — hər elementi dəyişib YENİ array yarat\",\"level\":4}"
+     },
+     {
+      "type": "CODE",
+      "title": null,
+      "content": "{\"code\":\"const ededler = [1, 2, 3, 4];\\n\\nconst ikiqat = ededler.map(function (eded) {\\n  return eded * 2;\\n});\\n\\nconsole.log(ikiqat); // [2, 4, 6, 8]\\nconsole.log(ededler); // [1, 2, 3, 4] — orijinal array dəyişmir!\",\"language\":\"javascript\",\"caption\":\"map nümunəsi\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"map hər elementi götürür, sənin göstərdiyin əməliyyatı tətbiq edir, və NƏTİCƏLƏRDƏN yeni bir array yaradır. Orijinal array toxunulmaz qalır.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"filter — şərtə uyğun elementləri seç\",\"level\":4}"
+     },
+     {
+      "type": "CODE",
+      "title": null,
+      "content": "{\"code\":\"const ededler = [1, 2, 3, 4, 5, 6];\\n\\nconst cutEdedler = ededler.filter(function (eded) {\\n  return eded % 2 === 0;\\n});\\n\\nconsole.log(cutEdedler); // [2, 4, 6]\",\"language\":\"javascript\",\"caption\":\"filter nümunəsi\"}"
+     },
+     {
+      "type": "TEXT",
+      "title": null,
+      "content": "{\"body\":\"filter hər elementi şərtdən keçirir — şərt true olan elementlər yeni array-ə düşür, false olanlar isə atılır.\",\"highlight\":\"normal\"}"
+     },
+     {
+      "type": "TABLE",
+      "title": "forEach vs map vs filter — Yekun Müqayisə",
+      "content": "{\"headers\":[\"Metod\",\"Nə edir\",\"Yeni array qaytarır?\"],\"rows\":[[\"forEach\",\"Hər element üzərində əməliyyat edir (məs: çap etmək)\",\"Xeyr\"],[\"map\",\"Hər elementi dəyişdirib yenisini yaradır\",\"Bəli — dəyişdirilmiş elementlərlə\"],[\"filter\",\"Şərtə uyğun elementləri seçir\",\"Bəli — yalnız şərtə uyğun elementlərlə\"]]}"
+     },
+     {
+      "type": "EXAMPLE",
+      "title": null,
+      "content": "{\"description\":\"Playwright ilə test yazanda, məsələn saytdakı bütün düymələri toplayıb (\\\"page.locator(...).all()\\\"), forEach ilə hər birini yoxlaya, ya da filter ilə yalnız aktiv olanları seçə bilərsən. Bu metodlar avtomatlaşdırma yazarkən demək olar ki, hər gün istifadə edəcəyin alətlərdir.\",\"takeaway\":\"forEach = əməliyyat et, map = dəyişdir, filter = seç.\",\"relatedImageUrl\":null}"
+     },
+     {
+      "type": "DIVIDER",
+      "title": null,
+      "content": "{}"
+     },
+     {
+      "type": "HEADING",
+      "title": null,
+      "content": "{\"text\":\"Məşqlər\",\"level\":3}"
+     },
+     {
+      "type": "CALLOUT",
+      "title": null,
+      "content": "{\"emoji\":\"1️⃣\",\"title\":\"Məşq 1: 1-dən 100-ə Toplama\",\"body\":\"for dövründən istifadə edərək 1-dən 100-ə qədər bütün ədədləri bir-birinə topla və yekun nəticəni console.log ilə çap et. (İpucu: dövrdən əvvəl \\\"let cem = 0;\\\" yaradıb, hər dövrədə cem-ə i-ni əlavə et: cem = cem + i;)\",\"color\":\"blue\"}"
+     },
+     {
+      "type": "CALLOUT",
+      "title": null,
+      "content": "{\"emoji\":\"2️⃣\",\"title\":\"Məşq 2: Array-dəki Cüt Ədədləri Tapmaq\",\"body\":\"const ededler = [3, 8, 11, 20, 15, 6, 9, 14]; array-i yarat. filter metodundan istifadə edərək yalnız cüt ədədləri seç və nəticəni çap et.\",\"color\":\"green\"}"
+     },
+     {
+      "type": "NOTE",
+      "title": null,
+      "content": "{\"variant\":\"tip\",\"body\":\"Hər iki məşqi əvvəlcə for dövrü ilə, sonra istəyirsənsə array metodları (forEach/filter) ilə yenidən yazmağı sına — bu, iki yanaşma arasındakı fərqi daha yaxşı hiss etməyə kömək edəcək.\"}"
+     },
+     {
+      "type": "QUIZ",
+      "title": null,
+      "content": "{\"questions\":[{\"id\":\"q1\",\"text\":\"for (let i = 1; i <= 3; i++) { console.log(i); } kodunun nəticəsi nədir?\",\"options\":[\"0, 1, 2\",\"1, 2, 3\",\"1, 2, 3, 4\",\"3, 2, 1\"],\"correctIndex\":1,\"explanation\":\"i=1-dən başlayır, i<=3 şərti doğru olduğu müddətcə davam edir, hər dəfə i++ ilə 1 artır: 1, 2, 3.\"},{\"id\":\"q2\",\"text\":\"while dövründə sayğacı artırmağı (i++) unutsan nə baş verir?\",\"options\":[\"Dövr bir dəfə icra olunub bitir\",\"Kod xəta verir\",\"Dövr sonsuz davam edir (infinite loop)\",\"Heç nə baş vermir\"],\"correctIndex\":2,\"explanation\":\"Şərt heç vaxt yalan olmayacağı üçün dövr dayanmadan davam edir — bu, proqramı \\\"dondurar\\\".\"},{\"id\":\"q3\",\"text\":\"Array-dən yalnız müəyyən şərtə uyğun elementləri seçmək üçün hansı metoddan istifadə edilir?\",\"options\":[\"forEach\",\"map\",\"filter\",\"for...in\"],\"correctIndex\":2,\"explanation\":\"filter metodu şərtə (true qaytaran) uyğun elementləri seçib yeni array yaradır.\"},{\"id\":\"q4\",\"text\":\"map metodu ilə forEach metodu arasındakı əsas fərq nədir?\",\"options\":[\"Heç bir fərq yoxdur\",\"map yeni array qaytarır, forEach qaytarmır\",\"forEach yalnız Object üçün işləyir\",\"map yalnız bir dəfə icra olunur\"],\"correctIndex\":1,\"explanation\":\"map hər elementi dəyişdirib yeni array yaradır, forEach isə sadəcə əməliyyat edir, heç nə qaytarmır.\"}]}"
+     },
+     {
+      "type": "TASK",
+      "title": null,
+      "content": "{\"instructions\":\"loops.js adlı yeni fayl yarat. İçində: 1) for dövrü ilə 1-dən 100-ə qədər ədədləri toplayan kod yaz və nəticəni çap et, 2) Verilmiş bir array-dəki cüt ədədləri filter metodu ilə tap və çap et. Terminalda işə sal və nəticələri buraya yapışdır.\",\"placeholder\":\"Kodunu və terminal nəticələrini buraya yapışdır...\",\"required\":true}"
+     }
+    ]
+   }
+  ]
+ }
+]

@@ -1,0 +1,1525 @@
+{
+  "id": "cmn0fw5bx0000ggbhwa7k6kb6",
+  "key": "qa-giris",
+  "order": 1,
+  "title": "QA-ya giriş",
+  "description": "Software, testing, QA və QC anlayışları, testin 7 prinsipi və QA mühəndisinin karyera yolu.",
+  "icon": "Sparkles",
+  "color": "#5B4BFF",
+  "lessons": [
+    {
+      "id": "cmn0lukgu0001cmyrmdt0kxh9",
+      "slug": "software-nedir",
+      "title": "Software nədir?",
+      "shortDescription": "Proqram təminatının növləri, testin niyə vacib olduğu və bug anlayışı.",
+      "estimatedMinutes": 9,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Software ilə hardware-i fərqləndirə biləcəksən",
+              "Sistem və tətbiqi proqram təminatına nümunə göstərə biləcəksən",
+              "Test olunmamış proqramın biznes üçün risklərini izah edə biləcəksən",
+              "Bug-ı gözlənilən və faktiki nəticə ilə təsvir edə biləcəksən"
+            ]
+          },
+          "id": "cmve390p3751fed4860a2"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Software",
+                "az": "proqram təminatı",
+                "definition": "Cihaza nə etməli olduğunu deyən təlimatlar və məlumatlar toplusu."
+              },
+              {
+                "term": "Hardware",
+                "az": "aparat təminatı",
+                "definition": "Cihazın fiziki hissələri: prosessor, yaddaş, ekran, klaviatura."
+              },
+              {
+                "term": "System software",
+                "az": "sistem proqram təminatı",
+                "definition": "Cihazı idarə edən və digər proqramlara platforma verən proqramlar."
+              },
+              {
+                "term": "Application software",
+                "az": "tətbiqi proqram təminatı",
+                "definition": "İstifadəçinin konkret işini görən proqramlar."
+              },
+              {
+                "term": "Bug",
+                "az": "baq, səhv",
+                "definition": "Gözlənilən nəticə ilə faktiki nəticə arasındakı uyğunsuzluq."
+              }
+            ]
+          },
+          "id": "cmve390p350fec67384ff"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Software və hardware",
+            "level": 2
+          },
+          "id": "cmve390p3347e2b063281"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "**Hardware** — toxuna bildiyin hər şeydir: telefonun prosessoru, ekranı, batareyası. **Software** isə bu hissələrə nə edəcəyini deyən təlimatlardır. Telefonunda Kapital Bank və ya ABB tətbiqini açanda ekran (hardware) sənə balansı göstərir, amma balansı serverdən alan, hesablayan və ekrana yazan software-dir.\n\nSoftware görünmür, amma səhv işləyəndə nəticəsini hamı görür.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p364a9ffd935c5"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Proqram təminatının növləri",
+            "level": 2
+          },
+          "id": "cmve390p3d3c795bd1a9d"
+        },
+        {
+          "type": "TABLE",
+          "title": "Proqram təminatı növləri və nümunələri",
+          "content": {
+            "headers": [
+              "Növ",
+              "Nə edir",
+              "Nümunə"
+            ],
+            "rows": [
+              [
+                "Sistem proqram təminatı",
+                "Cihazı idarə edir, digər proqramlar üçün zəmin yaradır",
+                "Windows, macOS, Android, iOS, drayverlər"
+              ],
+              [
+                "Tətbiqi proqram təminatı",
+                "İstifadəçinin konkret ehtiyacını ödəyir",
+                "WhatsApp, Chrome, Word, Zoom, bank tətbiqləri"
+              ],
+              [
+                "Proqramlaşdırma alətləri",
+                "Proqramçıya yeni software yaratmağa kömək edir",
+                "VS Code, Git, kompilyatorlar"
+              ]
+            ]
+          },
+          "id": "cmve390p34d6b173d6cb3"
+        },
+        {
+          "type": "CATEGORIZE",
+          "content": {
+            "instructions": "Hər proqramı uyğun növə yerləşdir.",
+            "categories": [
+              {
+                "id": "system",
+                "label": "Sistem proqram təminatı"
+              },
+              {
+                "id": "app",
+                "label": "Tətbiqi proqram təminatı"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "Android",
+                "categoryId": "system"
+              },
+              {
+                "id": "i2",
+                "text": "Telegram",
+                "categoryId": "app"
+              },
+              {
+                "id": "i3",
+                "text": "Printer drayveri",
+                "categoryId": "system"
+              },
+              {
+                "id": "i4",
+                "text": "Bolt taksi tətbiqi",
+                "categoryId": "app"
+              },
+              {
+                "id": "i5",
+                "text": "macOS",
+                "categoryId": "system"
+              },
+              {
+                "id": "i6",
+                "text": "Google Chrome",
+                "categoryId": "app"
+              }
+            ],
+            "explanation": "Sistem proqramı cihazın özünü işlədir. Tətbiqi proqram isə onun üzərində işləyir və istifadəçinin konkret işini görür: mesaj yazmaq, taksi çağırmaq, sayta girmək."
+          },
+          "id": "cmve390p336b3a71c4dff"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Niyə test vacibdir?",
+            "level": 2
+          },
+          "id": "cmve390p39a90b03a444f"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Test olunmamış proqram risklidir. İstifadəçiyə çatan bug:\n- **pul itkisinə** səbəb olur (səhv məbləğ köçürülür, sifariş itir);\n- **müştəri narazılığı** yaradır (tətbiq çökür, istifadəçi rəqibə keçir);\n- şirkətin **nüfuzunu** zədələyir;\n- bəzi sahələrdə (tibb, aviasiya, avtomobil) **insan həyatını** riskə atır.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p3f0f6fd3d7860"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "Real hadisə: 45 dəqiqəyə 440 milyon dollar",
+          "content": {
+            "description": "2012-ci ildə ABŞ-ın Knight Capital birja şirkəti yeni proqram versiyasını serverlərə yükləyəndə köhnə, istifadə olunmayan kod təsadüfən aktivləşdi. Sistem 45 dəqiqə ərzində milyonlarla səhv əməliyyat etdi və şirkət təxminən 440 milyon dollar itirdi.",
+            "takeaway": "Bir neçə dəqiqəlik software səhvi bütöv şirkəti iflasın kənarına gətirə bilər. Test bu riski azaltmaq üçündür."
+          },
+          "id": "cmve390p350d45805ed89"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Bug nədir?",
+            "level": 2
+          },
+          "id": "cmve390p34bd7df948bf7"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "**Bug** — proqramın gözlənilən nəticəsi ilə faktiki nəticəsi arasındakı uyğunsuzluqdur.\n\n- **Gözlənilən:** düzgün email və şifrə daxil edib \"Daxil ol\" düyməsinə basanda ana səhifə açılır.\n- **Faktiki:** düymə heç bir reaksiya vermir.\n\nBu fərq bug-dır. ISTQB terminologiyasında bunun rəsmi adı **defect**-dir; error, defect və failure fərqini ayrıca dərsdə öyrənəcəksən.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p3b0626a20bffa"
+        },
+        {
+          "type": "NOTE",
+          "title": "Tarixdən: ilk \"real\" bug",
+          "content": {
+            "variant": "tip",
+            "body": "9 sentyabr 1947-ci ildə Harvard Universitetinin Mark II kompüterində mühəndislər relelərin birində sıxışmış güvə tapdılar. Grace Hopper-in komandası onu jurnala yapışdırıb yazdı: \"First actual case of bug being found\". \"Bug\" sözü texniki nasazlıq mənasında bundan əvvəl də işlənirdi, amma bu hadisə onu proqramlaşdırma dünyasında məşhurlaşdırdı."
+          },
+          "id": "cmve390p3c4dc23deb3ea"
+        },
+        {
+          "type": "BUG_HUNT",
+          "title": "Praktika: login səhifəsində bug tap",
+          "content": {
+            "scenario": "login",
+            "instructions": "Qarşında kiçik bir login səhifəsi var. Tələbləri oxu, sonra müxtəlif məlumatlarla daxil olmağa çalış: düzgün email və şifrə, səhv şifrə, boş sahələr. Hər dəfə özündən soruş: **gözlənilən nəticə nədir, faktiki nəticə nədir?** Fərq gördüyün hər yer bir bug-dır."
+          },
+          "id": "cmve390p378cbf7ed28a8"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Hardware cihazın fiziki hissəsidir, software isə ona nə edəcəyini deyən təlimatlardır.",
+              "Sistem proqram təminatı cihazı işlədir, tətbiqi proqram təminatı istifadəçinin işini görür.",
+              "Test olunmamış proqram pul, müştəri və nüfuz itkisi riski daşıyır.",
+              "Bug — gözlənilən və faktiki nəticə arasındakı uyğunsuzluqdur."
+            ]
+          },
+          "id": "cmve390p3bd83697a67c3"
+        },
+        {
+          "type": "QUIZ",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Aşağıdakılardan hansı hardware-dir?",
+                "options": [
+                  "Android",
+                  "Telefonun prosessoru",
+                  "Bank tətbiqi",
+                  "Printer drayveri"
+                ],
+                "correctIndex": 1,
+                "explanation": "Prosessor fiziki hissədir. Android və drayver sistem proqramı, bank tətbiqi isə tətbiqi proqramdır."
+              },
+              {
+                "id": "q2",
+                "text": "Hansı tətbiqi proqram təminatıdır?",
+                "options": [
+                  "Windows",
+                  "iOS",
+                  "WhatsApp",
+                  "Printer drayveri"
+                ],
+                "correctIndex": 2,
+                "explanation": "WhatsApp istifadəçinin konkret işini görür: mesajlaşma. Qalanları cihazı idarə edən sistem proqramlarıdır."
+              },
+              {
+                "id": "q3",
+                "text": "Sistem proqram təminatının əsas funksiyası nədir?",
+                "options": [
+                  "İstifadəçi ilə çat etmək",
+                  "Cihazı idarə etmək və digər proqramlara zəmin yaratmaq",
+                  "Video montaj etmək",
+                  "Onlayn alış-veriş etmək"
+                ],
+                "correctIndex": 1,
+                "explanation": "Əməliyyat sistemi və drayverlər cihazı işlədir; tətbiqlər onların üzərində çalışır."
+              },
+              {
+                "id": "q4",
+                "text": "Kart köçürməsində 50 AZN yazırsan, hesabdan 500 AZN çıxılır. Bu nədir?",
+                "options": [
+                  "Normal davranış",
+                  "Bug, çünki faktiki nəticə gözləniləndən fərqlidir",
+                  "Hardware nasazlığı",
+                  "İstifadəçi səhvi"
+                ],
+                "correctIndex": 1,
+                "explanation": "Gözlənilən nəticə 50 AZN-in çıxılmasıdır. Faktiki nəticə fərqlidir, deməli bu bug-dır."
+              },
+              {
+                "id": "q5",
+                "text": "Test olunmamış proqramın istifadəçiyə çatması nəyə səbəb ola bilər?",
+                "options": [
+                  "Yalnız dizaynın pis görünməsinə",
+                  "Pul itkisi, müştəri narazılığı və nüfuz zərərinə",
+                  "Proqramın avtomatik sürətlənməsinə",
+                  "Heç nəyə, bug-lar zərərsizdir"
+                ],
+                "correctIndex": 1,
+                "explanation": "Knight Capital nümunəsi göstərir ki, bir software səhvi qısa müddətdə böyük maliyyə və nüfuz itkisi yarada bilər."
+              },
+              {
+                "id": "q6",
+                "text": "1947-ci ildə Mark II kompüterində nə tapıldı?",
+                "options": [
+                  "Virus",
+                  "Relelərin birində sıxışmış güvə",
+                  "Yanmış prosessor",
+                  "Səhv yazılmış kod sətri"
+                ],
+                "correctIndex": 1,
+                "explanation": "Mühəndislər relenin arasında güvə tapdılar və onu jurnala \"first actual case of bug\" kimi qeyd etdilər."
+              }
+            ]
+          },
+          "id": "cmve390p3097ad8b29fcf"
+        }
+      ]
+    },
+    {
+      "id": "cmn5tawzj002vw80avz5e307w",
+      "slug": "qa-software-testing-basics",
+      "title": "Software Testing nədir?",
+      "shortDescription": "Testin məqsədləri, verification və validation fərqi, testerin komandadakı rolu.",
+      "estimatedMinutes": 10,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Software testing-i ISTQB tərifinə uyğun izah edə biləcəksən",
+              "Testin əsas məqsədlərini sadalaya biləcəksən",
+              "Verification və validation-u nümunə ilə fərqləndirə biləcəksən",
+              "Testing ilə debugging arasındakı fərqi izah edə biləcəksən"
+            ]
+          },
+          "id": "cmve390p39672dd705e15"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Software testing",
+                "az": "proqram təminatının testi",
+                "definition": "Məhsulun keyfiyyətini qiymətləndirmək, defect-ləri tapmaq və riski azaltmaq üçün aparılan fəaliyyətlər toplusu."
+              },
+              {
+                "term": "Test object",
+                "az": "test obyekti",
+                "definition": "Test etdiyin konkret şey: modul, ekran, API, sənəd."
+              },
+              {
+                "term": "Verification",
+                "az": "yoxlama",
+                "definition": "Məhsulun spesifikasiyada yazılan tələblərə uyğunluğunu yoxlamaq."
+              },
+              {
+                "term": "Validation",
+                "az": "təsdiqləmə",
+                "definition": "Məhsulun istifadəçinin real ehtiyacını ödədiyini yoxlamaq."
+              },
+              {
+                "term": "Static testing",
+                "az": "statik test",
+                "definition": "Proqramı işə salmadan sənəd və kodu nəzərdən keçirmək (review)."
+              },
+              {
+                "term": "Debugging",
+                "az": "sazlama",
+                "definition": "Failure-in səbəbini tapıb düzəltmək; developer fəaliyyətidir."
+              }
+            ]
+          },
+          "id": "cmve390p3acc981d7c602"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Testing yalnız düymə basmaq deyil",
+            "level": 2
+          },
+          "id": "cmve390p360fc8b162c0f"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Çoxları testi \"proqramı açıb yoxlamaq\" kimi təsəvvür edir. ISTQB-yə görə isə testing daha genişdir:\n- **Dynamic testing** — proqramı işə salıb davranışını yoxlamaq.\n- **Static testing** — proqramı işə salmadan tələbləri, dizaynı, kodu oxuyub səhv axtarmaq.\n\nTest həm də planlama, analiz, test dizaynı, icra və hesabatı əhatə edən prosesdir. Kod hələ yazılmamış tələbi oxuyub ziddiyyət tapmaq da testdir.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p3576ead56c5b1"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Testin məqsədləri",
+            "level": 2
+          },
+          "id": "cmve390p3d7f66f26b4bb"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "ISTQB v4.0 testin tipik məqsədlərini belə sadalayır:\n- tələbləri, user story-ləri, dizaynı və kodu qiymətləndirmək;\n- failure-ləri üzə çıxarmaq və defect-ləri tapmaq;\n- lazımi əhatəni (coverage) təmin etmək;\n- keyfiyyətsizlik riskini azaltmaq;\n- tələblərin, o cümlədən qanun və müqavilə tələblərinin yerinə yetirildiyini yoxlamaq;\n- maraqlı tərəflərə qərar üçün məlumat vermək;\n- məhsula inam yaratmaq;\n- məhsulun istifadəçi gözləntisinə uyğun işlədiyini təsdiqləmək.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p348036b74696f"
+        },
+        {
+          "type": "NOTE",
+          "title": "Yadda saxla",
+          "content": {
+            "variant": "remember",
+            "body": "Testin məqsədi yalnız bug tapmaq deyil. Release-ə \"hə\" və ya \"yox\" demək üçün komandaya **etibarlı məlumat** vermək də testin işidir."
+          },
+          "id": "cmve390p38eb358a7a3e7"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Verification və validation",
+            "level": 2
+          },
+          "id": "cmve390p34b209e808e64"
+        },
+        {
+          "type": "TABLE",
+          "title": "Verification və validation müqayisəsi",
+          "content": {
+            "headers": [
+              "",
+              "Verification",
+              "Validation"
+            ],
+            "rows": [
+              [
+                "Sual",
+                "Məhsulu **düzgün** qururuqmu?",
+                "**Düzgün məhsulu** qururuqmu?"
+              ],
+              [
+                "Nəyə qarşı yoxlanır",
+                "Spesifikasiya, tələb sənədi",
+                "İstifadəçinin real ehtiyacı"
+              ],
+              [
+                "Nümunə fəaliyyət",
+                "Tələb review-su, test case-lərin icrası",
+                "İstifadəçi ilə acceptance testi, beta test"
+              ]
+            ]
+          },
+          "id": "cmve390p34c2cb26a0d8b"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "Nümunə: bank köçürməsində SMS təsdiqi",
+          "content": {
+            "description": "Tələb: \"Köçürmədən əvvəl istifadəçiyə SMS kod göndərilsin.\" Tester yoxlayır: SMS gəlir, kod 6 rəqəmlidir, 3 dəqiqədən sonra etibarsız olur. Bu **verification**-dır, hamısı spesifikasiyaya uyğundur.\n\nBeta testdə görünür ki, xaricdə olan müştərilərə SMS gəlmir və onlar köçürmə edə bilmir. Məhsul spesifikasiyaya uyğundur, amma istifadəçinin ehtiyacını ödəmir. Bunu **validation** üzə çıxardı.",
+            "takeaway": "Spesifikasiyaya tam uyğun məhsul da istifadəçi üçün yararsız ola bilər. Hər ikisi lazımdır."
+          },
+          "id": "cmve390p3313c19a638dd"
+        },
+        {
+          "type": "CATEGORIZE",
+          "content": {
+            "instructions": "Hər fəaliyyəti verification və ya validation kimi qruplaşdır.",
+            "categories": [
+              {
+                "id": "ver",
+                "label": "Verification"
+              },
+              {
+                "id": "val",
+                "label": "Validation"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "Şifrə sahəsinin tələbdəki kimi minimum 8 simvol qəbul etdiyini yoxlamaq",
+                "categoryId": "ver"
+              },
+              {
+                "id": "i2",
+                "text": "Real kassirlərin yeni POS ekranı ilə rahat işləyib-işləmədiyini müşahidə etmək",
+                "categoryId": "val"
+              },
+              {
+                "id": "i3",
+                "text": "Dizayn sənədini tələb sənədi ilə tutuşdurmaq",
+                "categoryId": "ver"
+              },
+              {
+                "id": "i4",
+                "text": "Pilot filialda müştərilərdən yeni tətbiq barədə rəy toplamaq",
+                "categoryId": "val"
+              },
+              {
+                "id": "i5",
+                "text": "API cavabındakı sahələrin spesifikasiyaya uyğunluğunu yoxlamaq",
+                "categoryId": "ver"
+              }
+            ],
+            "explanation": "Verification sənədə qarşı yoxlayır: \"yazılan kimi edilibmi?\". Validation istifadəçiyə qarşı yoxlayır: \"bu, həqiqətən lazım olan şeydirmi?\"."
+          },
+          "id": "cmve390p3490e35db2058"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Testerin rolu",
+            "level": 2
+          },
+          "id": "cmve390p3433f141e413e"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Tester proqramın keyfiyyəti barədə obyektiv məlumat verən şəxsdir. Gündəlik işi:\n- tələbləri analiz edir və qeyri-müəyyənlikləri soruşur;\n- test case və test data hazırlayır;\n- testləri icra edir, bug-ları qeyd edir;\n- düzəlişdən sonra **re-test** edir (bug-ın həqiqətən düzəldiyini yoxlayır);\n- **regression testing** edir — dəyişiklikdən sonra köhnə funksiyaların pozulmadığını yoxlayır.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p35cb473944a81"
+        },
+        {
+          "type": "NOTE",
+          "title": "Testing və debugging fərqlidir",
+          "content": {
+            "variant": "important",
+            "body": "Testing failure-i göstərir, **debugging** isə onun səbəbini tapıb düzəldir. Tester \"Login 500 xətası verir\" deyir; developer koddakı səhvi tapıb düzəldir. Sonra tester re-test edir."
+          },
+          "id": "cmve390p3afafa815e196"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Testing — keyfiyyəti qiymətləndirmək, defect tapmaq və riski azaltmaq üçün proses; static və dynamic testi əhatə edir.",
+              "Testin məqsədi bug tapmaqla bitmir: o, məhsula inam yaradır və qərar üçün məlumat verir.",
+              "Verification: məhsulu düzgün qururuqmu? Validation: düzgün məhsulu qururuqmu?",
+              "Tester failure-i tapır və bildirir, developer debugging ilə səbəbi düzəldir."
+            ]
+          },
+          "id": "cmve390p34a23d3caf2f3"
+        },
+        {
+          "type": "QUIZ",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Hansı fəaliyyət static testing-dir?",
+                "options": [
+                  "Login formasını brauzerdə doldurmaq",
+                  "Tələb sənədini oxuyub ziddiyyət tapmaq",
+                  "API-yə sorğu göndərmək",
+                  "Yük testi aparmaq"
+                ],
+                "correctIndex": 1,
+                "explanation": "Static testing proqramı işə salmadan aparılır. Tələb sənədinin review-su buna nümunədir."
+              },
+              {
+                "id": "q2",
+                "text": "\"Düzgün məhsulu qururuqmu?\" sualı nəyə aiddir?",
+                "options": [
+                  "Verification",
+                  "Validation",
+                  "Debugging",
+                  "Deployment"
+                ],
+                "correctIndex": 1,
+                "explanation": "Validation məhsulun istifadəçinin real ehtiyacını ödəyib-ödəmədiyini yoxlayır."
+              },
+              {
+                "id": "q3",
+                "text": "Aşağıdakılardan hansı testin məqsədi DEYİL?",
+                "options": [
+                  "Defect-ləri tapmaq",
+                  "Keyfiyyətsizlik riskini azaltmaq",
+                  "Koddakı səhvi tapıb düzəltmək",
+                  "Maraqlı tərəflərə qərar üçün məlumat vermək"
+                ],
+                "correctIndex": 2,
+                "explanation": "Səhvi tapıb düzəltmək debugging-dir və developer fəaliyyətidir. Test failure-i üzə çıxarır."
+              },
+              {
+                "id": "q4",
+                "text": "Developer bug-ı düzəltdi. Tester eyni addımları təkrarlayıb bug-ın getdiyini yoxlayır. Bu nədir?",
+                "options": [
+                  "Regression testing",
+                  "Re-test",
+                  "Debugging",
+                  "Validation"
+                ],
+                "correctIndex": 1,
+                "explanation": "Re-test konkret bug-ın düzəldiyini yoxlayır. Regression isə dəyişikliyin başqa yerləri pozmadığını yoxlayır."
+              },
+              {
+                "id": "q5",
+                "text": "Tətbiq spesifikasiyaya tam uyğundur, amma istifadəçilər əsas funksiyanı tapa bilmir. Hansı yoxlama bunu üzə çıxarır?",
+                "options": [
+                  "Verification",
+                  "Validation",
+                  "Static analysis",
+                  "Re-test"
+                ],
+                "correctIndex": 1,
+                "explanation": "Spesifikasiyaya uyğunluq verification-dır. İstifadəçi ehtiyacının ödənmədiyini validation göstərir."
+              }
+            ]
+          },
+          "id": "cmve390p3b2f0bc7a283d"
+        }
+      ]
+    },
+    {
+      "slug": "qa-qc-testing-ferqi",
+      "title": "QA, QC və Testing fərqi",
+      "shortDescription": "QA prosesə, QC məhsula baxır; error, defect və failure zəncirini öyrən.",
+      "estimatedMinutes": 9,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "QA, QC və testing anlayışlarını fərqləndirə biləcəksən",
+              "Preventive və corrective yanaşmaya nümunə göstərə biləcəksən",
+              "Error, defect və failure zəncirini real nümunə ilə izah edə biləcəksən"
+            ]
+          },
+          "id": "cmve390p373b019b7ddb4"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Quality Assurance (QA)",
+                "az": "keyfiyyətin təminatı",
+                "definition": "Prosesləri qurub yaxşılaşdıraraq səhvlərin yaranmasının qarşısını alan yanaşma."
+              },
+              {
+                "term": "Quality Control (QC)",
+                "az": "keyfiyyətə nəzarət",
+                "definition": "Hazır məhsulu yoxlayıb defect-ləri tapan və düzəltdirən fəaliyyətlər."
+              },
+              {
+                "term": "Error (mistake)",
+                "az": "insan səhvi",
+                "definition": "İnsanın etdiyi yanlış hərəkət: səhv anlama, səhv yazma."
+              },
+              {
+                "term": "Defect",
+                "az": "qüsur",
+                "definition": "Error nəticəsində iş məhsulunda (kod, sənəd) yaranan qüsur. Gündəlik dildə bug."
+              },
+              {
+                "term": "Failure",
+                "az": "nasazlıq",
+                "definition": "Defect-li kod işləyəndə sistemin gözləniləndən fərqli davranması."
+              },
+              {
+                "term": "Root cause",
+                "az": "kök səbəb",
+                "definition": "Defect-in yaranmasının əsas səbəbi."
+              }
+            ]
+          },
+          "id": "cmve390p38dbf9179b812"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "QA prosesə, QC məhsula baxır",
+            "level": 2
+          },
+          "id": "cmve390p3eea8574233b5"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "**QA (Quality Assurance)** prosesyönümlüdür və **preventive**-dir: məqsəd səhvin yaranmasının qarşısını almaqdır. Yaxşı proses yaxşı məhsul verir. QA-ya bütün komanda cavabdehdir.\n\n**QC (Quality Control)** məhsulyönümlüdür və **corrective**-dir: hazır iş məhsulunu yoxlayır, defect tapır, düzəltdirir.\n\n**Testing** QC-nin əsas formasıdır. Test nəticələri həm QC-yə (bug-ları düzəltmək), həm də QA-ya (prosesi yaxşılaşdırmaq) məlumat verir.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p343450cb35b3b"
+        },
+        {
+          "type": "TABLE",
+          "title": "QA, QC və testing müqayisəsi",
+          "content": {
+            "headers": [
+              "",
+              "QA",
+              "QC",
+              "Testing"
+            ],
+            "rows": [
+              [
+                "Fokus",
+                "Proses",
+                "Məhsul",
+                "Məhsulun konkret yoxlanışı"
+              ],
+              [
+                "Yanaşma",
+                "Preventive (qabaqlayıcı)",
+                "Corrective (düzəldici)",
+                "QC-nin əsas fəaliyyəti"
+              ],
+              [
+                "Kim cavabdehdir",
+                "Bütün komanda",
+                "Əsasən test komandası",
+                "Tester və developer"
+              ],
+              [
+                "Nümunə",
+                "Code review qaydası tətbiq etmək",
+                "Release-dən əvvəl məhsulu yoxlamaq",
+                "Checkout ssenarisini icra etmək"
+              ]
+            ]
+          },
+          "id": "cmve390p3cc5f55ce4510"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "Nümunə: e-commerce saytında kupon bug-ları",
+          "content": {
+            "description": "Onlayn mağazada son 3 release-də endirim kuponu ilə bağlı bug-lar çıxır.\n- **QC/testing:** tester kupon ssenarilərini yoxlayır, 4 bug tapır, developer-lər düzəldir.\n- **QA:** komanda retrospektivdə səbəbi araşdırır: kupon qaydaları heç yerdə yazılmayıb. Qərar verilir ki, hər kupon tapşırığı üçün acceptance criteria yazılsın və tester tələbi kod yazılmamış review etsin.",
+            "takeaway": "QC bu release-in bug-larını tutur, QA isə növbəti release-də onların yaranmasının qarşısını alır."
+          },
+          "id": "cmve390p31eda299d8e57"
+        },
+        {
+          "type": "CATEGORIZE",
+          "content": {
+            "instructions": "Hər fəaliyyəti QA və ya QC kimi qruplaşdır.",
+            "categories": [
+              {
+                "id": "qa",
+                "label": "QA (proses, preventive)"
+              },
+              {
+                "id": "qc",
+                "label": "QC (məhsul, corrective)"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "Komanda üçün kod yazma standartı hazırlamaq",
+                "categoryId": "qa"
+              },
+              {
+                "id": "i2",
+                "text": "Yeni build-də ödəniş funksiyasını test etmək",
+                "categoryId": "qc"
+              },
+              {
+                "id": "i3",
+                "text": "Developer-lərə test dizaynı üzrə təlim keçmək",
+                "categoryId": "qa"
+              },
+              {
+                "id": "i4",
+                "text": "Tapılan bug-ı bug tracker-də qeyd etmək",
+                "categoryId": "qc"
+              },
+              {
+                "id": "i5",
+                "text": "Retrospektivdə defect-lərin kök səbəbini araşdırıb prosesi dəyişmək",
+                "categoryId": "qa"
+              },
+              {
+                "id": "i6",
+                "text": "Release-dən əvvəl smoke test icra etmək",
+                "categoryId": "qc"
+              }
+            ],
+            "explanation": "Prosesi dəyişən və səhvin qarşısını alan hər şey QA-dır. Konkret məhsulu yoxlayıb defect tapan hər şey QC-dir."
+          },
+          "id": "cmve390p3c8e9ec58ff90"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Error, defect və failure",
+            "level": 2
+          },
+          "id": "cmve390p3bebe3e9d1192"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "ISTQB üç anlayışı ayırır:\n1. İnsan **error** edir (səhv anlayır, səhv yazır).\n2. Error iş məhsulunda **defect** yaradır: kodda, tələbdə, test skriptində.\n3. Defect-li kod icra olunanda **failure** baş verir: sistem gözləniləndən fərqli davranır.\n\nHər defect failure yaratmır: həmin kod heç vaxt işləmirsə, defect gizli qalır. Failure-ə ətraf mühit də səbəb ola bilər (məsələn, radiasiya və ya elektromaqnit sahəsi aparatı təsir edəndə).",
+            "highlight": "normal"
+          },
+          "id": "cmve390p3177213abe010"
+        },
+        {
+          "type": "DIAGRAM",
+          "title": "Error → defect → failure zənciri",
+          "content": {
+            "code": "flowchart LR\n  E[\"Error: developer tələbi səhv anlayır\"] --> D[\"Defect: kodda age > 18 yazılır\"]\n  D --> F[\"Failure: 18 yaşlı müştəri qeydiyyatdan keçə bilmir\"]\n  F --> R[\"Root cause analizi: tələb aydın yazılmamışdı\"]",
+            "caption": "Error defect yaradır, defect icra olunanda failure-ə çevrilir."
+          },
+          "id": "cmve390p30df5646bbf86"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "Nümunə: kredit kartı müraciətində yaş yoxlaması",
+          "content": {
+            "description": "Tələb: \"18 yaş və yuxarı müştərilər kredit kartı üçün müraciət edə bilər.\" Developer şərti `age > 18` kimi yazır, `age >= 18` olmalı idi.\n- **Error:** developer-in diqqətsizliyi.\n- **Defect:** koddakı `>` operatoru.\n- **Failure:** düz 18 yaşı olan müştəri \"Yaşınız uyğun deyil\" mesajı alır.",
+            "takeaway": "Tester failure-i görür, bug report yazır; developer defect-i düzəldir; komanda error-un kök səbəbini aradan qaldırır."
+          },
+          "id": "cmve390p371fe856e4d51"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "QA prosesyönümlü və preventive-dir; bütün komanda ona cavabdehdir.",
+              "QC məhsulyönümlü və corrective-dir; testing onun əsas formasıdır.",
+              "İnsan error edir, error defect yaradır, defect icra olunanda failure baş verir.",
+              "Hər defect failure-ə çevrilmir; root cause analizi eyni səhvin təkrarlanmasının qarşısını alır."
+            ]
+          },
+          "id": "cmve390p3aeb8750f43a5"
+        },
+        {
+          "type": "QUIZ",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "QA-nın əsas fokusu nədir?",
+                "options": [
+                  "Hazır məhsulda bug tapmaq",
+                  "Prosesləri qurub yaxşılaşdıraraq səhvin qarşısını almaq",
+                  "Test case-ləri icra etmək",
+                  "Bug report yazmaq"
+                ],
+                "correctIndex": 1,
+                "explanation": "QA prosesyönümlü və preventive-dir. Bug tapmaq və test icrası QC fəaliyyətidir."
+              },
+              {
+                "id": "q2",
+                "text": "Testing ilə QC arasındakı əlaqə necədir?",
+                "options": [
+                  "Testing QC-nin əsas formasıdır",
+                  "Testing QA-nın sinonimidir",
+                  "Testing QC-dən tam asılı deyil",
+                  "QC testing-in bir hissəsidir"
+                ],
+                "correctIndex": 0,
+                "explanation": "ISTQB-yə görə testing QC-nin əsas formasıdır. QC-yə həmçinin simulyasiya, prototipləmə kimi üsullar daxildir."
+              },
+              {
+                "id": "q3",
+                "text": "Developer kodda `>=` əvəzinə `>` yazıb. Bu kod parçası nədir?",
+                "options": [
+                  "Error",
+                  "Defect",
+                  "Failure",
+                  "Root cause"
+                ],
+                "correctIndex": 1,
+                "explanation": "Kodda qalan qüsur defect-dir. Onu yazmaq hərəkəti error, istifadəçinin gördüyü səhv davranış failure-dir."
+              },
+              {
+                "id": "q4",
+                "text": "Hansı fikir doğrudur?",
+                "options": [
+                  "Hər defect mütləq failure yaradır",
+                  "Defect-li kod icra olunmasa, failure baş verməyə bilər",
+                  "Failure yalnız istifadəçi səhvindən yaranır",
+                  "Error və failure eyni şeydir"
+                ],
+                "correctIndex": 1,
+                "explanation": "Defect yalnız həmin kod icra olunanda və şərtlər uyğun gələndə failure-ə çevrilir."
+              },
+              {
+                "id": "q5",
+                "text": "Komanda hər user story üçün acceptance criteria yazılmasını məcburi edir. Bu nəyə nümunədir?",
+                "options": [
+                  "QC",
+                  "QA",
+                  "Debugging",
+                  "Failure"
+                ],
+                "correctIndex": 1,
+                "explanation": "Bu, prosesi dəyişib gələcək defect-lərin qarşısını alan preventive addımdır, yəni QA."
+              }
+            ]
+          },
+          "id": "cmve390p3f5e784c476b4"
+        }
+      ]
+    },
+    {
+      "slug": "testin-7-prinsipi",
+      "title": "Testin 7 prinsipi",
+      "shortDescription": "ISTQB v4.0-ın yeddi test prinsipi: hər biri real nümunə ilə.",
+      "estimatedMinutes": 12,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "ISTQB v4.0-ın yeddi test prinsipini sadalaya biləcəksən",
+              "Hər prinsipi real layihə situasiyasında tanıya biləcəksən",
+              "Prinsiplərə əsasən test qərarlarını əsaslandıra biləcəksən"
+            ]
+          },
+          "id": "cmve390p305afbe59a851"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Exhaustive testing",
+                "az": "tam test",
+                "definition": "Bütün mümkün giriş və şərt kombinasiyalarını yoxlamaq."
+              },
+              {
+                "term": "Defect clustering",
+                "az": "defect-lərin toplanması",
+                "definition": "Defect-lərin çoxunun az sayda modulda cəmləşməsi."
+              },
+              {
+                "term": "Pareto principle",
+                "az": "Pareto qaydası",
+                "definition": "Təxminən 80% nəticənin 20% səbəbdən gəlməsi."
+              },
+              {
+                "term": "Tests wear out",
+                "az": "testlər köhnəlir",
+                "definition": "Eyni testlər təkrarlandıqca yeni defect tapmaq qabiliyyətini itirir. Köhnə adı: pesticide paradox."
+              },
+              {
+                "term": "Absence-of-defects fallacy",
+                "az": "defect yoxluğu yanılgısı",
+                "definition": "Bug-sız məhsulun avtomatik uğurlu olacağı yanlış fikri."
+              }
+            ]
+          },
+          "id": "cmve390p30caf6a1337c6"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Prinsip 1–3: testin hüdudları",
+            "level": 2
+          },
+          "id": "cmve390p39edac0196c74"
+        },
+        {
+          "type": "STEPPER",
+          "title": "İlk üç prinsip",
+          "content": {
+            "steps": [
+              {
+                "title": "1. Testing defect-lərin varlığını göstərir, yoxluğunu yox",
+                "description": "Test bug olduğunu sübut edə bilər, olmadığını yox. 500 test keçdi deyə \"tətbiqdə bug yoxdur\" demək olmaz; yalnız qalan defect riskinin azaldığını demək olar."
+              },
+              {
+                "title": "2. Tam test mümkün deyil",
+                "description": "Bütün kombinasiyaları yoxlamaq mümkün deyil. Bunun əvəzinə risk, prioritet və test texnikaları ilə seçim edilir."
+              },
+              {
+                "title": "3. Erkən test vaxta və pula qənaət edir",
+                "description": "Tələbdə tapılan səhv bir sətir düzəlişdir. Eyni səhv production-da tapılarsa kod, test, release və müştəri itkisi deməkdir. Buna shift-left deyilir."
+              }
+            ]
+          },
+          "id": "cmve390p311fa23f8124e"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "Nümunə: niyə tam test mümkün deyil",
+          "content": {
+            "description": "Kart köçürmə formasında 3 sahə var: məbləğ (0.01–5000 AZN), valyuta (3 seçim) və təsvir (0–140 simvol). Yalnız qəpiklə məbləğ variantları 500 000-dir. 500 000 × 3 × 141 ≈ 211 milyon kombinasiya. Saniyədə bir test icra etsən belə, 6 ildən çox vaxt lazımdır.",
+            "takeaway": "Buna görə tester bütün dəyərləri deyil, sərhəd dəyərlərini və riskli halları seçir (0.01, 5000, 5000.01 və s.)."
+          },
+          "id": "cmve390p3fb0796dcd3a4"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Prinsip 4–5: defect-lər harada gizlənir",
+            "level": 2
+          },
+          "id": "cmve390p3e083935affef"
+        },
+        {
+          "type": "STEPPER",
+          "title": "Dördüncü və beşinci prinsiplər",
+          "content": {
+            "steps": [
+              {
+                "title": "4. Defect-lər toplanır",
+                "description": "Defect-lərin çoxu az sayda modulda olur. Məsələn, bank tətbiqində bug-ların 70%-i ödəniş və valyuta konvertasiyası modullarından gəlir. Test resursunu ora yönəlt."
+              },
+              {
+                "title": "5. Testlər köhnəlir",
+                "description": "Eyni regression testləri aylarla təkrarlansa, artıq yeni bug tapmır. Testləri və test data-nı vaxtaşırı yenilə, yeni ssenarilər əlavə et."
+              }
+            ]
+          },
+          "id": "cmve390p30c99b457ff6a"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Prinsip 6–7: kontekst və məqsəd",
+            "level": 2
+          },
+          "id": "cmve390p319d7f9b9d332"
+        },
+        {
+          "type": "STEPPER",
+          "title": "Altıncı və yeddinci prinsiplər",
+          "content": {
+            "steps": [
+              {
+                "title": "6. Test kontekstdən asılıdır",
+                "description": "Universal test yanaşması yoxdur. Xəstəxana sisteminin testi sənədləşmə və təhlükəsizliyə fokuslanır; startap-ın mobil oyunu sürətli kəşfiyyat testi ilə gedir."
+              },
+              {
+                "title": "7. Defect yoxluğu yanılgısı",
+                "description": "Bug-sız sistem istifadəçinin ehtiyacını ödəmirsə, uğursuzdur. Mükəmməl işləyən, amma heç kimin istifadə etmədiyi funksiya dəyər yaratmır. Buna görə validation da lazımdır."
+              }
+            ]
+          },
+          "id": "cmve390p30f2e593a7940"
+        },
+        {
+          "type": "CATEGORIZE",
+          "content": {
+            "instructions": "Hər situasiyanı onu ən yaxşı izah edən prinsipə yerləşdir.",
+            "categories": [
+              {
+                "id": "p1",
+                "label": "Varlığı göstərir, yoxluğu yox"
+              },
+              {
+                "id": "p2",
+                "label": "Tam test mümkün deyil"
+              },
+              {
+                "id": "p3",
+                "label": "Erkən test"
+              },
+              {
+                "id": "p4",
+                "label": "Defect-lər toplanır"
+              },
+              {
+                "id": "p5",
+                "label": "Testlər köhnəlir"
+              },
+              {
+                "id": "p6",
+                "label": "Kontekstdən asılıdır"
+              },
+              {
+                "id": "p7",
+                "label": "Defect yoxluğu yanılgısı"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "Menecer: \"Bütün testlər keçib, deməli bug yoxdur.\" Release-dən sonra müştərilər bug tapır.",
+                "categoryId": "p1"
+              },
+              {
+                "id": "i2",
+                "text": "Tester 10 000 mümkün promo kodun hamısını deyil, 12 təmsilçi halı seçir.",
+                "categoryId": "p2"
+              },
+              {
+                "id": "i3",
+                "text": "Tester tələb review-unda ziddiyyət tapır, kod hələ yazılmayıb.",
+                "categoryId": "p3"
+              },
+              {
+                "id": "i4",
+                "text": "Son 5 release-də bug-ların çoxu checkout modulundan çıxıb, komanda orada testi gücləndirir.",
+                "categoryId": "p4"
+              },
+              {
+                "id": "i5",
+                "text": "1 ildir dəyişməyən regression paketi son 6 ayda heç bir bug tapmayıb.",
+                "categoryId": "p5"
+              },
+              {
+                "id": "i6",
+                "text": "Aviasiya proqramı üçün test planı mobil oyun planından xeyli sərtdir.",
+                "categoryId": "p6"
+              },
+              {
+                "id": "i7",
+                "text": "Yeni tətbiq bug-sızdır, amma müştərilər onu çaşdırıcı tapıb köhnə versiyaya qayıdır.",
+                "categoryId": "p7"
+              }
+            ],
+            "explanation": "Prinsipləri əzbərləmək yox, situasiyada tanımaq vacibdir. ISTQB imtahanı da məhz belə suallar verir."
+          },
+          "id": "cmve390p3ffa3275db88f"
+        },
+        {
+          "type": "NOTE",
+          "title": "Ad dəyişikliyi",
+          "content": {
+            "variant": "tip",
+            "body": "ISTQB v4.0-da 5-ci prinsipin adı \"Pesticide paradox\"-dan \"Tests wear out\"-a dəyişdirilib. Köhnə materiallarda hər iki adla rastlaşa bilərsən."
+          },
+          "id": "cmve390p34ab51f4f9399"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Test defect-lərin varlığını göstərir, yoxluğunu sübut edə bilməz.",
+              "Tam test mümkün deyil, buna görə risk və texnikalarla seçim edilir; erkən test isə ən ucuzudur.",
+              "Defect-lər bir neçə modulda toplanır, eyni testlər isə zamanla köhnəlir.",
+              "Test kontekstdən asılıdır; bug-sız, amma lazımsız məhsul da uğursuzdur."
+            ]
+          },
+          "id": "cmve390p30cef05c30faf"
+        },
+        {
+          "type": "QUIZ",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Bütün 800 test case keçdi. Hansı nəticə ISTQB prinsiplərinə uyğundur?",
+                "options": [
+                  "Məhsulda heç bir defect yoxdur",
+                  "Qalan defect riski azalıb, amma defect-lərin yoxluğu sübut olunmayıb",
+                  "Test lazımsız idi",
+                  "Növbəti release-də test etmək lazım deyil"
+                ],
+                "correctIndex": 1,
+                "explanation": "1-ci prinsip: test defect-lərin varlığını göstərir, yoxluğunu sübut etmir."
+              },
+              {
+                "id": "q2",
+                "text": "Regression paketi aylardır eyni qalır və yeni bug tapmır. Hansı prinsip bunu izah edir?",
+                "options": [
+                  "Defect-lər toplanır",
+                  "Testlər köhnəlir",
+                  "Tam test mümkün deyil",
+                  "Kontekstdən asılıdır"
+                ],
+                "correctIndex": 1,
+                "explanation": "Tests wear out: eyni testlər zamanla yeni defect tapmaq qabiliyyətini itirir, onları yeniləmək lazımdır."
+              },
+              {
+                "id": "q3",
+                "text": "Defect-i aradan qaldırmaq hansı mərhələdə ən ucuzdur?",
+                "options": [
+                  "Production-da",
+                  "Sistem testində",
+                  "Tələblərin review-su zamanı",
+                  "Acceptance testində"
+                ],
+                "correctIndex": 2,
+                "explanation": "3-cü prinsip: nə qədər erkən tapılsa, düzəltmək bir o qədər ucuzdur."
+              },
+              {
+                "id": "q4",
+                "text": "Hansı fikir \"defect yoxluğu yanılgısı\"na nümunədir?",
+                "options": [
+                  "\"Bug yoxdursa, istifadəçilər mütləq məmnun olacaq\"",
+                  "\"Riskli modulları daha çox test etməliyik\"",
+                  "\"Bütün kombinasiyaları yoxlaya bilmərik\"",
+                  "\"Testlər yenilənməlidir\""
+                ],
+                "correctIndex": 0,
+                "explanation": "Bug-sız məhsul istifadəçinin ehtiyacını ödəmirsə, yenə uğursuzdur."
+              },
+              {
+                "id": "q5",
+                "text": "Test menecer əlavə test vaxtını ötən release-də ən çox bug çıxan ödəniş moduluna ayırır. Hansı prinsipə əsaslanır?",
+                "options": [
+                  "Defect-lər toplanır",
+                  "Erkən test",
+                  "Testlər köhnəlir",
+                  "Defect yoxluğu yanılgısı"
+                ],
+                "correctIndex": 0,
+                "explanation": "Defect clustering: defect-lərin çoxu az sayda modulda cəmləşir, test səyini ora yönəltmək səmərəlidir."
+              },
+              {
+                "id": "q6",
+                "text": "Niyə tibbi cihaz proqramı ilə əyləncə tətbiqi eyni qaydada test edilmir?",
+                "options": [
+                  "Tibbi proqramlarda bug olmur",
+                  "Test kontekstdən asılıdır",
+                  "Əyləncə tətbiqləri test edilmir",
+                  "Tam test yalnız tibbi proqramlarda mümkündür"
+                ],
+                "correctIndex": 1,
+                "explanation": "6-cı prinsip: risk, qanunvericilik və domen test yanaşmasını müəyyən edir."
+              }
+            ]
+          },
+          "id": "cmve390p3164332855bff"
+        }
+      ]
+    },
+    {
+      "slug": "qa-muhendisi-karyera",
+      "title": "QA mühəndisinin işi və karyera yolu",
+      "shortDescription": "QA mühəndisinin bir günü, manual və automation fərqi, junior-dan senior-a yol.",
+      "estimatedMinutes": 7,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "QA mühəndisinin gündəlik işlərini təsvir edə biləcəksən",
+              "Manual və automation testing-in harada daha faydalı olduğunu fərqləndirə biləcəksən",
+              "Junior, middle və senior səviyyələrin gözləntilərini izah edə biləcəksən"
+            ]
+          },
+          "id": "cmve390p33cfe6a60b2ad"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Manual testing",
+                "az": "əl ilə test",
+                "definition": "Testləri insanın özü icra etməsi."
+              },
+              {
+                "term": "Test automation",
+                "az": "test avtomatlaşdırması",
+                "definition": "Testlərin skript və alətlərlə icra olunması."
+              },
+              {
+                "term": "Exploratory testing",
+                "az": "kəşfiyyat testi",
+                "definition": "Öyrənmə, test dizaynı və icranın eyni vaxtda aparıldığı test."
+              },
+              {
+                "term": "SDET",
+                "az": "test üzrə proqram mühəndisi",
+                "definition": "Software Development Engineer in Test: kod yazmağa fokuslanan QA rolu."
+              }
+            ]
+          },
+          "id": "cmve390p3f19b0d628c83"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "QA mühəndisinin bir günü",
+            "level": 2
+          },
+          "id": "cmve390p38545da22a090"
+        },
+        {
+          "type": "STEPPER",
+          "title": "Tipik iş günü",
+          "content": {
+            "steps": [
+              {
+                "title": "09:30 Daily stand-up",
+                "description": "Dünən nə test etdin, bu gün nə edəcəksən, nə mane olur."
+              },
+              {
+                "title": "10:00 Tələb analizi",
+                "description": "Yeni user story-ni oxuyursan, aydın olmayan yerləri Product Owner-dən soruşursan."
+              },
+              {
+                "title": "11:00 Test dizaynı",
+                "description": "Pozitiv və neqativ ssenarilər üçün test case və test data hazırlayırsan."
+              },
+              {
+                "title": "13:30 Test icrası",
+                "description": "Yeni build-də testləri icra edirsən, bug tapanda bug report yazırsan."
+              },
+              {
+                "title": "16:00 Re-test və regression",
+                "description": "Düzəldilən bug-ları yoxlayır, köhnə funksiyaların pozulmadığına baxırsan."
+              }
+            ]
+          },
+          "id": "cmve390p3f535ef2ea689"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Manual və automation",
+            "level": 2
+          },
+          "id": "cmve390p38ce724228457"
+        },
+        {
+          "type": "TABLE",
+          "title": "Manual testing və automation müqayisəsi",
+          "content": {
+            "headers": [
+              "",
+              "Manual testing",
+              "Test automation"
+            ],
+            "rows": [
+              [
+                "Ən yaxşı harada işləyir",
+                "Yeni funksiya, exploratory, usability testi",
+                "Təkrarlanan regression, API, yük testləri"
+              ],
+              [
+                "Tələb olunan bacarıq",
+                "Analitik düşüncə, domen bilgisi, test texnikaları",
+                "Bunlara əlavə proqramlaşdırma (JavaScript, Java, Python)"
+              ],
+              [
+                "Alətlər",
+                "Jira, TestRail, Postman, DevTools",
+                "Playwright, Cypress, Selenium, CI/CD"
+              ]
+            ]
+          },
+          "id": "cmve390p3830d23e659d9"
+        },
+        {
+          "type": "NOTE",
+          "title": "Yadda saxla",
+          "content": {
+            "variant": "remember",
+            "body": "Automation manual testi əvəz etmir. Skript yalnız ona yazdığını yoxlayır; yeni bug-ları çox vaxt insan düşüncəsi tapır. Yaxşı automation mühəndisi əvvəlcə yaxşı tester olur."
+          },
+          "id": "cmve390p3be98122c49d0"
+        },
+        {
+          "type": "CATEGORIZE",
+          "content": {
+            "instructions": "Hər tapşırığı ilk növbədə harada həll etmək daha səmərəlidir?",
+            "categories": [
+              {
+                "id": "manual",
+                "label": "Manual testing"
+              },
+              {
+                "id": "auto",
+                "label": "Automation"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "Yeni dizaynlı onboarding ekranının rahatlığını qiymətləndirmək",
+                "categoryId": "manual"
+              },
+              {
+                "id": "i2",
+                "text": "Hər gecə 300 login və ödəniş ssenarisini təkrarlamaq",
+                "categoryId": "auto"
+              },
+              {
+                "id": "i3",
+                "text": "Hələ tələbləri tam yazılmamış funksiyanı kəşf etmək",
+                "categoryId": "manual"
+              },
+              {
+                "id": "i4",
+                "text": "API-nin 50 müxtəlif data ilə eyni cavab strukturu qaytardığını yoxlamaq",
+                "categoryId": "auto"
+              }
+            ],
+            "explanation": "Təkrarlanan və stabil yoxlamalar automation-a, insan mühakiməsi tələb edən yoxlamalar manual testə uyğundur."
+          },
+          "id": "cmve390p34b3c53d55ff3"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Soft skills",
+            "level": 2
+          },
+          "id": "cmve390p3707aa1b01d48"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Texniki bilik qədər vacib olan bacarıqlar:\n- **Ünsiyyət:** bug-ı ittiham etmədən, aydın təsvir etmək.\n- **Maraq:** \"bəs belə etsəm nə olar?\" sualını vermək.\n- **Diqqət:** kiçik uyğunsuzluğu görmək.\n- **İstifadəçi empatiyası:** məhsula müştərinin gözü ilə baxmaq.\n- **Prioritet qoymaq:** vaxt azdırsa, ən riskli hissəni birinci test etmək.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p347baf78c8119"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Karyera yolu",
+            "level": 2
+          },
+          "id": "cmve390p3aed37700ba9e"
+        },
+        {
+          "type": "TABLE",
+          "title": "QA karyera səviyyələri",
+          "content": {
+            "headers": [
+              "Səviyyə",
+              "Təxmini təcrübə",
+              "Gözlənti"
+            ],
+            "rows": [
+              [
+                "Junior QA",
+                "0–1 il",
+                "Hazır test case-ləri icra edir, bug report yazır, yönləndirmə ilə işləyir"
+              ],
+              [
+                "Middle QA",
+                "1–3 il",
+                "Funksiyanı müstəqil test edir, test dizaynı edir, automation-a başlayır"
+              ],
+              [
+                "Senior QA",
+                "3–5+ il",
+                "Test strategiyası qurur, riskləri qiymətləndirir, junior-lara mentorluq edir"
+              ],
+              [
+                "QA Lead / Manager",
+                "5+ il",
+                "Test prosesini və komandanı idarə edir, keyfiyyət hədəflərini müəyyən edir"
+              ]
+            ]
+          },
+          "id": "cmve390p320179f0fcb57"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Senior-dan sonra yol şaxələnir: **SDET / Automation Architect** (texniki), **QA Manager** (idarəetmə) və ya Performance, Security testing kimi ixtisaslaşma. ISTQB Foundation sertifikatı bu yolun ilk rəsmi addımıdır.",
+            "highlight": "info"
+          },
+          "id": "cmve390p36d5370f3aedb"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "QA mühəndisi tələbi analiz edir, test dizayn edir, icra edir, bug bildirir və re-test edir.",
+              "Manual test yeni və insan mühakiməsi tələb edən işlərdə, automation təkrarlanan yoxlamalarda güclüdür.",
+              "Ünsiyyət, maraq və diqqət texniki bilik qədər vacibdir.",
+              "Yol junior-dan senior-a, oradan texniki, idarəetmə və ya ixtisaslaşma istiqamətinə gedir."
+            ]
+          },
+          "id": "cmve390p3d7467896e7b8"
+        },
+        {
+          "type": "QUIZ",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Hansı tapşırıq automation üçün daha uyğundur?",
+                "options": [
+                  "Yeni ekranın istifadə rahatlığını qiymətləndirmək",
+                  "Hər release-də eyni 200 regression testini təkrarlamaq",
+                  "Tələbləri tam olmayan funksiyanı kəşf etmək",
+                  "Dizaynerlə rəng uyğunluğunu müzakirə etmək"
+                ],
+                "correctIndex": 1,
+                "explanation": "Təkrarlanan və stabil testlər automation-a ən çox fayda verir."
+              },
+              {
+                "id": "q2",
+                "text": "Automation manual testi tam əvəz edə bilərmi?",
+                "options": [
+                  "Bəli, skriptlər hər şeyi tapır",
+                  "Xeyr, skript yalnız ona yazılanı yoxlayır, yeni bug-ları çox vaxt insan tapır",
+                  "Bəli, amma yalnız mobil tətbiqlərdə",
+                  "Xeyr, çünki automation qanunla qadağandır"
+                ],
+                "correctIndex": 1,
+                "explanation": "Exploratory və usability testi insan düşüncəsi tələb edir."
+              },
+              {
+                "id": "q3",
+                "text": "Developer-in bug-ını bildirərkən ən yaxşı yanaşma hansıdır?",
+                "options": [
+                  "\"Yenə səhv kod yazmısan\"",
+                  "Addımları, gözlənilən və faktiki nəticəni neytral dillə yazmaq",
+                  "Bug-ı yalnız şifahi demək",
+                  "Bug-ı birbaşa menecerə şikayət etmək"
+                ],
+                "correctIndex": 1,
+                "explanation": "Bug report problemi təsvir edir, insanı ittiham etmir. Bu, komandada etimad yaradır."
+              },
+              {
+                "id": "q4",
+                "text": "Test strategiyası qurmaq və junior-lara mentorluq etmək adətən hansı səviyyənin gözləntisidir?",
+                "options": [
+                  "Junior QA",
+                  "Middle QA",
+                  "Senior QA",
+                  "Təcrübəçi"
+                ],
+                "correctIndex": 2,
+                "explanation": "Senior QA strateji qərarlar verir və komandanı inkişaf etdirir."
+              }
+            ]
+          },
+          "id": "cmve390p33d4b643211c6"
+        }
+      ]
+    }
+  ]
+}

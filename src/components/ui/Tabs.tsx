@@ -1,37 +1,37 @@
 "use client";
 
-import * as RadixTabs from "@radix-ui/react-tabs";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-interface TabItem {
-  value: string;
-  label: string;
-  icon?: ReactNode;
-}
+interface Item { value: string; label: string; icon?: ReactNode; count?: number }
 
-interface TabsProps {
-  value: string;
-  onValueChange: (value: string) => void;
-  items: TabItem[];
-  className?: string;
-}
-
-export function Tabs({ value, onValueChange, items, className }: TabsProps) {
+/** Segmented control. Content switching is done by the caller. */
+export function Tabs({
+  value, onValueChange, items, className, label,
+}: { value: string; onValueChange: (v: string) => void; items: Item[]; className?: string; label?: string }) {
   return (
-    <RadixTabs.Root value={value} onValueChange={onValueChange}>
-      <RadixTabs.List className={cn("flex gap-1 overflow-x-auto rounded-xl bg-surface-2 p-1", className)}>
-        {items.map((item) => (
-          <RadixTabs.Trigger
+    <div role="tablist" aria-label={label} className={cn("inline-flex max-w-full gap-1 overflow-x-auto rounded-lg bg-surface-2 p-1", className)}>
+      {items.map((item) => {
+        const active = item.value === value;
+        return (
+          <button
             key={item.value}
-            value={item.value}
-            className="flex shrink-0 items-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-medium text-gray-500 transition-all data-[state=active]:bg-white data-[state=active]:text-primary data-[state=active]:shadow-card"
+            role="tab"
+            aria-selected={active}
+            onClick={() => onValueChange(item.value)}
+            className={cn(
+              "flex h-9 shrink-0 items-center gap-1.5 rounded-md px-3.5 text-sm font-medium transition-colors",
+              active ? "bg-surface text-ink shadow-pop" : "text-muted hover:text-ink"
+            )}
           >
             {item.icon}
             {item.label}
-          </RadixTabs.Trigger>
-        ))}
-      </RadixTabs.List>
-    </RadixTabs.Root>
+            {item.count != null && (
+              <span className={cn("rounded-full px-1.5 text-xs", active ? "bg-iris-soft text-iris-ink" : "bg-surface-3")}>{item.count}</span>
+            )}
+          </button>
+        );
+      })}
+    </div>
   );
 }

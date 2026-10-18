@@ -1,0 +1,1408 @@
+{
+  "id": "cmn0nois30012cmyrrzq5zxsm",
+  "key": "proses",
+  "order": 2,
+  "title": "Proses: SDLC, modellər və STLC",
+  "description": "Proqramın həyat dövrü, Waterfall, V-Model və Agile yanaşmaları, testin öz həyat dövrü.",
+  "icon": "Workflow",
+  "color": "#00B8F0",
+  "lessons": [
+    {
+      "id": "cmn0npqv70014cmyrf9iasaqv",
+      "slug": "softwaredevelopment-life-cycle-sdlc",
+      "title": "SDLC (proqram təminatının həyat dövrü)",
+      "shortDescription": "Proqramın ideyadan istifadəyə qədər keçdiyi mərhələlər və QA-nın hər mərhələdəki rolu.",
+      "estimatedMinutes": 10,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "SDLC mərhələlərini düzgün ardıcıllıqla sadalaya biləcəksən",
+              "Hər mərhələdə QA-nın nə etdiyini izah edə biləcəksən",
+              "SDLC-dəki əsas rolları fərqləndirə biləcəksən",
+              "Shift-left yanaşmasının faydasını əsaslandıra biləcəksən"
+            ]
+          },
+          "id": "cmve390p488071e1925cb"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "SDLC",
+                "az": "proqram təminatının həyat dövrü",
+                "definition": "Software Development Life Cycle: proqramın ideyadan istifadədən çıxana qədər keçdiyi mərhələlər."
+              },
+              {
+                "term": "Requirement",
+                "az": "tələb",
+                "definition": "Sistemin nə etməli olduğunu təsvir edən ifadə."
+              },
+              {
+                "term": "Deployment",
+                "az": "yerləşdirmə",
+                "definition": "Hazır versiyanın istifadəçilərin işlətdiyi production mühitinə çıxarılması."
+              },
+              {
+                "term": "Maintenance",
+                "az": "texniki dəstək",
+                "definition": "Release-dən sonra bug düzəlişləri, yeniləmələr və təkmilləşdirmələr."
+              },
+              {
+                "term": "Shift-left",
+                "az": "sola sürüşdürmə",
+                "definition": "Test fəaliyyətlərini SDLC-nin daha erkən mərhələlərinə çəkmək."
+              }
+            ]
+          },
+          "id": "cmve390p4c6c360973e72"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "SDLC nədir?",
+            "level": 2
+          },
+          "id": "cmve390p493da4a5a6ead"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "SDLC proqramı planlı və idarə olunan şəkildə yaratmaq üçün çərçivədir. O, \"nə vaxt nə edirik və kim cavabdehdir?\" sualına cavab verir.\n\nEv tikintisini xatırla: əvvəl ehtiyac müəyyən edilir, sonra layihə çəkilir, tikilir, yoxlanılır, sakinlər köçür və ev illərlə təmir olunur. Proqram da oxşar yol keçir.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p489b7ced660c1"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "SDLC mərhələləri və QA-nın rolu",
+            "level": 2
+          },
+          "id": "cmve390p41f4f97c537b7"
+        },
+        {
+          "type": "STEPPER",
+          "title": "Yeddi mərhələ",
+          "content": {
+            "steps": [
+              {
+                "title": "1. Planning (planlama)",
+                "description": "Layihənin məqsədi, büdcəsi, müddəti və riskləri müəyyən edilir. QA: test üçün vaxt və resurs planlanmasında iştirak edir."
+              },
+              {
+                "title": "2. Requirement analysis (tələblərin analizi)",
+                "description": "Biznes nə istədiyini bildirir, BA tələbləri yazır. QA: tələbləri review edir, ziddiyyət və boşluqları tapır."
+              },
+              {
+                "title": "3. Design (dizayn)",
+                "description": "Arxitektura, verilənlər bazası və UI/UX dizaynı hazırlanır. QA: dizaynı tələblə tutuşdurur, test edilə bilənliyi yoxlayır."
+              },
+              {
+                "title": "4. Development (kodlaşdırma)",
+                "description": "Developer-lər kodu yazır və component testlərini edir. QA: test case və test data hazırlayır."
+              },
+              {
+                "title": "5. Testing",
+                "description": "Hazır funksiyalar tələblərə qarşı yoxlanır, bug-lar qeyd edilir və düzəldilir. QA: testləri icra edir, re-test və regression edir."
+              },
+              {
+                "title": "6. Deployment (yerləşdirmə)",
+                "description": "Versiya production-a çıxarılır, bəzən əvvəl kiçik istifadəçi qrupuna. QA: production-da smoke test edir."
+              },
+              {
+                "title": "7. Maintenance (dəstək)",
+                "description": "İstifadəçilərin bildirdiyi bug-lar düzəldilir, yeni funksiyalar əlavə edilir. QA: hər dəyişiklikdən sonra regression edir."
+              }
+            ]
+          },
+          "id": "cmve390p497aa1047d853"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "Nümunə: QR ödəniş funksiyası",
+          "content": {
+            "description": "Bank mobil tətbiqinə \"QR ilə ödəniş\" əlavə olunur.\n- Planlama: 3 aylıq hədəf, risk — ödəniş təhlükəsizliyi.\n- Tələb: \"İstifadəçi QR-ı skan edib 1–1000 AZN ödəyə bilər.\"\n- Dizayn: kamera ekranı, təsdiq səhifəsi.\n- Development: kamera modulu və ödəniş API-si.\n- Testing: düzgün, korlanmış, vaxtı keçmiş QR; limitdən artıq məbləğ.\n- Deployment: əvvəl işçilərə, sonra bütün müştərilərə.\n- Maintenance: bəzi Android cihazlarda kamera açılmır, düzəliş buraxılır.",
+            "takeaway": "QA hər mərhələdə iştirak edir, təkcə \"Testing\" mərhələsində deyil."
+          },
+          "id": "cmve390p45f296c6ec862"
+        },
+        {
+          "type": "ORDERING",
+          "content": {
+            "instructions": "SDLC mərhələlərini düzgün ardıcıllıqla düz.",
+            "items": [
+              "Planning",
+              "Requirement analysis",
+              "Design",
+              "Development",
+              "Testing",
+              "Deployment",
+              "Maintenance"
+            ],
+            "explanation": "Əvvəl nə və niyə qurulacağı müəyyən edilir, sonra necə qurulacağı, sonra qurulur, yoxlanılır, istifadəyə verilir və dəstəklənir."
+          },
+          "id": "cmve390p4872bfd275924"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "SDLC-də rollar",
+            "level": 2
+          },
+          "id": "cmve390p47a2ec8761f2a"
+        },
+        {
+          "type": "TABLE",
+          "title": "SDLC rolları və məsuliyyətləri",
+          "content": {
+            "headers": [
+              "Rol",
+              "Əsas məsuliyyət"
+            ],
+            "rows": [
+              [
+                "Product Owner",
+                "Məhsulun nə olacağına qərar verir, prioritetləri müəyyən edir"
+              ],
+              [
+                "Business Analyst",
+                "Biznes ehtiyacını aydın, test edilə bilən tələblərə çevirir"
+              ],
+              [
+                "UI/UX Designer",
+                "İstifadəçi interfeysini və təcrübəsini dizayn edir"
+              ],
+              [
+                "Developer",
+                "Kodu yazır və component testlərini edir"
+              ],
+              [
+                "QA Engineer",
+                "Keyfiyyəti qiymətləndirir: tələb review-u, test dizaynı, icrası, bug report"
+              ],
+              [
+                "DevOps Engineer",
+                "Build, deployment və infrastrukturu avtomatlaşdırır"
+              ]
+            ]
+          },
+          "id": "cmve390p4b0507b95dbd9"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Shift-left: testi sola çək",
+            "level": 2
+          },
+          "id": "cmve390p4f1c53a7c87eb"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Mərhələləri soldan sağa yazsaq, ənənəvi yanaşmada test sağda, sona yaxın olur. **Shift-left** test fəaliyyətlərini sola, erkən mərhələlərə çəkir: tester tələbi review edir, developer ilə acceptance criteria-nı müzakirə edir, kod yazılmamış test case hazırlayır.\n\nBu, 3-cü test prinsipinin (\"erkən test vaxta və pula qənaət edir\") praktik tətbiqidir.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p41b02e1ac80a5"
+        },
+        {
+          "type": "NOTE",
+          "title": "Gecikmiş defect-in qiyməti",
+          "content": {
+            "variant": "important",
+            "body": "Tələbdə tapılan səhvi düzəltmək bir sənəd redaktəsidir. Eyni səhv production-da tapılarsa, kod dəyişikliyi, yenidən test, yeni release və müştəri şikayətləri deməkdir. Səhv nə qədər gec tapılsa, bir o qədər baha başa gəlir."
+          },
+          "id": "cmve390p45ceb4843eb35"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Sürətli yoxlama",
+          "content": {
+            "questions": [
+              {
+                "id": "mq1",
+                "text": "Tester tələb review-unda \"limit 1000 AZN\" və \"limit 500 AZN\" ziddiyyətini tapır. Bu hansı SDLC mərhələsidir?",
+                "options": [
+                  "Requirement analysis",
+                  "Testing",
+                  "Deployment",
+                  "Maintenance"
+                ],
+                "correctIndex": 0,
+                "explanation": "Tələblərin review-u requirement analysis mərhələsində aparılır və shift-left-in tipik nümunəsidir."
+              }
+            ]
+          },
+          "id": "cmve390p45d6542ca436c"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "SDLC: planning, requirement analysis, design, development, testing, deployment, maintenance.",
+              "QA hər mərhələdə iştirak edir: tələb review-undan production smoke testinə qədər.",
+              "Hər rolun aydın məsuliyyəti var; keyfiyyət isə bütün komandanın işidir.",
+              "Shift-left defect-ləri erkən, ucuz mərhələdə tapmağa imkan verir."
+            ]
+          },
+          "id": "cmve390p4e584bdbefc41"
+        },
+        {
+          "type": "QUIZ",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "SDLC-də hansı mərhələ design-dan dərhal sonra gəlir?",
+                "options": [
+                  "Requirement analysis",
+                  "Development",
+                  "Deployment",
+                  "Maintenance"
+                ],
+                "correctIndex": 1,
+                "explanation": "Dizayn hazır olandan sonra developer-lər kodu yazır."
+              },
+              {
+                "id": "q2",
+                "text": "Requirement analysis mərhələsində QA nə edir?",
+                "options": [
+                  "Production-da smoke test",
+                  "Tələbləri review edib ziddiyyət və boşluqları tapır",
+                  "Kodu yazır",
+                  "Serverləri qurur"
+                ],
+                "correctIndex": 1,
+                "explanation": "Bu mərhələdə QA static testing aparır: tələbləri oxuyub test edilə bilənliyi yoxlayır."
+              },
+              {
+                "id": "q3",
+                "text": "Release-dən sonra müştərilərin bildirdiyi bug-ların düzəldilməsi hansı mərhələdir?",
+                "options": [
+                  "Testing",
+                  "Deployment",
+                  "Maintenance",
+                  "Design"
+                ],
+                "correctIndex": 2,
+                "explanation": "Maintenance release-dən sonrakı düzəliş və təkmilləşdirmələri əhatə edir."
+              },
+              {
+                "id": "q4",
+                "text": "Shift-left nə deməkdir?",
+                "options": [
+                  "Testi yalnız release-dən sonra etmək",
+                  "Test fəaliyyətlərini SDLC-nin daha erkən mərhələlərinə çəkmək",
+                  "Developer-ləri test komandasına köçürmək",
+                  "Testləri sol əllə icra etmək"
+                ],
+                "correctIndex": 1,
+                "explanation": "Shift-left testi erkənə çəkir ki, defect-lər ucuz mərhələdə tapılsın."
+              },
+              {
+                "id": "q5",
+                "text": "Biznes ehtiyacını aydın, test edilə bilən tələblərə kim çevirir?",
+                "options": [
+                  "DevOps Engineer",
+                  "Business Analyst",
+                  "UI/UX Designer",
+                  "QA Engineer"
+                ],
+                "correctIndex": 1,
+                "explanation": "Business Analyst biznes ilə komanda arasında körpüdür və tələbləri formalaşdırır."
+              }
+            ]
+          },
+          "id": "cmve390p454aee55eaa16"
+        }
+      ]
+    },
+    {
+      "id": "cmn4ho3wc001cxbrdjn28c2rf",
+      "slug": "software-testing-methodologies",
+      "title": "Development modelləri: Waterfall, V-Model, Iterative",
+      "shortDescription": "Ardıcıl və iterativ modellər, hər birində testin yeri və hansı layihəyə uyğun olduğu.",
+      "estimatedMinutes": 11,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Waterfall, V-Model və iterativ-inkremental modelləri fərqləndirə biləcəksən",
+              "V-Model-də development və test səviyyələrini uyğunlaşdıra biləcəksən",
+              "Layihənin xüsusiyyətinə görə uyğun modeli seçə biləcəksən"
+            ]
+          },
+          "id": "cmve390p4236a2c8017ce"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "SDLC model",
+                "az": "inkişaf modeli",
+                "definition": "SDLC mərhələlərinin necə və hansı ardıcıllıqla aparıldığını təsvir edən yanaşma."
+              },
+              {
+                "term": "Sequential model",
+                "az": "ardıcıl model",
+                "definition": "Mərhələlərin bir-birinin ardınca, bir dəfə keçildiyi model."
+              },
+              {
+                "term": "Waterfall",
+                "az": "şəlalə modeli",
+                "definition": "Hər mərhələ bitmədən növbəti başlamayan klassik ardıcıl model."
+              },
+              {
+                "term": "V-Model",
+                "az": "V modeli",
+                "definition": "Hər development mərhələsinə uyğun test səviyyəsi qarşı qoyulan ardıcıl model."
+              },
+              {
+                "term": "Iterative development",
+                "az": "iterativ inkişaf",
+                "definition": "Sistemin təkrarlanan dövrlərlə, hər dəfə təkmilləşdirilərək qurulması."
+              },
+              {
+                "term": "Incremental development",
+                "az": "inkremental inkişaf",
+                "definition": "Sistemin hissə-hissə qurulması: hər hissə yeni funksiya əlavə edir."
+              }
+            ]
+          },
+          "id": "cmve390p4b3496923fe57"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Waterfall",
+            "level": 2
+          },
+          "id": "cmve390p4b19579775f20"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Waterfall-da mərhələlər şəlalə kimi aşağı axır: requirements → design → development → testing → deployment. Bir mərhələ bitmədən növbəti başlamır və geri qayıtmaq bahadır.\n\nDynamic testing kod tam yazılandan sonra başlayır. Buna görə tələbdəki səhv çox gec, testing mərhələsində üzə çıxa bilər. Bu riski azaltmaq üçün tester erkən mərhələdə tələb və dizayn review-unda iştirak etməlidir.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p4f7161009d7b3"
+        },
+        {
+          "type": "NOTE",
+          "title": "Waterfall nə vaxt uyğundur",
+          "content": {
+            "variant": "tip",
+            "body": "Tələblər əvvəlcədən dəqiq məlum və stabil olanda: məsələn, dövlət tenderi ilə sabit spesifikasiyalı sistem və ya köhnə sistemin eyni funksiyalarla köçürülməsi."
+          },
+          "id": "cmve390p479467c1cfc7b"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "V-Model",
+            "level": 2
+          },
+          "id": "cmve390p4f8cbf7f9c950"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "V-Model Waterfall-un təkmil formasıdır. V-nin sol qolu development mərhələləridir, sağ qolu isə onlara uyğun **test səviyyələri**. Hər sol mərhələdə uyğun testin planı və dizaynı dərhal hazırlanır, icra isə kod yazılandan sonra olur.\n\nBu, testin erkən planlanmasını təmin edir, amma model yenə ardıcıldır: dəyişiklik bahadır.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p419994001f41d"
+        },
+        {
+          "type": "DIAGRAM",
+          "title": "V-Model: development və test səviyyələri",
+          "content": {
+            "code": "flowchart LR\n  R[\"Requirements\"] -.-> AT[\"Acceptance testing\"]\n  SD[\"System design\"] -.-> ST[\"System testing\"]\n  AD[\"Architecture design\"] -.-> IT[\"Integration testing\"]\n  MD[\"Module design\"] -.-> CT[\"Component testing\"]\n  R --> SD --> AD --> MD --> C[\"Coding\"]\n  C --> CT --> IT --> ST --> AT",
+            "caption": "Sol qolda hər development mərhələsi, sağda ona uyğun test səviyyəsi. Qırıq xətt: testin əsası həmin mərhələnin sənədidir."
+          },
+          "id": "cmve390p4a6efb880113b"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Iterative və incremental modellər",
+            "level": 2
+          },
+          "id": "cmve390p4c4351b55af09"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Burada sistem bir dəfəyə deyil, dövrlərlə qurulur. Hər iterasiyada planlama, dizayn, kod və test aparılır və işləyən bir hissə ortaya çıxır.\n- **Incremental:** hər dəfə yeni hissə əlavə olunur.\n- **Iterative:** mövcud hissə hər dövrdə təkmilləşdirilir.\n\nPraktikada ikisi birlikdə işlədilir. Spiral və prototyping bu ailənin nümunələridir; Agile də bu prinsip üzərində qurulub (növbəti dərs).",
+            "highlight": "normal"
+          },
+          "id": "cmve390p4475b58a3fbf5"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "Nümunə: onlayn ərzaq mağazası",
+          "content": {
+            "description": "Bakıda yeni onlayn ərzaq mağazası açılır.\n- Iterasiya 1: kataloq və axtarış — test edilir, real istifadəçilərə göstərilir.\n- Iterasiya 2: səbət və qeydiyyat əlavə olunur; birinci hissə üçün regression edilir.\n- Iterasiya 3: kartla ödəniş və çatdırılma vaxtı seçimi.\nHər iterasiyadan sonra istifadəçi rəyi növbəti planı dəyişir.",
+            "takeaway": "Iterativ modeldə test hər dövrdə təkrarlanır, regression testing isə getdikcə vacibləşir."
+          },
+          "id": "cmve390p49ddd97886875"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Modellərin müqayisəsi",
+            "level": 2
+          },
+          "id": "cmve390p4de6e4e7405b8"
+        },
+        {
+          "type": "TABLE",
+          "title": "Development modellərinin müqayisəsi",
+          "content": {
+            "headers": [
+              "",
+              "Waterfall",
+              "V-Model",
+              "Iterative / Incremental"
+            ],
+            "rows": [
+              [
+                "Axın",
+                "Ardıcıl, bir dəfə",
+                "Ardıcıl, hər mərhələyə test səviyyəsi",
+                "Təkrarlanan dövrlər"
+              ],
+              [
+                "Dynamic test nə vaxt",
+                "Kod tam bitəndən sonra",
+                "Kod bitəndən sonra, amma erkən planlanır",
+                "Hər iterasiyada"
+              ],
+              [
+                "Dəyişikliyə uyğunluq",
+                "Aşağı",
+                "Aşağı",
+                "Yüksək"
+              ],
+              [
+                "Üstünlük",
+                "Sadə, aydın sənədləşmə",
+                "Testin erkən planlanması, izlənə bilənlik",
+                "Erkən rəy, risk azalır"
+              ],
+              [
+                "Çətinlik",
+                "Səhvlər gec tapılır",
+                "Sərt struktur",
+                "Daha çox koordinasiya və regression"
+              ],
+              [
+                "Uyğun layihə",
+                "Stabil tələblər",
+                "Təhlükəsizlik kritik sistemlər (tibb, aviasiya)",
+                "Tələblərin dəyişdiyi məhsullar"
+              ]
+            ]
+          },
+          "id": "cmve390p4403f3b0f5bb4"
+        },
+        {
+          "type": "CATEGORIZE",
+          "content": {
+            "instructions": "Hər layihə üçün ən uyğun modeli seç.",
+            "categories": [
+              {
+                "id": "wf",
+                "label": "Waterfall"
+              },
+              {
+                "id": "v",
+                "label": "V-Model"
+              },
+              {
+                "id": "it",
+                "label": "Iterative / Incremental"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "Köhnə mühasibat sistemini eyni funksiyalarla yeni serverə köçürmək",
+                "categoryId": "wf"
+              },
+              {
+                "id": "i2",
+                "text": "Xəstəxana üçün infuziya nasosunun proqramı, hər tələb sənədləşdirilməli və test edilməlidir",
+                "categoryId": "v"
+              },
+              {
+                "id": "i3",
+                "text": "Bazarı yoxlamaq üçün yeni fintech tətbiqi, istifadəçi rəyinə görə dəyişəcək",
+                "categoryId": "it"
+              },
+              {
+                "id": "i4",
+                "text": "Təyyarənin naviqasiya modulu, ciddi sertifikasiya tələbləri ilə",
+                "categoryId": "v"
+              },
+              {
+                "id": "i5",
+                "text": "E-commerce saytı, hər ay yeni funksiya buraxılır",
+                "categoryId": "it"
+              }
+            ],
+            "explanation": "Stabil tələb → Waterfall. Yüksək risk və sərt sənədləşmə → V-Model. Dəyişən tələb və erkən rəy ehtiyacı → iterativ."
+          },
+          "id": "cmve390p4eaa5a300f489"
+        },
+        {
+          "type": "NOTE",
+          "title": "Bütün modellər üçün yaxşı təcrübə",
+          "content": {
+            "variant": "remember",
+            "body": "Hansı model seçilsə də, ISTQB-yə görə hər development fəaliyyətinə uyğun test fəaliyyəti olmalı, test analizi və dizaynı uyğun development mərhələsində başlamalı, tester-lər sənəd review-unda erkən iştirak etməlidir."
+          },
+          "id": "cmve390p4b93314fe2f97"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Waterfall ardıcıldır; dynamic test sonda olduğuna görə səhvlər gec tapıla bilər.",
+              "V-Model hər development mərhələsinə test səviyyəsi qarşı qoyur: component, integration, system, acceptance.",
+              "Iterative və incremental modellər sistemi dövrlərlə qurur və hər dövrdə test edir.",
+              "Model layihənin riskinə və tələblərin stabilliyinə görə seçilir."
+            ]
+          },
+          "id": "cmve390p4fc329a56cd1c"
+        },
+        {
+          "type": "QUIZ",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "V-Model-də \"Requirements\" mərhələsinə hansı test səviyyəsi uyğundur?",
+                "options": [
+                  "Component testing",
+                  "Integration testing",
+                  "System testing",
+                  "Acceptance testing"
+                ],
+                "correctIndex": 3,
+                "explanation": "Acceptance testing istifadəçi və biznes tələblərinə qarşı aparılır, ona görə V-nin ən yuxarı səviyyəsidir."
+              },
+              {
+                "id": "q2",
+                "text": "Waterfall-un əsas riski nədir?",
+                "options": [
+                  "Çox tez-tez release",
+                  "Tələbdəki səhvlərin gec, testing mərhələsində tapılması",
+                  "Sənədləşmənin olmaması",
+                  "Testin hər gün aparılması"
+                ],
+                "correctIndex": 1,
+                "explanation": "Dynamic test sonda olduğuna görə erkən mərhələnin səhvi gec üzə çıxır və bahalı olur."
+              },
+              {
+                "id": "q3",
+                "text": "Hansı fikir V-Model-ə aiddir?",
+                "options": [
+                  "Testlər yalnız kod bitəndən sonra planlanır",
+                  "Hər development mərhələsində uyğun testin planı və dizaynı hazırlanır",
+                  "Mərhələlər paralel və təkrarlanan dövrlərlə gedir",
+                  "Sənədləşmə yoxdur"
+                ],
+                "correctIndex": 1,
+                "explanation": "V-Model testin erkən planlanmasını təmin edir; icra isə kod yazılandan sonra olur."
+              },
+              {
+                "id": "q4",
+                "text": "Tələbləri tez-tez dəyişən startap üçün hansı model daha uyğundur?",
+                "options": [
+                  "Waterfall",
+                  "V-Model",
+                  "Iterative / Incremental",
+                  "Heç bir model"
+                ],
+                "correctIndex": 2,
+                "explanation": "Iterativ model hər dövrdə rəy alıb planı dəyişməyə imkan verir."
+              },
+              {
+                "id": "q5",
+                "text": "Incremental development nə deməkdir?",
+                "options": [
+                  "Sistemin bir dəfəyə tam qurulması",
+                  "Sistemin hissə-hissə qurulması, hər hissənin yeni funksiya əlavə etməsi",
+                  "Yalnız test mərhələsinin təkrarlanması",
+                  "Kodun avtomatik yazılması"
+                ],
+                "correctIndex": 1,
+                "explanation": "Incremental yanaşmada hər addım sistemə yeni funksional hissə əlavə edir."
+              }
+            ]
+          },
+          "id": "cmve390p4cc3d08373b4c"
+        }
+      ]
+    },
+    {
+      "id": "cmn5q7jpx000xw80abwsx88od",
+      "slug": "agile-methodologies-testing",
+      "title": "Agile və Scrum-da QA",
+      "shortDescription": "Scrum rolları, event-ləri və artifact-ları, Definition of Done və tester-in sprint-dəki işi.",
+      "estimatedMinutes": 14,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Agile Manifesto-nun dörd dəyərini izah edə biləcəksən",
+              "Scrum rollarını, event-lərini və artifact-larını fərqləndirə biləcəksən",
+              "Tester-in sprint boyu nə etdiyini təsvir edə biləcəksən",
+              "Definition of Done ilə acceptance criteria-nı fərqləndirə biləcəksən"
+            ]
+          },
+          "id": "cmve390p4c0ce1615c001"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Agile",
+                "az": "çevik yanaşma",
+                "definition": "Kiçik iterasiyalar, tez-tez rəy və dəyişikliyə açıqlıq üzərində qurulan yanaşmalar ailəsi."
+              },
+              {
+                "term": "Scrum",
+                "az": "Scrum framework-ü",
+                "definition": "Agile-in ən geniş yayılmış framework-ü: işi sabit uzunluqlu sprint-lərlə idarə edir."
+              },
+              {
+                "term": "Sprint",
+                "az": "sprint",
+                "definition": "Bir ay və ya daha qısa sabit müddətli iş dövrü; çox vaxt 2 həftə."
+              },
+              {
+                "term": "User story",
+                "az": "istifadəçi hekayəsi",
+                "definition": "Funksiyanı istifadəçi gözü ilə təsvir edən qısa tələb: \"İstifadəçi kimi ... istəyirəm ki, ...\"."
+              },
+              {
+                "term": "Acceptance criteria",
+                "az": "qəbul meyarları",
+                "definition": "Konkret user story-nin hazır sayılması üçün şərtlər."
+              },
+              {
+                "term": "Definition of Done (DoD)",
+                "az": "hazırlıq tərifi",
+                "definition": "Hər iş vahidinə tətbiq olunan, komandanın ortaq keyfiyyət standartı."
+              }
+            ]
+          },
+          "id": "cmve390p42abcee33cf73"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Agile Manifesto",
+            "level": 2
+          },
+          "id": "cmve390p4b463f051bc16"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "2001-ci ildə 17 proqramçı Agile Manifesto-nu yazdı. Dörd dəyər:\n1. **İnsanlar və ünsiyyət** proses və alətlərdən önəmlidir.\n2. **İşləyən proqram** ətraflı sənədləşmədən önəmlidir.\n3. **Müştəri ilə əməkdaşlıq** müqavilə danışıqlarından önəmlidir.\n4. **Dəyişikliyə reaksiya** plana sadiq qalmaqdan önəmlidir.\n\nSağdakılar da dəyərlidir, sadəcə soldakılar daha üstündür. Agile sənədsiz iş demək deyil.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p42728ae8b82be"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Scrum: rollar, event-lər, artifact-lar",
+            "level": 2
+          },
+          "id": "cmve390p45ce6a77bed40"
+        },
+        {
+          "type": "TABLE",
+          "title": "Scrum komandasının rolları",
+          "content": {
+            "headers": [
+              "Rol",
+              "Məsuliyyət"
+            ],
+            "rows": [
+              [
+                "Product Owner",
+                "Product Backlog-u idarə edir, prioritet qoyur, məhsulun dəyərinə cavabdehdir"
+              ],
+              [
+                "Scrum Master",
+                "Scrum-un düzgün tətbiqinə kömək edir, maneələri aradan qaldırır; menecer deyil"
+              ],
+              [
+                "Developers",
+                "Hər sprint-də işləyən increment yaradır. Scrum Guide-a görə tester-lər də bu qrupa daxildir"
+              ]
+            ]
+          },
+          "id": "cmve390p44945249c4cb4"
+        },
+        {
+          "type": "TABLE",
+          "title": "Scrum event-ləri",
+          "content": {
+            "headers": [
+              "Event",
+              "Nə vaxt",
+              "Məqsəd"
+            ],
+            "rows": [
+              [
+                "Sprint Planning",
+                "Sprint-in əvvəli",
+                "Sprint Goal və hansı backlog elementlərinin götürüləcəyi seçilir"
+              ],
+              [
+                "Daily Scrum",
+                "Hər gün, maksimum 15 dəqiqə",
+                "Sprint Goal-a doğru irəliləyiş yoxlanır, gündəlik plan uyğunlaşdırılır"
+              ],
+              [
+                "Sprint Review",
+                "Sprint-in sonu",
+                "Hazır increment maraqlı tərəflərə göstərilir, rəy alınır"
+              ],
+              [
+                "Sprint Retrospective",
+                "Sprint-in ən sonu",
+                "Komanda işini necə yaxşılaşdıracağını müzakirə edir"
+              ]
+            ]
+          },
+          "id": "cmve390p45a9357ff8793"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Üç **artifact** var: **Product Backlog** (məhsul üçün bütün işlərin prioritetli siyahısı), **Sprint Backlog** (bu sprint üçün seçilən işlər və plan), **Increment** (sprint sonunda DoD-a cavab verən işləyən məhsul hissəsi).\n\nSprint-in uzunluğu bir ay və ya daha qısadır və sprint ərzində dəyişmir. Ən çox 2 həftəlik sprint işlədilir, amma bu qayda deyil.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p47535fd8abe74"
+        },
+        {
+          "type": "CATEGORIZE",
+          "content": {
+            "instructions": "Hər elementi Scrum-dakı yerinə qoy.",
+            "categories": [
+              {
+                "id": "role",
+                "label": "Rol"
+              },
+              {
+                "id": "event",
+                "label": "Event"
+              },
+              {
+                "id": "artifact",
+                "label": "Artifact"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "Product Owner",
+                "categoryId": "role"
+              },
+              {
+                "id": "i2",
+                "text": "Daily Scrum",
+                "categoryId": "event"
+              },
+              {
+                "id": "i3",
+                "text": "Product Backlog",
+                "categoryId": "artifact"
+              },
+              {
+                "id": "i4",
+                "text": "Scrum Master",
+                "categoryId": "role"
+              },
+              {
+                "id": "i5",
+                "text": "Sprint Retrospective",
+                "categoryId": "event"
+              },
+              {
+                "id": "i6",
+                "text": "Increment",
+                "categoryId": "artifact"
+              },
+              {
+                "id": "i7",
+                "text": "Sprint Planning",
+                "categoryId": "event"
+              },
+              {
+                "id": "i8",
+                "text": "Sprint Backlog",
+                "categoryId": "artifact"
+              }
+            ],
+            "explanation": "Rollar insanların məsuliyyətidir, event-lər müntəzəm görüşlərdir, artifact-lar isə işin özü və onun şəffaf görüntüsüdür."
+          },
+          "id": "cmve390p4356a628b0c56"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Tester sprint boyu",
+            "level": 2
+          },
+          "id": "cmve390p4cf981aeb08da"
+        },
+        {
+          "type": "STEPPER",
+          "title": "Tester-in sprint-dəki işi",
+          "content": {
+            "steps": [
+              {
+                "title": "Backlog refinement",
+                "description": "User story-ləri sprint-dən əvvəl oxuyursan, acceptance criteria-nı aydınlaşdırırsan, \"bəs səhv məlumat daxil edilsə?\" kimi sual verirsən."
+              },
+              {
+                "title": "Sprint Planning",
+                "description": "Test həcmini qiymətləndirirsən; testin vaxtı story-nin qiymətləndirməsinə daxildir."
+              },
+              {
+                "title": "Sprint ərzində",
+                "description": "Story hazır olan kimi test edirsən, sona saxlamırsan. Developer ilə birlikdə işləyir, bug-ları dərhal müzakirə edirsən, regression testlərini avtomatlaşdırırsan."
+              },
+              {
+                "title": "Sprint Review",
+                "description": "Hazır funksiyanın demo-suna kömək edirsən, keyfiyyət barədə məlumat verirsən."
+              },
+              {
+                "title": "Retrospective",
+                "description": "Prosesdəki problemləri qaldırırsan: məsələn, \"story-lər test üçün sprint-in son günü gəlir\"."
+              }
+            ]
+          },
+          "id": "cmve390p41b2a59abe4fe"
+        },
+        {
+          "type": "NOTE",
+          "title": "Whole-team approach",
+          "content": {
+            "variant": "remember",
+            "body": "Agile-də keyfiyyət **bütün komandanın** məsuliyyətidir (whole-team approach). Tester \"keyfiyyət qapısı\" deyil; o, komandaya keyfiyyəti erkən qurmağa kömək edir."
+          },
+          "id": "cmve390p41b58caf0e4b6"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Definition of Done",
+            "level": 2
+          },
+          "id": "cmve390p4d580dca0441a"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "Nümunə: bank tətbiqində \"Kartı blokla\" story-si",
+          "content": {
+            "description": "Komandanın DoD-u (hər story üçün eyni):\n- Kod review olunub\n- Component testləri yazılıb və keçir\n- Acceptance criteria üzrə testlər keçib\n- Critical və Major bug qalmayıb\n- Regression testləri keçib\n- Test mühitinə deploy olunub\n\nStory-nin acceptance criteria-sı (yalnız bu story üçün): \"Müştəri kartı bloklaya bilər; bloklanmış kartla ödəniş rədd edilir; blokdan sonra SMS gəlir.\"",
+            "takeaway": "Acceptance criteria konkret story-nin \"nə\" etməli olduğunu, DoD isə hər story-nin hansı keyfiyyət standartına çatmalı olduğunu deyir."
+          },
+          "id": "cmve390p424cb128f1ccb"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Agile testing quadrants",
+            "level": 2
+          },
+          "id": "cmve390p4350b71c5d518"
+        },
+        {
+          "type": "TABLE",
+          "title": "Agile testing quadrants",
+          "content": {
+            "headers": [
+              "Quadrant",
+              "Yönüm",
+              "Nümunə testlər"
+            ],
+            "rows": [
+              [
+                "Q1",
+                "Texnoloji, komandaya dəstək",
+                "Component (unit) testləri, component integration testləri"
+              ],
+              [
+                "Q2",
+                "Biznes, komandaya dəstək",
+                "Funksional testlər, user story testləri, nümunələr, prototiplər"
+              ],
+              [
+                "Q3",
+                "Biznes, məhsulu tənqid",
+                "Exploratory testing, usability testi, user acceptance testi"
+              ],
+              [
+                "Q4",
+                "Texnoloji, məhsulu tənqid",
+                "Performance, security, reliability kimi qeyri-funksional testlər"
+              ]
+            ]
+          },
+          "id": "cmve390p4144a0b149d5b"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Quadrant-lar test növlərini qruplaşdırır ki, komanda heç bir sahəni unutmasın. Q1 və Q2 komandaya düzgün qurmağa kömək edir, Q3 və Q4 isə hazır məhsulu tənqidi gözlə yoxlayır. Sıra nömrəsi testlərin ardıcıllığı demək deyil.",
+            "highlight": "info"
+          },
+          "id": "cmve390p42b10e7e2f599"
+        },
+        {
+          "type": "TASK",
+          "title": "Tapşırıq: story-ni test üçün hazırla",
+          "content": {
+            "instructions": "Bank tətbiqi üçün story: \"Müştəri kimi kart limitimi tətbiqdən dəyişmək istəyirəm.\" Bu story üçün 3 acceptance criteria və tester kimi refinement-də verəcəyin 2 sualı yaz.",
+            "placeholder": "Acceptance criteria:\n1) ...\n2) ...\n3) ...\n\nSuallar:\n1) ...\n2) ...",
+            "required": true
+          },
+          "id": "cmve390p4e2c010383a09"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Agile kiçik iterasiyalar, tez-tez rəy və dəyişikliyə açıqlıq üzərində qurulub; Scrum onun ən yayılmış framework-üdür.",
+              "Scrum: 3 rol, 4 event (sprint-in içində) və 3 artifact; sprint bir ay və ya daha qısadır.",
+              "Tester refinement-dən retrospektivə qədər iştirak edir və story hazır olan kimi test edir.",
+              "Acceptance criteria konkret story üçündür, DoD isə bütün işlər üçün ortaq keyfiyyət standartıdır.",
+              "Testing quadrants texnoloji və biznes, dəstək və tənqid testlərini balanslaşdırmağa kömək edir."
+            ]
+          },
+          "id": "cmve390p498aea902d037"
+        },
+        {
+          "type": "QUIZ",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Scrum Guide-a görə tester hansı rola daxildir?",
+                "options": [
+                  "Product Owner",
+                  "Scrum Master",
+                  "Developers",
+                  "Stakeholders"
+                ],
+                "correctIndex": 2,
+                "explanation": "Scrum-da increment yaradan hər kəs Developers sayılır: proqramçı, tester, dizayner."
+              },
+              {
+                "id": "q2",
+                "text": "Sprint-in uzunluğu ilə bağlı hansı fikir doğrudur?",
+                "options": [
+                  "Həmişə dəqiq 2 həftədir",
+                  "Bir ay və ya daha qısa, sabit müddətdir",
+                  "Hər sprint-də ehtiyaca görə uzadılır",
+                  "Ən azı 3 aydır"
+                ],
+                "correctIndex": 1,
+                "explanation": "Scrum Guide sprint-i bir ay və ya daha qısa sabit müddət kimi təyin edir. 2 həftə sadəcə ən çox seçilən variantdır."
+              },
+              {
+                "id": "q3",
+                "text": "\"Hər story-də kod review olunmalı və regression keçməlidir\" qaydası nədir?",
+                "options": [
+                  "Acceptance criteria",
+                  "Definition of Done",
+                  "Sprint Goal",
+                  "Product Backlog"
+                ],
+                "correctIndex": 1,
+                "explanation": "Bütün işlərə tətbiq olunan ortaq keyfiyyət standartı DoD-dur."
+              },
+              {
+                "id": "q4",
+                "text": "Agile-də tester story-ləri nə vaxt test etməlidir?",
+                "options": [
+                  "Sprint-in son günü, hamısını birlikdə",
+                  "Story hazır olan kimi, sprint ərzində",
+                  "Yalnız növbəti sprint-də",
+                  "Release-dən sonra"
+                ],
+                "correctIndex": 1,
+                "explanation": "Davamlı test bug-ları dərhal tapıb sprint daxilində düzəltməyə imkan verir."
+              },
+              {
+                "id": "q5",
+                "text": "Performance və security testləri hansı quadrant-a aiddir?",
+                "options": [
+                  "Q1",
+                  "Q2",
+                  "Q3",
+                  "Q4"
+                ],
+                "correctIndex": 3,
+                "explanation": "Q4 texnoloji yönümlü, məhsulu tənqid edən qeyri-funksional testləri əhatə edir."
+              },
+              {
+                "id": "q6",
+                "text": "Agile Manifesto-ya görə hansı daha önəmlidir?",
+                "options": [
+                  "Ətraflı sənədləşmə işləyən proqramdan",
+                  "İşləyən proqram ətraflı sənədləşmədən",
+                  "Plana sadiq qalmaq dəyişikliyə reaksiyadan",
+                  "Alətlər insanlardan"
+                ],
+                "correctIndex": 1,
+                "explanation": "Manifesto işləyən proqramı ətraflı sənədləşmədən üstün tutur, amma sənədləşməni rədd etmir."
+              }
+            ]
+          },
+          "id": "cmve390p49594b94ca86e"
+        }
+      ]
+    },
+    {
+      "id": "cmn1iyf640002vkfisphxe5yg",
+      "slug": "what-is-stlc",
+      "title": "STLC (testin həyat dövrü)",
+      "shortDescription": "STLC-nin 6 mərhələsi: hər birinin entry və exit criteria-sı, nəticə sənədləri.",
+      "estimatedMinutes": 12,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "STLC-nin 6 mərhələsini düzgün ardıcıllıqla sadalaya biləcəksən",
+              "Hər mərhələnin entry və exit criteria-sını izah edə biləcəksən",
+              "Hər mərhələnin deliverable-ını (nəticə sənədini) adlandıra biləcəksən"
+            ]
+          },
+          "id": "cmve390p45cabe91ed5c2"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "STLC",
+                "az": "testin həyat dövrü",
+                "definition": "Software Testing Life Cycle: test fəaliyyətlərinin planlı ardıcıllığı."
+              },
+              {
+                "term": "Entry criteria",
+                "az": "giriş meyarları",
+                "definition": "Mərhələyə başlamaq üçün ödənməli şərtlər."
+              },
+              {
+                "term": "Exit criteria",
+                "az": "çıxış meyarları",
+                "definition": "Mərhələni bitmiş saymaq üçün şərtlər. ISTQB-də Definition of Done ilə yaxın anlayışdır."
+              },
+              {
+                "term": "Deliverable",
+                "az": "nəticə sənədi",
+                "definition": "Mərhələnin sonunda hazırlanan iş məhsulu: plan, test case, hesabat."
+              },
+              {
+                "term": "Test environment",
+                "az": "test mühiti",
+                "definition": "Testin aparıldığı server, build, verilənlər və alətlər."
+              },
+              {
+                "term": "RTM",
+                "az": "tələblərin izlənmə matrisi",
+                "definition": "Requirement Traceability Matrix: hər tələbi onu yoxlayan test case-lərlə bağlayan cədvəl."
+              }
+            ]
+          },
+          "id": "cmve390p4f3d4ebd77c96"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "STLC nədir?",
+            "level": 2
+          },
+          "id": "cmve390p4bdce032ffbb5"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "SDLC bütün məhsulun həyat dövrüdürsə, **STLC** onun içindəki test işinin həyat dövrüdür. O, \"nə vaxt nəyi test edirik, nə zaman bitmiş sayırıq?\" sualına cavab verir.\n\nHər mərhələnin **entry criteria**-sı (başlamaq şərti), **exit criteria**-sı (bitirmə şərti) və **deliverable**-ı var. Bu, testin təsadüfi deyil, idarə olunan olmasını təmin edir.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p407dddfc9f4f1"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "6 mərhələ",
+            "level": 2
+          },
+          "id": "cmve390p474c78ef28fcd"
+        },
+        {
+          "type": "STEPPER",
+          "title": "STLC mərhələləri",
+          "content": {
+            "steps": [
+              {
+                "title": "1. Requirement Analysis",
+                "description": "Tələblər və acceptance criteria oxunur, nəyin test ediləcəyi və riskli sahələr müəyyən edilir, aydın olmayan suallar verilir."
+              },
+              {
+                "title": "2. Test Planning",
+                "description": "Test strategiyası, əhatə, test növləri, resurslar, cədvəl, mühit və risklər müəyyən edilir."
+              },
+              {
+                "title": "3. Test Case Design",
+                "description": "Test case-lər, test data və lazım olsa avtomatlaşdırma skriptləri hazırlanır, review olunur."
+              },
+              {
+                "title": "4. Test Environment Setup",
+                "description": "Test serveri, build, test hesabları və data hazırlanır; smoke test ilə mühitin hazır olduğu yoxlanır."
+              },
+              {
+                "title": "5. Test Execution",
+                "description": "Test case-lər icra olunur, nəticələr qeyd edilir, bug-lar report olunur, düzəlişlər re-test edilir, regression aparılır."
+              },
+              {
+                "title": "6. Test Closure",
+                "description": "Nəticələr analiz edilir, Test Summary Report hazırlanır, dərslər çıxarılır, test materialları arxivlənir."
+              }
+            ]
+          },
+          "id": "cmve390p45ef8bd2b79ee"
+        },
+        {
+          "type": "ORDERING",
+          "content": {
+            "instructions": "STLC mərhələlərini düzgün ardıcıllıqla düz.",
+            "items": [
+              "Requirement Analysis",
+              "Test Planning",
+              "Test Case Design",
+              "Test Environment Setup",
+              "Test Execution",
+              "Test Closure"
+            ],
+            "explanation": "Əvvəl nəyi test edəcəyini anlayırsan, sonra necə test edəcəyini planlayırsan, testləri hazırlayırsan, mühiti qurursan, icra edirsən və nəticəni yekunlaşdırırsan. Praktikada mühitin qurulması test dizaynı ilə paralel də gedə bilər."
+          },
+          "id": "cmve390p494ccd684cf63"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Entry, exit və deliverable-lar",
+            "level": 2
+          },
+          "id": "cmve390p4f88a9a801abc"
+        },
+        {
+          "type": "TABLE",
+          "title": "STLC mərhələlərinin entry/exit criteria-sı və deliverable-ları",
+          "content": {
+            "headers": [
+              "Mərhələ",
+              "Entry criteria",
+              "Exit criteria",
+              "Deliverable"
+            ],
+            "rows": [
+              [
+                "Requirement Analysis",
+                "Tələb sənədi və ya user story-lər mövcuddur",
+                "Test ediləcək funksiyalar və suallar razılaşdırılıb",
+                "Test ediləcək funksiyaların siyahısı, sual siyahısı, ilkin RTM"
+              ],
+              [
+                "Test Planning",
+                "Tələblər analiz olunub",
+                "Plan təsdiqlənib",
+                "Test Plan, effort qiymətləndirməsi"
+              ],
+              [
+                "Test Case Design",
+                "Test Plan təsdiqlənib",
+                "Test case-lər review olunub və təsdiqlənib",
+                "Test case-lər, test data, yenilənmiş RTM"
+              ],
+              [
+                "Test Environment Setup",
+                "Mühit planı və build mövcuddur",
+                "Smoke test keçib",
+                "Hazır test mühiti, smoke test nəticəsi"
+              ],
+              [
+                "Test Execution",
+                "Test case-lər və mühit hazırdır",
+                "Planlanan testlər icra olunub, kritik bug qalmayıb",
+                "Test nəticələri, bug report-lar"
+              ],
+              [
+                "Test Closure",
+                "Test icrası bitib",
+                "Hesabat təqdim olunub və təsdiqlənib",
+                "Test Summary Report"
+              ]
+            ]
+          },
+          "id": "cmve390p4c381ed27963c"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "Nümunə: login funksiyası STLC boyu",
+          "content": {
+            "description": "Tələb: \"İstifadəçi email və şifrə ilə login ola bilməlidir.\"\n- **Requirement Analysis:** düzgün login, səhv şifrə, boş sahələr, bloklanmış istifadəçi. Sual: neçə səhv cəhddən sonra hesab bloklanır?\n- **Test Execution:** şifrə səhv olsa belə login olur → Critical bug report yazılır.\n- **Test Closure:** 100 test case, 92 passed, 8 failed; 15 bug tapılıb, 13-ü düzəldilib, 2 Minor bug növbəti release-ə keçirilib.",
+            "takeaway": "Hər mərhələnin nəticəsi növbəti mərhələnin girişidir."
+          },
+          "id": "cmve390p41610e62052e5"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Sürətli yoxlama",
+          "content": {
+            "questions": [
+              {
+                "id": "mq1",
+                "text": "Test mühitində smoke test keçmədi: build açılmır. Nə etməlisən?",
+                "options": [
+                  "Test case-ləri icra etməyə davam etmək",
+                  "Test Execution-a başlamamaq, mühit problemini bildirmək",
+                  "Test Closure-a keçmək",
+                  "Test case-ləri silmək"
+                ],
+                "correctIndex": 1,
+                "explanation": "Test Execution-ın entry criteria-sı hazır mühitdir. Mühit hazır deyilsə, icra nəticələri etibarsız olar."
+              }
+            ]
+          },
+          "id": "cmve390p4acee23eec36f"
+        },
+        {
+          "type": "NOTE",
+          "title": "ISTQB terminologiyası ilə əlaqə",
+          "content": {
+            "variant": "tip",
+            "body": "ISTQB v4.0 test prosesini belə adlandırır: test planning, monitoring and control, analysis, design, implementation, execution, completion. STLC-nin 6 mərhələsi bu fəaliyyətlərin sənayedə geniş işlənən sadələşdirilmiş formasıdır. Monitoring and control bütün proses boyu davam edir."
+          },
+          "id": "cmve390p49db77acbb827"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "STLC: Requirement Analysis, Test Planning, Test Case Design, Test Environment Setup, Test Execution, Test Closure.",
+              "Entry criteria mərhələyə başlamaq, exit criteria onu bitirmək şərtidir.",
+              "Hər mərhələnin deliverable-ı var: Test Plan, test case-lər, bug report-lar, Test Summary Report.",
+              "STLC ISTQB test prosesinin sadələşdirilmiş praktik formasıdır."
+            ]
+          },
+          "id": "cmve390p4bbd399f39d7a"
+        },
+        {
+          "type": "QUIZ",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Test Plan hansı mərhələnin deliverable-ıdır?",
+                "options": [
+                  "Requirement Analysis",
+                  "Test Planning",
+                  "Test Execution",
+                  "Test Closure"
+                ],
+                "correctIndex": 1,
+                "explanation": "Test Planning mərhələsində strategiya, əhatə, resurs və cədvəl Test Plan-da sənədləşdirilir."
+              },
+              {
+                "id": "q2",
+                "text": "Test Execution-ın entry criteria-sı hansıdır?",
+                "options": [
+                  "Test Summary Report təqdim olunub",
+                  "Test case-lər və test mühiti hazırdır",
+                  "Tələb sənədi hələ yazılmayıb",
+                  "Bütün bug-lar düzəldilib"
+                ],
+                "correctIndex": 1,
+                "explanation": "İcraya başlamaq üçün hazır test case-lər və işləyən mühit lazımdır."
+              },
+              {
+                "id": "q3",
+                "text": "Test Summary Report hansı mərhələdə hazırlanır?",
+                "options": [
+                  "Test Planning",
+                  "Test Case Design",
+                  "Test Execution",
+                  "Test Closure"
+                ],
+                "correctIndex": 3,
+                "explanation": "Test Closure-da nəticələr analiz olunur və yekun hesabat hazırlanır."
+              },
+              {
+                "id": "q4",
+                "text": "Exit criteria nədir?",
+                "options": [
+                  "Mərhələyə başlamaq üçün şərtlər",
+                  "Mərhələni bitmiş saymaq üçün şərtlər",
+                  "Bug-ın prioriteti",
+                  "Test serverinin ünvanı"
+                ],
+                "correctIndex": 1,
+                "explanation": "Exit criteria nə vaxt dayanmaq olar sualına cavab verir; məsələn, bütün planlı testlər icra olunub və kritik bug qalmayıb."
+              },
+              {
+                "id": "q5",
+                "text": "RTM (Requirement Traceability Matrix) nəyə xidmət edir?",
+                "options": [
+                  "Bug-ların prioritetini təyin etməyə",
+                  "Hər tələbin test case-lərlə əhatə olunduğunu izləməyə",
+                  "Test serverini qurmağa",
+                  "Developer-lərin iş saatını hesablamağa"
+                ],
+                "correctIndex": 1,
+                "explanation": "RTM tələbləri test case-lərlə bağlayır və heç bir tələbin testsiz qalmadığını göstərir."
+              },
+              {
+                "id": "q6",
+                "text": "Requirement Analysis mərhələsində tester nə edir?",
+                "options": [
+                  "Bug report yazır",
+                  "Tələbləri oxuyur, nəyin test ediləcəyini və riskli sahələri müəyyən edir",
+                  "Test Summary Report hazırlayır",
+                  "Production-a deploy edir"
+                ],
+                "correctIndex": 1,
+                "explanation": "Bu mərhələdə test obyekti və riskli sahələr müəyyən edilir, aydın olmayan suallar verilir."
+              }
+            ]
+          },
+          "id": "cmve390p47e5fe1ab2bcb"
+        }
+      ]
+    }
+  ]
+}

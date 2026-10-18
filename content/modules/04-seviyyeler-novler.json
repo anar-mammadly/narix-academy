@@ -1,0 +1,2373 @@
+{
+  "id": "cmn4dghxi006jvkfidd8ridrc",
+  "key": "seviyyeler-novler",
+  "order": 4,
+  "title": "Test səviyyələri və növləri",
+  "description": "Komponentdən qəbula qədər test səviyyələri; functional, non-functional, dəyişikliklə bağlı və static testlər.",
+  "icon": "Layers",
+  "color": "#FFB020",
+  "lessons": [
+    {
+      "id": "cmn1vv3rd0043vkfinsept456",
+      "slug": "testing-levels",
+      "title": "Test səviyyələri",
+      "shortDescription": "ISTQB v4.0 test səviyyələri: component, integration, system, acceptance — kim edir, nəyi yoxlayır və test piramidası.",
+      "estimatedMinutes": 12,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "ISTQB v4.0-ın test səviyyələrini kiçikdən böyüyə sıralaya biləcəksən",
+              "Hər səviyyənin məqsədini, test basis-ini və kimin apardığını izah edə biləcəksən",
+              "Bir feature-un hər səviyyədə necə test olunduğunu göstərə biləcəksən",
+              "Test piramidasının məntiqini izah edə biləcəksən"
+            ]
+          },
+          "id": "cmve390p58d4ce28a979f"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Test level",
+                "az": "test səviyyəsi",
+                "definition": "Birlikdə təşkil və idarə olunan test fəaliyyətləri qrupu; inkişafın bir mərhələsinə bağlıdır."
+              },
+              {
+                "term": "Component testing",
+                "az": "komponent testi (unit testing)",
+                "definition": "Ayrı funksiya, class və ya modulun təcrid olunmuş şəkildə yoxlanması."
+              },
+              {
+                "term": "Integration testing",
+                "az": "inteqrasiya testi",
+                "definition": "Komponentlər və ya sistemlər arasında interfeys və qarşılıqlı əlaqənin yoxlanması."
+              },
+              {
+                "term": "System testing",
+                "az": "sistem testi",
+                "definition": "Bütöv sistemin tələblərə uyğun davranışının yoxlanması."
+              },
+              {
+                "term": "Acceptance testing",
+                "az": "qəbul testi",
+                "definition": "Sistemin biznes ehtiyacını ödədiyini və istifadəyə hazır olduğunu təsdiqləmək."
+              },
+              {
+                "term": "Test pyramid",
+                "az": "test piramidası",
+                "definition": "Testlərin səviyyələr üzrə ideal paylanma modeli: aşağıda çox, yuxarıda az."
+              }
+            ]
+          },
+          "id": "cmve390p562ab1fe3be13"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Test səviyyəsi nədir",
+            "level": 2
+          },
+          "id": "cmve390p679508e1ef4c5"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Test səviyyəsi \"**harada** və **nəyi** test edirik\" sualına cavab verir: tək funksiyanı, yoxsa bütöv sistemi. ISTQB v4.0 beş səviyyə göstərir:\n\n1. Component testing\n2. Component integration testing\n3. System testing\n4. System integration testing\n5. Acceptance testing\n\nHər səviyyənin öz məqsədi, test basis-i, test obyekti və tipik defektləri var. Səviyyələr bir-birini əvəz etmir, tamamlayır."
+          },
+          "id": "cmve390p616bcd6296672"
+        },
+        {
+          "type": "TABLE",
+          "title": "Test səviyyələri bir baxışda",
+          "content": {
+            "headers": [
+              "Səviyyə",
+              "Nəyi test edir",
+              "Test basis",
+              "Kim edir",
+              "Tipik defekt"
+            ],
+            "rows": [
+              [
+                "Component (unit)",
+                "Ayrı funksiya, class, modul",
+                "Kod, detallı dizayn",
+                "Developer",
+                "Səhv hesablama, yanlış şərt"
+              ],
+              [
+                "Component integration",
+                "Modullar arası interfeys",
+                "Arxitektura, API spesifikasiyası",
+                "Developer, SDET",
+                "Yanlış data formatı, səhv API çağırışı"
+              ],
+              [
+                "System",
+                "Bütöv sistem",
+                "SRS, user story, use case",
+                "Müstəqil QA komandası",
+                "Biznes axınında səhv, performance problemi"
+              ],
+              [
+                "System integration",
+                "Sistemin xarici sistemlərlə əlaqəsi",
+                "İnterfeys müqavilələri",
+                "QA komandası",
+                "Ödəniş və ya SMS provayder cavabının yanlış emalı"
+              ],
+              [
+                "Acceptance",
+                "Biznes ehtiyacına uyğunluq",
+                "Biznes tələbləri, müqavilə",
+                "Müştəri, son istifadəçi, PO",
+                "Sistem işləyir, amma iş prosesinə uyğun deyil"
+              ]
+            ]
+          },
+          "id": "cmve390p6131097b46479"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Bir feature, dörd səviyyə: bank köçürməsi",
+            "level": 2
+          },
+          "id": "cmve390p6783e15cc2323"
+        },
+        {
+          "type": "STEPPER",
+          "title": "Kartdan karta köçürmə hər səviyyədə",
+          "content": {
+            "steps": [
+              {
+                "title": "Component",
+                "description": "Developer `calculateFee(amount)` funksiyasını yoxlayır: 1% komissiya, minimum 0.50 AZN."
+              },
+              {
+                "title": "Integration",
+                "description": "Mobil tətbiq → transfer API → core banking: sorğu düzgün formatda gedir və cavab düzgün emal olunur?"
+              },
+              {
+                "title": "System",
+                "description": "QA test mühitində tam axını yoxlayır: login → köçürmə → SMS təsdiq → balans → əməliyyat tarixçəsi."
+              },
+              {
+                "title": "Acceptance",
+                "description": "Bankın əməliyyat şöbəsi real ssenarilərlə yoxlayır: limitlər, mübahisəli əməliyyat, çıxarış."
+              }
+            ]
+          },
+          "id": "cmve390p628abd8a857ff"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "// Component (unit) test: yalnız bir funksiya, xarici asılılıq yoxdur\nfunction calculateFee(amount) {\n  return Math.max(amount * 0.01, 0.5);\n}\n\nconsole.assert(calculateFee(200) === 2,   '200 AZN → 2 AZN');\nconsole.assert(calculateFee(10)  === 0.5, 'minimum komissiya 0.50 AZN');",
+            "language": "javascript",
+            "caption": "Unit test sürətlidir və səbəbi dəqiq göstərir: fail olsa, problem məhz bu funksiyadadır."
+          },
+          "id": "cmve390p686cbaefac4ad"
+        },
+        {
+          "type": "ORDERING",
+          "title": "Səviyyələri sırala",
+          "content": {
+            "instructions": "Test səviyyələrini ən kiçik test obyektindən ən böyüyünə doğru düz.",
+            "items": [
+              "Component testing",
+              "Component integration testing",
+              "System testing",
+              "System integration testing",
+              "Acceptance testing"
+            ],
+            "explanation": "Test obyekti tək komponentdən başlayır, komponentlərin birləşməsinə, bütöv sistemə, sistemin xarici sistemlərlə əlaqəsinə və nəhayət biznesin qəbuluna qədər böyüyür."
+          },
+          "id": "cmve390p62d09f5e5219d"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Test piramidası",
+            "level": 2
+          },
+          "id": "cmve390p6186cebb8e8c5"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "**Test pyramid** (Mike Cohn) avtomatlaşdırılmış testlərin necə paylanmalı olduğunu göstərir: aşağıda çoxlu sürətli və ucuz **unit** testlər, ortada **integration/API** testlər, yuxarıda az sayda **UI / end-to-end** test.\n\nYuxarı qalxdıqca test yavaşlayır, bahalaşır və kövrək (flaky) olur. Əks forma — çoxlu manual və UI testi, az unit testi — \"ice cream cone\" anti-pattern adlanır."
+          },
+          "id": "cmve390p61203e8f358b3"
+        },
+        {
+          "type": "DIAGRAM",
+          "content": {
+            "code": "graph TB\n  UI[\"UI / E2E testlər: az, yavaş, bahalı\"] --> API[\"Integration / API testlər: orta\"]\n  API --> UNIT[\"Unit testlər: çox, sürətli, ucuz\"]",
+            "caption": "Test piramidası: yuxarıdan aşağı testlərin sayı artır, qiyməti azalır"
+          },
+          "id": "cmve390p6b4b5ad256654"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "remember",
+            "body": "Piramida test səviyyələri ilə bir-bir üst-üstə düşmür: o, **avtomatlaşdırma strategiyası** modelidir. Acceptance testing isə çox vaxt manual aparılır və piramidada ayrıca qat kimi göstərilmir."
+          },
+          "id": "cmve390p6b08480655a1a"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "ISTQB v4.0: component, component integration, system, system integration, acceptance.",
+              "Component testini adətən developer, system testini müstəqil QA, acceptance testini biznes aparır.",
+              "Hər səviyyə fərqli defekt tapır: kiçik səviyyədə səbəb, böyük səviyyədə axın və uyğunluq problemləri.",
+              "Test piramidası: çox unit, orta sayda API, az UI/E2E test."
+            ]
+          },
+          "id": "cmve390p61fc54297ae6f"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yoxlama testi",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Mobil tətbiqin backend API-yə göndərdiyi sorğunun formatını yoxlamaq hansı səviyyədir?",
+                "options": [
+                  "Component testing",
+                  "Component integration testing",
+                  "Acceptance testing",
+                  "System testing"
+                ],
+                "correctIndex": 1,
+                "explanation": "İki komponent (mobil tətbiq və API) arasındakı interfeys yoxlanılır — bu component integration testing-dir."
+              },
+              {
+                "id": "q2",
+                "text": "Component (unit) testing-i adətən kim aparır?",
+                "options": [
+                  "Son istifadəçi",
+                  "Müstəqil QA komandası",
+                  "Developer",
+                  "Product Owner"
+                ],
+                "correctIndex": 2,
+                "explanation": "Unit testlər kodla birlikdə yazılır və adətən developer tərəfindən yaradılıb işə salınır."
+              },
+              {
+                "id": "q3",
+                "text": "E-commerce saytının ödəniş provayderi ilə əlaqəsini yoxlamaq hansı səviyyəyə aiddir?",
+                "options": [
+                  "System integration testing",
+                  "Component testing",
+                  "Component integration testing",
+                  "Acceptance testing"
+                ],
+                "correctIndex": 0,
+                "explanation": "Sistem xarici sistemlə (ödəniş provayderi) inteqrasiya olunur. ISTQB bunu system integration testing adlandırır."
+              },
+              {
+                "id": "q4",
+                "text": "Acceptance testing-in əsas məqsədi nədir?",
+                "options": [
+                  "Kodda maksimum baq tapmaq",
+                  "Funksiyaların sürətini ölçmək",
+                  "Sistemin biznes ehtiyacını ödədiyini və istifadəyə hazır olduğunu təsdiqləmək",
+                  "Modullar arası interfeysi yoxlamaq"
+                ],
+                "correctIndex": 2,
+                "explanation": "Acceptance mərhələsində məqsəd inam qazanmaq və qəbul qərarı verməkdir. Bu mərhələdə çox baq çıxırsa, bu risk siqnalıdır."
+              },
+              {
+                "id": "q5",
+                "text": "Test piramidasına görə hansı testlər ən çox olmalıdır?",
+                "options": [
+                  "Unit testlər",
+                  "Manual testlər",
+                  "Acceptance testlər",
+                  "UI / E2E testlər"
+                ],
+                "correctIndex": 0,
+                "explanation": "Unit testlər ən sürətli və ucuzdur, səbəbi dəqiq göstərir, buna görə piramidanın geniş təməlini təşkil edir."
+              },
+              {
+                "id": "q6",
+                "text": "Komandada 800 UI testi və 50 unit test var. Bu vəziyyət necə adlanır?",
+                "options": [
+                  "Test pyramid",
+                  "Regression suite",
+                  "Shift-left",
+                  "Ice cream cone anti-pattern"
+                ],
+                "correctIndex": 3,
+                "explanation": "Piramidanın tərsinə çevrilmiş forması — çox UI, az unit — yavaş və kövrək test toplusu yaradır."
+              }
+            ]
+          },
+          "id": "cmve390p6aa1788babb0a"
+        }
+      ]
+    },
+    {
+      "id": "cmn4hjd92000ixbrdvz4mv2ac",
+      "slug": "system-testing-1",
+      "title": "System Testing",
+      "shortDescription": "Bütöv sistemi production-a yaxın mühitdə end-to-end yoxlamaq: məqsəd, mühit, ssenarilər və yoxlama siyahısı.",
+      "estimatedMinutes": 11,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "System testing-in məqsədini və test obyektini izah edə biləcəksən",
+              "Production-like mühitin niyə vacib olduğunu əsaslandıra biləcəksən",
+              "Real məhsul üçün end-to-end ssenari qura biləcəksən",
+              "System testing zamanı yoxlanan sahələri sadalaya biləcəksən"
+            ]
+          },
+          "id": "cmve390p67f7c4862cc23"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "System testing",
+                "az": "sistem testi",
+                "definition": "Bütöv, inteqrasiya olunmuş sistemin tələblərə uyğun davranışının yoxlanması."
+              },
+              {
+                "term": "End-to-end (E2E)",
+                "az": "başdan-sona test",
+                "definition": "İstifadəçi axınının ilk addımdan son nəticəyə qədər, bütün komponentlərdən keçərək yoxlanması."
+              },
+              {
+                "term": "Production-like environment",
+                "az": "production-a yaxın mühit",
+                "definition": "Konfiqurasiya, data və inteqrasiyalara görə real mühitə maksimum oxşayan test mühiti (staging)."
+              },
+              {
+                "term": "Independent testing",
+                "az": "müstəqil test",
+                "definition": "Kodu yazmayan şəxs və ya komanda tərəfindən aparılan test."
+              },
+              {
+                "term": "Test data",
+                "az": "test datası",
+                "definition": "Testi icra etmək üçün hazırlanmış istifadəçilər, məhsullar, sifarişlər və s."
+              }
+            ]
+          },
+          "id": "cmve390p6ec9c9b9f444f"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Məqsəd: bütöv sistemin davranışı",
+            "level": 2
+          },
+          "id": "cmve390p63880414274aa"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "**System testing** bütöv sistemin tələblərə uyğun işlədiyini yoxlayır. Test obyekti artıq ayrı kod parçası deyil, istifadəçinin gördüyü davranışdır. Test basis: SRS, user story, use case, biznes qaydaları.\n\nAdətən **müstəqil QA komandası** aparır: kodu yazan şəxsin \"kor nöqtələri\" olur və o, öz fərziyyələrini təkrar yoxlayır. System testing funksional və non-functional xüsusiyyətləri birlikdə əhatə edir."
+          },
+          "id": "cmve390p6789a4175bab2"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Production-like mühit",
+            "level": 2
+          },
+          "id": "cmve390p62571281a336c"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Test mühiti production-a nə qədər yaxındırsa, nəticə o qədər etibarlıdır. Fərqli konfiqurasiya, köhnə verilənlər bazası versiyası və ya söndürülmüş inteqrasiya \"test mühitində işləyirdi\" tipli production baqları yaradır. Mühitin qurulması Modul 6-da ətraflı keçilir."
+          },
+          "id": "cmve390p6ede812e8206a"
+        },
+        {
+          "type": "TABLE",
+          "title": "Yaxşı və pis staging mühiti",
+          "content": {
+            "headers": [
+              "Komponent",
+              "Yaxşı staging",
+              "Pis staging və onun riski"
+            ],
+            "rows": [
+              [
+                "Versiyalar",
+                "Production-la eyni OS, DB, kitabxana versiyaları",
+                "Fərqli DB versiyası → sorğu production-da sınır"
+              ],
+              [
+                "Konfiqurasiya",
+                "Eyni feature flag-lar və limitlər",
+                "Flag söndürülüb → yeni axın heç test olunmayıb"
+              ],
+              [
+                "Data həcmi",
+                "Real həcmə yaxın, anonimləşdirilmiş və ya sintetik data",
+                "10 məhsul → 50 000 məhsulda axtarış yavaşlığı görünmür"
+              ],
+              [
+                "İnteqrasiyalar",
+                "Ödəniş və SMS provayderinin sandbox mühiti",
+                "Hər şey mock → real cavab formatı fərqlənir"
+              ]
+            ]
+          },
+          "id": "cmve390p65ccb54d88c39"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "important",
+            "body": "Real müştəri datasını (FİN, kart nömrəsi, telefon) test mühitinə kopyalamaq olmaz. Anonimləşdirilmiş və ya sintetik test datası istifadə et — bu həm qanun (GDPR və yerli qanunvericilik), həm də təhlükəsizlik tələbidir."
+          },
+          "id": "cmve390p6d947fc461b6d"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "End-to-end ssenari",
+            "level": 2
+          },
+          "id": "cmve390p6145ea15cf022"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "E-commerce: sifarişin tam axını",
+          "content": {
+            "description": "1. Yeni istifadəçi qeydiyyatdan keçir və email-i təsdiqləyir\n2. \"simsiz qulaqlıq\" axtarır, filtr tətbiq edir\n3. Məhsulu səbətə atır, promo kod daxil edir\n4. Kartla ödəyir (3D Secure ilə)\n5. Təsdiq email-i və SMS gəlir\n6. Admin paneldə sifariş \"Ödənilib\" statusunda görünür\n7. Anbarda məhsul sayı 1 azalır",
+            "takeaway": "Hər addım ayrılıqda işləyə bilər. System testing datanın bütün axın boyu düzgün ötürüldüyünü yoxlayır: məbləğ, status, stok."
+          },
+          "id": "cmve390p6586d98fadbec"
+        },
+        {
+          "type": "ORDERING",
+          "title": "Çatdırılma tətbiqində E2E ssenarini qur",
+          "content": {
+            "instructions": "Yemək sifarişi ssenarisinin addımlarını düzgün ardıcıllıqla düz.",
+            "items": [
+              "Müştəri tətbiqə daxil olur və ünvanını seçir",
+              "Restoran seçib yeməkləri səbətə əlavə edir",
+              "Kartla ödəniş edir",
+              "Restoran sifarişi təsdiqləyir",
+              "Kuryer sifarişi götürür, müştəri xəritədə izləyir",
+              "Sifariş təhvil verilir, müştəri qəbz alır və qiymətləndirir"
+            ],
+            "explanation": "E2E ssenari real istifadəçi yolunu təkrarlayır və müştəri, restoran, kuryer tətbiqləri ilə backend-in birlikdə işlədiyini yoxlayır."
+          },
+          "id": "cmve390p6e4be172258ea"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "System testing-də nə yoxlanır",
+            "level": 2
+          },
+          "id": "cmve390p6dff278e2eb2b"
+        },
+        {
+          "type": "CHECKLIST",
+          "title": "System testing yoxlama siyahısı",
+          "content": {
+            "items": [
+              {
+                "id": "c1",
+                "text": "Əsas biznes axınları tələblərə uyğun başdan sona işləyir"
+              },
+              {
+                "id": "c2",
+                "text": "Data bütün axın boyu düzgün ötürülür və saxlanılır (məbləğ, status, tarix)"
+              },
+              {
+                "id": "c3",
+                "text": "Xəta halları idarə olunur: ödəniş rədd edilir, internet kəsilir, sessiya bitir"
+              },
+              {
+                "id": "c4",
+                "text": "Rollar və icazələr: müştəri admin səhifəsinə daxil ola bilmir"
+              },
+              {
+                "id": "c5",
+                "text": "Xarici sistemlərlə əlaqə: ödəniş, SMS, email, xəritə"
+              },
+              {
+                "id": "c6",
+                "text": "Non-functional baza: cavab müddəti, əsas təhlükəsizlik yoxlamaları, usability"
+              }
+            ]
+          },
+          "id": "cmve390p61856cbc2bbd4"
+        },
+        {
+          "type": "BUG_HUNT",
+          "title": "Səbəti sistem səviyyəsində yoxla",
+          "content": {
+            "scenario": "cart",
+            "instructions": "Səbət tətbiqini istifadəçi kimi başdan sona yoxla: məhsul əlavə et, sayı dəyiş, sil, cəmi və endirimi yoxla. Tələblər siyahısı ilə müqayisə et və hər uyğunsuzluğu baq kimi qeyd et."
+          },
+          "id": "cmve390p6f3426e7f9a4f"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "System testing bütöv sistemin tələblərə uyğun davranışını yoxlayır; adətən müstəqil QA aparır.",
+              "Mühit production-a yaxın olmalıdır: eyni versiyalar, konfiqurasiya, real həcmə yaxın data, sandbox inteqrasiyalar.",
+              "Real şəxsi data test mühitinə kopyalanmır — anonimləşdirilmiş və ya sintetik data istifadə olunur.",
+              "E2E ssenari datanın bütün axın boyu düzgün ötürüldüyünü yoxlayır."
+            ]
+          },
+          "id": "cmve390p621cf524cd0d8"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yoxlama testi",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "System testing-in test basis-i adətən hansıdır?",
+                "options": [
+                  "Funksiyanın kodu",
+                  "Unit test nəticələri",
+                  "SRS, user story və use case-lər",
+                  "Server logları"
+                ],
+                "correctIndex": 2,
+                "explanation": "System testing istifadəçi baxışından davranışı yoxlayır, buna görə tələb sənədlərinə əsaslanır."
+              },
+              {
+                "id": "q2",
+                "text": "Staging-də bütün testlər keçdi, amma production-da axtarış çox yavaşdır. Ən ehtimallı səbəb nədir?",
+                "options": [
+                  "Staging-də data həcmi production-dan çox kiçikdir",
+                  "Test case-lər yanlış yazılıb",
+                  "Developer unit test yazmayıb",
+                  "UAT aparılmayıb"
+                ],
+                "correctIndex": 0,
+                "explanation": "10 məhsulla 50 000 məhsulda axtarış fərqli işləyir. Data həcmi production-a yaxın olmalıdır."
+              },
+              {
+                "id": "q3",
+                "text": "Test mühiti üçün data hazırlayarkən hansı yanaşma düzgündür?",
+                "options": [
+                  "Production bazasını olduğu kimi kopyalamaq",
+                  "Data olmadan test etmək",
+                  "Anonimləşdirilmiş və ya sintetik data istifadə etmək",
+                  "Real kart nömrələri ilə test etmək"
+                ],
+                "correctIndex": 2,
+                "explanation": "Real şəxsi data test mühitində qorunmur və qanunu pozur. Anonimləşdirmə və sintetik data həm təhlükəsiz, həm realistdir."
+              },
+              {
+                "id": "q4",
+                "text": "Hansı yoxlama system testing-ə aiddir?",
+                "options": [
+                  "Müştərinin qeydiyyatdan ödənişə və təsdiq email-inə qədər tam axını",
+                  "`calculateFee()` funksiyasının 0 üçün nəticəsi",
+                  "Müştərinin sistemi qəbul edib-etməməsi",
+                  "Kodun ESLint ilə yoxlanması"
+                ],
+                "correctIndex": 0,
+                "explanation": "Tam axının bütöv sistemdə yoxlanması system testing-dir. Birinci component, üçüncü acceptance, dördüncü static analizdir."
+              },
+              {
+                "id": "q5",
+                "text": "System testing-i niyə adətən kodu yazmayan müstəqil QA aparır?",
+                "options": [
+                  "Developer-lər test etməyi bacarmır",
+                  "QA kodu daha yaxşı bilir",
+                  "Qanun bunu tələb edir",
+                  "Müstəqil tester fərqli baxış gətirir və müəllifin fərziyyələrini təkrarlamır"
+                ],
+                "correctIndex": 3,
+                "explanation": "Müəllif öz kodunu öz fərziyyələri ilə test edir. Müstəqil baxış bu kor nöqtələri tapır."
+              }
+            ]
+          },
+          "id": "cmve390p6dc2c05b528fc"
+        }
+      ]
+    },
+    {
+      "id": "cmn1wz0fi0057vkfi9cghix75",
+      "slug": "testing-types-functional-non-functional",
+      "title": "Functional və Non-functional testing",
+      "shortDescription": "Sistem nə edir və necə işləyir: functional test, performance, load, stress, security, usability, compatibility, accessibility.",
+      "estimatedMinutes": 12,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Test səviyyəsi ilə test növünü fərqləndirə biləcəksən",
+              "Functional və non-functional testləri ayıra biləcəksən",
+              "Performance, load və stress testlərinin fərqini izah edə biləcəksən",
+              "Security, usability, compatibility və accessibility testlərinin məqsədini bilərsən"
+            ]
+          },
+          "id": "cmve390p65e1cfd89ec27"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Test type",
+                "az": "test növü",
+                "definition": "Konkret keyfiyyət xüsusiyyətinə yönəlmiş test fəaliyyətləri qrupu."
+              },
+              {
+                "term": "Functional testing",
+                "az": "funksional test",
+                "definition": "Sistemin nə etdiyini yoxlayır: funksiyaların tamlığı və düzgünlüyü."
+              },
+              {
+                "term": "Non-functional testing",
+                "az": "qeyri-funksional test",
+                "definition": "Sistemin necə işlədiyini yoxlayır: sürət, təhlükəsizlik, rahatlıq, uyğunluq."
+              },
+              {
+                "term": "Load testing",
+                "az": "yük testi",
+                "definition": "Gözlənilən (normal və pik) yükdə sistemin davranışını ölçmək."
+              },
+              {
+                "term": "Stress testing",
+                "az": "stres testi",
+                "definition": "Sistemi limitdən yuxarı yükləyib necə sındığını və necə bərpa olunduğunu görmək."
+              },
+              {
+                "term": "Accessibility testing",
+                "az": "əlçatanlıq testi",
+                "definition": "Əlilliyi olan insanların sistemi istifadə edə bilməsini yoxlamaq (WCAG)."
+              }
+            ]
+          },
+          "id": "cmve390p6ca616a3e8d16"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Test növü test səviyyəsindən fərqlidir",
+            "level": 2
+          },
+          "id": "cmve390p6af969b04a492"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Test səviyyəsi \"**harada**\" sualına cavab verir (component, system...). Test növü isə \"**nəyi yoxlayırıq**\" sualına. ISTQB v4.0 dörd əsas növ göstərir: functional, non-functional, black-box, white-box.\n\nHər növ istənilən səviyyədə aparıla bilər. Məsələn, performance testi həm tək funksiyada (alqoritmin sürəti), həm də bütöv sistemdə (1000 istifadəçi) edilə bilər."
+          },
+          "id": "cmve390p68e7447a2d4b3"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Functional testing: sistem nə edir",
+            "level": 2
+          },
+          "id": "cmve390p64f19b8380c2a"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "**Functional testing** sistemin funksiyalarının tələblərə uyğun olduğunu yoxlayır: funksiya var (completeness), düzgün nəticə verir (correctness) və istifadəçinin məqsədinə xidmət edir (appropriateness). Nəticə adətən aydın **pass/fail**-dir."
+          },
+          "id": "cmve390p6a54324e340a6"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "Bank tətbiqində kommunal ödəniş",
+          "content": {
+            "description": "1. Müştəri \"Azərişıq\" xidmətini seçir və abonent kodunu daxil edir\n2. Sistem cari borcu göstərir: 23.40 AZN\n3. Müştəri ödəyir\n4. Kart balansı 23.40 AZN azalır, qəbz yaranır, borc 0 göstərilir",
+            "takeaway": "Hər addımın gözlənilən nəticəsi tələbdən gəlir. Bir addım uyğun gəlmirsə, bu funksional baqdır."
+          },
+          "id": "cmve390p66532b7e98711"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Non-functional testing: sistem necə işləyir",
+            "level": 2
+          },
+          "id": "cmve390p63a1350d109c1"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "**Non-functional testing** keyfiyyət xüsusiyyətlərini ölçür. ISTQB bunlara performance efficiency, compatibility, usability, reliability, security, maintainability və portability aid edir (ISO/IEC 25010 əsasında).\n\nNəticə çox vaxt pass/fail deyil, **ölçüdür**: 1.8 saniyə, 2% xəta, kontrast 3.2:1. Buna görə tələb rəqəmlə yazılmalıdır. Non-functional test erkən başlamalıdır: arxitektura problemi sonda bahalı düzəlir."
+          },
+          "id": "cmve390p6525c0687ff0e"
+        },
+        {
+          "type": "TABLE",
+          "title": "Əsas non-functional test növləri",
+          "content": {
+            "headers": [
+              "Növ",
+              "Cavab verdiyi sual",
+              "Nümunə"
+            ],
+            "rows": [
+              [
+                "Performance",
+                "Normal yükdə cavab nə qədər tezdir?",
+                "Kataloq 2 saniyədən tez açılır"
+              ],
+              [
+                "Load",
+                "Gözlənilən pik yükə dözürmü?",
+                "Novruz endirimində 10 000 eyni vaxtda istifadəçi"
+              ],
+              [
+                "Stress",
+                "Limitdən yuxarıda necə sınır və bərpa olunur?",
+                "30 000 istifadəçi: sistem çöküb-qalxır, data itmir?"
+              ],
+              [
+                "Security",
+                "Data və giriş qorunurmu?",
+                "URL-də sifariş ID-sini dəyişib başqasının sifarişinə baxmaq olmur"
+              ],
+              [
+                "Usability",
+                "İstifadəsi asan və anlaşıqlıdırmı?",
+                "Yeni istifadəçi köçürməni köməksiz 1 dəqiqədə edir"
+              ],
+              [
+                "Compatibility",
+                "Fərqli cihaz və brauzerlərdə işləyirmi?",
+                "Chrome, Safari, Android 10+, iOS 15+"
+              ],
+              [
+                "Accessibility",
+                "Əlilliyi olan insanlar istifadə edə bilirmi?",
+                "Ekran oxuyucu düymələri oxuyur, kontrast WCAG 2.1 AA (4.5:1)"
+              ]
+            ]
+          },
+          "id": "cmve390p6c106db64a0b4"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "tip",
+            "body": "Load və stress tez-tez qarışdırılır. **Load** — gözlənilən yükdə sistemin normal işlədiyini təsdiqləmək. **Stress** — limiti aşıb sınma nöqtəsini və bərpa davranışını tapmaq. Hər ikisi performance testing ailəsinə aiddir; alətlər: JMeter, k6, Gatling."
+          },
+          "id": "cmve390p695482e91bbf8"
+        },
+        {
+          "type": "CATEGORIZE",
+          "title": "Yoxlamanı növünə görə ayır",
+          "content": {
+            "instructions": "Hər yoxlamanın functional, yoxsa non-functional test olduğunu müəyyən et.",
+            "categories": [
+              {
+                "id": "func",
+                "label": "Functional"
+              },
+              {
+                "id": "nonfunc",
+                "label": "Non-functional"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "Promo kod tətbiq olunanda cəm 10% azalır",
+                "categoryId": "func"
+              },
+              {
+                "id": "i2",
+                "text": "Ödəniş səhifəsi 5 000 eyni vaxtda istifadəçidə 3 saniyədən tez açılır",
+                "categoryId": "nonfunc"
+              },
+              {
+                "id": "i3",
+                "text": "Səhv şifrə daxil edildikdə xəta mesajı görünür",
+                "categoryId": "func"
+              },
+              {
+                "id": "i4",
+                "text": "Login formu yalnız klaviatura ilə doldurula bilir",
+                "categoryId": "nonfunc"
+              },
+              {
+                "id": "i5",
+                "text": "Sayt iPhone Safari-də düzgün göstərilir",
+                "categoryId": "nonfunc"
+              },
+              {
+                "id": "i6",
+                "text": "Sifariş ləğv edildikdə status \"Ləğv edildi\" olur",
+                "categoryId": "func"
+              },
+              {
+                "id": "i7",
+                "text": "Şifrələr bazada hash olunmuş şəkildə saxlanılır",
+                "categoryId": "nonfunc"
+              },
+              {
+                "id": "i8",
+                "text": "Admin istifadəçini bloklaya bilir",
+                "categoryId": "func"
+              }
+            ],
+            "explanation": "Functional yoxlama davranışın nəticəsinə baxır. Sürət, klaviatura ilə əlçatanlıq, brauzer uyğunluğu və şifrələrin saxlanma üsulu isə keyfiyyət xüsusiyyətləridir."
+          },
+          "id": "cmve390p605749c1377df"
+        },
+        {
+          "type": "TABLE",
+          "title": "Functional və non-functional müqayisəsi",
+          "content": {
+            "headers": [
+              "Meyar",
+              "Functional",
+              "Non-functional"
+            ],
+            "rows": [
+              [
+                "Sual",
+                "Sistem nə edir?",
+                "Sistem necə işləyir?"
+              ],
+              [
+                "Test basis",
+                "Funksional tələblər, AC",
+                "Non-functional tələblər, SLA, standartlar (WCAG, OWASP)"
+              ],
+              [
+                "Nəticə forması",
+                "Adətən pass/fail",
+                "Ölçü: saniyə, %, xal"
+              ],
+              [
+                "Tipik alətlər",
+                "Manual, Postman, Selenium, Playwright",
+                "JMeter, k6, OWASP ZAP, Lighthouse, axe"
+              ]
+            ]
+          },
+          "id": "cmve390p6ac2f624caa18"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Test səviyyəsi \"harada\", test növü \"nəyi yoxlayırıq\" sualına cavab verir; növlər istənilən səviyyədə aparılır.",
+              "Functional test sistemin nə etdiyini yoxlayır, nəticə adətən pass/fail-dir.",
+              "Non-functional test keyfiyyəti ölçür: performance, security, usability, compatibility, accessibility və s.",
+              "Load gözlənilən yükü, stress isə limitdən yuxarı yükü və bərpanı yoxlayır.",
+              "Non-functional tələblər ölçülə bilən olmalı və testlər erkən başlamalıdır."
+            ]
+          },
+          "id": "cmve390p69a5d95fabce0"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yoxlama testi",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Online bank Novruz bonusu kampaniyasından əvvəl 20 000 eyni vaxtda istifadəçini yoxlamaq istəyir (gözlənilən pik). Bu hansı testdir?",
+                "options": [
+                  "Load testing",
+                  "Stress testing",
+                  "Usability testing",
+                  "Compatibility testing"
+                ],
+                "correctIndex": 0,
+                "explanation": "Gözlənilən pik yükdə sistemin normal işlədiyini yoxlamaq load testing-dir. Stress testing limitdən yuxarı yükü yoxlayır."
+              },
+              {
+                "id": "q2",
+                "text": "Tester URL-də `orderId=1045`-i `1046` edib başqa müştərinin sifarişini gördü. Bu hansı test növünün tapıntısıdır?",
+                "options": [
+                  "Usability testing",
+                  "Performance testing",
+                  "Security testing",
+                  "Compatibility testing"
+                ],
+                "correctIndex": 2,
+                "explanation": "İcazəsiz dataya giriş təhlükəsizlik defektidir (IDOR adlanan zəiflik)."
+              },
+              {
+                "id": "q3",
+                "text": "Test səviyyəsi ilə test növü arasındakı əlaqə hansı ifadədə düzgün verilib?",
+                "options": [
+                  "Test növləri istənilən səviyyədə aparıla bilər",
+                  "Non-functional test yalnız acceptance səviyyəsində edilir",
+                  "Hər növ yalnız bir səviyyədə aparılır",
+                  "Functional test yalnız unit səviyyəsindədir"
+                ],
+                "correctIndex": 0,
+                "explanation": "ISTQB-yə görə istənilən test növü istənilən səviyyədə tətbiq oluna bilər."
+              },
+              {
+                "id": "q4",
+                "text": "Ekran oxuyucunun düymələri oxuya bilməsini yoxlamaq hansı testdir?",
+                "options": [
+                  "Compatibility",
+                  "Performance",
+                  "Functional",
+                  "Accessibility"
+                ],
+                "correctIndex": 3,
+                "explanation": "Əlilliyi olan istifadəçilərin sistemi istifadə edə bilməsi accessibility testing-in mövzusudur (WCAG)."
+              },
+              {
+                "id": "q5",
+                "text": "Non-functional test nəticəsi çox vaxt hansı formada olur?",
+                "options": [
+                  "Yalnız pass/fail",
+                  "Ölçü: saniyə, faiz, xal",
+                  "Bug sayı",
+                  "Test case sayı"
+                ],
+                "correctIndex": 1,
+                "explanation": "Non-functional testlər keyfiyyəti ölçür. Ölçünü tələbdəki hədd ilə müqayisə edib qərar verirsən."
+              }
+            ]
+          },
+          "id": "cmve390p6b3cff51d03c3"
+        }
+      ]
+    },
+    {
+      "id": "cmn4hhg7n0002xbrd04n91x7c",
+      "slug": "testing-types-functional-non-functional-1",
+      "title": "Regression, Re-testing və Ad-hoc testing",
+      "shortDescription": "Dəyişiklikdən sonra nə test olunur: fix-i təsdiqləmək, köhnə funksiyaları qorumaq və plansız ad-hoc yoxlamalar.",
+      "estimatedMinutes": 11,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Re-testing (confirmation testing) ilə regression testing-i fərqləndirə biləcəksən",
+              "Impact analysis ilə regression scope-unu seçə biləcəksən",
+              "Ad-hoc testing-in güclü və zəif tərəflərini izah edə biləcəksən"
+            ]
+          },
+          "id": "cmve390p6b51cae22fb1c"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Change-related testing",
+                "az": "dəyişikliklə bağlı test",
+                "definition": "Dəyişiklikdən sonra aparılan testlər: confirmation və regression."
+              },
+              {
+                "term": "Re-testing",
+                "az": "təkrar test (confirmation testing)",
+                "definition": "Fix olunmuş defektin həqiqətən aradan qalxdığını yoxlamaq."
+              },
+              {
+                "term": "Regression testing",
+                "az": "reqressiya testi",
+                "definition": "Dəyişiklikdən sonra əvvəl işləyən funksiyaların pozulmadığını yoxlamaq."
+              },
+              {
+                "term": "Regression suite",
+                "az": "reqressiya test toplusu",
+                "definition": "Hər dəyişiklikdən sonra təkrar işə salınan test case-lər toplusu."
+              },
+              {
+                "term": "Impact analysis",
+                "az": "təsir analizi",
+                "definition": "Dəyişikliyin hansı funksiyalara toxuna biləcəyini qiymətləndirmək."
+              },
+              {
+                "term": "Ad-hoc testing",
+                "az": "ad-hoc test",
+                "definition": "Plansız, sənədsiz, test case olmadan aparılan qeyri-formal test."
+              }
+            ]
+          },
+          "id": "cmve390p67d8c3a59b5ae"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Dəyişiklik gəldi: nə test edirik",
+            "level": 2
+          },
+          "id": "cmve390p6eeda90d8d5fd"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Hər dəyişiklik — bug fix, yeni feature, konfiqurasiya, kitabxana yeniləməsi — iki risk yaradır:\n\n1. Fix işləmir və ya natamamdır.\n2. Fix başqa bir şeyi pozub.\n\nISTQB bunu **change-related testing** adlandırır və iki növə bölür: birinci riskə qarşı **confirmation testing (re-testing)**, ikinciyə qarşı **regression testing**."
+          },
+          "id": "cmve390p6a3adec528ce1"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Re-testing (confirmation testing)",
+            "level": 2
+          },
+          "id": "cmve390p66cbbff15295c"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "**Re-testing** — fix olunmuş defektin həqiqətən aradan qalxdığını yoxlamaq. Baqı tapan addımlar **eyni data və eyni mühitlə** təkrarlanır. Lazım olsa, fix-in əhatə etməli olduğu yaxın hallar da yoxlanır.\n\nNəticəyə görə baq **Closed** və ya **Reopened** olur (baqın həyat dövrü Modul 7-də)."
+          },
+          "id": "cmve390p685128e30b5b0"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Regression testing",
+            "level": 2
+          },
+          "id": "cmve390p69c2ce13f96eb"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "**Regression testing** — dəyişiklikdən sonra əvvəl işləyən funksiyaların pozulmadığını yoxlamaq. Regression suite hər release ilə böyüyür və çox təkrarlanır, buna görə **avtomatlaşdırma üçün ən yaxşı namizəddir**.\n\nHər dəfə hamısını işə salmaq mümkün deyilsə, **impact analysis** et: dəyişən kod hansı funksiyalardan istifadə olunur? Risk olan sahələri seç."
+          },
+          "id": "cmve390p60a9f1d20ebdb"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "Çatdırılma tətbiqində kupon fix-i",
+          "content": {
+            "description": "BUG-245: 10% kupon 30 AZN-lik sifarişdə 3 AZN yox, 0.30 AZN endirim edir. Developer `calculateTotal()` funksiyasını düzəldir.\n\n**Re-testing:** BUG-245-in addımları: 30 AZN + 10% kupon → endirim 3 AZN, cəm 27 AZN.\n\n**Regression (impact analysis):** `calculateTotal()`-dan istifadə edən hər yer: kuponsuz sifariş, pulsuz çatdırılma həddi, kuryer bəxşişi, qəbz məbləği, sifariş tarixçəsi.",
+            "takeaway": "Re-testing bir baqa baxır, regression isə dəyişikliyin \"yan təsirlərini\" axtarır."
+          },
+          "id": "cmve390p6c69d31caa3cd"
+        },
+        {
+          "type": "TABLE",
+          "title": "Re-testing və regression fərqi",
+          "content": {
+            "headers": [
+              "Meyar",
+              "Re-testing",
+              "Regression testing"
+            ],
+            "rows": [
+              [
+                "Məqsəd",
+                "Fix işləyirmi?",
+                "Başqa bir şey pozulubmu?"
+              ],
+              [
+                "Nə test olunur",
+                "Konkret fix olunmuş defekt",
+                "Dəyişiklikdən təsirlənə bilən, əvvəl işləyən funksiyalar"
+              ],
+              [
+                "Test case-lər",
+                "Baq hesabatındakı addımlar",
+                "Regression suite və ya impact analysis ilə seçilmiş testlər"
+              ],
+              [
+                "Avtomatlaşdırma",
+                "Adətən manual, bir dəfəlik",
+                "Avtomatlaşdırmanın əsas namizədi"
+              ],
+              [
+                "Ardıcıllıq",
+                "Əvvəl",
+                "Re-testing keçəndən sonra"
+              ]
+            ]
+          },
+          "id": "cmve390p669ba144eef3f"
+        },
+        {
+          "type": "CATEGORIZE",
+          "title": "Hansı testdir?",
+          "content": {
+            "instructions": "Hər situasiyanı düzgün test növünə ayır.",
+            "categories": [
+              {
+                "id": "re",
+                "label": "Re-testing"
+              },
+              {
+                "id": "reg",
+                "label": "Regression"
+              },
+              {
+                "id": "adhoc",
+                "label": "Ad-hoc"
+              }
+            ],
+            "items": [
+              {
+                "id": "s1",
+                "text": "Login baqı fix olundu; baq hesabatındakı addımları təkrarlayırsan",
+                "categoryId": "re"
+              },
+              {
+                "id": "s2",
+                "text": "Ödəniş SDK-sı yeniləndi; ödəniş, geri qaytarma və qəbz testlərini işə salırsan",
+                "categoryId": "reg"
+              },
+              {
+                "id": "s3",
+                "text": "Demo-dan 10 dəqiqə əvvəl planı olmadan tətbiqdə qeyri-adi hərəkətlər edirsən",
+                "categoryId": "adhoc"
+              },
+              {
+                "id": "s4",
+                "text": "Yeni \"sevimlilər\" feature-u əlavə olundu; köhnə axtarış və səbət testlərini yoxlayırsan",
+                "categoryId": "reg"
+              },
+              {
+                "id": "s5",
+                "text": "Reopened baqın ikinci fix-ini eyni data ilə yoxlayırsan",
+                "categoryId": "re"
+              },
+              {
+                "id": "s6",
+                "text": "Formaya emoji, 500 simvol, boşluq yapışdırıb nə olacağına baxırsan",
+                "categoryId": "adhoc"
+              }
+            ],
+            "explanation": "Re-testing konkret fix-ə, regression dəyişikliyin yan təsirlərinə baxır. Ad-hoc isə plan və sənəd olmadan, təcrübəyə əsaslanan yoxlamadır."
+          },
+          "id": "cmve390p61ec2ee4b5efb"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Ad-hoc testing",
+            "level": 2
+          },
+          "id": "cmve390p6ceb1f71d7476"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "**Ad-hoc testing** — plan, sənəd və test case olmadan aparılan qeyri-formal test. Testerin təcrübəsinə və intuisiyasına əsaslanır: qeyri-adi input, gözlənilməz addım ardıcıllığı, \"sındırmağa\" cəhd.\n\nÜstünlüyü: sürətlidir, test case-lərin görmədiyi baqları tapır. Zəifliyi: təkrarlana bilmir, coverage ölçülmür. Exploratory testing-dən fərqi: orada **charter** və **time-box** olur (Modul 5)."
+          },
+          "id": "cmve390p69f30d6d04d79"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "tip",
+            "body": "Ad-hoc zamanı baq tapanda addımları **dərhal** yaz — 5 dəqiqə sonra necə ora çatdığını xatırlamayacaqsan. Ekran yazısını (screen recording) açıq saxlamaq yaxşı vərdişdir."
+          },
+          "id": "cmve390p6d7ca291ed0af"
+        },
+        {
+          "type": "TASK",
+          "title": "Fix-dən sonra test planı",
+          "content": {
+            "instructions": "Mobil bank tətbiqində BUG-318 fix olunub: \"Kartı müvəqqəti blokla\" düyməsinə basanda kart bloklanmırdı.\n\n1. Re-testing addımlarını yaz.\n2. Impact analysis edərək ən azı 4 regression yoxlaması seç və hər birinin niyə risk olduğunu bir cümlə ilə izah et.",
+            "placeholder": "Re-testing:\n1) ...\n\nRegression:\n1) ... — çünki ...\n2) ...",
+            "required": true
+          },
+          "id": "cmve390p6e42e4659896b"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Change-related testing iki növdür: confirmation (re-testing) və regression.",
+              "Re-testing fix olunmuş baqı eyni addım, data və mühitlə yoxlayır.",
+              "Regression dəyişikliyin əvvəl işləyən funksiyaları pozmadığını yoxlayır; avtomatlaşdırmanın əsas namizədidir.",
+              "Impact analysis regression scope-unu riskə görə seçməyə kömək edir.",
+              "Ad-hoc test sürətli və plansızdır, amma təkrarlana bilmir; tapıntını dərhal sənədləşdir."
+            ]
+          },
+          "id": "cmve390p6347395fa8a41"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yoxlama testi",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Developer BUG-101-i düzəltdi. Tester baq hesabatındakı addımları eyni data ilə təkrarlayır. Bu nədir?",
+                "options": [
+                  "Regression testing",
+                  "Smoke testing",
+                  "Re-testing",
+                  "Ad-hoc testing"
+                ],
+                "correctIndex": 2,
+                "explanation": "Konkret fix-in işlədiyini təsdiqləmək confirmation testing, yəni re-testing-dir."
+              },
+              {
+                "id": "q2",
+                "text": "Regression testing-in əsas məqsədi nədir?",
+                "options": [
+                  "Dəyişiklikdən sonra əvvəl işləyən funksiyaların pozulmadığını yoxlamaq",
+                  "Fix olunmuş baqı yoxlamaq",
+                  "Yeni feature-u ilk dəfə test etmək",
+                  "Sistemin yükə dözümünü ölçmək"
+                ],
+                "correctIndex": 0,
+                "explanation": "Regression dəyişikliyin gözlənilməz yan təsirlərini axtarır."
+              },
+              {
+                "id": "q3",
+                "text": "Niyə regression testlər avtomatlaşdırma üçün ən yaxşı namizəddir?",
+                "options": [
+                  "Çünki onlar ən çətin testlərdir",
+                  "Çünki yalnız developer-lər işə salır",
+                  "Çünki manual edilə bilmir",
+                  "Çünki hər dəyişiklikdən sonra çox dəfə təkrarlanır"
+                ],
+                "correctIndex": 3,
+                "explanation": "Tez-tez təkrarlanan, sabit testlərin avtomatlaşdırılması ən çox vaxt qənaəti verir."
+              },
+              {
+                "id": "q4",
+                "text": "Release-ə 2 saat qalıb, 1 200 regression testini işə salmağa vaxt yoxdur. Ən düzgün yanaşma hansıdır?",
+                "options": [
+                  "Regression-u tamamilə atlamaq",
+                  "Impact analysis edib dəyişiklikdən təsirlənən riskli sahələri seçmək",
+                  "Təsadüfi 50 test seçmək",
+                  "Yalnız re-testing etmək"
+                ],
+                "correctIndex": 1,
+                "explanation": "Impact analysis məhdud vaxtda ən böyük riski əhatə etməyə imkan verir."
+              },
+              {
+                "id": "q5",
+                "text": "Ad-hoc testing-in əsas zəif tərəfi nədir?",
+                "options": [
+                  "Çox yavaşdır",
+                  "Baq tapmır",
+                  "Təkrarlana bilmir və coverage ölçülmür",
+                  "Yalnız avtomatlaşdırılmış şəkildə edilir"
+                ],
+                "correctIndex": 2,
+                "explanation": "Plan və sənəd olmadığı üçün eyni testi təkrarlamaq və nəyin əhatə olunduğunu ölçmək çətindir."
+              }
+            ]
+          },
+          "id": "cmve390p60ee0bf3fdac2"
+        }
+      ]
+    },
+    {
+      "slug": "smoke-sanity-testing",
+      "title": "Smoke və Sanity testing",
+      "shortDescription": "Yeni build-i qəbul etmək üçün smoke, kiçik dəyişikliyi yoxlamaq üçün sanity: fərq, istifadə yeri və real nümunə.",
+      "estimatedMinutes": 10,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Smoke və sanity testing-i məqsəd və scope-a görə fərqləndirə biləcəksən",
+              "Real layihədə hansının nə vaxt aparıldığını müəyyən edə biləcəksən",
+              "Əsas axınlar üçün qısa smoke checklist hazırlaya biləcəksən"
+            ]
+          },
+          "id": "cmve390p6792fb490fb1d"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Build",
+                "az": "yığım",
+                "definition": "Test və ya release üçün hazırlanmış proqramın konkret versiyası (məs. 4.12.0)."
+              },
+              {
+                "term": "Smoke testing",
+                "az": "smoke test",
+                "definition": "Yeni build-in əsas funksiyalarının işlədiyini yoxlayan qısa, geniş, səthi test."
+              },
+              {
+                "term": "Sanity testing",
+                "az": "sanity test",
+                "definition": "Kiçik dəyişiklikdən sonra həmin sahənin məntiqli işlədiyini yoxlayan qısa, dar test."
+              },
+              {
+                "term": "Build verification test (BVT)",
+                "az": "build-in təsdiq testi",
+                "definition": "Smoke testin digər adı; çox vaxt CI/CD-də avtomatik işləyir."
+              },
+              {
+                "term": "Hotfix",
+                "az": "təcili düzəliş",
+                "definition": "Production-dakı kritik problemi aradan qaldırmaq üçün təcili buraxılan kiçik dəyişiklik."
+              }
+            ]
+          },
+          "id": "cmve390p6a41ab50e28ab"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Smoke testing: build test edilə bilərmi?",
+            "level": 2
+          },
+          "id": "cmve390p6b064dc3196f3"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "**Smoke testing** yeni build-in əsas funksiyalarının işlədiyini yoxlayır. Adı elektronikadan gəlir: cihazı yandırırsan, tüstü çıxırsa, davam etmirsən.\n\nSmoke **geniş və səthidir**: hər əsas sahəyə bir-iki yoxlama, 10–30 dəqiqə. Fail olarsa build **rədd edilir** və detallı test başlamır — sınıq build üzərində saatlarla test etməyin mənası yoxdur. Adətən avtomatlaşdırılır və hər deploy-dan sonra CI/CD-də işləyir."
+          },
+          "id": "cmve390p695abbb050e79"
+        },
+        {
+          "type": "CHECKLIST",
+          "title": "E-commerce üçün smoke checklist",
+          "content": {
+            "items": [
+              {
+                "id": "c1",
+                "text": "Tətbiq açılır, ana səhifə yüklənir"
+              },
+              {
+                "id": "c2",
+                "text": "Mövcud istifadəçi ilə login olur"
+              },
+              {
+                "id": "c3",
+                "text": "Axtarış nəticə qaytarır"
+              },
+              {
+                "id": "c4",
+                "text": "Məhsul səbətə əlavə olunur"
+              },
+              {
+                "id": "c5",
+                "text": "Checkout səhifəsi açılır"
+              },
+              {
+                "id": "c6",
+                "text": "Sandbox kartla ödəniş keçir"
+              }
+            ]
+          },
+          "id": "cmve390p6bbeed88a2a19"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Sanity testing: dəyişiklik məntiqlidirmi?",
+            "level": 2
+          },
+          "id": "cmve390p6496721dfd488"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "**Sanity testing** kiçik dəyişiklikdən və ya bug fix-dən sonra həmin sahənin və ona bağlı funksiyaların rasional işlədiyini qısa yoxlayır. **Dar, amma dərindir**; çox vaxt skriptsiz (unscripted) aparılır.\n\nNümunə: \"Şifrəni unutmuşam\" düzəldilib. Sanity: bərpa email-i gəlir, link işləyir, yeni şifrə ilə login olur, köhnə şifrə ilə olmur. Sanity keçəndən sonra lazım olsa daha geniş regression aparılır."
+          },
+          "id": "cmve390p6dc3b0e064b75"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "important",
+            "body": "Terminologiya fərqlidir: **ISTQB glossary-də \"sanity test\" smoke test-in sinonimi** kimi verilir. Yuxarıdakı fərq (smoke — geniş, sanity — dar) isə sənayedə və müsahibələrdə geniş istifadə olunur. Hər iki baxışı bil və komandada terminin necə işləndiyini soruş."
+          },
+          "id": "cmve390p674163492a872"
+        },
+        {
+          "type": "TABLE",
+          "title": "Smoke və sanity fərqi",
+          "content": {
+            "headers": [
+              "Meyar",
+              "Smoke",
+              "Sanity"
+            ],
+            "rows": [
+              [
+                "Nə vaxt",
+                "Hər yeni build-dən sonra",
+                "Kiçik dəyişiklik və ya bug fix-dən sonra"
+              ],
+              [
+                "Scope",
+                "Geniş, səthi: bütün əsas sahələr",
+                "Dar, dərin: dəyişən sahə və qonşuları"
+              ],
+              [
+                "Sual",
+                "Build test üçün yararlıdırmı?",
+                "Dəyişiklik məntiqli işləyirmi?"
+              ],
+              [
+                "Sənəd",
+                "Adətən skriptli, çox vaxt avtomatik",
+                "Çox vaxt skriptsiz"
+              ],
+              [
+                "Fail olarsa",
+                "Build rədd edilir",
+                "Dəyişiklik developer-ə qaytarılır"
+              ]
+            ]
+          },
+          "id": "cmve390p6bcb08bc0b05d"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Real nümunə: bir release həftəsi",
+            "level": 2
+          },
+          "id": "cmve390p67d043a060278"
+        },
+        {
+          "type": "STEPPER",
+          "title": "Delivery tətbiqi, 4.12 release-i",
+          "content": {
+            "steps": [
+              {
+                "title": "Bazar ertəsi, 10:00",
+                "description": "4.12.0 build staging-ə deploy olunur. Avtomatik smoke (12 yoxlama, 15 dəqiqə): login fail. Build rədd edilir."
+              },
+              {
+                "title": "Bazar ertəsi, 14:00",
+                "description": "4.12.1 gəlir, smoke keçir. Komanda yeni feature testlərinə və tam regression-a başlayır."
+              },
+              {
+                "title": "Çərşənbə",
+                "description": "Kritik baq tapılır: SMS OTP bəzi operatorlarda gəlmir. Developer fix edir, 4.12.2 build-i gəlir."
+              },
+              {
+                "title": "Çərşənbə, 16:00",
+                "description": "Smoke keçir, sonra sanity: OTP göndərmə, təkrar göndərmə, login, şifrə bərpası — 20 dəqiqə."
+              },
+              {
+                "title": "Cümə axşamı",
+                "description": "Re-testing və hədəflənmiş regression keçir, release təsdiqlənir."
+              }
+            ]
+          },
+          "id": "cmve390p609a102a79516"
+        },
+        {
+          "type": "CATEGORIZE",
+          "title": "Smoke, yoxsa sanity?",
+          "content": {
+            "instructions": "Hər situasiyada hansı test aparılır?",
+            "categories": [
+              {
+                "id": "smoke",
+                "label": "Smoke"
+              },
+              {
+                "id": "sanity",
+                "label": "Sanity"
+              }
+            ],
+            "items": [
+              {
+                "id": "s1",
+                "text": "Gecə build-i staging-ə gəldi; komanda testə başlamazdan əvvəl əsas axınlar yoxlanır",
+                "categoryId": "smoke"
+              },
+              {
+                "id": "s2",
+                "text": "Səbətdə endirimin yuvarlaqlaşdırma xətası düzəldildi; endirim və cəm hesablaması yoxlanır",
+                "categoryId": "sanity"
+              },
+              {
+                "id": "s3",
+                "text": "CI/CD hər deploy-dan sonra 10 avtomatik testi işə salır",
+                "categoryId": "smoke"
+              },
+              {
+                "id": "s4",
+                "text": "Profil səhifəsində tarix formatı dəyişdirildi; profil və tarix göstərilən yerlər yoxlanır",
+                "categoryId": "sanity"
+              },
+              {
+                "id": "s5",
+                "text": "Yeni test mühiti quruldu; tətbiqin ümumiyyətlə işlədiyi yoxlanır",
+                "categoryId": "smoke"
+              }
+            ],
+            "explanation": "Smoke bütöv build-in yararlılığına baxır, sanity isə konkret dəyişikliyin məntiqli işlədiyinə."
+          },
+          "id": "cmve390p64b6b4fb9079c"
+        },
+        {
+          "type": "BUG_HUNT",
+          "title": "Login build-inə smoke apar",
+          "content": {
+            "scenario": "login",
+            "instructions": "Sənə yeni login build-i gəlib. 5 dəqiqəlik smoke apar: əsas axın işləyirmi (düzgün məlumatla giriş, səhv şifrə, boş sahələr)? Tapdığın baqları qeyd et və sonda qərar ver: build detallı testə qəbul olunur, yoxsa rədd edilir?"
+          },
+          "id": "cmve390p65a66c82bb96a"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Smoke yeni build-in əsas funksiyalarını geniş və səthi yoxlayır; fail olarsa build rədd edilir.",
+              "Sanity kiçik dəyişiklikdən sonra həmin sahəni dar və dərin yoxlayır.",
+              "Smoke çox vaxt avtomatik və CI/CD-dədir; sanity çox vaxt skriptsizdir.",
+              "ISTQB glossary-də sanity smoke-un sinonimidir; sənayedə isə fərqləndirilir."
+            ]
+          },
+          "id": "cmve390p63bbd4a20a901"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yoxlama testi",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Yeni build-də login işləmir. Smoke testdən sonra ən düzgün addım hansıdır?",
+                "options": [
+                  "Build-i rədd edib developer-ə qaytarmaq",
+                  "Digər test case-ləri icra etməyə davam etmək",
+                  "Sanity test aparmaq",
+                  "UAT-a keçmək"
+                ],
+                "correctIndex": 0,
+                "explanation": "Smoke fail olarsa build test üçün yararsızdır; üzərində detallı test aparmaq vaxt itkisidir."
+              },
+              {
+                "id": "q2",
+                "text": "Smoke testing-in scope-u necədir?",
+                "options": [
+                  "Dar və dərin",
+                  "Bütün test case-lər",
+                  "Yalnız bir funksiya",
+                  "Geniş və səthi"
+                ],
+                "correctIndex": 3,
+                "explanation": "Smoke hər əsas sahəyə qısa baxır: geniş, amma dərin deyil."
+              },
+              {
+                "id": "q3",
+                "text": "Şifrə bərpası fix olundu. Tester bərpa email-ini, linki, yeni şifrə ilə girişi qısa yoxlayır. Bu hansı testdir?",
+                "options": [
+                  "Smoke",
+                  "Sanity",
+                  "Load",
+                  "Acceptance"
+                ],
+                "correctIndex": 1,
+                "explanation": "Konkret dəyişiklik və onun qonşu funksiyalarının dar, qısa yoxlanması sanity-dir."
+              },
+              {
+                "id": "q4",
+                "text": "ISTQB glossary-yə görə \"sanity test\" nədir?",
+                "options": [
+                  "Regression test-in sinonimi",
+                  "Acceptance test növü",
+                  "Smoke test-in sinonimi",
+                  "Static test növü"
+                ],
+                "correctIndex": 2,
+                "explanation": "ISTQB glossary sanity test-i smoke test-in sinonimi kimi verir. Sənayedəki fərqi də bilmək lazımdır."
+              },
+              {
+                "id": "q5",
+                "text": "Hansı test CI/CD pipeline-da hər deploy-dan sonra avtomatik işləmək üçün ən uyğundur?",
+                "options": [
+                  "Smoke test",
+                  "Ad-hoc test",
+                  "UAT",
+                  "Beta test"
+                ],
+                "correctIndex": 0,
+                "explanation": "Smoke qısa, sabit və əsas axınları əhatə edir, buna görə hər deploy-dan sonra avtomatik işləməyə ideal namizəddir."
+              }
+            ]
+          },
+          "id": "cmve390p60a8e1472470b"
+        }
+      ]
+    },
+    {
+      "id": "cmn5q3exz0003w80aju063u9g",
+      "slug": "alpha-beta-testing-1",
+      "title": "Acceptance: UAT, Alpha və Beta testing",
+      "shortDescription": "Qəbul testinin formaları: UAT, operational, contractual və regulatory, alpha və beta — kim aparır və nəyi yoxlayır.",
+      "estimatedMinutes": 11,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Acceptance testing-in məqsədini və formalarını sadalaya biləcəksən",
+              "UAT-ın necə keçirildiyini və QA-nın orada rolunu izah edə biləcəksən",
+              "Alpha və beta testing-i yer, iştirakçı və mühitə görə fərqləndirə biləcəksən"
+            ]
+          },
+          "id": "cmve390p6cbfb6310bb9e"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "UAT",
+                "az": "istifadəçi qəbul testi",
+                "definition": "User Acceptance Testing — son istifadəçilərin sistemi real iş prosesləri ilə yoxlaması."
+              },
+              {
+                "term": "OAT",
+                "az": "əməliyyat qəbul testi",
+                "definition": "Operational Acceptance Testing — backup, bərpa, monitorinq kimi əməliyyat hazırlığının yoxlanması."
+              },
+              {
+                "term": "Contractual / regulatory acceptance",
+                "az": "müqavilə / tənzimləyici qəbul",
+                "definition": "Sistemin müqavilə şərtlərinə və ya qanun və standartlara uyğunluğunun yoxlanması."
+              },
+              {
+                "term": "Alpha testing",
+                "az": "alfa test",
+                "definition": "Developer şirkətinin yerində, development komandası olmayan istifadəçilər tərəfindən aparılan test."
+              },
+              {
+                "term": "Beta testing",
+                "az": "beta test",
+                "definition": "Real istifadəçilərin öz cihaz və mühitlərində apardığı test."
+              },
+              {
+                "term": "Sign-off",
+                "az": "qəbul imzası",
+                "definition": "Biznesin sistemi qəbul etdiyini rəsmi təsdiqləməsi."
+              }
+            ]
+          },
+          "id": "cmve390p695d21108d07a"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Acceptance testing-in məqsədi",
+            "level": 2
+          },
+          "id": "cmve390p631f728e17d4f"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "**Acceptance testing** sistemin biznes ehtiyacını ödədiyini və istifadəyə hazır olduğunu təsdiqləyir. Məqsəd baq ovlamaq deyil, **inam qazanmaq və qəbul qərarı** verməkdir. Bu mərhələdə çoxlu baq çıxırsa, əvvəlki səviyyələrdə ciddi boşluq var.\n\nISTQB v4.0 beş forma göstərir: UAT, operational, contractual and regulatory, alpha, beta."
+          },
+          "id": "cmve390p69e348e1ad85b"
+        },
+        {
+          "type": "TABLE",
+          "title": "Acceptance testing-in formaları",
+          "content": {
+            "headers": [
+              "Forma",
+              "Kim aparır",
+              "Nəyi yoxlayır",
+              "Nümunə"
+            ],
+            "rows": [
+              [
+                "UAT",
+                "Son istifadəçilər, biznes",
+                "Real iş prosesləri",
+                "Bank filial işçiləri yeni kredit modulunda müraciəti başdan sona emal edir"
+              ],
+              [
+                "Operational (OAT)",
+                "Sistem administratorları, DevOps",
+                "Backup/bərpa, monitorinq, quraşdırma, fəlakətdən bərpa",
+                "Gecə backup-dan sistem 1 saat ərzində bərpa olunur"
+              ],
+              [
+                "Contractual",
+                "Müştəri",
+                "Müqavilədə yazılmış şərtlər",
+                "Sifarişçi müqavilədəki 40 funksiyanın hamısını yoxlayır"
+              ],
+              [
+                "Regulatory",
+                "Auditor, tənzimləyici orqan",
+                "Qanun və standartlara uyğunluq",
+                "Ödəniş sistemi Mərkəzi Bankın və PCI DSS tələblərinə uyğundur"
+              ],
+              [
+                "Alpha",
+                "Potensial istifadəçilər və ya müstəqil komanda, şirkətin yerində",
+                "Release-dən əvvəl real istifadə",
+                "Satış və dəstək işçiləri yeni tətbiqi ofisdə istifadə edir"
+              ],
+              [
+                "Beta",
+                "Real istifadəçilər, öz mühitlərində",
+                "Real cihaz, şəbəkə, istifadə nümunələri",
+                "500 müştəri closed beta versiyasını öz telefonunda istifadə edir"
+              ]
+            ]
+          },
+          "id": "cmve390p6db3a29ca3ee8"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "UAT necə keçirilir",
+            "level": 2
+          },
+          "id": "cmve390p6a1f140926d63"
+        },
+        {
+          "type": "STEPPER",
+          "title": "UAT prosesi",
+          "content": {
+            "steps": [
+              {
+                "title": "Ssenarilər hazırlanır",
+                "description": "Biznes tələblərindən real iş ssenariləri yazılır; QA formalaşdırmağa kömək edir."
+              },
+              {
+                "title": "Mühit və data hazırlanır",
+                "description": "Production-a yaxın mühit, anonimləşdirilmiş və ya sintetik data."
+              },
+              {
+                "title": "İstifadəçilər icra edir",
+                "description": "Biznes istifadəçiləri ssenariləri keçir; QA suallara cavab verir və nəticələri qeyd edir."
+              },
+              {
+                "title": "Problemlər prioritetləşdirilir",
+                "description": "Tapıntılar baq, dəyişiklik sorğusu (change request) və ya təlim ehtiyacı kimi ayrılır."
+              },
+              {
+                "title": "Qəbul qərarı",
+                "description": "Exit meyarları ödənibsə biznes sign-off verir; ödənməyibsə go/no-go görüşündə qərar verilir."
+              }
+            ]
+          },
+          "id": "cmve390p6dd8834505d23"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "remember",
+            "body": "UAT-da QA **kömək edir, qərar vermir**: ssenariləri hazırlayır, mühiti təmin edir, tapıntıları qeyd edir. Sistemi qəbul edib-etməmək qərarını biznes verir."
+          },
+          "id": "cmve390p6450b30d721dd"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Alpha və beta testing",
+            "level": 2
+          },
+          "id": "cmve390p6af0f45d78977"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Alpha və beta testing kütləvi bazar üçün hazırlanan məhsullarda (mobil tətbiq, SaaS, oyun) istifadə olunur. Diqqət: alpha testi **development komandası deyil**, potensial istifadəçilər, operatorlar və ya müstəqil test komandası aparır — amma developer şirkətinin yerində və nəzarəti altında. Beta isə istifadəçinin öz mühitində keçir."
+          },
+          "id": "cmve390p6713d9b489464"
+        },
+        {
+          "type": "TABLE",
+          "title": "Alpha və beta fərqi",
+          "content": {
+            "headers": [
+              "Meyar",
+              "Alpha",
+              "Beta"
+            ],
+            "rows": [
+              [
+                "Harada",
+                "Developer şirkətinin yerində",
+                "İstifadəçinin öz mühitində"
+              ],
+              [
+                "Kim",
+                "Potensial istifadəçilər, daxili işçilər, müstəqil test komandası",
+                "Real istifadəçilər"
+              ],
+              [
+                "Mühit",
+                "Nəzarət olunan",
+                "Real cihaz, şəbəkə, data"
+              ],
+              [
+                "Nə vaxt",
+                "Beta-dan əvvəl",
+                "Release-dən əvvəl son mərhələ"
+              ],
+              [
+                "Əsas fayda",
+                "Kritik problemləri bazara çıxmadan tapmaq",
+                "Real istifadə müxtəlifliyindən feedback"
+              ]
+            ]
+          },
+          "id": "cmve390p63fb4ee467e20"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "Bakıda yeni çatdırılma tətbiqinin launch-u",
+          "content": {
+            "description": "**Alpha:** şirkət ofisində 30 nəfər (satış, dəstək, maliyyə) 2 həftə ərzində daxili build ilə real sifariş verir.\n\n**Beta:** TestFlight və Google Play closed testing ilə 500 müştəri tətbiqi istifadə edir.\n\nBeta tapıntıları: Xırdalanda bəzi ünvanlar xəritədə tapılmır; zəif 3G-də kuryerin yeri gec yenilənir; köhnə Android cihazlarda ödəniş ekranı kəsilir.",
+            "takeaway": "Beta real cihaz, real şəbəkə və real ünvan müxtəlifliyi gətirir — bunu ofisdə təkrarlamaq çətindir."
+          },
+          "id": "cmve390p6a17b85fbd8af"
+        },
+        {
+          "type": "CATEGORIZE",
+          "title": "Acceptance formasını tap",
+          "content": {
+            "instructions": "Hər situasiyanı düzgün acceptance testing formasına ayır.",
+            "categories": [
+              {
+                "id": "uat",
+                "label": "UAT"
+              },
+              {
+                "id": "oat",
+                "label": "Operational (OAT)"
+              },
+              {
+                "id": "alpha",
+                "label": "Alpha"
+              },
+              {
+                "id": "beta",
+                "label": "Beta"
+              }
+            ],
+            "items": [
+              {
+                "id": "a1",
+                "text": "Mühasibat şöbəsi yeni ERP-də ay sonu hesabatını özü hazırlayıb yoxlayır",
+                "categoryId": "uat"
+              },
+              {
+                "id": "a2",
+                "text": "DevOps serverin çökməsini simulyasiya edib sistemin 15 dəqiqədə bərpasını yoxlayır",
+                "categoryId": "oat"
+              },
+              {
+                "id": "a3",
+                "text": "Oyun şirkəti yeni oyunu ofisdə marketinq və dəstək işçilərinə oynadır",
+                "categoryId": "alpha"
+              },
+              {
+                "id": "a4",
+                "text": "1 000 könüllü istifadəçi yeni versiyanı öz telefonunda istifadə edib rəy göndərir",
+                "categoryId": "beta"
+              },
+              {
+                "id": "a5",
+                "text": "Kredit mütəxəssisləri müştəri müraciətini real iş qaydası ilə emal edir",
+                "categoryId": "uat"
+              },
+              {
+                "id": "a6",
+                "text": "Monitorinq alert-lərinin düzgün komandaya getdiyi yoxlanır",
+                "categoryId": "oat"
+              }
+            ],
+            "explanation": "UAT biznes prosesinə, OAT əməliyyat hazırlığına baxır. Alpha şirkətin yerində, beta isə istifadəçinin öz mühitində keçir."
+          },
+          "id": "cmve390p6e69563b3d9cf"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Acceptance testing-in məqsədi baq tapmaq deyil, inam qazanmaq və qəbul qərarı verməkdir.",
+              "Formalar: UAT, operational, contractual, regulatory, alpha, beta.",
+              "UAT-ı biznes istifadəçiləri aparır; QA kömək edir, qərarı biznes verir.",
+              "Alpha developer şirkətinin yerində, development komandası olmayan istifadəçilərlə keçir.",
+              "Beta real istifadəçilərin öz cihaz və mühitlərində keçir və real feedback verir."
+            ]
+          },
+          "id": "cmve390p6fffdc1247ee6"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yoxlama testi",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "ISTQB-yə görə alpha testing-i kim aparır?",
+                "options": [
+                  "Yalnız kodu yazan developer-lər",
+                  "Yalnız tənzimləyici orqan",
+                  "Real istifadəçilər öz evlərində",
+                  "Potensial istifadəçilər və ya müstəqil test komandası, developer şirkətinin yerində"
+                ],
+                "correctIndex": 3,
+                "explanation": "Alpha developer şirkətinin yerində keçir, amma development komandası tərəfindən deyil — potensial istifadəçilər, operatorlar və ya müstəqil komanda aparır."
+              },
+              {
+                "id": "q2",
+                "text": "Backup-dan bərpa və monitorinq alert-lərinin yoxlanması hansı formadır?",
+                "options": [
+                  "UAT",
+                  "Operational acceptance testing",
+                  "Beta testing",
+                  "Contractual acceptance testing"
+                ],
+                "correctIndex": 1,
+                "explanation": "OAT sistemin əməliyyat baxımından hazır olduğunu yoxlayır: backup, bərpa, monitorinq, quraşdırma."
+              },
+              {
+                "id": "q3",
+                "text": "UAT-da sistemi qəbul etmək qərarını kim verir?",
+                "options": [
+                  "QA lead",
+                  "Developer",
+                  "Biznes / müştəri",
+                  "Scrum Master"
+                ],
+                "correctIndex": 2,
+                "explanation": "QA kömək edir və nəticələri təqdim edir, amma qəbul qərarı biznesə məxsusdur."
+              },
+              {
+                "id": "q4",
+                "text": "Beta testing-in əsas üstünlüyü nədir?",
+                "options": [
+                  "Real cihaz, şəbəkə və istifadə müxtəlifliyindən feedback",
+                  "Tam nəzarət olunan mühit",
+                  "Kodun static analizi",
+                  "Unit testləri əvəz etməsi"
+                ],
+                "correctIndex": 0,
+                "explanation": "Real istifadəçilər test mühitində təkrarlanması çətin olan şərtləri gətirir."
+              },
+              {
+                "id": "q5",
+                "text": "UAT zamanı 60 kritik baq tapıldı. Bu nəyi göstərir?",
+                "options": [
+                  "UAT çox yaxşı keçib",
+                  "Beta lazım deyil",
+                  "Əvvəlki test səviyyələrində ciddi boşluq var",
+                  "Sistem release-ə hazırdır"
+                ],
+                "correctIndex": 2,
+                "explanation": "Acceptance mərhələsi inam qazanmaq üçündür. Çox baq çıxırsa, system və integration testlərində boşluq olub."
+              }
+            ]
+          },
+          "id": "cmve390p60d25d8451142"
+        }
+      ]
+    },
+    {
+      "id": "cmn4jr1160035xbrdk6h7q1pq",
+      "slug": "static-dynamic-testing-1",
+      "title": "Static və Dynamic testing",
+      "shortDescription": "Kodu işə salmadan (review, static analysis) və işə salaraq test etmək; review növləri və review prosesi.",
+      "estimatedMinutes": 13,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Static və dynamic testing-i fərqləndirə və hər birinin tapdığı defektləri göstərə biləcəksən",
+              "Static analysis-in nə etdiyini izah edə biləcəksən",
+              "Review növlərini (informal, walkthrough, technical review, inspection) fərqləndirə biləcəksən",
+              "ISTQB v4.0 review prosesinin addımlarını sıralaya biləcəksən"
+            ]
+          },
+          "id": "cmve390p62a521a3d502f"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Static testing",
+                "az": "statik test",
+                "definition": "Test obyektini icra etmədən yoxlamaq: review və static analysis."
+              },
+              {
+                "term": "Dynamic testing",
+                "az": "dinamik test",
+                "definition": "Proqramı işə salıb faktiki nəticəni gözlənilənlə müqayisə etmək."
+              },
+              {
+                "term": "Work product",
+                "az": "iş məhsulu",
+                "definition": "Layihədə yaranan istənilən nəticə: tələb, dizayn, kod, test case, sənəd."
+              },
+              {
+                "term": "Review",
+                "az": "nəzərdən keçirmə",
+                "definition": "İş məhsulunun bir və ya bir neçə nəfər tərəfindən yoxlanması."
+              },
+              {
+                "term": "Static analysis",
+                "az": "statik analiz",
+                "definition": "Kodun alət vasitəsilə, işə salınmadan yoxlanması (ESLint, SonarQube)."
+              },
+              {
+                "term": "Inspection",
+                "az": "inspeksiya",
+                "definition": "Ən formal review növü: rollar, checklist, metriklər və entry/exit meyarları ilə."
+              }
+            ]
+          },
+          "id": "cmve390p663b96d88feda"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Kod işə salınırmı?",
+            "level": 2
+          },
+          "id": "cmve390p63af8185926dd"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "**Static testing**-də test obyekti icra edilmir: tələblər, user story, dizayn, kod, test case, hətta müqavilə yoxlanır. **Dynamic testing**-də proqram işə salınır və faktiki nəticə gözlənilənlə müqayisə olunur.\n\nFərq tapılan şeydədir: static **defektin özünü** tapır (sənəddə, kodda). Dynamic isə **failure** (nasazlıq) görür, sonra səbəbi axtarılır."
+          },
+          "id": "cmve390p65aa9a3c96005"
+        },
+        {
+          "type": "TABLE",
+          "title": "Static və dynamic müqayisəsi",
+          "content": {
+            "headers": [
+              "Meyar",
+              "Static",
+              "Dynamic"
+            ],
+            "rows": [
+              [
+                "Kod icrası",
+                "Yox",
+                "Bəli"
+              ],
+              [
+                "Test obyekti",
+                "İstənilən work product: tələb, dizayn, kod",
+                "İşləyən proqram"
+              ],
+              [
+                "Nə tapır",
+                "Defekt: ziddiyyət, qeyri-müəyyənlik, ölü kod, standart pozuntusu",
+                "Failure: səhv nəticə, crash, yavaşlıq"
+              ],
+              [
+                "Nə vaxt",
+                "Kod yazılmadan əvvəl də başlaya bilər",
+                "İcra oluna bilən build lazımdır"
+              ],
+              [
+                "Nümunə",
+                "Requirement review, code review, ESLint",
+                "Test case icrası, API testi, load testi"
+              ]
+            ]
+          },
+          "id": "cmve390p6a9284b9cbb1a"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "tip",
+            "body": "Bəzi defektləri yalnız static tapır: istifadə olunmayan dəyişən, əlçatmaz kod, kodlaşdırma standartının pozulması, icra olunmayan sənəddəki ziddiyyət. Performance və yaddaş problemlərini isə yalnız dynamic görür. Biri digərini əvəz etmir."
+          },
+          "id": "cmve390p6e5bb0fff4bc9"
+        },
+        {
+          "type": "CATEGORIZE",
+          "title": "Static, yoxsa dynamic?",
+          "content": {
+            "instructions": "Hər fəaliyyəti düzgün qrupa ayır.",
+            "categories": [
+              {
+                "id": "static",
+                "label": "Static"
+              },
+              {
+                "id": "dynamic",
+                "label": "Dynamic"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "User story-dəki acceptance criteria-nı refinement-də oxuyub sual vermək",
+                "categoryId": "static"
+              },
+              {
+                "id": "i2",
+                "text": "Login formasında test case-i icra etmək",
+                "categoryId": "dynamic"
+              },
+              {
+                "id": "i3",
+                "text": "Pull request-də həmkarın kodunu oxumaq",
+                "categoryId": "static"
+              },
+              {
+                "id": "i4",
+                "text": "Postman ilə API-yə sorğu göndərib cavabı yoxlamaq",
+                "categoryId": "dynamic"
+              },
+              {
+                "id": "i5",
+                "text": "SonarQube-un CI-da kodda hardcoded şifrə tapması",
+                "categoryId": "static"
+              },
+              {
+                "id": "i6",
+                "text": "JMeter ilə 1 000 istifadəçi yükü vermək",
+                "categoryId": "dynamic"
+              }
+            ],
+            "explanation": "Sual sadədir: proqram icra olunurmu? Sənədi və ya kodu oxumaq static, proqramı işə salmaq dynamic-dir."
+          },
+          "id": "cmve390p64a79029020cf"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Static analysis",
+            "level": 2
+          },
+          "id": "cmve390p6739d17257308"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "**Static analysis** — alətin kodu işə salmadan yoxlaması. ESLint, SonarQube, compiler warning-ləri bu qrupa aiddir. Alət qaydalar toplusuna görə şübhəli yerləri göstərir: istifadə olunmayan dəyişən, əlçatmaz kod, təhlükəli funksiya, mürəkkəblik. Adətən CI pipeline-da hər commit-dən sonra avtomatik işləyir."
+          },
+          "id": "cmve390p66ff35129d1a6"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "const API_KEY = \"sk_live_8f3a2b\";        // hardcoded gizli açar (security)\n\nfunction applyDiscount(total, code) {\n  let unused = 0;                          // istifadə olunmayan dəyişən\n  if (code == \"YAZ10\") {                  // == əvəzinə === (tip xətası riski)\n    return total * 0.9;\n    console.log(\"applied\");               // əlçatmaz kod\n  }\n  return total;\n}",
+            "language": "javascript",
+            "caption": "Bu dörd problemi static analysis kodu bir dəfə də işə salmadan tapır."
+          },
+          "id": "cmve390p699c207e65160"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Review növləri",
+            "level": 2
+          },
+          "id": "cmve390p6e50c26f92a64"
+        },
+        {
+          "type": "TABLE",
+          "title": "Review növləri formallıq sırası ilə",
+          "content": {
+            "headers": [
+              "Növ",
+              "Formallıq",
+              "Kim aparır",
+              "Əsas məqsəd",
+              "Nümunə"
+            ],
+            "rows": [
+              [
+                "Informal review",
+                "Çox aşağı: proses və sənəd yoxdur",
+                "Hər kəs",
+                "Tez anomaliya tapmaq",
+                "Developer həmkarından PR-a baxmasını xahiş edir"
+              ],
+              [
+                "Walkthrough",
+                "Aşağı–orta",
+                "Müəllif",
+                "Bilik ötürmək, rəy toplamaq, defekt tapmaq",
+                "BA yeni tələbləri komandaya izah edir"
+              ],
+              [
+                "Technical review",
+                "Orta",
+                "Moderator (texniki ekspert)",
+                "Texniki qərar və konsensus, defekt tapmaq",
+                "Arxitekt və senior developer-lər API dizaynını müzakirə edir"
+              ],
+              [
+                "Inspection",
+                "Ən yüksək: rollar, checklist, metriklər, entry/exit meyarları",
+                "Moderator (müəllif deyil)",
+                "Maksimum defekt tapmaq, prosesi ölçmək",
+                "Bank ödəniş modulunun tələbləri checklist ilə rəsmi yoxlanır"
+              ]
+            ]
+          },
+          "id": "cmve390p6ee1a98bdb0df"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "remember",
+            "body": "Review rolları (ISTQB v4.0): **manager** (resurs verir), **author** (müəllif), **moderator / facilitator** (görüşü idarə edir), **scribe / recorder** (qeyd aparır), **reviewer** (yoxlayır), **review leader** (review-a ümumi cavabdeh). Inspection-da müəllif moderator və ya scribe ola bilməz."
+          },
+          "id": "cmve390p6ca8b0583e0b8"
+        },
+        {
+          "type": "ORDERING",
+          "title": "Review prosesini sırala",
+          "content": {
+            "instructions": "ISTQB v4.0 review prosesinin fəaliyyətlərini düzgün ardıcıllıqla düz.",
+            "items": [
+              "Planning — scope, məqsəd, iştirakçılar və exit meyarları müəyyən edilir",
+              "Review initiation — iştirakçılar hazırlanır, materiala çıxış verilir",
+              "Individual review — hər reviewer materialı təkbaşına yoxlayır",
+              "Communication and analysis — tapıntılar müzakirə edilir, qərar verilir",
+              "Fixing and reporting — defektlər düzəldilir, nəticə hesabatı yazılır"
+            ],
+            "explanation": "Review planlaşdırma ilə başlayır, fərdi yoxlama müzakirədən əvvəl gəlir və proses düzəliş və hesabatla bitir."
+          },
+          "id": "cmve390p6d96aac0ed31e"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Niyə static testi erkən başlatmaq lazımdır",
+            "level": 2
+          },
+          "id": "cmve390p6ea942299f656"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Tələbdə tapılan defekt bir cümlə düzəlişidir. Eyni defekt production-da hotfix, müştəri şikayəti və bəzən birbaşa pul itkisi deməkdir. Static testing defektləri **mənbəyində və ən ucuz anda** tapır — bu, shift-left yanaşmasının əsasıdır.\n\nDynamic testing isə real davranışı göstərir. Güclü komanda hər ikisini birlikdə istifadə edir."
+          },
+          "id": "cmve390p6fceecc21e8b4"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Static testing proqramı icra etmədən istənilən work product-u yoxlayır; dynamic testing proqramı işə salır.",
+              "Static defektin özünü, dynamic failure-u tapır; biri digərini əvəz etmir.",
+              "Static analysis alətləri (ESLint, SonarQube) kodu işə salmadan şübhəli yerləri göstərir.",
+              "Review növləri formallığa görə: informal → walkthrough → technical review → inspection.",
+              "Review prosesi: planning, initiation, individual review, communication and analysis, fixing and reporting."
+            ]
+          },
+          "id": "cmve390p640cd5cf4ce15"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yoxlama testi",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Hansı fəaliyyət static testing-dir?",
+                "options": [
+                  "API-yə sorğu göndərib cavabı yoxlamaq",
+                  "User story-ni refinement-də oxuyub ziddiyyət tapmaq",
+                  "Load testi aparmaq",
+                  "Login test case-ini icra etmək"
+                ],
+                "correctIndex": 1,
+                "explanation": "Sənədin oxunması və təhlili proqramın icrasını tələb etmir — bu static testing-dir."
+              },
+              {
+                "id": "q2",
+                "text": "Hansı defekti static testing dynamic testing-dən daha asan tapır?",
+                "options": [
+                  "Yüksək yükdə yaddaş sızması",
+                  "Yavaş cavab müddəti",
+                  "Əlçatmaz (unreachable) kod",
+                  "Brauzerdə vizual pozulma"
+                ],
+                "correctIndex": 2,
+                "explanation": "Əlçatmaz kod heç vaxt icra olunmur, buna görə dynamic test onu görmür. Static analysis isə dərhal göstərir."
+              },
+              {
+                "id": "q3",
+                "text": "Hansı review növü ən formaldır?",
+                "options": [
+                  "Inspection",
+                  "Walkthrough",
+                  "Technical review",
+                  "Informal review"
+                ],
+                "correctIndex": 0,
+                "explanation": "Inspection-da rəsmi rollar, checklist, metriklər və entry/exit meyarları var."
+              },
+              {
+                "id": "q4",
+                "text": "Walkthrough-u adətən kim aparır?",
+                "options": [
+                  "Son istifadəçi",
+                  "Müstəqil auditor",
+                  "Müəllif",
+                  "Manager"
+                ],
+                "correctIndex": 2,
+                "explanation": "Walkthrough-da müəllif materialı iştirakçılara izah edir və rəy toplayır."
+              },
+              {
+                "id": "q5",
+                "text": "ISTQB v4.0 review prosesində \"individual review\" hansı fəaliyyətdən sonra gəlir?",
+                "options": [
+                  "Review initiation",
+                  "Communication and analysis",
+                  "Fixing and reporting",
+                  "Planning-dən dərhal əvvəl"
+                ],
+                "correctIndex": 0,
+                "explanation": "Ardıcıllıq: planning → review initiation → individual review → communication and analysis → fixing and reporting."
+              },
+              {
+                "id": "q6",
+                "text": "Static və dynamic testing-in əlaqəsi necədir?",
+                "options": [
+                  "Static dynamic-i tam əvəz edir",
+                  "Dynamic static-i tam əvəz edir",
+                  "Yalnız Waterfall-da birlikdə istifadə olunur",
+                  "Bir-birini tamamlayır, fərqli defekt növləri tapır"
+                ],
+                "correctIndex": 3,
+                "explanation": "Hər biri digərinin görmədiyi problemləri tapır, buna görə birlikdə istifadə olunur."
+              }
+            ]
+          },
+          "id": "cmve390p6503b93212837"
+        }
+      ]
+    }
+  ]
+}

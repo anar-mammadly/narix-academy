@@ -17,6 +17,12 @@ model User {
   bio          String?
   phone        String?
   language     String   @default("az")
+  // Gamification
+  xp             Int       @default(0)
+  streakCount    Int       @default(0)
+  longestStreak  Int       @default(0)
+  lastActiveDay  String?   // YYYY-MM-DD in Asia/Baku
+  dailyGoalXp    Int       @default(30)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
@@ -29,6 +35,10 @@ model User {
   homeworkSubmits   HomeworkSubmit[]
   certificates      Certificate[]
   calendarEvents    CalendarEvent[]
+  xpEvents          XpEvent[]
+  blockAttempts     BlockAttempt[]
+  achievements      UserAchievement[]
+  reviewItems       ReviewItem[]
 }
 
 model Module {
@@ -88,6 +98,8 @@ model LessonBlock {
 
   lesson      Lesson       @relation(fields: [lessonId], references: [id], onDelete: Cascade)
   submissions Submission[]
+  attempts    BlockAttempt[]
+  reviewItems ReviewItem[]
 }
 
 model Submission {
@@ -241,4 +253,73 @@ model CalendarEvent {
   createdAt   DateTime @default(now())
 
   createdBy User @relation(fields: [createdById], references: [id], onDelete: Cascade)
+}
+
+// ── Gamification ───────────────────────────────────────────────
+
+// Every XP grant. (userId, reason, refId) is unique so a reward is never paid twice.
+model XpEvent {
+  id        String   @id @default(cuid())
+  userId    String
+  amount    Int
+  reason    String // BLOCK, LESSON, PERFECT_QUIZ, REVIEW, STREAK, ACHIEVEMENT
+  refId     String
+  day       String // YYYY-MM-DD in Asia/Baku
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, reason, refId])
+  @@index([userId, day])
+  @@index([createdAt])
+}
+
+// Result of an interactive block (quiz, ordering, bug hunt, code exercise, ...).
+model BlockAttempt {
+  id        String   @id @default(cuid())
+  userId    String
+  lessonId  String
+  blockId   String
+  score     Int // 0–100, best score
+  passed    Boolean  @default(false)
+  attempts  Int      @default(1)
+  answer    String   @default("{}") // last answer JSON
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user  User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  block LessonBlock @relation(fields: [blockId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, blockId])
+  @@index([userId, lessonId])
+}
+
+model UserAchievement {
+  id         String   @id @default(cuid())
+  userId     String
+  key        String
+  unlockedAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, key])
+}
+
+// Spaced repetition (Leitner boxes 1–5) for quiz questions answered wrongly.
+model ReviewItem {
+  id         String   @id @default(cuid())
+  userId     String
+  blockId    String
+  questionId String
+  lessonId   String
+  box        Int      @default(1)
+  dueAt      DateTime @default(now())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  user  User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  block LessonBlock @relation(fields: [blockId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, blockId, questionId])
+  @@index([userId, dueAt])
 }

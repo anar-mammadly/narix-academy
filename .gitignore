@@ -27,3 +27,6 @@ public/uploads/*
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
+
+# Database snapshots written by `npm run content:sync`
+content/_legacy/backup-*.json

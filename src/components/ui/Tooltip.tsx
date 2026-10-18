@@ -7,17 +7,14 @@ export function TooltipProvider({ children }: { children: ReactNode }) {
   return <RadixTooltip.Provider delayDuration={200}>{children}</RadixTooltip.Provider>;
 }
 
-export function Tooltip({ label, children }: { label: string; children: ReactNode }) {
+export function Tooltip({ label, children, side }: { label: string; children: ReactNode; side?: "top" | "right" | "bottom" | "left" }) {
   return (
     <RadixTooltip.Root>
       <RadixTooltip.Trigger asChild>{children}</RadixTooltip.Trigger>
       <RadixTooltip.Portal>
-        <RadixTooltip.Content
-          sideOffset={6}
-          className="z-50 rounded-lg bg-gray-900 px-2.5 py-1.5 text-xs font-medium text-white shadow-lg"
-        >
+        <RadixTooltip.Content side={side} sideOffset={6} className="z-50 max-w-60 rounded-md bg-ink px-2.5 py-1.5 text-xs font-medium text-bg shadow-pop">
           {label}
-          <RadixTooltip.Arrow className="fill-gray-900" />
+          <RadixTooltip.Arrow className="fill-ink" />
         </RadixTooltip.Content>
       </RadixTooltip.Portal>
     </RadixTooltip.Root>

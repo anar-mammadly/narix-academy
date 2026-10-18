@@ -1,0 +1,1581 @@
+{
+  "id": "cmn1l6pjb000pvkfi9kr4bc3h",
+  "key": "baqlar",
+  "order": 7,
+  "title": "Baqlar və defekt idarəetməsi",
+  "description": "Bug-ı tanımaq, dəqiq report yazmaq, severity və priority təyin etmək və həyat dövrünü izləmək.",
+  "icon": "Bug",
+  "color": "#FF7A1A",
+  "lessons": [
+    {
+      "id": "cmn1l7yeg000rvkfi8doz6m56",
+      "slug": "bug-defect-basics",
+      "title": "Bug, Defect, Error, Failure",
+      "shortDescription": "ISTQB terminologiyası: insan səhvi, kodda qüsur və istifadəçinin gördüyü nasazlıq arasındakı fərq.",
+      "estimatedMinutes": 10,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Error, defect və failure anlayışlarını ISTQB-yə uyğun fərqləndirə biləcəksən",
+              "Baqların yaranma səbəblərini real nümunələrlə izah edə biləcəksən",
+              "Expected və actual result-u dəqiq formalaşdıra biləcəksən",
+              "Hansı halın bug olmadığını tanıya və düzgün reaksiya verə biləcəksən"
+            ]
+          },
+          "id": "cmve390p8caeadeb5a3c9"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Error (mistake)",
+                "az": "insan səhvi",
+                "definition": "İnsanın yanlış nəticə verən hərəkəti: səhv düşünmək, səhv yazmaq, tələbi səhv anlamaq."
+              },
+              {
+                "term": "Defect (bug, fault)",
+                "az": "qüsur",
+                "definition": "Kodda, tələbdə və ya digər iş məhsulunda olan qüsur. ISTQB üçün bug, defect və fault sinonimdir."
+              },
+              {
+                "term": "Failure",
+                "az": "nasazlıq",
+                "definition": "Sistemin icra zamanı gözlənilən davranışı göstərməməsi — istifadəçinin gördüyü problem."
+              },
+              {
+                "term": "Root cause",
+                "az": "kök səbəb",
+                "definition": "Defektin yaranmasına gətirib çıxaran ilkin səbəb (məsələn, tələbin qeyri-müəyyən yazılması)."
+              },
+              {
+                "term": "Expected / Actual result",
+                "az": "gözlənilən / faktiki nəticə",
+                "definition": "Sistemin necə işləməli olduğu və real olaraq necə işlədiyi."
+              }
+            ]
+          },
+          "id": "cmve390p87e6090daa2e1"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Error → Defect → Failure zənciri",
+            "level": 2
+          },
+          "id": "cmve390p88c6f4602825f"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "ISTQB bu üç anlayışı səbəb-nəticə zənciri kimi izah edir. **İnsan error edir** → bu, kodda və ya sənəddə **defect** yaradır → defektli kod icra olunanda **failure** baş verir.\n\nQA adətən zəncirin sonunu — failure-u görür. Bug report yazanda isə failure-u təsvir edirsən, developer onun arxasındakı defekti tapır."
+          },
+          "id": "cmve390p8361c01c9350b"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "Nümunə: 50 AZN endirim qaydası",
+          "content": {
+            "description": "Tələb: \"Səbət 50 AZN və daha çox olarsa, 10% endirim tətbiq olunur.\"\n\n- **Error:** developer şərti yazanda `total >= 50` əvəzinə `total > 50` yazır.\n- **Defect:** səhv şərt kodda qalır.\n- **Failure:** müştəri səbətə düz 50 AZN-lik məhsul yığır, amma endirim almır.",
+            "takeaway": "Failure — simptomdur, defect — onun kodda olan səbəbi, error — defekti yaradan insan hərəkəti."
+          },
+          "id": "cmve390p899c6182cff61"
+        },
+        {
+          "type": "NOTE",
+          "title": "İki vacib istisna",
+          "content": {
+            "variant": "remember",
+            "body": "- Hər defect failure-a çevrilmir: defektli kod heç vaxt icra olunmursa, istifadəçi problemi görmür.\n- Hər failure defektdən yaranmır: mühit şəraiti (məsələn, serverdə disk dolması, radiasiya, elektromaqnit sahəsi) və ya yanlış konfiqurasiya da failure yarada bilər."
+          },
+          "id": "cmve390p8b24a99aac790"
+        },
+        {
+          "type": "CATEGORIZE",
+          "title": "Error, defect, yoxsa failure?",
+          "content": {
+            "instructions": "Hər vəziyyəti uyğun anlayışa yerləşdir.",
+            "categories": [
+              {
+                "id": "error",
+                "label": "Error"
+              },
+              {
+                "id": "defect",
+                "label": "Defect"
+              },
+              {
+                "id": "failure",
+                "label": "Failure"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "Analitik \"ən azı 8 simvol\" əvəzinə tələbə \"ən çoxu 8 simvol\" yazdı",
+                "categoryId": "error"
+              },
+              {
+                "id": "i2",
+                "text": "Developer valyuta çevirməsində AZN əvəzinə USD məzənnəsini seçdi",
+                "categoryId": "error"
+              },
+              {
+                "id": "i3",
+                "text": "Kodda tarix formatı `MM/DD` kimi yazılıb, halbuki tələb `DD.MM` istəyir",
+                "categoryId": "defect"
+              },
+              {
+                "id": "i4",
+                "text": "Tələb sənədində iki bənd bir-birinə zidd yazılıb",
+                "categoryId": "defect"
+              },
+              {
+                "id": "i5",
+                "text": "İstifadəçi \"Ödə\" düyməsinə basır və səhifə donur",
+                "categoryId": "failure"
+              },
+              {
+                "id": "i6",
+                "text": "Kommunal ödənişindən sonra qəbzdə yanlış məbləğ göstərilir",
+                "categoryId": "failure"
+              }
+            ],
+            "explanation": "Error insanın hərəkətidir, defect iş məhsulunda (kod, tələb) qalan izdir, failure isə icra zamanı görünən nəticədir."
+          },
+          "id": "cmve390p8af6276cc4fbd"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Baqlar niyə yaranır?",
+            "level": 2
+          },
+          "id": "cmve390p8728acd05294b"
+        },
+        {
+          "type": "TABLE",
+          "title": "Baqların əsas səbəbləri və nümunələr",
+          "content": {
+            "headers": [
+              "Səbəb",
+              "Necə təsir edir",
+              "Nümunə"
+            ],
+            "rows": [
+              [
+                "Vaxt təzyiqi",
+                "Kod tələsik yazılır, review atlanır",
+                "Release-dən bir gün əvvəl əlavə edilən feature"
+              ],
+              [
+                "Mürəkkəblik",
+                "Çoxlu inteqrasiya və şərt səhv ehtimalını artırır",
+                "Bank tətbiqində 5 fərqli kart tipi üçün komissiya hesabı"
+              ],
+              [
+                "Ünsiyyət çatışmazlığı",
+                "Tələb fərqli başa düşülür",
+                "PO \"tarix\" deyir, developer doğum tarixi yox, qeydiyyat tarixi anlayır"
+              ],
+              [
+                "Təcrübəsizlik, yeni texnologiya",
+                "Komanda alətin xüsusiyyətlərini bilmir",
+                "Yeni ödəniş SDK-sı ilə ilk inteqrasiya"
+              ],
+              [
+                "Mühit və konfiqurasiya",
+                "Kod düzgündür, mühit fərqlidir",
+                "Test serverində saat qurşağı UTC, production-da UTC+4"
+              ]
+            ]
+          },
+          "id": "cmve390p8eebb9ae25b2f"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Expected vs Actual: problemi dəqiq ifadə et",
+            "level": 2
+          },
+          "id": "cmve390p812b41c198ad8"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Expected result təxmin deyil — onu **test oracle**-dan götürürsən: tələb, acceptance criteria, dizayn maketi, API sənədi və ya oxşar məhsulun davranışı.\n\nActual result isə gördüyünü olduğu kimi, ölçülə bilən şəkildə yazır: hansı mesaj, hansı rəqəm, hansı status code."
+          },
+          "id": "cmve390p87211ca30144b"
+        },
+        {
+          "type": "TABLE",
+          "title": "Zəif və dəqiq ifadə nümunələri",
+          "content": {
+            "headers": [
+              "",
+              "Zəif",
+              "Dəqiq"
+            ],
+            "rows": [
+              [
+                "Expected",
+                "Login işləməlidir",
+                "Düzgün email və şifrədən sonra \"Hesabım\" səhifəsi açılır"
+              ],
+              [
+                "Actual",
+                "Login işləmir",
+                "\"Daxil ol\" düyməsinə basdıqdan sonra səhifə yenilənir, heç bir mesaj çıxmır"
+              ],
+              [
+                "Expected",
+                "Məbləğ düzgün olmalıdır",
+                "50 AZN səbətdə yekun məbləğ 45.00 AZN olur"
+              ],
+              [
+                "Actual",
+                "Məbləğ səhvdir",
+                "Yekun məbləğ 50.00 AZN göstərilir, endirim sətri yoxdur"
+              ]
+            ]
+          },
+          "id": "cmve390p8ce15f1b5f36f"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Nə zaman bug DEYİL?",
+            "level": 2
+          },
+          "id": "cmve390p82d2f6bca245c"
+        },
+        {
+          "type": "TABLE",
+          "title": "Bug olmayan hallar və düzgün reaksiya",
+          "content": {
+            "headers": [
+              "Hal",
+              "Niyə bug deyil",
+              "Nə etməli"
+            ],
+            "rows": [
+              [
+                "Sistem tələbə uyğun işləyir",
+                "Davranış spesifikasiyadadır",
+                "Tələbin özü səhv görünürsə, PO-ya sual ver (bu, tələb defekti ola bilər)"
+              ],
+              [
+                "Feature hələ hazır deyil",
+                "Sprint scope-una daxil deyil",
+                "Backlog-u yoxla, bug açma"
+              ],
+              [
+                "Şüurlu dizayn qərarı",
+                "Komanda bunu bilərəkdən seçib",
+                "UX təklifi kimi qeyd et"
+              ],
+              [
+                "Test mühiti və ya test data problemi",
+                "Məhsulun kodu yox, sənin setup-ın səhvdir",
+                "Mühiti, build versiyasını və data-nı yoxla"
+              ],
+              [
+                "İstifadəçi səhvi, sistem düzgün xəbərdarlıq edir",
+                "Sistem gözlənildiyi kimi qoruyur",
+                "Mesaj aydın deyilsə, usability qeydi yaz"
+              ]
+            ]
+          },
+          "id": "cmve390p863eff7c2793c"
+        },
+        {
+          "type": "NOTE",
+          "title": "Bug açmazdan əvvəl",
+          "content": {
+            "variant": "tip",
+            "body": "Bug açmazdan əvvəl üç sual ver: 1) Expected-i hansı mənbədən bilirəm? 2) Problemi təkrarlaya bilirəm? 3) Bu, mühit və ya data problemi deyil ki?"
+          },
+          "id": "cmve390p8437a69663ec8"
+        },
+        {
+          "type": "CATEGORIZE",
+          "title": "Bug, yoxsa bug deyil?",
+          "content": {
+            "instructions": "Hər vəziyyəti qiymətləndir. Tələblər mötərizədə verilib.",
+            "categories": [
+              {
+                "id": "bug",
+                "label": "Bug"
+              },
+              {
+                "id": "not-bug",
+                "label": "Bug deyil"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "Şifrə sahəsinə 7 simvol yazanda qeydiyyat uğurla bitir (tələb: minimum 8 simvol)",
+                "categoryId": "bug"
+              },
+              {
+                "id": "i2",
+                "text": "Səbətdən məhsulu silirsən, amma yekun məbləğ dəyişmir",
+                "categoryId": "bug"
+              },
+              {
+                "id": "i3",
+                "text": "Kart ilə ödəniş yoxdur — bu feature növbəti sprintin backlog-undadır",
+                "categoryId": "not-bug"
+              },
+              {
+                "id": "i4",
+                "text": "3 dəfə yanlış şifrədən sonra hesab 15 dəqiqəlik bloklanır (tələb məhz belədir)",
+                "categoryId": "not-bug"
+              },
+              {
+                "id": "i5",
+                "text": "Test serverində köhnə build olduğu üçün yeni düymə görünmür",
+                "categoryId": "not-bug"
+              },
+              {
+                "id": "i6",
+                "text": "Profil şəkli 2 MB-dan kiçik olsa da \"Fayl çox böyükdür\" xətası çıxır (tələb: maksimum 5 MB)",
+                "categoryId": "bug"
+              }
+            ],
+            "explanation": "Bug — expected (tələb) ilə actual arasında real fərqdir. Planlaşdırılmamış feature, düzgün işləyən qayda və yanlış mühit bug sayılmır."
+          },
+          "id": "cmve390p8d69c86e0d988"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Error insan hərəkətidir, defect (bug, fault) iş məhsulundakı qüsurdur, failure icra zamanı görünən nəticədir.",
+              "Hər defect failure-a çevrilmir, hər failure da defektdən yaranmır — mühit də səbəb ola bilər.",
+              "Baqların əsas səbəbləri: vaxt təzyiqi, mürəkkəblik, ünsiyyət çatışmazlığı, təcrübəsizlik və mühit fərqləri.",
+              "Expected result-u test oracle-dan götür, actual result-u ölçülə bilən şəkildə yaz.",
+              "Bug açmazdan əvvəl tələbi, backlog-u və test mühitini yoxla."
+            ]
+          },
+          "id": "cmve390p8ca63293278e0"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "ISTQB-yə görə hansı ardıcıllıq düzgündür?",
+                "options": [
+                  "Failure → Defect → Error",
+                  "Error → Defect → Failure",
+                  "Defect → Error → Failure",
+                  "Error → Failure → Defect"
+                ],
+                "correctIndex": 1,
+                "explanation": "İnsan error edir, bu iş məhsulunda defect yaradır, defektli kod icra olunanda failure baş verir."
+              },
+              {
+                "id": "q2",
+                "text": "Developer tələbi səhv anlayıb yanlış şərt yazdı. Bu hərəkət nədir?",
+                "options": [
+                  "Failure",
+                  "Defect",
+                  "Error",
+                  "Incident"
+                ],
+                "correctIndex": 2,
+                "explanation": "Yanlış nəticə verən insan hərəkəti error (mistake) adlanır. Onun nəticəsi kodda qalan defektdir."
+              },
+              {
+                "id": "q3",
+                "text": "Kodda defekt var, amma həmin funksiya heç vaxt çağırılmır. Nə baş verir?",
+                "options": [
+                  "Mütləq failure baş verir",
+                  "Failure baş vermir, çünki defektli kod icra olunmur",
+                  "Defekt avtomatik error-a çevrilir",
+                  "Sistem dərhal çökür"
+                ],
+                "correctIndex": 1,
+                "explanation": "Failure yalnız defektli kod icra olunanda yaranır. Buna görə bəzi defektlər uzun müddət gizli qalır."
+              },
+              {
+                "id": "q4",
+                "text": "Hansı actual result ən dəqiq yazılıb?",
+                "options": [
+                  "Səbət işləmir",
+                  "Səbətdə problem var, yoxlayın",
+                  "Məhsulu sildikdən sonra yekun məbləğ 120.00 AZN olaraq qalır",
+                  "Məbləğ qəribədir"
+                ],
+                "correctIndex": 2,
+                "explanation": "Dəqiq actual result konkret hərəkəti və ölçülə bilən nəticəni (120.00 AZN) göstərir."
+              },
+              {
+                "id": "q5",
+                "text": "Tələbə görə 3 yanlış cəhddən sonra hesab bloklanır. Tester bunu gördü. Bu nədir?",
+                "options": [
+                  "Critical bug",
+                  "Bug deyil, sistem tələbə uyğun işləyir",
+                  "Mühit problemi",
+                  "Duplicate bug"
+                ],
+                "correctIndex": 1,
+                "explanation": "Davranış tələbə uyğundursa, bug deyil. Qaydanı səhv hesab edirsənsə, bunu PO ilə müzakirə et."
+              },
+              {
+                "id": "q6",
+                "text": "Test serverində saat qurşağı səhv qurulub və tarixlər yanlış görünür. Production-da problem yoxdur. Ən düzgün addım hansıdır?",
+                "options": [
+                  "Critical bug açmaq",
+                  "Mühit problemini DevOps-a bildirmək və testi düzgün mühitdə təkrarlamaq",
+                  "Problemi görməzdən gəlmək",
+                  "Developer-dən kodu dəyişməyi tələb etmək"
+                ],
+                "correctIndex": 1,
+                "explanation": "Bu, məhsul kodunun deyil, test mühitinin problemidir. Mühiti düzəltmək və testi təkrarlamaq lazımdır."
+              }
+            ]
+          },
+          "id": "cmve390p86a689706d2f9"
+        }
+      ]
+    },
+    {
+      "id": "cmn1lv8wm001dvkfi9n3yjs95",
+      "slug": "bug-reporting-bug-life-cycle",
+      "title": "Yaxşı Bug Report yazmaq",
+      "shortDescription": "Developer-in ilk oxuyuşda anlayıb təkrarlaya biləcəyi bug report: başlıq, addımlar, mühit və sübutlar.",
+      "estimatedMinutes": 12,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Bug report-un əsas sahələrini və hər birinin məqsədini sadalaya biləcəksən",
+              "\"Harada + nə + hansı şərtdə\" formulu ilə dəqiq başlıq yaza biləcəksən",
+              "Təkrarlana bilən Steps to Reproduce yaza biləcəksən",
+              "Bug report-a uyğun sübut (screenshot, video, log) əlavə edə biləcəksən"
+            ]
+          },
+          "id": "cmve390p82330feb24b22"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Bug report (defect report)",
+                "az": "baq hesabatı",
+                "definition": "Tapılmış defekt haqqında developer-in onu təkrarlayıb düzəltməsi üçün lazım olan məlumat."
+              },
+              {
+                "term": "Steps to Reproduce (STR)",
+                "az": "təkrarlama addımları",
+                "definition": "Problemi yenidən yaratmaq üçün nömrələnmiş, dəqiq addımlar."
+              },
+              {
+                "term": "Environment",
+                "az": "mühit",
+                "definition": "Problemin göründüyü şərait: build versiyası, browser, OS, cihaz, server (test/staging)."
+              },
+              {
+                "term": "Reproducibility",
+                "az": "təkrarlanma tezliyi",
+                "definition": "Bug neçə cəhddən neçəsində təkrarlanır, məsələn 3/3 və ya 1/5."
+              },
+              {
+                "term": "Attachment",
+                "az": "əlavə",
+                "definition": "Screenshot, ekran videosu, console log və ya request/response kimi sübut."
+              }
+            ]
+          },
+          "id": "cmve390p84d556e326c35"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Bug report nə üçündür?",
+            "level": 2
+          },
+          "id": "cmve390p866c1b39060a6"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Bug report-u oxuyan developer sənin ekranını görmür. Hesabat yalnız ona lazım olan məlumatı verməlidir ki, o:\n- problemi **təkrarlasın**,\n- **səbəbini** tapsın,\n- düzəlişdən sonra sən **yoxlaya biləsən**.\n\nISTQB-yə görə defect report həm də keyfiyyətin izlənməsi və prosesin yaxşılaşdırılması üçün məlumat mənbəyidir."
+          },
+          "id": "cmve390p849eaef5c0dbc"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Bug report-un strukturu",
+            "level": 2
+          },
+          "id": "cmve390p8f3f9a21acf2c"
+        },
+        {
+          "type": "TABLE",
+          "title": "Bug report sahələri və məqsədi",
+          "content": {
+            "headers": [
+              "Sahə",
+              "Nə yazılır",
+              "Nümunə"
+            ],
+            "rows": [
+              [
+                "Title",
+                "Harada, nə və hansı şərtdə baş verir",
+                "Checkout: kartla ödənişdə \"Ödə\" düyməsi 500 xətası qaytarır"
+              ],
+              [
+                "Environment",
+                "Build, browser/cihaz, OS, server",
+                "Staging, build 2.14.0, Chrome 129, Windows 11"
+              ],
+              [
+                "Preconditions",
+                "Başlamazdan əvvəl lazım olan vəziyyət",
+                "İstifadəçi daxil olub, səbətdə 1 məhsul var"
+              ],
+              [
+                "Steps to Reproduce",
+                "Nömrələnmiş, dəqiq addımlar",
+                "1. /cart səhifəsini aç 2. \"Sifarişi rəsmiləşdir\" düyməsini bas..."
+              ],
+              [
+                "Expected result",
+                "Tələbə görə nə olmalıdır",
+                "\"Sifariş qəbul edildi\" səhifəsi açılır"
+              ],
+              [
+                "Actual result",
+                "Real olaraq nə baş verir",
+                "\"Xəta baş verdi\" mesajı çıxır, sifariş yaranmır"
+              ],
+              [
+                "Severity / Priority",
+                "Təsir və təcililik",
+                "Critical / High"
+              ],
+              [
+                "Attachments",
+                "Sübut",
+                "Ekran videosu, Network tab-dan response"
+              ]
+            ]
+          },
+          "id": "cmve390p8a17ac35f9977"
+        },
+        {
+          "type": "NOTE",
+          "title": "Severity və priority",
+          "content": {
+            "variant": "remember",
+            "body": "Severity — problemin sistemə **texniki təsiri**, priority — **nə qədər tez** düzəldilməsi. Hər ikisini növbəti dərsdə ətraflı öyrənəcəksən."
+          },
+          "id": "cmve390p800e0a6024f8b"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Başlıq: harada + nə + hansı şərtdə",
+            "level": 2
+          },
+          "id": "cmve390p813d570b36985"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Başlıq bug-un bir cümləlik xülasəsidir. Developer, PO və digər tester bug siyahısında yalnız başlığı görür. Formul:\n\n**[Harada]: [nə baş verir] + [hansı şərtdə]**\n\nBaşlıqda \"işləmir\", \"problem var\", \"təcili!\" kimi qeyri-dəqiq sözlərdən və emosiyadan qaç."
+          },
+          "id": "cmve390p86c15106521a2"
+        },
+        {
+          "type": "TABLE",
+          "title": "Zəif və güclü başlıqlar",
+          "content": {
+            "headers": [
+              "Zəif başlıq",
+              "Güclü başlıq"
+            ],
+            "rows": [
+              [
+                "Login işləmir",
+                "Login: düzgün şifrə ilə daxil olduqda \"Yanlış şifrə\" xətası çıxır"
+              ],
+              [
+                "Səbətdə bug",
+                "Səbət: məhsul silindikdən sonra yekun məbləğ yenilənmir"
+              ],
+              [
+                "TƏCİLİ!!! Ödəniş",
+                "Checkout: kartla ödənişdə pul çıxılır, amma sifariş yaranmır"
+              ],
+              [
+                "Şəkil problemi",
+                "Profil: 3 MB-lıq PNG yüklənəndə \"Fayl çox böyükdür\" xətası çıxır (limit 5 MB)"
+              ]
+            ]
+          },
+          "id": "cmve390p8be74dcae60be"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Sürətli yoxlama",
+          "content": {
+            "questions": [
+              {
+                "id": "mq1",
+                "text": "Hansı başlıq ən yaxşısıdır?",
+                "options": [
+                  "Axtarış işləmir",
+                  "Axtarış: \"telefon\" sözü ilə axtarışda nəticə siyahısı boş qalır",
+                  "Axtarışda problem var, tez baxın",
+                  "Axtarış bug-u"
+                ],
+                "correctIndex": 1,
+                "explanation": "Güclü başlıq yeri (Axtarış), hərəkəti/şərti (\"telefon\" sözü) və nəticəni (siyahı boş) göstərir."
+              }
+            ]
+          },
+          "id": "cmve390p88c7cb31a3970"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Steps to Reproduce: təkrarlana bilən addımlar",
+            "level": 2
+          },
+          "id": "cmve390p8dcd92d4965b5"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Yaxşı STR qaydaları:\n1. Başlanğıc nöqtəsindən başla (URL və ya ekran adı).\n2. Bir addımda bir hərəkət yaz.\n3. Konkret test data ver: email, məbləğ, məhsul adı.\n4. Düymə və sahə adlarını interfeysdəki kimi yaz.\n5. Lazımsız addımları çıxar — problemi yaradan minimum yol qalsın."
+          },
+          "id": "cmve390p887153c3e662d"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "Zəif və güclü STR",
+          "content": {
+            "description": "**Zəif:**\nSayta girdim, məhsul əlavə etdim, ödəniş etmək istədim, alınmadı.\n\n**Güclü:**\n1. https://staging.narixmarket.az/login səhifəsini aç\n2. `test.user@narix.az` / `Test1234!` ilə daxil ol\n3. \"Simsiz qulaqlıq\" (35 AZN) məhsulunu səbətə əlavə et\n4. \"Sifarişi rəsmiləşdir\" düyməsini bas\n5. Test kartı `4111 1111 1111 1111` daxil et və \"Ödə\" düyməsini bas",
+            "takeaway": "Güclü STR-i başqa tester ilk dəfə oxuyub eyni nəticəni almalıdır."
+          },
+          "id": "cmve390p83a7ef3029571"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Mühit və sübutlar",
+            "level": 2
+          },
+          "id": "cmve390p827e06fa9ce6c"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Eyni bug Chrome-da görünüb Safari-də görünməyə bilər, test serverində olub production-da olmaya bilər. Buna görə environment sahəsi məcburidir.\n\nSübut kimi əlavə et:\n- **Screenshot** — problemli yeri işarələ.\n- **Ekran videosu** — çox addımlı və ya animasiya ilə bağlı bug üçün.\n- **Console log, request/response** — xəta texnikidirsə (DevTools dərsində öyrənəcəksən).\n- **Reproducibility** — məsələn, \"3/3 cəhddə təkrarlandı\"."
+          },
+          "id": "cmve390p8e20b6fbaa4f2"
+        },
+        {
+          "type": "CHECKLIST",
+          "title": "Göndərməzdən əvvəl yoxla",
+          "content": {
+            "items": [
+              {
+                "id": "c1",
+                "text": "Eyni bug artıq açılmayıb (duplicate axtardım)"
+              },
+              {
+                "id": "c2",
+                "text": "Bir report — bir problem"
+              },
+              {
+                "id": "c3",
+                "text": "Başlıq harada, nə və hansı şərtdə baş verdiyini deyir"
+              },
+              {
+                "id": "c4",
+                "text": "Addımları təzə səhifədə özüm təkrarladım"
+              },
+              {
+                "id": "c5",
+                "text": "Environment və build versiyası yazılıb"
+              },
+              {
+                "id": "c6",
+                "text": "Screenshot və ya video əlavə olunub"
+              },
+              {
+                "id": "c7",
+                "text": "Ton neytraldır: faktlar var, ittiham yoxdur"
+              }
+            ]
+          },
+          "id": "cmve390p81999816558df"
+        },
+        {
+          "type": "CODE",
+          "title": "Nümunə bug report",
+          "content": {
+            "code": "Title: Checkout: kartla ödənişdə pul çıxılır, amma sifariş yaranmır\nEnvironment: Staging, build 2.14.0, Chrome 129, Windows 11\nPreconditions: İstifadəçi daxil olub, səbətdə \"Simsiz qulaqlıq\" (35 AZN) var\n\nSteps to Reproduce:\n1. /cart səhifəsini aç\n2. \"Sifarişi rəsmiləşdir\" düyməsini bas\n3. Test kartı 4111 1111 1111 1111 daxil et\n4. \"Ödə\" düyməsini bas\n\nExpected: \"Sifariş qəbul edildi\" səhifəsi açılır, sifariş \"Sifarişlərim\"də görünür\nActual: \"Xəta baş verdi\" mesajı çıxır, sifariş yaranmır, kartdan 35 AZN çıxılır\nReproducibility: 3/3\nSeverity: Critical | Priority: High\nAttachments: checkout-error.mp4, POST /payments response (500)",
+            "language": "text",
+            "caption": "Tam bug report nümunəsi"
+          },
+          "id": "cmve390p834b8b7675ac3"
+        },
+        {
+          "type": "BUG_REPORT_BUILDER",
+          "title": "Praktika: bug report yaz",
+          "content": {
+            "scenario": "Narix Market saytında (staging, build 2.14.0, Chrome 129) daxil olmuş istifadəçi səbətdəki məhsulu kartla ödəyir. \"Ödə\" düyməsinə basdıqdan sonra \"Xəta baş verdi\" mesajı çıxır, sifariş \"Sifarişlərim\" bölməsində görünmür, amma istifadəçiyə kartdan 35 AZN çıxılması barədə SMS gəlir. Problem 3 cəhddən 3-də təkrarlandı.",
+            "expectedSeverity": "Critical",
+            "expectedPriority": "High",
+            "keywords": [
+              "ödə",
+              "kart",
+              "sifariş",
+              "xəta",
+              "35"
+            ],
+            "sampleSolution": {
+              "title": "Checkout: kartla ödənişdə pul çıxılır, amma sifariş yaranmır",
+              "steps": [
+                "Staging-də test istifadəçisi ilə daxil ol",
+                "Səbətə 35 AZN-lik məhsul əlavə et",
+                "\"Sifarişi rəsmiləşdir\" düyməsini bas",
+                "Test kartını daxil et və \"Ödə\" düyməsini bas"
+              ],
+              "expected": "\"Sifariş qəbul edildi\" səhifəsi açılır, sifariş \"Sifarişlərim\" bölməsində görünür",
+              "actual": "\"Xəta baş verdi\" mesajı çıxır, sifariş yaranmır, kartdan 35 AZN çıxılır (3/3 təkrarlandı)"
+            }
+          },
+          "id": "cmve390p8d93d3d6b837a"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Bug report developer-ə problemi təkrarlamaq, səbəbini tapmaq və düzəlişi yoxlatmaq üçün lazımdır.",
+              "Başlıq formulu: harada + nə baş verir + hansı şərtdə.",
+              "STR nömrələnmiş, bir addımda bir hərəkət və konkret test data ilə yazılır.",
+              "Environment, reproducibility və sübut (screenshot, video, log) məcburi hissələrdir.",
+              "Bir report — bir problem; göndərməzdən əvvəl duplicate axtar."
+            ]
+          },
+          "id": "cmve390p859b6eacba156"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Bug report-un əsas məqsədi nədir?",
+                "options": [
+                  "Developer-in səhvini qeyd etmək",
+                  "Developer-ə problemi təkrarlamaq və düzəltmək üçün kifayət qədər məlumat vermək",
+                  "Tester-in tapdığı bug sayını artırmaq",
+                  "Release-i dayandırmaq"
+                ],
+                "correctIndex": 1,
+                "explanation": "Bug report kommunikasiya alətidir: məqsəd problemi təkrarlana bilən və düzəldilə bilən etməkdir."
+              },
+              {
+                "id": "q2",
+                "text": "Hansı STR addımı ən yaxşı yazılıb?",
+                "options": [
+                  "Məhsul əlavə et və yoxla",
+                  "Bir neçə dəfə klik et",
+                  "\"Simsiz qulaqlıq\" məhsulunda \"Səbətə əlavə et\" düyməsini bas",
+                  "Ödənişə qədər hər şeyi et"
+                ],
+                "correctIndex": 2,
+                "explanation": "Yaxşı addım bir konkret hərəkətdir və interfeysdəki adlardan istifadə edir."
+              },
+              {
+                "id": "q3",
+                "text": "Bug yalnız Safari-də görünür. Bu məlumat hansı sahəyə yazılmalıdır?",
+                "options": [
+                  "Title və Environment",
+                  "Yalnız Attachments",
+                  "Expected result",
+                  "Heç yerə, vacib deyil"
+                ],
+                "correctIndex": 0,
+                "explanation": "Browser fərqi bug-un açarıdır: Environment-də mütləq yazılır, başlıqda da göstərmək faydalıdır."
+              },
+              {
+                "id": "q4",
+                "text": "Bir test zamanı 3 fərqli problem tapdın. Nə etməlisən?",
+                "options": [
+                  "Hamısını bir report-da yazmaq",
+                  "3 ayrı bug report açmaq",
+                  "Yalnız ən ciddisini yazmaq",
+                  "Şifahi demək kifayətdir"
+                ],
+                "correctIndex": 1,
+                "explanation": "Hər problemin öz statusu, sahibi və düzəlişi olur. Bir report — bir problem."
+              },
+              {
+                "id": "q5",
+                "text": "Bug 5 cəhddən yalnız 1-də təkrarlanır. Nə etməlisən?",
+                "options": [
+                  "Report açmamaq",
+                  "Report açmaq və reproducibility 1/5 qeyd etmək, mümkünsə video və log əlavə etmək",
+                  "Hər dəfə təkrarlandığını yazmaq",
+                  "Bug-u Rejected etmək"
+                ],
+                "correctIndex": 1,
+                "explanation": "Arabir təkrarlanan bug-lar da real problemdir. Dürüst tezlik və maksimum sübut developer-ə səbəbi tapmağa kömək edir."
+              }
+            ]
+          },
+          "id": "cmve390p894b25873f5f5"
+        }
+      ]
+    },
+    {
+      "slug": "severity-ve-priority",
+      "title": "Severity və Priority",
+      "shortDescription": "Baqın texniki təsirini və düzəlişin təcililiyini ayrı-ayrı qiymətləndirməyi öyrən.",
+      "estimatedMinutes": 10,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Severity və priority arasındakı fərqi izah edə biləcəksən",
+              "Bug-a Critical, Major, Minor və ya Trivial severity verə biləcəksən",
+              "4 klassik severity–priority kombinasiyasını real nümunələrlə tanıya biləcəksən"
+            ]
+          },
+          "id": "cmve390p8021edc3bde88"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Severity",
+                "az": "ciddilik",
+                "definition": "Defektin sistemin işinə və ya istifadəçiyə texniki təsirinin dərəcəsi."
+              },
+              {
+                "term": "Priority",
+                "az": "prioritet",
+                "definition": "Defektin nə qədər tez düzəldilməli olduğu — biznes əhəmiyyəti."
+              },
+              {
+                "term": "Workaround",
+                "az": "alternativ yol",
+                "definition": "Bug düzəlməmiş istifadəçinin məqsədə başqa yolla çata bilməsi."
+              },
+              {
+                "term": "Bug triage",
+                "az": "baqların çeşidlənməsi",
+                "definition": "Komandanın yeni bug-lara baxıb priority və sahib təyin etdiyi görüş."
+              }
+            ]
+          },
+          "id": "cmve390p847e9c089213a"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Severity: problem nə qədər ciddidir?",
+            "level": 2
+          },
+          "id": "cmve390p8b8569fc24d94"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Severity sualı: **bu bug sistemi nə qədər pozur?** Onu adətən tester təyin edir, çünki bug-un texniki təsirini ən yaxşı o görür. Severity zamanla dəyişmir: bug release-dən bir gün əvvəl tapılsa da, bir ay əvvəl tapılsa da təsiri eynidir."
+          },
+          "id": "cmve390p8e310da7c7981"
+        },
+        {
+          "type": "TABLE",
+          "title": "Severity səviyyələri",
+          "content": {
+            "headers": [
+              "Səviyyə",
+              "Təsir",
+              "Nümunə"
+            ],
+            "rows": [
+              [
+                "Critical",
+                "Əsas funksiya tam işləmir, data itir və ya təhlükəsizlik pozulur, workaround yoxdur",
+                "Kartdan pul çıxılır, sifariş yaranmır"
+              ],
+              [
+                "Major",
+                "Vacib funksiya düzgün işləmir, workaround çətindir",
+                "Filtrləmə qiymətə görə səhv nəticə qaytarır"
+              ],
+              [
+                "Minor",
+                "Kiçik funksional problem, asan workaround var",
+                "\"Enter\" düyməsi formu göndərmir, amma \"Göndər\" düyməsi işləyir"
+              ],
+              [
+                "Trivial",
+                "Kosmetik problem, funksionallığa təsiri yoxdur",
+                "Footer-də hərf səhvi, 2 px yerdəyişmə"
+              ]
+            ]
+          },
+          "id": "cmve390p88d34c89de05d"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Priority: nə qədər tez düzəldilməlidir?",
+            "level": 2
+          },
+          "id": "cmve390p8e126b4438b69"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Priority sualı: **bunu nə vaxt düzəltməliyik?** Onu Product Owner və ya triage komandası təyin edir, tester isə təklif verir. Priority-yə təsir edənlər:\n- neçə istifadəçi təsirlənir,\n- biznesə və brendə təsir,\n- workaround olub-olmaması,\n- release tarixi və müqavilə öhdəlikləri.\n\nSeverity-dən fərqli olaraq priority zamanla dəyişə bilər."
+          },
+          "id": "cmve390p8d043d37d2db3"
+        },
+        {
+          "type": "TABLE",
+          "title": "Priority səviyyələri",
+          "content": {
+            "headers": [
+              "Səviyyə",
+              "Mənası"
+            ],
+            "rows": [
+              [
+                "High",
+                "Dərhal və ya cari sprintdə düzəldilməlidir, release-i bloklaya bilər"
+              ],
+              [
+                "Medium",
+                "Planlı şəkildə, yaxın sprintlərdə düzəldilir"
+              ],
+              [
+                "Low",
+                "Vaxt olduqda düzəldilir, release-i bloklamır"
+              ]
+            ]
+          },
+          "id": "cmve390p8f15b4bdd49bf"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "4 klassik kombinasiya",
+            "level": 2
+          },
+          "id": "cmve390p890d3421b5c99"
+        },
+        {
+          "type": "TABLE",
+          "title": "Severity–priority matrisi",
+          "content": {
+            "headers": [
+              "",
+              "High priority",
+              "Low priority"
+            ],
+            "rows": [
+              [
+                "High severity",
+                "Bank tətbiqində login hamı üçün işləmir",
+                "Nadir istifadə olunan admin hesabatı köhnə Android 8-də açılanda tətbiq çökür"
+              ],
+              [
+                "Low severity",
+                "Ana səhifədə bankın adı səhv yazılıb, sabah reklam kampaniyası başlayır",
+                "\"Haqqımızda\" səhifəsində vergül səhvi"
+              ]
+            ]
+          },
+          "id": "cmve390p818cfb417326c"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "Niyə qarışıq kombinasiyalar mümkündür?",
+          "content": {
+            "description": "- **High severity + Low priority:** tətbiqin çökməsi ciddidir, amma bu ekranı ayda bir neçə admin açır və köhnə OS versiyası artıq dəstəklənmir. Komanda daha təcili işləri qabağa çəkir.\n- **Low severity + High priority:** brend adındakı səhv heç bir funksiyanı pozmur, amma minlərlə istifadəçi kampaniya günü onu ana səhifədə görəcək. Brendə zərər təcili düzəliş tələb edir.",
+            "takeaway": "Severity texniki təsiri, priority biznes qərarını əks etdirir. Onlar bir-birindən asılı deyil."
+          },
+          "id": "cmve390p8c6df0ce97ec3"
+        },
+        {
+          "type": "CATEGORIZE",
+          "title": "Bug-ları matrisə yerləşdir",
+          "content": {
+            "instructions": "Hər bug üçün severity və priority kombinasiyasını seç.",
+            "categories": [
+              {
+                "id": "hs-hp",
+                "label": "High severity / High priority"
+              },
+              {
+                "id": "hs-lp",
+                "label": "High severity / Low priority"
+              },
+              {
+                "id": "ls-hp",
+                "label": "Low severity / High priority"
+              },
+              {
+                "id": "ls-lp",
+                "label": "Low severity / Low priority"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "Online kommunal ödənişində ödəniş təsdiqi gəlir, amma borc silinmir",
+                "categoryId": "hs-hp"
+              },
+              {
+                "id": "i2",
+                "text": "Qeydiyyatdan sonra istifadəçi şifrəsi açıq mətn kimi email-də göndərilir",
+                "categoryId": "hs-hp"
+              },
+              {
+                "id": "i3",
+                "text": "İllik arxiv hesabatını PDF-ə çevirəndə 10 000-dən çox sətir olarsa server xətası yaranır, bu hesabatdan ildə bir dəfə istifadə olunur",
+                "categoryId": "hs-lp"
+              },
+              {
+                "id": "i4",
+                "text": "Artıq dəstəklənməyən iOS 14-də nadir açılan \"Köhnə kampaniyalar\" ekranı çökür",
+                "categoryId": "hs-lp"
+              },
+              {
+                "id": "i5",
+                "text": "Ana səhifədəki banner-də şirkətin loqosu köhnə versiyadadır, rebrending bu gün elan olunur",
+                "categoryId": "ls-hp"
+              },
+              {
+                "id": "i6",
+                "text": "Kampaniya səhifəsində endirim \"20%\" əvəzinə \"2%\" yazılıb, funksional hesablama düzgündür",
+                "categoryId": "ls-hp"
+              },
+              {
+                "id": "i7",
+                "text": "Parametrlər səhifəsində iki ikon arasında 3 px fərq var",
+                "categoryId": "ls-lp"
+              },
+              {
+                "id": "i8",
+                "text": "FAQ səhifəsinin sonunda hərf səhvi var",
+                "categoryId": "ls-lp"
+              }
+            ],
+            "explanation": "Əvvəlcə texniki təsirə (severity), sonra biznes təcililiyinə (priority) ayrıca bax."
+          },
+          "id": "cmve390p8187c4b426656"
+        },
+        {
+          "type": "NOTE",
+          "title": "Hər şey Critical deyil",
+          "content": {
+            "variant": "warning",
+            "body": "Tester bütün bug-lara Critical yazanda severity mənasını itirir və komanda həqiqətən kritik problemi görə bilmir. Səviyyəni faktlara görə seç: data itkisi, workaround, təsirlənən funksiya."
+          },
+          "id": "cmve390p885aa06a7cbce"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Bir çox komandada həftədə 1–2 dəfə **bug triage** keçirilir: QA, PO və tech lead yeni bug-lara baxır, priority və sahib təyin edir, lazım olsa Duplicate və ya Rejected qərarı verir."
+          },
+          "id": "cmve390p8d4fc52db197c"
+        },
+        {
+          "type": "BUG_REPORT_BUILDER",
+          "title": "Praktika: kampaniya günündə bug",
+          "content": {
+            "scenario": "Narix Bank-ın ana səhifəsində (production, bütün browser-lərdə) yeni kredit kampaniyasının banner-ində bankın adı \"Narix Bnak\" kimi yazılıb. Banner-dəki \"Ətraflı\" düyməsi və kampaniya səhifəsi düzgün işləyir. Kampaniya bu gün saat 18:00-da TV reklamı ilə elan olunacaq.",
+            "expectedSeverity": "Trivial",
+            "expectedPriority": "High",
+            "keywords": [
+              "banner",
+              "ana səhifə",
+              "bnak",
+              "kampaniya"
+            ],
+            "sampleSolution": {
+              "title": "Ana səhifə: kredit kampaniyası banner-ində bankın adı \"Narix Bnak\" yazılıb",
+              "steps": [
+                "Production-da narixbank.az ana səhifəsini aç",
+                "Yuxarıdakı kredit kampaniyası banner-inə bax"
+              ],
+              "expected": "Banner-də bankın adı \"Narix Bank\" yazılır",
+              "actual": "Banner-də \"Narix Bnak\" yazılıb; funksionallıq düzgün işləyir"
+            }
+          },
+          "id": "cmve390p8c27637a6ee54"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Severity — bug-un texniki təsiri, priority — düzəlişin təcililiyi.",
+              "Severity-ni adətən tester, priority-ni PO və ya triage komandası təyin edir.",
+              "Severity zamanla dəyişmir, priority isə release tarixi və biznes vəziyyətinə görə dəyişə bilər.",
+              "High severity + low priority və low severity + high priority kombinasiyaları real və tez-tez rast gəlinən hallardır."
+            ]
+          },
+          "id": "cmve390p84e5f2138aa3f"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Severity nəyi ölçür?",
+                "options": [
+                  "Bug-un nə qədər tez düzəldilməli olduğunu",
+                  "Bug-un sistemə texniki təsirini",
+                  "Bug-u kimin tapdığını",
+                  "Bug-un neçə dəfə təkrarlandığını"
+                ],
+                "correctIndex": 1,
+                "explanation": "Severity defektin sistemin işinə təsir dərəcəsidir. Təcililik priority ilə ölçülür."
+              },
+              {
+                "id": "q2",
+                "text": "Priority-ni adətən kim son qərar kimi təyin edir?",
+                "options": [
+                  "Yalnız tester",
+                  "Product Owner və ya triage komandası",
+                  "Müştəri dəstəyi",
+                  "Bug-u düzəldən developer"
+                ],
+                "correctIndex": 1,
+                "explanation": "Tester təklif verir, amma biznes prioritetini PO və ya triage komandası müəyyən edir."
+              },
+              {
+                "id": "q3",
+                "text": "Saytın loqosunda hərf səhvi var və bu gün böyük kampaniya başlayır. Ən uyğun kombinasiya hansıdır?",
+                "options": [
+                  "Critical / Low",
+                  "Trivial / High",
+                  "Major / Medium",
+                  "Trivial / Low"
+                ],
+                "correctIndex": 1,
+                "explanation": "Funksional təsir yoxdur (Trivial), amma brendə və kampaniyaya təsir təcili düzəliş tələb edir (High)."
+              },
+              {
+                "id": "q4",
+                "text": "Release tarixi yaxınlaşdı. Hansı dəyər dəyişə bilər?",
+                "options": [
+                  "Severity",
+                  "Priority",
+                  "Hər ikisi mütləq dəyişir",
+                  "Heç biri"
+                ],
+                "correctIndex": 1,
+                "explanation": "Bug-un texniki təsiri eyni qalır, biznes kontekstinə görə priority dəyişə bilər."
+              },
+              {
+                "id": "q5",
+                "text": "Formu \"Enter\" ilə göndərmək olmur, amma \"Göndər\" düyməsi işləyir. Severity nədir?",
+                "options": [
+                  "Critical",
+                  "Major",
+                  "Minor",
+                  "Trivial"
+                ],
+                "correctIndex": 2,
+                "explanation": "Kiçik funksional problem var və asan workaround mövcuddur — bu Minor-dur."
+              }
+            ]
+          },
+          "id": "cmve390p824814027fdd0"
+        }
+      ]
+    },
+    {
+      "slug": "bug-life-cycle",
+      "title": "Bug Life Cycle (baqın həyat dövrü)",
+      "shortDescription": "Baqın New-dan Closed-a qədər keçdiyi statuslar, alternativ yollar və hər addımda QA-nın rolu.",
+      "estimatedMinutes": 10,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Bug life cycle-ın əsas statuslarını düzgün ardıcıllıqla sadalaya biləcəksən",
+              "Rejected, Duplicate, Deferred və Reopened statuslarının nə vaxt istifadə olunduğunu izah edə biləcəksən",
+              "Retest (confirmation testing) və regression testing fərqini göstərə biləcəksən"
+            ]
+          },
+          "id": "cmve390p850b0da170ca0"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Bug life cycle",
+                "az": "baqın həyat dövrü",
+                "definition": "Bug-un yaradılmasından bağlanmasına qədər keçdiyi statuslar ardıcıllığı."
+              },
+              {
+                "term": "Retest (confirmation testing)",
+                "az": "təkrar yoxlama",
+                "definition": "Düzəlişdən sonra eyni addımlarla bug-un həqiqətən düzəldiyini yoxlamaq."
+              },
+              {
+                "term": "Regression testing",
+                "az": "reqressiya testi",
+                "definition": "Dəyişiklikdən sonra əvvəl işləyən funksiyaların pozulmadığını yoxlamaq."
+              },
+              {
+                "term": "Duplicate",
+                "az": "təkrar",
+                "definition": "Artıq açılmış başqa bug-la eyni problem."
+              },
+              {
+                "term": "Deferred",
+                "az": "təxirə salınmış",
+                "definition": "Real bug, amma düzəlişi gələcək release-ə saxlanılıb."
+              }
+            ]
+          },
+          "id": "cmve390p8bdec6ebe4dfa"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Əsas yol: New-dan Closed-a",
+            "level": 2
+          },
+          "id": "cmve390p8beef1480cba1"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Hər bug bir neçə əldən keçir: QA yaradır, lead təyin edir, developer düzəldir, QA yoxlayıb bağlayır. Statuslar hər an kimin növbəsi olduğunu göstərir. Status adları komandadan komandaya fərqlənə bilər, amma məntiq eynidir."
+          },
+          "id": "cmve390p8e339900e8714"
+        },
+        {
+          "type": "DIAGRAM",
+          "title": "Bug life cycle diaqramı",
+          "content": {
+            "code": "stateDiagram-v2\n    [*] --> New\n    New --> Assigned\n    New --> Rejected\n    New --> Duplicate\n    New --> Deferred\n    Assigned --> Open\n    Open --> Fixed\n    Open --> Rejected\n    Fixed --> Retest\n    Retest --> Verified\n    Retest --> Reopened\n    Reopened --> Assigned\n    Deferred --> Assigned\n    Verified --> Closed\n    Closed --> [*]\n    Rejected --> [*]\n    Duplicate --> [*]",
+            "caption": "Əsas yol: New → Assigned → Open → Fixed → Retest → Verified → Closed"
+          },
+          "id": "cmve390p85637bab60206"
+        },
+        {
+          "type": "TABLE",
+          "title": "Əsas statuslar",
+          "content": {
+            "headers": [
+              "Status",
+              "Mənası",
+              "Kim dəyişir"
+            ],
+            "rows": [
+              [
+                "New",
+                "Bug yenicə yaradılıb, hələ baxılmayıb",
+                "QA"
+              ],
+              [
+                "Assigned",
+                "Bug konkret developer-ə təyin olunub",
+                "Team lead / PO"
+              ],
+              [
+                "Open",
+                "Developer bug-u analiz edir və üzərində işləyir",
+                "Developer"
+              ],
+              [
+                "Fixed",
+                "Kod düzəldilib, yeni build-ə daxil olunub",
+                "Developer"
+              ],
+              [
+                "Retest",
+                "QA düzəlişi test mühitində yoxlayır",
+                "QA"
+              ],
+              [
+                "Verified",
+                "Bug artıq təkrarlanmır",
+                "QA"
+              ],
+              [
+                "Closed",
+                "İş bitib, bug arxivə düşür",
+                "QA / lead"
+              ]
+            ]
+          },
+          "id": "cmve390p8a055e87a21dd"
+        },
+        {
+          "type": "ORDERING",
+          "title": "Əsas yolu sırala",
+          "content": {
+            "instructions": "Bug-un statuslarını yaradılmasından bağlanmasına qədər düzgün ardıcıllıqla düz.",
+            "items": [
+              "New",
+              "Assigned",
+              "Open",
+              "Fixed",
+              "Retest",
+              "Verified",
+              "Closed"
+            ],
+            "explanation": "QA yaradır (New), lead təyin edir (Assigned), developer işləyir (Open) və düzəldir (Fixed), QA yoxlayır (Retest), təsdiqləyir (Verified) və bağlayır (Closed)."
+          },
+          "id": "cmve390p83b303cc698d1"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Alternativ statuslar",
+            "level": 2
+          },
+          "id": "cmve390p8988998989a43"
+        },
+        {
+          "type": "TABLE",
+          "title": "Alternativ statuslar və nümunələr",
+          "content": {
+            "headers": [
+              "Status",
+              "Nə vaxt",
+              "Nümunə"
+            ],
+            "rows": [
+              [
+                "Rejected",
+                "Developer və ya PO bunu bug hesab etmir",
+                "Sistem tələbə uyğun işləyir: 3 yanlış cəhddən sonra blok"
+              ],
+              [
+                "Duplicate",
+                "Eyni problem artıq başqa bug-da açılıb",
+                "\"Səbət məbləği yenilənmir\" bug-u SHOP-112 ilə eynidir"
+              ],
+              [
+                "Deferred",
+                "Real bug-dur, amma düzəliş sonrakı release-ə saxlanılır",
+                "Nadir istifadə olunan ekranda kosmetik problem"
+              ],
+              [
+                "Reopened",
+                "Retest zamanı bug yenidən təkrarlanır",
+                "Düzəlişdən sonra endirim 50 AZN-də yenə tətbiq olunmur"
+              ]
+            ]
+          },
+          "id": "cmve390p8c16c9bc80651"
+        },
+        {
+          "type": "NOTE",
+          "title": "Rejected və Duplicate qaydası",
+          "content": {
+            "variant": "important",
+            "body": "Rejected statusuna həmişə səbəb yazılmalıdır. Razı deyilsənsə, emosional mübahisə yox, sübut gətir: tələbdən sitat, video, log. Duplicate bağlayanda isə orijinal bug-a link əlavə et."
+          },
+          "id": "cmve390p849fa0071cadb"
+        },
+        {
+          "type": "CATEGORIZE",
+          "title": "Hansı status?",
+          "content": {
+            "instructions": "Hər vəziyyət üçün bug-un keçəcəyi statusu seç.",
+            "categories": [
+              {
+                "id": "rejected",
+                "label": "Rejected"
+              },
+              {
+                "id": "duplicate",
+                "label": "Duplicate"
+              },
+              {
+                "id": "deferred",
+                "label": "Deferred"
+              },
+              {
+                "id": "reopened",
+                "label": "Reopened"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "PO: \"Bu, bug deyil, şifrə tələbi məhz 6 simvoldur\"",
+                "categoryId": "rejected"
+              },
+              {
+                "id": "i2",
+                "text": "Eyni login problemi dünən başqa tester tərəfindən SHOP-87 kimi açılıb",
+                "categoryId": "duplicate"
+              },
+              {
+                "id": "i3",
+                "text": "Komanda kosmetik problemi 3.0 versiyasına saxlamağa qərar verdi",
+                "categoryId": "deferred"
+              },
+              {
+                "id": "i4",
+                "text": "Fixed bug-u yeni build-də yoxladın və problem eyni addımlarla yenə yarandı",
+                "categoryId": "reopened"
+              },
+              {
+                "id": "i5",
+                "text": "Düzəliş yalnız Chrome-da işləyir, bug-da göstərilən Safari-də problem qalır",
+                "categoryId": "reopened"
+              },
+              {
+                "id": "i6",
+                "text": "Developer göstərir ki, problem yalnız tester-in köhnə build-ində olub",
+                "categoryId": "rejected"
+              }
+            ],
+            "explanation": "Rejected — bug deyil; Duplicate — artıq var; Deferred — real, amma sonra; Reopened — düzəliş işləmədi."
+          },
+          "id": "cmve390p884382c0f69f1"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Retest və regression: Fixed-dən sonra nə yoxlanır?",
+            "level": 2
+          },
+          "id": "cmve390p81bf8758d45ec"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Bug Fixed olanda QA iki iş görür:\n- **Retest (confirmation testing)** — bug report-dakı eyni addımları, eyni data və mühitlə təkrarlayır. Bug yoxdursa — Verified.\n- **Regression testing** — düzəlişin yaxın funksiyaları pozmadığını yoxlayır. Məsələn, endirim şərti düzəldiləndən sonra 49.99 AZN və 100 AZN səbətləri də yoxlanır.\n\nRetest uğursuz olarsa, bug Reopened olur və yenidən developer-ə qayıdır."
+          },
+          "id": "cmve390p85788c0d0f1de"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "Bir bug-un hekayəsi",
+          "content": {
+            "description": "1. QA \"50 AZN-də endirim tətbiq olunmur\" bug-unu yaradır — **New**.\n2. Lead onu Elvin-ə təyin edir — **Assigned**, Elvin işə başlayır — **Open**.\n3. Elvin `>`-ni `>=` ilə əvəz edir, build 2.15 çıxır — **Fixed**.\n4. QA build 2.15-də yoxlayır — **Retest**. Mobil tətbiqdə problem qalır — **Reopened → Assigned**.\n5. İkinci düzəlişdən sonra web və mobildə problem yoxdur — **Verified → Closed**.",
+            "takeaway": "Reopened normal haldır: bu, prosesin işlədiyini göstərir, kiminsə səhvini yox."
+          },
+          "id": "cmve390p8a8551eee02ac"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Əsas yol: New → Assigned → Open → Fixed → Retest → Verified → Closed.",
+              "Rejected — bug deyil, Duplicate — artıq açılıb, Deferred — sonraya saxlanılıb, Reopened — düzəliş işləməyib.",
+              "Rejected-ə səbəb, Duplicate-ə orijinal bug-un linki yazılır.",
+              "Fixed-dən sonra QA retest (eyni addımlar) və regression (yaxın funksiyalar) edir."
+            ]
+          },
+          "id": "cmve390p89d301279e127"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Developer düzəlişi bitirdi və kod yeni build-ə düşdü. Bug hansı statusa keçir?",
+                "options": [
+                  "Verified",
+                  "Fixed",
+                  "Closed",
+                  "Assigned"
+                ],
+                "correctIndex": 1,
+                "explanation": "Fixed — developer-in işinin bitdiyini göstərir. Verified və Closed yalnız QA yoxlamasından sonra gəlir."
+              },
+              {
+                "id": "q2",
+                "text": "Retest zamanı bug yenidən təkrarlandı. Növbəti status hansıdır?",
+                "options": [
+                  "Closed",
+                  "Deferred",
+                  "Reopened",
+                  "Duplicate"
+                ],
+                "correctIndex": 2,
+                "explanation": "Düzəliş işləmədisə, bug Reopened olur və yenidən developer-ə təyin edilir."
+              },
+              {
+                "id": "q3",
+                "text": "Real bug-dur, amma komanda onu növbəti release-də düzəltməyə qərar verdi. Status nədir?",
+                "options": [
+                  "Rejected",
+                  "Deferred",
+                  "Closed",
+                  "Verified"
+                ],
+                "correctIndex": 1,
+                "explanation": "Deferred — bug qəbul olunub, amma düzəliş təxirə salınıb."
+              },
+              {
+                "id": "q4",
+                "text": "Retest (confirmation testing) nədir?",
+                "options": [
+                  "Bütün sistemi yenidən test etmək",
+                  "Düzəlişdən sonra bug report-dakı eyni addımlarla bug-un düzəldiyini yoxlamaq",
+                  "Yeni feature test etmək",
+                  "Bug-u başqa tester-ə vermək"
+                ],
+                "correctIndex": 1,
+                "explanation": "Retest konkret bug-un düzəldiyini təsdiqləyir. Yaxın funksiyaların yoxlanması isə regression testing-dir."
+              },
+              {
+                "id": "q5",
+                "text": "Bug-u Duplicate kimi bağlayanda nə etmək vacibdir?",
+                "options": [
+                  "Bug-u silmək",
+                  "Orijinal bug-a link əlavə etmək",
+                  "Severity-ni Critical etmək",
+                  "Heç nə"
+                ],
+                "correctIndex": 1,
+                "explanation": "Link sayəsində komanda bütün məlumatı bir yerdə görür və orijinal bug-un statusunu izləyir."
+              }
+            ]
+          },
+          "id": "cmve390p9fa57b9437a04"
+        }
+      ]
+    }
+  ]
+}

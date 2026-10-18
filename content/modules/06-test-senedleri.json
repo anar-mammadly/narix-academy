@@ -1,0 +1,1661 @@
+{
+  "id": "cmn1onmn4001yvkfi2dzr0kyj",
+  "key": "test-senedleri",
+  "order": 6,
+  "title": "Test sənədləri və icrası",
+  "description": "Test case, checklist, test data və test mühiti hazırlamağı, testi planlayıb nəticəni report etməyi öyrən.",
+  "icon": "FileCheck2",
+  "color": "#A855F7",
+  "lessons": [
+    {
+      "id": "cmn1umc3a003dvkfiubewahuk",
+      "slug": "what-is-a-test-case",
+      "title": "Test Scenario və Test Case",
+      "shortDescription": "Test scenario-dan aydın, təkrarlana bilən positive və negative test case-lər yazmağı öyrən.",
+      "estimatedMinutes": 14,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Test scenario ilə test case-i fərqləndirə biləcəksən",
+              "Test case-in bütün sahələrini düzgün doldura biləcəksən",
+              "Bir funksiya üçün positive və negative test case-lər yaza biləcəksən",
+              "Yaxşı test case-i pis test case-dən ayıra biləcəksən"
+            ]
+          },
+          "id": "cmve390p81fa696d46770"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Test scenario",
+                "az": "test ssenarisi",
+                "definition": "Nəyi test edəcəyini ümumi şəkildə deyən bir cümlə: “İstifadəçi sistemə daxil ola bilir”."
+              },
+              {
+                "term": "Test case",
+                "az": "test halı",
+                "definition": "Konkret ilkin şərtlər, addımlar, test data və gözlənilən nəticədən ibarət yoxlama."
+              },
+              {
+                "term": "Precondition",
+                "az": "ilkin şərt",
+                "definition": "Test başlamazdan əvvəl sistemin olmalı olduğu vəziyyət."
+              },
+              {
+                "term": "Expected result",
+                "az": "gözlənilən nəticə",
+                "definition": "Tələbə görə sistemin göstərməli olduğu konkret nəticə."
+              },
+              {
+                "term": "Test suite",
+                "az": "test dəsti",
+                "definition": "Birlikdə icra olunan test case-lər qrupu, məs. “Login suite”, “Regression suite”."
+              }
+            ]
+          },
+          "id": "cmve390p8ed5662b7412e"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Test scenario və test case fərqi",
+            "level": 2
+          },
+          "id": "cmve390p8e463cb90f884"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "**Test scenario** nəyi test edəcəyini deyir, **test case** isə necə test edəcəyini. Scenario bir cümlədir. Test case konkret addımlar, data və gözlənilən nəticədir.\n\nBir scenario-dan bir neçə test case çıxır. ISTQB v4.0 “test condition” terminini işlədir. “Test scenario” isə komandalarda geniş işlənən, mənaca yaxın bir termindir.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p8552924f74728"
+        },
+        {
+          "type": "DIAGRAM",
+          "content": {
+            "code": "flowchart TD\n  S[Scenario: İstifadəçi sistemə daxil olur] --> C1[TC-01: düzgün username və password]\n  S --> C2[TC-02: səhv password]\n  S --> C3[TC-03: boş sahələr]\n  S --> C4[TC-04: bloklanmış istifadəçi]",
+            "caption": "Bir scenario, dörd test case: biri positive, üçü negative."
+          },
+          "id": "cmve390p8223bb5db338a"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Test case-in sahələri",
+            "level": 2
+          },
+          "id": "cmve390p86e92eff60d0c"
+        },
+        {
+          "type": "TABLE",
+          "title": "Test case sahələri: saucedemo.com login nümunəsi",
+          "content": {
+            "headers": [
+              "Sahə",
+              "Nə yazılır",
+              "Nümunə"
+            ],
+            "rows": [
+              [
+                "ID",
+                "Unikal nömrə",
+                "TC-LOGIN-002"
+              ],
+              [
+                "Title",
+                "Nəyi yoxladığı, qısa",
+                "Səhv password ilə login rədd edilir"
+              ],
+              [
+                "Preconditions",
+                "Testdən əvvəlki vəziyyət",
+                "saucedemo.com açıqdır, istifadəçi daxil olmayıb"
+              ],
+              [
+                "Steps",
+                "Nömrəli, hər addımda bir hərəkət",
+                "1. Username: standard_user 2. Password: wrong_pass 3. Login bas"
+              ],
+              [
+                "Test data",
+                "Konkret dəyərlər",
+                "standard_user / wrong_pass"
+              ],
+              [
+                "Expected result",
+                "Tələbə görə konkret nəticə",
+                "“Username and password do not match any user in this service” xətası, səhifə dəyişmir"
+              ],
+              [
+                "Actual result",
+                "İcra zamanı baş verən",
+                "İcrada doldurulur"
+              ],
+              [
+                "Status",
+                "Pass / Fail / Blocked / Not run",
+                "Pass"
+              ],
+              [
+                "Priority",
+                "High / Medium / Low",
+                "High"
+              ]
+            ]
+          },
+          "id": "cmve390p894a63847c976"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "remember",
+            "body": "**Blocked** — test icra oluna bilmir: mühit işləmir və ya əvvəlki addımda başqa baq var. **Not run** — hələ icra olunmayıb. Blocked testi Fail kimi qeyd etmə, səbəbini yaz."
+          },
+          "id": "cmve390p81cb0c5131919"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Positive və negative test case",
+            "level": 2
+          },
+          "id": "cmve390p8ed896cb99ce9"
+        },
+        {
+          "type": "TABLE",
+          "title": "Positive və negative test case-lər",
+          "content": {
+            "headers": [
+              "Növ",
+              "Məqsəd",
+              "saucedemo.com nümunəsi"
+            ],
+            "rows": [
+              [
+                "Positive",
+                "Düzgün input ilə sistem gözlənildiyi kimi işləyir",
+                "standard_user + secret_sauce → Products səhifəsi açılır"
+              ],
+              [
+                "Negative",
+                "Səhv input-u sistem düzgün rədd edir",
+                "standard_user + səhv password → xəta mesajı"
+              ],
+              [
+                "Negative",
+                "Qadağan olunmuş hal düzgün emal olunur",
+                "locked_out_user → “Sorry, this user has been locked out.”"
+              ]
+            ]
+          },
+          "id": "cmve390p877b759c0c26d"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "tip",
+            "body": "Əvvəl əsas positive yolu yoxla: o işləmirsə, digər testlərin çoxu Blocked olacaq. Sonra negative testlərə keç: baqların çoxu orada tapılır."
+          },
+          "id": "cmve390p85856752c86c1"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Yaxşı və pis test case",
+            "level": 2
+          },
+          "id": "cmve390p84a6f55e1176a"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "Eyni testin iki versiyası",
+          "content": {
+            "description": "**Pis:**\nTitle: Login test\nSteps: Login ol\nExpected: İşləməlidir\n\n**Yaxşı:**\nTitle: Düzgün məlumatlarla login uğurla tamamlanır\nPreconditions: saucedemo.com açıqdır, istifadəçi daxil olmayıb\nSteps: 1. Username sahəsinə `standard_user` yaz 2. Password sahəsinə `secret_sauce` yaz 3. Login düyməsini bas\nExpected: Products səhifəsi açılır, URL `/inventory.html`-dir",
+            "takeaway": "Test case-i başqa tester səndən heç nə soruşmadan icra edə bilməli və eyni nəticəni almalıdır."
+          },
+          "id": "cmve390p89da69eefc0e0"
+        },
+        {
+          "type": "CATEGORIZE",
+          "title": "Yaxşı, yoxsa pis təcrübə?",
+          "content": {
+            "instructions": "Hər ifadəni yaxşı və ya pis test case təcrübəsi kimi qiymətləndir.",
+            "categories": [
+              {
+                "id": "good",
+                "label": "Yaxşı təcrübə"
+              },
+              {
+                "id": "bad",
+                "label": "Pis təcrübə"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "Expected: “Products səhifəsi açılır, URL /inventory.html-dir”",
+                "categoryId": "good"
+              },
+              {
+                "id": "i2",
+                "text": "Hər addımda bir hərəkət: “2. Password sahəsinə secret_sauce yaz”",
+                "categoryId": "good"
+              },
+              {
+                "id": "i3",
+                "text": "Preconditions: test hesabı mövcuddur, istifadəçi daxil olmayıb",
+                "categoryId": "good"
+              },
+              {
+                "id": "i4",
+                "text": "Expected: “Sistem normal işləyir”",
+                "categoryId": "bad"
+              },
+              {
+                "id": "i5",
+                "text": "Bir test case-də həm login, həm checkout, həm logout yoxlanır",
+                "categoryId": "bad"
+              },
+              {
+                "id": "i6",
+                "text": "Test data: “hər hansı bir şifrə”",
+                "categoryId": "bad"
+              }
+            ],
+            "explanation": "Yaxşı test case konkret, təkrarlana bilən və bir məqsədə yönəlmiş olur. “Normal işləyir” ölçülə bilmir, bir neçə məqsədli test isə fail olanda səbəbi gizlədir."
+          },
+          "id": "cmve390p8b03f14bda157"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Praktika: saucedemo.com login",
+            "level": 2
+          },
+          "id": "cmve390p8ead608d99605"
+        },
+        {
+          "type": "TEST_CASE_BUILDER",
+          "content": {
+            "feature": "saucedemo.com — Login",
+            "requirement": "Qeydiyyatlı istifadəçi düzgün username və password daxil edib Login düyməsini basdıqda Products səhifəsinə yönləndirilməlidir. Test hesabı: standard_user / secret_sauce.",
+            "minSteps": 3,
+            "expectedKeywords": [
+              "username",
+              "password",
+              "standard_user",
+              "secret_sauce",
+              "login",
+              "products"
+            ],
+            "sampleSolution": {
+              "title": "Düzgün məlumatlarla login uğurla tamamlanır",
+              "preconditions": "https://www.saucedemo.com açıqdır, istifadəçi daxil olmayıb",
+              "steps": [
+                "Username sahəsinə standard_user yaz",
+                "Password sahəsinə secret_sauce yaz",
+                "Login düyməsini bas"
+              ],
+              "expected": "Products səhifəsi açılır (URL: /inventory.html), məhsul siyahısı görünür"
+            }
+          },
+          "id": "cmve390p81c8371124530"
+        },
+        {
+          "type": "TASK",
+          "title": "Negative test case-lər yaz və icra et",
+          "content": {
+            "instructions": "https://www.saucedemo.com üçün 3 negative test case yaz: səhv password, boş username, `locked_out_user`. Hər birində ID, title, preconditions, steps, test data, expected result olsun. Sonra saytda icra et, actual result və status yaz.",
+            "placeholder": "TC-LOGIN-002\nTitle: ...\nPreconditions: ...\nSteps: 1. ... 2. ... 3. ...\nTest data: ...\nExpected: ...\nActual: ...\nStatus: ...",
+            "required": true
+          },
+          "id": "cmve390p819363c0bdde3"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Scenario nəyi, test case necə test edəcəyini deyir. Bir scenario-dan bir neçə test case çıxır.",
+              "Test case-in əsas sahələri: ID, title, preconditions, steps, test data, expected, actual, status, priority.",
+              "Positive testlər düzgün yolu, negative testlər səhv input-un düzgün rədd edilməsini yoxlayır.",
+              "Yaxşı test case konkret, təkrarlana bilən və bir məqsədə yönəlmiş olur."
+            ]
+          },
+          "id": "cmve390p8bd81dd03523a"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Hansı ifadə test scenario-dur, test case deyil?",
+                "options": [
+                  "“İstifadəçi şifrəsini bərpa edə bilir”",
+                  "“1. Email sahəsinə test@example.com yaz 2. Göndər bas → ‘Link göndərildi’ mesajı”",
+                  "“TC-07: boş email ilə bərpa rədd edilir”",
+                  "“Expected: xəta mesajı görünür”"
+                ],
+                "correctIndex": 0,
+                "explanation": "Scenario nəyi test edəcəyini ümumi şəkildə deyir. Addımlar, data və expected result test case-in hissələridir."
+              },
+              {
+                "id": "q2",
+                "text": "Hansı düzgün precondition-dır?",
+                "options": [
+                  "Login düyməsini bas",
+                  "İstifadəçi hesabı mövcuddur və istifadəçi daxil olmayıb",
+                  "Products səhifəsi açılır",
+                  "Test fail oldu"
+                ],
+                "correctIndex": 1,
+                "explanation": "Precondition testdən əvvəlki vəziyyətdir. “Login bas” addımdır, “Products açılır” expected result-dur."
+              },
+              {
+                "id": "q3",
+                "text": "Hansı expected result ən yaxşı yazılıb?",
+                "options": [
+                  "Hər şey işləyir",
+                  "Login uğurludur",
+                  "Products səhifəsi açılır, URL /inventory.html-dir",
+                  "Sistem düzgün reaksiya verir"
+                ],
+                "correctIndex": 2,
+                "explanation": "Expected result konkret və yoxlanıla bilən olmalıdır. Digər variantlar şərhə açıqdır."
+              },
+              {
+                "id": "q4",
+                "text": "Test mühiti işləmədiyi üçün test icra oluna bilmir. Status nə olmalıdır?",
+                "options": [
+                  "Pass",
+                  "Fail",
+                  "Blocked",
+                  "Not run"
+                ],
+                "correctIndex": 2,
+                "explanation": "Test obyektində baq yoxdur, sadəcə icra mümkün deyil. Bu, Blocked-dur və səbəbi qeyd olunur."
+              },
+              {
+                "id": "q5",
+                "text": "Hansı negative test case-dir?",
+                "options": [
+                  "Düzgün username və password ilə login",
+                  "locked_out_user ilə login cəhdi",
+                  "Products səhifəsində məhsulları görmək",
+                  "Səbətə məhsul əlavə etmək"
+                ],
+                "correctIndex": 1,
+                "explanation": "Negative test sistemin qadağan olunmuş və ya səhv hal-ı düzgün rədd etdiyini yoxlayır."
+              }
+            ]
+          },
+          "id": "cmve390p8184c0d2b63ce"
+        }
+      ]
+    },
+    {
+      "id": "cmn1tbhxp0020vkfiidoea1vy",
+      "slug": "what-is-testing-fundamentals",
+      "title": "Test Plan, icra və Test Report",
+      "shortDescription": "Test plan yazmağı, testləri icra etməyi və nəticəni metriklərlə report etməyi öyrən.",
+      "estimatedMinutes": 14,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Test planın əsas bölmələrini sadalayıb doldura biləcəksən",
+              "Entry və exit criteria-nı fərqləndirə biləcəksən",
+              "Pass rate və defect density hesablaya biləcəksən",
+              "Qısa test completion report yaza biləcəksən"
+            ]
+          },
+          "id": "cmve390p8df09e5d10b08"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Test plan",
+                "az": "test planı",
+                "definition": "Testin məqsədini, əhatəsini, yanaşmasını, resurslarını və cədvəlini təsvir edən sənəd."
+              },
+              {
+                "term": "Entry criteria",
+                "az": "başlama meyarları",
+                "definition": "Test fəaliyyətinə başlamaq üçün ödənməli şərtlər."
+              },
+              {
+                "term": "Exit criteria",
+                "az": "bitirmə meyarları",
+                "definition": "Testi tamamlanmış saymaq üçün ödənməli şərtlər."
+              },
+              {
+                "term": "Test progress report",
+                "az": "gedişat hesabatı",
+                "definition": "Test zamanı müntəzəm paylaşılan qısa vəziyyət hesabatı."
+              },
+              {
+                "term": "Test completion report",
+                "az": "yekun hesabat",
+                "definition": "Test bitəndə hazırlanan hesabat. Köhnə adı: test summary report."
+              },
+              {
+                "term": "Defect density",
+                "az": "baq sıxlığı",
+                "definition": "Baq sayının proqramın ölçüsünə nisbəti, məs. baq / 1000 sətir kod."
+              }
+            ]
+          },
+          "id": "cmve390p841baa762ea73"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Test plan nə üçündür?",
+            "level": 2
+          },
+          "id": "cmve390p809567686efac"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "**Test plan** komanda ilə razılaşmadır: nəyi yoxlayırıq, nəyi yoxlamırıq, necə, kim, nə vaxt və nə vaxt “hazırdır” deyirik. Riskləri əvvəlcədən görməyə və vaxtı düzgün bölməyə kömək edir.\n\nAgile komandalarda test plan qısa və canlı olur: Confluence-də 1–2 səhifə, hər release-də yenilənir.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p86847387c4602"
+        },
+        {
+          "type": "TABLE",
+          "title": "Test planın bölmələri: kuryer tətbiqi v2.3",
+          "content": {
+            "headers": [
+              "Bölmə",
+              "Sual",
+              "Nümunə"
+            ],
+            "rows": [
+              [
+                "Scope",
+                "Nə test olunur, nə olunmur?",
+                "In: qeydiyyat, səbət, ödəniş. Out: admin panel"
+              ],
+              [
+                "Approach",
+                "Necə test edirik?",
+                "System və acceptance səviyyəsi. EP/BVA, exploratory, avtomatlaşdırılmış regression"
+              ],
+              [
+                "Resources",
+                "Kim və nə ilə?",
+                "2 QA, Jira, Postman, staging mühiti"
+              ],
+              [
+                "Schedule",
+                "Nə vaxt?",
+                "3–14 noyabr test, 17 noyabr release"
+              ],
+              [
+                "Entry criteria",
+                "Nə vaxt başlaya bilərik?",
+                "Build staging-ə deploy olunub, smoke test keçib, test data hazırdır"
+              ],
+              [
+                "Exit criteria",
+                "Nə vaxt bitiririk?",
+                "High priority testlərin 100%-i icra olunub, açıq Critical baq yoxdur, pass rate ≥ 95%"
+              ],
+              [
+                "Risks",
+                "Nə pozula bilər?",
+                "Ödəniş provayderinin sandbox-u qeyri-stabildir → mock istifadə et"
+              ]
+            ]
+          },
+          "id": "cmve390p8765d54c16c2b"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "remember",
+            "body": "ISTQB v4.0-a görə Agile-da entry criteria çox vaxt **Definition of Ready**, exit criteria isə **Definition of Done** adlanır."
+          },
+          "id": "cmve390p82fef35a88bcc"
+        },
+        {
+          "type": "CATEGORIZE",
+          "title": "Bu hansı bölməyə aiddir?",
+          "content": {
+            "instructions": "Hər ifadəni test planın uyğun bölməsinə yerləşdir.",
+            "categories": [
+              {
+                "id": "scope",
+                "label": "Scope"
+              },
+              {
+                "id": "entry",
+                "label": "Entry criteria"
+              },
+              {
+                "id": "exit",
+                "label": "Exit criteria"
+              },
+              {
+                "id": "risk",
+                "label": "Risks"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "Admin panel bu release-də test olunmur",
+                "categoryId": "scope"
+              },
+              {
+                "id": "i2",
+                "text": "Yalnız Android 12+ və iOS 16+ dəstəklənir",
+                "categoryId": "scope"
+              },
+              {
+                "id": "i3",
+                "text": "Build staging-ə deploy olunub və smoke test keçib",
+                "categoryId": "entry"
+              },
+              {
+                "id": "i4",
+                "text": "50 test istifadəçisi yaradılıb",
+                "categoryId": "entry"
+              },
+              {
+                "id": "i5",
+                "text": "Açıq Critical və Major baq qalmayıb",
+                "categoryId": "exit"
+              },
+              {
+                "id": "i6",
+                "text": "Planlaşdırılmış testlərin 98%-i icra olunub",
+                "categoryId": "exit"
+              },
+              {
+                "id": "i7",
+                "text": "Yeganə backend developer release həftəsində məzuniyyətdə ola bilər",
+                "categoryId": "risk"
+              },
+              {
+                "id": "i8",
+                "text": "Ödəniş provayderinin test serveri tez-tez çökür",
+                "categoryId": "risk"
+              }
+            ],
+            "explanation": "Scope sərhədləri, entry criteria başlamaq şərtini, exit criteria bitirmə şərtini, risks isə planı poza biləcək hadisələri göstərir."
+          },
+          "id": "cmve390p84cb2ce3a0fe3"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Test icrası",
+            "level": 2
+          },
+          "id": "cmve390p8a2b3664c5fb4"
+        },
+        {
+          "type": "STEPPER",
+          "title": "Test execution addımları",
+          "content": {
+            "steps": [
+              {
+                "title": "Entry criteria-nı yoxla",
+                "description": "Build deploy olunub, mühit işləyir, test data hazırdır."
+              },
+              {
+                "title": "Smoke testlə başla",
+                "description": "Əsas funksiyalar işləmirsə, dərin testə keçmə. Build-i geri qaytar."
+              },
+              {
+                "title": "Test case-ləri icra et",
+                "description": "Prioritetə görə icra et. Hər test üçün actual result və status yaz."
+              },
+              {
+                "title": "Baqları qeyd et",
+                "description": "Fail olan test üçün baq report aç və test case-ə link et."
+              },
+              {
+                "title": "Fix-dən sonra yenidən yoxla",
+                "description": "Confirmation testing (re-test) ilə fix-i, regression testing ilə köhnə funksiyaları yoxla."
+              }
+            ]
+          },
+          "id": "cmve390p8885e369c383e"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Test metrikləri",
+            "level": 2
+          },
+          "id": "cmve390p8dc99c2d638f9"
+        },
+        {
+          "type": "TABLE",
+          "title": "Əsas test metrikləri",
+          "content": {
+            "headers": [
+              "Metrika",
+              "Formula",
+              "Nümunə"
+            ],
+            "rows": [
+              [
+                "Execution progress",
+                "İcra olunan / planlaşdırılan × 100%",
+                "180 / 200 = 90%"
+              ],
+              [
+                "Pass rate",
+                "Pass / icra olunan × 100%",
+                "162 / 180 = 90%"
+              ],
+              [
+                "Defect density",
+                "Baq sayı / ölçü (KLOC, modul, story point)",
+                "12 baq / 8 KLOC = 1,5 baq/KLOC"
+              ],
+              [
+                "Açıq baqlar",
+                "Severity üzrə say",
+                "Critical 0, Major 3, Minor 7"
+              ]
+            ]
+          },
+          "id": "cmve390p8f32968da83c5"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Pass rate-i hesabla",
+          "content": {
+            "questions": [
+              {
+                "id": "m1",
+                "text": "250 test planlaşdırılıb, 200-ü icra olunub, onlardan 170-i Pass-dır. Pass rate neçədir?",
+                "options": [
+                  "68%",
+                  "80%",
+                  "85%",
+                  "90%"
+                ],
+                "correctIndex": 2,
+                "explanation": "Pass rate icra olunan testlərə görə hesablanır: 170 / 200 = 85%. 170 / 250 = 68% isə səhv məxrəcdir."
+              }
+            ]
+          },
+          "id": "cmve390p8dee553a81866"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Test report",
+            "level": 2
+          },
+          "id": "cmve390p81c7e34953767"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "**Progress report** test zamanı müntəzəm (gündəlik və ya həftəlik) paylaşılır: nə edildi, nə problem var, növbəti addım nədir.\n\n**Completion report** test bitəndə hazırlanır: nəticələr, exit criteria-ya uyğunluq, açıq baqlar, qalan risklər və tövsiyə. Report qərar vermir, stakeholder-ə qərar üçün fakt verir. Menecerə qısa versiya, komandaya detallı versiya göndər.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p88534674823e8"
+        },
+        {
+          "type": "EXAMPLE",
+          "title": "Test completion report: kuryer tətbiqi v2.3",
+          "content": {
+            "description": "- İcra: 200 / 200 (100%)\n- Nəticə: Pass 192 (96%), Fail 6, Blocked 2\n- Açıq baqlar: Critical 0, Major 1 (BUG-311: kartla ödənişdə 2 dəqiqəlik gecikmə), Minor 5\n- Exit criteria: ödənilib (pass rate ≥ 95%, açıq Critical yoxdur)\n- Risk: BUG-311 pik saatlarda şikayətlərə səbəb ola bilər\n- Tövsiyə: release; BUG-311 2.3.1 hotfix-ində düzəldilsin",
+            "takeaway": "Yaxşı report rəqəm, risk və tövsiyə verir."
+          },
+          "id": "cmve390p8efca723bc052"
+        },
+        {
+          "type": "TASK",
+          "title": "Completion report yaz",
+          "content": {
+            "instructions": "Məlumat: 120 test planlaşdırılıb, 120-si icra olunub. 108 Pass, 9 Fail, 3 Blocked. Açıq baqlar: 1 Critical (ödəniş səhifəsi Safari-də açılmır), 4 Minor. Exit criteria: “açıq Critical baq yoxdur, pass rate ≥ 95%”.\n\nPass rate-i hesabla, exit criteria-nın ödənib-ödənmədiyini yaz və 5–6 sətirlik completion report hazırla. Tövsiyəni də əlavə et.",
+            "placeholder": "İcra: ...\nPass rate: ...\nAçıq baqlar: ...\nExit criteria: ...\nRisk: ...\nTövsiyə: ...",
+            "required": true
+          },
+          "id": "cmve390p836e7b6795a82"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Test plan scope, approach, resources, schedule, entry/exit criteria və riskləri razılaşdırır.",
+              "Entry criteria başlamaq, exit criteria bitirmək üçün ödənməli şərtlərdir.",
+              "Pass rate = Pass / icra olunan. Defect density = baq sayı / proqramın ölçüsü.",
+              "Completion report nəticəni, exit criteria-ya uyğunluğu, riskləri və tövsiyəni verir. Qərarı stakeholder verir."
+            ]
+          },
+          "id": "cmve390p8a4dfc62e9edc"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Test planda “Admin panel bu release-də test olunmur” hansı bölməyə yazılır?",
+                "options": [
+                  "Schedule",
+                  "Scope (out of scope)",
+                  "Entry criteria",
+                  "Resources"
+                ],
+                "correctIndex": 1,
+                "explanation": "Scope nəyin test olunduğunu və nəyin olunmadığını göstərir."
+              },
+              {
+                "id": "q2",
+                "text": "Hansı exit criteria nümunəsidir?",
+                "options": [
+                  "Build staging-ə deploy olunub",
+                  "Açıq Critical baq yoxdur və pass rate ≥ 95%-dir",
+                  "Test data hazırlanıb",
+                  "QA komandası 2 nəfərdir"
+                ],
+                "correctIndex": 1,
+                "explanation": "Exit criteria testi bitirmək üçün şərtdir. Deploy və test data entry criteria-dır, komanda ölçüsü resources-dur."
+              },
+              {
+                "id": "q3",
+                "text": "Modulda 6 KLOC (6000 sətir) kod var, testdə 18 baq tapılıb. Defect density neçədir?",
+                "options": [
+                  "0,33 baq/KLOC",
+                  "3 baq/KLOC",
+                  "18 baq/KLOC",
+                  "108 baq/KLOC"
+                ],
+                "correctIndex": 1,
+                "explanation": "18 / 6 = 3 baq hər 1000 sətir koda."
+              },
+              {
+                "id": "q4",
+                "text": "Progress report ilə completion report arasındakı fərq nədir?",
+                "options": [
+                  "Fərq yoxdur",
+                  "Progress report test zamanı müntəzəm, completion report test bitəndə hazırlanır",
+                  "Completion report yalnız developerlər üçündür",
+                  "Progress report yalnız baq siyahısıdır"
+                ],
+                "correctIndex": 1,
+                "explanation": "Progress report gedişatı izləyir, completion report yekunu, exit criteria-ya uyğunluğu və tövsiyəni verir."
+              },
+              {
+                "id": "q5",
+                "text": "Pass rate 97%-dir, amma 1 açıq Critical baq var. Exit criteria: “açıq Critical baq yoxdur”. Report-da nə yazırsan?",
+                "options": [
+                  "Exit criteria ödənib, çünki pass rate yüksəkdir",
+                  "Exit criteria ödənməyib. Baqı və riski göstər, tövsiyəni yaz, qərarı stakeholder versin",
+                  "Critical baqı report-dan çıxar",
+                  "Baqın severity-sini Minor-a dəyiş"
+                ],
+                "correctIndex": 1,
+                "explanation": "Exit criteria-nın bir şərti pozulub. QA faktları dürüst göstərir və tövsiyə verir. Release qərarını stakeholder verir."
+              }
+            ]
+          },
+          "id": "cmve390p80166b16bc5dd"
+        }
+      ]
+    },
+    {
+      "id": "cmn1trutt002kvkfie2b481wi",
+      "slug": "what-is-a-test-environment",
+      "title": "Test Environment (test mühiti)",
+      "shortDescription": "Dev, test, staging və production mühitlərini, build və konfiqurasiya fərqlərini öyrən.",
+      "estimatedMinutes": 12,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Dev, test, staging və production mühitlərinin məqsədini fərqləndirə biləcəksən",
+              "Build ilə environment arasındakı fərqi izah edə biləcəksən",
+              "Baqı environment problemindən ayıra biləcəksən"
+            ]
+          },
+          "id": "cmve390p8d523fb711881"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Test environment",
+                "az": "test mühiti",
+                "definition": "Test aparmaq üçün lazım olan hardware, software, alətlər, data və şəbəkə ayarları toplusu."
+              },
+              {
+                "term": "Build",
+                "az": "versiya",
+                "definition": "Proqramın konkret yığılmış versiyası, məs. v1.2.0 (build #348)."
+              },
+              {
+                "term": "Deployment",
+                "az": "yerləşdirmə",
+                "definition": "Build-in mühitə qurulması."
+              },
+              {
+                "term": "Staging",
+                "az": "son yoxlama mühiti",
+                "definition": "Production-a ən çox bənzəyən, release-dən əvvəlki mühit."
+              },
+              {
+                "term": "Stub / Mock",
+                "az": "əvəzedici",
+                "definition": "Hazır olmayan və ya əlçatmaz sistemi (ödəniş, SMS) təqlid edən komponent."
+              }
+            ]
+          },
+          "id": "cmve390p82fba1f98fb5a"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Test environment nədir?",
+            "level": 2
+          },
+          "id": "cmve390p833e276317ee5"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Test environment testin aparıldığı yerdir: serverlər, verilənlər bazası, tətbiqin konfiqurasiyası, test data, alətlər və xarici sistemlərin test versiyaları (stub, mock, sandbox).\n\nYaxşı mühit production-a mümkün qədər bənzəyir, amma real istifadəçilərdən və real datadan təcrid olunub. Mühit fərqlidirsə, testdə keçən funksiya production-da sına bilər.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p89e7afa6ecda8"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Dev, Test, Staging, Production",
+            "level": 2
+          },
+          "id": "cmve390p83ee8a13965f1"
+        },
+        {
+          "type": "TABLE",
+          "title": "Mühitlər və onların məqsədi",
+          "content": {
+            "headers": [
+              "Mühit",
+              "Kim istifadə edir",
+              "Məqsəd",
+              "Data"
+            ],
+            "rows": [
+              [
+                "Dev",
+                "Developer",
+                "Kod yazmaq, unit test",
+                "Lokal, saxta"
+              ],
+              [
+                "Test (QA)",
+                "QA",
+                "Funksional və regression test",
+                "Saxta test data"
+              ],
+              [
+                "Staging (pre-prod)",
+                "QA, PO, müştəri",
+                "Release-dən əvvəl son yoxlama, UAT",
+                "Production-a bənzər, anonimləşdirilmiş"
+              ],
+              [
+                "Production",
+                "Real istifadəçilər",
+                "Canlı xidmət",
+                "Real data — test üçün deyil"
+              ]
+            ]
+          },
+          "id": "cmve390p8e274ad7a537c"
+        },
+        {
+          "type": "DIAGRAM",
+          "content": {
+            "code": "flowchart LR\n  D[Dev] -->|build v1.2.0| T[Test]\n  T -->|testlər keçdi| S[Staging]\n  S -->|release təsdiqi| P[Production]",
+            "caption": "Eyni build mühitdən mühitə irəliləyir."
+          },
+          "id": "cmve390p8cbcae223fc0c"
+        },
+        {
+          "type": "CATEGORIZE",
+          "title": "Bu hansı mühitdə baş verir?",
+          "content": {
+            "instructions": "Hər fəaliyyəti adətən aid olduğu mühitə yerləşdir.",
+            "categories": [
+              {
+                "id": "dev",
+                "label": "Dev"
+              },
+              {
+                "id": "test",
+                "label": "Test (QA)"
+              },
+              {
+                "id": "staging",
+                "label": "Staging"
+              },
+              {
+                "id": "prod",
+                "label": "Production"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "Developer yeni funksiyanı öz kompüterində yazıb unit testləri işlədir",
+                "categoryId": "dev"
+              },
+              {
+                "id": "i2",
+                "text": "QA yeni build-də regression suite-i icra edir",
+                "categoryId": "test"
+              },
+              {
+                "id": "i3",
+                "text": "QA saxta test hesabları ilə negative testlər aparır",
+                "categoryId": "test"
+              },
+              {
+                "id": "i4",
+                "text": "Müştəri release-dən əvvəl production-a bənzər mühitdə UAT keçirir",
+                "categoryId": "staging"
+              },
+              {
+                "id": "i5",
+                "text": "Release-dən əvvəl son smoke test production-un surəti olan mühitdə aparılır",
+                "categoryId": "staging"
+              },
+              {
+                "id": "i6",
+                "text": "Minlərlə istifadəçi tətbiqdə real sifariş verir",
+                "categoryId": "prod"
+              }
+            ],
+            "explanation": "Dev — yazmaq, Test — sistemli test, Staging — release-dən əvvəl son yoxlama və UAT, Production — real istifadəçilər."
+          },
+          "id": "cmve390p84062dcf68d8d"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "warning",
+            "body": "Production-da test etmək real data və real pul riskidir. Release-dən sonra smoke yoxlaması lazımdırsa, yalnız icazə ilə və xüsusi test hesabları ilə et."
+          },
+          "id": "cmve390p8a2429ea6291a"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Build və environment fərqi",
+            "level": 2
+          },
+          "id": "cmve390p800dfbe579268"
+        },
+        {
+          "type": "TABLE",
+          "title": "Build və environment",
+          "content": {
+            "headers": [
+              "Faktor",
+              "Environment",
+              "Build"
+            ],
+            "rows": [
+              [
+                "Nədir",
+                "Proqramın işlədiyi yer: server, DB, konfiqurasiya",
+                "Proqramın konkret versiyası"
+              ],
+              [
+                "Nümunə",
+                "staging.kuryer.az",
+                "v1.2.0 (build #348)"
+              ],
+              [
+                "Nə qədər tez dəyişir",
+                "Nadir",
+                "Hər deploy-da"
+              ]
+            ]
+          },
+          "id": "cmve390p8bcdcc6eedb8c"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Baq report-da həmişə ikisini də yaz: **Env:** Staging, **Build:** v1.2.0 #348, **Konfiqurasiya:** Chrome 130 / Windows 11. Bu məlumat olmadan developer baqı təkrarlaya bilməyə bilər.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p8567061c8287f"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Konfiqurasiya: brauzer, OS, cihaz",
+            "level": 2
+          },
+          "id": "cmve390p870f794bcfc4c"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Eyni build fərqli konfiqurasiyada fərqli işləyə bilər. Ödəniş forması Chrome-da düzgün, Safari-də pozulubsa, bu baqdır (compatibility baqı).\n\nTest planda dəstəklənən konfiqurasiyalar siyahısı olur: məs. Chrome, Safari, Firefox — son 2 versiya, Android 12+, iOS 16+. Konfiqurasiyaya feature flag-lər, API açarları və xarici sistemlərin sandbox ayarları da daxildir.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p82388da024a6a"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Baq, yoxsa environment problemi?",
+            "level": 2
+          },
+          "id": "cmve390p8fe66b78fe659"
+        },
+        {
+          "type": "TABLE",
+          "title": "Tipik environment problemləri",
+          "content": {
+            "headers": [
+              "Simptom",
+              "Mümkün səbəb",
+              "Nə etməli"
+            ],
+            "rows": [
+              [
+                "Sayt 502 qaytarır",
+                "Server düşüb və ya deploy davam edir",
+                "DevOps-a xəbər ver, testi Blocked qeyd et"
+              ],
+              [
+                "Köhnə dizayn görünür",
+                "Cache və ya köhnə build",
+                "Hard refresh et, build nömrəsini yoxla"
+              ],
+              [
+                "Siyahılar boşdur",
+                "Test DB-də data yoxdur",
+                "Test datanı yoxla və ya yarat"
+              ],
+              [
+                "SMS kodu gəlmir",
+                "SMS sandbox-u söndürülüb",
+                "Konfiqurasiyanı yoxla, komandaya bildir"
+              ]
+            ]
+          },
+          "id": "cmve390p8f531c762fe53"
+        },
+        {
+          "type": "CATEGORIZE",
+          "title": "Baq, yoxsa environment problemi?",
+          "content": {
+            "instructions": "Hər halı baq və ya environment problemi kimi qiymətləndir.",
+            "categories": [
+              {
+                "id": "bug",
+                "label": "Baq"
+              },
+              {
+                "id": "env",
+                "label": "Environment problemi"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "Staging 502 qaytarır, çünki deploy davam edir",
+                "categoryId": "env"
+              },
+              {
+                "id": "i2",
+                "text": "Test DB-də məhsul yoxdur, ona görə kataloq boşdur",
+                "categoryId": "env"
+              },
+              {
+                "id": "i3",
+                "text": "Ödəniş sandbox açarının müddəti bitib, bütün ödənişlər 401 qaytarır",
+                "categoryId": "env"
+              },
+              {
+                "id": "i4",
+                "text": "Bütün brauzerlərdə “Sifariş ver” səbəti boşaldır, amma sifariş yaranmır",
+                "categoryId": "bug"
+              },
+              {
+                "id": "i5",
+                "text": "Safari-də ödəniş düyməsi ekrandan kənara çıxır",
+                "categoryId": "bug"
+              },
+              {
+                "id": "i6",
+                "text": "Endirim 10% əvəzinə 100% hesablanır",
+                "categoryId": "bug"
+              }
+            ],
+            "explanation": "Environment problemi mühitin özündən gəlir və mühit düzələndə yox olur. Baq isə düzgün mühitdə də təkrarlanır."
+          },
+          "id": "cmve390p8181bb0eaac80"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Test environment test üçün lazım olan server, DB, konfiqurasiya, data və alətlər toplusudur.",
+              "Dev — yazmaq, Test — QA, Staging — son yoxlama və UAT, Production — real istifadəçilər.",
+              "Environment işləmə yeridir, build isə versiyadır. Baq report-da ikisini də göstər.",
+              "Hər problem baq deyil: əvvəl mühiti, build-i və test datanı yoxla."
+            ]
+          },
+          "id": "cmve390p810cdb3a2c485"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Staging mühitinin əsas məqsədi nədir?",
+                "options": [
+                  "Developerin lokal işi",
+                  "Production-a bənzər mühitdə release-dən əvvəl son yoxlama",
+                  "Real istifadəçilərə xidmət",
+                  "Kodun saxlanması"
+                ],
+                "correctIndex": 1,
+                "explanation": "Staging production-a ən çox bənzəyən mühitdir. Orada son yoxlamalar və UAT aparılır."
+              },
+              {
+                "id": "q2",
+                "text": "Build ilə environment arasındakı fərq nədir?",
+                "options": [
+                  "Fərq yoxdur",
+                  "Build proqramın versiyası, environment isə onun işlədiyi yerdir",
+                  "Environment proqramın versiyasıdır",
+                  "Build yalnız mobil tətbiqlərdə olur"
+                ],
+                "correctIndex": 1,
+                "explanation": "Eyni build (v1.2.0) fərqli mühitlərə (test, staging) deploy oluna bilər."
+              },
+              {
+                "id": "q3",
+                "text": "Staging-də sayt açılmır, DevOps deploy-un davam etdiyini deyir. Test case-lərin statusu nə olmalıdır?",
+                "options": [
+                  "Fail",
+                  "Pass",
+                  "Blocked",
+                  "Baq report açılmalı və Critical qeyd olunmalıdır"
+                ],
+                "correctIndex": 2,
+                "explanation": "Problem test obyektində deyil, mühitdədir. Test icra oluna bilmir, deməli Blocked-dur."
+              },
+              {
+                "id": "q4",
+                "text": "Ödəniş forması Chrome-da işləyir, Safari-də pozulur. Bu nədir?",
+                "options": [
+                  "Environment problemi",
+                  "Compatibility baqı",
+                  "Gözlənilən davranış",
+                  "Test data problemi"
+                ],
+                "correctIndex": 1,
+                "explanation": "Safari dəstəklənən konfiqurasiyadırsa, orada pozulan UI baqdır."
+              },
+              {
+                "id": "q5",
+                "text": "Ödəniş provayderinin real sistemi testdə istifadə oluna bilmir. Nə edirsən?",
+                "options": [
+                  "Testi ləğv edirsən",
+                  "Production-da real kartla test edirsən",
+                  "Sandbox, stub və ya mock istifadə edirsən",
+                  "Developerdən kodu silməyi xahiş edirsən"
+                ],
+                "correctIndex": 2,
+                "explanation": "Stub, mock və sandbox xarici sistemi təhlükəsiz təqlid edir. Real ödənişlə test etmək riskdir."
+              }
+            ]
+          },
+          "id": "cmve390p87110514a068c"
+        }
+      ]
+    },
+    {
+      "slug": "test-checklist-test-data",
+      "title": "Test Checklist və Test Data hazırlamaq",
+      "shortDescription": "Checklist-in test case-dən üstün olduğu halları və real şəxsi data olmadan test data hazırlamağı öyrən.",
+      "estimatedMinutes": 13,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Checklist ilə test case arasında düzgün seçim edə biləcəksən",
+              "Bir funksiya üçün valid, invalid və boundary test data hazırlaya biləcəksən",
+              "Real şəxsi məlumat əvəzinə təhlükəsiz saxta data istifadə edə biləcəksən"
+            ]
+          },
+          "id": "cmve390p8db6db523a562"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Checklist",
+                "az": "yoxlama siyahısı",
+                "definition": "Addım və expected result detalı olmadan yoxlanılacaq maddələrin siyahısı."
+              },
+              {
+                "term": "Checklist-based testing",
+                "az": "siyahı əsaslı test",
+                "definition": "ISTQB v4.0-da checklist-ə əsaslanan experience-based texnika."
+              },
+              {
+                "term": "Test data",
+                "az": "test məlumatı",
+                "definition": "Testin input-u və testdən əvvəl sistemdə olmalı olan məlumat: hesablar, məhsullar, sifarişlər."
+              },
+              {
+                "term": "Synthetic data",
+                "az": "süni data",
+                "definition": "Real şəxsə aid olmayan, generatorla yaradılmış saxta data."
+              },
+              {
+                "term": "Data masking",
+                "az": "datanın maskalanması",
+                "definition": "Real datada şəxsi məlumatları geri qaytarılmayacaq şəkildə dəyişmək."
+              }
+            ]
+          },
+          "id": "cmve390p844da0e5afc92"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Test checklist nədir?",
+            "level": 2
+          },
+          "id": "cmve390p84e3c0bf579be"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "**Checklist** “nəyi yoxlamalı” sualına cavab verir, “necə” sualına yox. Maddə qısa və yoxlanıla bilən olur: “Bütün məcburi sahələr işarələnib”.\n\nISTQB v4.0-da **checklist-based testing** experience-based texnikadır: maddələr təcrübədən, köhnə baqlardan və standartlardan yaranır. Hər icrada tester detalları özü seçir, ona görə nəticə bir az fərqli ola bilər.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p84290d7860849"
+        },
+        {
+          "type": "TABLE",
+          "title": "Checklist və test case müqayisəsi",
+          "content": {
+            "headers": [
+              "Faktor",
+              "Checklist",
+              "Test case"
+            ],
+            "rows": [
+              [
+                "Detal",
+                "Az: yalnız nə yoxlanır",
+                "Çox: addımlar, data, expected"
+              ],
+              [
+                "Hazırlıq vaxtı",
+                "Dəqiqələr",
+                "Saatlar"
+              ],
+              [
+                "Kim icra edə bilər",
+                "Təcrübəli tester",
+                "Hər kəs, yeni tester də"
+              ],
+              [
+                "Təkrarlanma",
+                "Hər icra bir az fərqli",
+                "Hər dəfə eyni addımlar"
+              ],
+              [
+                "Uyğundur",
+                "Tez dəyişən UI, smoke, usability, kiçik komanda",
+                "Kritik funksiya, regression, audit, avtomatlaşdırma"
+              ]
+            ]
+          },
+          "id": "cmve390p8a9693869e7f0"
+        },
+        {
+          "type": "CHECKLIST",
+          "title": "Qeydiyyat forması üçün UI checklist",
+          "content": {
+            "items": [
+              {
+                "id": "c1",
+                "text": "Bütün məcburi sahələr işarələnib"
+              },
+              {
+                "id": "c2",
+                "text": "Hər sahənin aydın label-i var"
+              },
+              {
+                "id": "c3",
+                "text": "Xəta mesajı sahənin yanında görünür və nə etmək lazım olduğunu deyir"
+              },
+              {
+                "id": "c4",
+                "text": "Tab düyməsi sahələr arasında məntiqi ardıcıllıqla keçir"
+              },
+              {
+                "id": "c5",
+                "text": "Şifrə sahəsi simvolları gizlədir"
+              },
+              {
+                "id": "c6",
+                "text": "“Qeydiyyat” düyməsinə iki dəfə klik iki hesab yaratmır"
+              },
+              {
+                "id": "c7",
+                "text": "Forma 360px enində mobil ekranda pozulmur"
+              }
+            ]
+          },
+          "id": "cmve390p864e5729203f8"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "tip",
+            "body": "Checklist-i yeni baqlar və tələblərlə böyüt, köhnəlmiş maddələri sil. 15–25 maddədən uzun checklist-i hissələrə böl, yoxsa ondan istifadə olunmur."
+          },
+          "id": "cmve390p8e91080f47211"
+        },
+        {
+          "type": "CATEGORIZE",
+          "title": "Checklist, yoxsa test case?",
+          "content": {
+            "instructions": "Hər vəziyyət üçün daha uyğun sənədi seç.",
+            "categories": [
+              {
+                "id": "cl",
+                "label": "Checklist kifayətdir"
+              },
+              {
+                "id": "tc",
+                "label": "Test case lazımdır"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "Hər sprint dəyişən landing page-in vizual yoxlanması",
+                "categoryId": "cl"
+              },
+              {
+                "id": "i2",
+                "text": "Release-dən sonra 10 dəqiqəlik smoke yoxlaması",
+                "categoryId": "cl"
+              },
+              {
+                "id": "i3",
+                "text": "Formalarda accessibility əsasları: label, kontrast, klaviatura",
+                "categoryId": "cl"
+              },
+              {
+                "id": "i4",
+                "text": "Bankda pul köçürməsi, audit üçün sübut lazımdır",
+                "categoryId": "tc"
+              },
+              {
+                "id": "i5",
+                "text": "Yeni gələn junior tester-in icra edəcəyi regression testləri",
+                "categoryId": "tc"
+              },
+              {
+                "id": "i6",
+                "text": "Gələcəkdə Playwright ilə avtomatlaşdırılacaq checkout axını",
+                "categoryId": "tc"
+              }
+            ],
+            "explanation": "Checklist sürət və çeviklik verir. Dəqiq təkrarlanma, sübut və ya avtomatlaşdırma lazımdırsa, test case yaz."
+          },
+          "id": "cmve390p8afc921d2bb39"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Test data hazırlamaq",
+            "level": 2
+          },
+          "id": "cmve390p83f1aebb4346d"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Test data iki növdür: testin **input-u** (email, məbləğ) və **precondition datası** (balansı 0 olan hesab, stokda bitmiş məhsul). Dəyərləri EP və BVA ilə seç.\n\nHər test öz datasını yaratmalı və ya datanı bilinən vəziyyətə qaytarmalıdır. Testlər eyni hesabı paylaşanda biri o birinin datasını pozur və nəticələr təsadüfi olur.",
+            "highlight": "normal"
+          },
+          "id": "cmve390p8185065735bd2"
+        },
+        {
+          "type": "TABLE",
+          "title": "Qeydiyyat forması üçün test data növləri",
+          "content": {
+            "headers": [
+              "Data növü",
+              "Nümunə"
+            ],
+            "rows": [
+              [
+                "Valid",
+                "aysel.test@example.com, 25 yaş"
+              ],
+              [
+                "Invalid",
+                "aysel@, 17 yaş"
+              ],
+              [
+                "Boundary",
+                "18 və 60 yaş, 8 simvollu şifrə"
+              ],
+              [
+                "Boş",
+                "Boş email sahəsi"
+              ],
+              [
+                "Xüsusi simvol",
+                "“Əli Şükürov”, “O’Connor”, emoji"
+              ],
+              [
+                "Həcm",
+                "10 000 məhsullu kataloq, 500 sətirlik sifariş"
+              ]
+            ]
+          },
+          "id": "cmve390p85cc1475971d5"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Data privacy: real şəxsi məlumat yoxdur",
+            "level": 2
+          },
+          "id": "cmve390p8c096ad3a6cab"
+        },
+        {
+          "type": "CALLOUT",
+          "content": {
+            "emoji": "🔒",
+            "title": "Real şəxsi məlumatı testdə istifadə etmə",
+            "body": "Real müştərinin adı, telefonu, şəxsiyyət vəsiqəsi nömrəsi və ya kart məlumatı test mühitinə köçürülməməlidir. GDPR və Azərbaycanın “Fərdi məlumatlar haqqında” Qanunu şəxsi məlumatların yalnız məqsədəuyğun və qorunan şəkildə emalını tələb edir. Test mühitləri isə adətən production qədər qorunmur.",
+            "color": "red"
+          },
+          "id": "cmve390p8779b5d27c225"
+        },
+        {
+          "type": "TABLE",
+          "title": "Real data əvəzinə nə istifadə etməli",
+          "content": {
+            "headers": [
+              "Ehtiyac",
+              "Təhlükəsiz həll"
+            ],
+            "rows": [
+              [
+                "Email",
+                "`example.com` domeni test üçün ayrılıb: test.user1@example.com"
+              ],
+              [
+                "Ad, ünvan, telefon",
+                "Faker kimi generatorla yaradılmış, formatca düzgün saxta dəyərlər"
+              ],
+              [
+                "Bank kartı",
+                "Ödəniş provayderinin test kartları, məs. Stripe: 4242 4242 4242 4242"
+              ],
+              [
+                "Production-a bənzər həcm",
+                "Maskalanmış və ya anonimləşdirilmiş surət, security komandasının təsdiqi ilə"
+              ]
+            ]
+          },
+          "id": "cmve390p8b70a579af784"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "import { faker } from \"@faker-js/faker\";\n\nconst testUser = {\n  fullName: faker.person.fullName(),\n  email: faker.internet.email({ provider: \"example.com\" }),\n  password: faker.internet.password({ length: 12 }),\n  birthDate: faker.date.birthdate({ min: 18, max: 60, mode: \"age\" }),\n};",
+            "language": "javascript",
+            "caption": "Faker hər işə salınanda yeni, real olmayan istifadəçi yaradır."
+          },
+          "id": "cmve390p8f0783fa856f7"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "warning",
+            "body": "Real datanı screenshot-da, baq report-da və ya Slack-də paylaşma. Test mühitində təsadüfən real şəxsi məlumat görsən, onu maskala və komandana bildir."
+          },
+          "id": "cmve390p88ae40a7f244a"
+        },
+        {
+          "type": "TASK",
+          "title": "Hesab açma forması üçün test data",
+          "content": {
+            "instructions": "Onlayn bankda hesab açma formasında bu sahələr var: ad soyad, telefon (+994), email, doğum tarixi (yalnız 18+). Hər sahə üçün ən azı bir valid, bir invalid və bir boundary dəyər hazırla. Bütün dəyərlər saxta olmalıdır.",
+            "placeholder": "Ad soyad: valid ... | invalid ... | boundary ...\nTelefon: ...\nEmail: ...\nDoğum tarixi: ...",
+            "required": true
+          },
+          "id": "cmve390p88cda5358d237"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Checklist nəyi yoxlamalı olduğunu deyir. Sürətli, çevik və təcrübəli tester üçündür.",
+              "Kritik funksiya, audit, yeni tester və avtomatlaşdırma üçün test case yaz.",
+              "Test data input və precondition datasıdır. Dəyərləri EP və BVA ilə seç, testləri bir-birindən təcrid et.",
+              "Real şəxsi məlumatdan istifadə etmə: example.com, generator, test kartları və ya maskalanmış data işlət."
+            ]
+          },
+          "id": "cmve390p8fad8d053f4fc"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Hansı halda checklist test case-dən daha uyğundur?",
+                "options": [
+                  "Pul köçürməsinin audit üçün sənədləşməsi",
+                  "Tez-tez dəyişən landing page-in sürətli vizual yoxlanması",
+                  "Junior tester üçün regression testləri",
+                  "Avtomatlaşdırılacaq checkout axını"
+                ],
+                "correctIndex": 1,
+                "explanation": "Tez dəyişən UI üçün detallı test case-i yeniləmək baha başa gəlir. Checklist kifayətdir."
+              },
+              {
+                "id": "q2",
+                "text": "ISTQB v4.0-da checklist-based testing hansı ailəyə aiddir?",
+                "options": [
+                  "Black-box",
+                  "White-box",
+                  "Experience-based",
+                  "Static testing"
+                ],
+                "correctIndex": 2,
+                "explanation": "Checklist maddələri testerin təcrübəsindən və köhnə baqlardan yaranır."
+              },
+              {
+                "id": "q3",
+                "text": "Komanda real müştəri bazasını test mühitinə köçürmək istəyir. Düzgün yanaşma hansıdır?",
+                "options": [
+                  "Köçürmək olar, çünki test mühiti daxilidir",
+                  "Saxta və ya maskalanmış data istifadə etmək",
+                  "Yalnız telefon nömrələrini saxlamaq",
+                  "Datanı Slack-də paylaşıb yoxlamaq"
+                ],
+                "correctIndex": 1,
+                "explanation": "Real şəxsi data test mühitində qorunmur. Generatorla yaradılmış və ya maskalanmış data istifadə et."
+              },
+              {
+                "id": "q4",
+                "text": "Test istifadəçisi üçün ən təhlükəsiz email hansıdır?",
+                "options": [
+                  "öz şəxsi gmail ünvanın",
+                  "real müştərinin email-i",
+                  "test.user1@example.com",
+                  "həmkarının iş email-i"
+                ],
+                "correctIndex": 2,
+                "explanation": "`example.com` domeni test və nümunə üçün ayrılıb. Ora göndərilən məktub real şəxsə çatmır."
+              },
+              {
+                "id": "q5",
+                "text": "Testlər eyni test hesabını paylaşır və nəticələr təsadüfi dəyişir. Necə düzəldirsən?",
+                "options": [
+                  "Testləri daha tez icra edirsən",
+                  "Hər test öz datasını yaradır və ya datanı bilinən vəziyyətə qaytarır",
+                  "Testləri silirsən",
+                  "Production datası istifadə edirsən"
+                ],
+                "correctIndex": 1,
+                "explanation": "Testlər bir-birindən təcrid olunanda biri o birinin datasını pozmur və nəticələr sabit olur."
+              }
+            ]
+          },
+          "id": "cmve390p8e7c3322b07e6"
+        }
+      ]
+    }
+  ]
+}

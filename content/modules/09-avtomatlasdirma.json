@@ -1,0 +1,3721 @@
+{
+  "id": "cmna7zlx90000b9i0lpsnfmjn",
+  "key": "avtomatlasdirma",
+  "order": 9,
+  "title": "Avtomatlaşdırma: JavaScript və Playwright",
+  "description": "Sıfırdan JavaScript əsasları və Playwright ilə ilk UI avtomatlaşdırma testləri.",
+  "icon": "Bot",
+  "color": "#EC4899",
+  "lessons": [
+    {
+      "id": "cmnaaa7vg00028dy15s3aky6y",
+      "slug": "automation-qa-basics",
+      "title": "Automation testing nədir?",
+      "shortDescription": "Nəyi və nə vaxt avtomatlaşdırmaq lazımdır: ROI, test piramidası, əsas alətlər və flaky testlər.",
+      "estimatedMinutes": 10,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Manual və avtomatlaşdırılmış testi müqayisə edə biləcəksən",
+              "Hansı testlərin avtomatlaşdırılmalı olduğunu seçə biləcəksən",
+              "Test piramidasını və ROI hesabını izah edə biləcəksən",
+              "Playwright, Selenium və Cypress-i fərqləndirə biləcəksən"
+            ]
+          },
+          "id": "cmve390pab4b16427a47c"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Test automation",
+                "az": "test avtomatlaşdırılması",
+                "definition": "Testi insanın əvəzinə kodun (script-in) icra etməsi və nəticəni yoxlaması."
+              },
+              {
+                "term": "Test script",
+                "az": "test skripti",
+                "definition": "Test addımlarını və gözlənilən nəticəni təsvir edən kod faylı."
+              },
+              {
+                "term": "Regression testing",
+                "az": "reqressiya testi",
+                "definition": "Dəyişiklikdən sonra köhnə funksiyaların pozulmadığını yoxlamaq."
+              },
+              {
+                "term": "ROI",
+                "az": "investisiyanın gəliri",
+                "definition": "Avtomatlaşdırmaya sərf olunan vaxtın qənaət etdiyin vaxtla müqayisəsi."
+              },
+              {
+                "term": "Test pyramid",
+                "az": "test piramidası",
+                "definition": "Testləri səviyyələr üzrə necə paylamağı göstərən model: çox component, az UI testi."
+              },
+              {
+                "term": "Flaky test",
+                "az": "qeyri-sabit test",
+                "definition": "Kod dəyişmədən gah keçən, gah düşən test."
+              }
+            ]
+          },
+          "id": "cmve390pbb93d7c798d6a"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Manual və avtomatlaşdırılmış test",
+            "level": 2
+          },
+          "id": "cmve390pb0d857623e353"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Manual testdə hər addımı sən edirsən: səhifəni açırsan, formanı doldurursan, nəticəyə baxırsan. Avtomatlaşdırmada eyni addımları **script** edir — sən onu bir dəfə yazırsan, sonra istənilən qədər, saniyələr içində işə salırsan.\n\nAnalogiya: qabı əllə yumaq manual testdir, qabyuyan maşın avtomatlaşdırmadır. Maşın sürətlidir, amma qabın necə görünməli olduğunu yenə sən bilirsən.",
+            "highlight": "normal"
+          },
+          "id": "cmve390pb61d65f8f36ab"
+        },
+        {
+          "type": "TABLE",
+          "title": "Manual və avtomatlaşdırılmış testin müqayisəsi",
+          "content": {
+            "headers": [
+              "Meyar",
+              "Manual",
+              "Avtomatlaşdırılmış"
+            ],
+            "rows": [
+              [
+                "Sürət",
+                "Yavaş, insandan asılı",
+                "Çox sürətli, paralel işləyir"
+              ],
+              [
+                "Təkrar icra",
+                "Yorucu, səhvə meyilli",
+                "Hər dəfə eyni addımlar"
+              ],
+              [
+                "İlkin xərc",
+                "Aşağı",
+                "Yüksək: kod yazmaq lazımdır"
+              ],
+              [
+                "Exploratory və usability",
+                "Güclüdür",
+                "Zəifdir: kod yalnız yazdığını yoxlayır"
+              ],
+              [
+                "Ən yaxşı sahə",
+                "Yeni, tez dəyişən funksiyalar",
+                "Regression, smoke, çox data ilə testlər"
+              ]
+            ]
+          },
+          "id": "cmve390pbe140597ed244"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "important",
+            "body": "Avtomatlaşdırma manual QA-nı əvəz etmir. Script yalnız ona yazdığını yoxlayır; yeni baqları tapmaq, istifadəçi təcrübəsini qiymətləndirmək insan işidir. Automation QA — testçi düşüncəsi + kod."
+          },
+          "id": "cmve390pbaecda67939ac"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Nəyi avtomatlaşdırmaq lazımdır?",
+            "level": 2
+          },
+          "id": "cmve390pb5b9873aaef9a"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Avtomatlaşdırma üçün yaxşı namizəd:\n- tez-tez təkrarlanan testlər (hər release-də regression)\n- sabit funksiyalar (tələblər hər həftə dəyişmir)\n- biznes üçün kritik axınlar (login, ödəniş)\n- eyni addımların çox data ilə təkrarı (50 fərqli email)\n\nPis namizəd: bir dəfəlik yoxlama, hələ dizaynı dəyişən funksiya, gözlə qiymətləndirilən şeylər (rəng uyğunluğu, rahatlıq).",
+            "highlight": "normal"
+          },
+          "id": "cmve390pbb11cf1ff4849"
+        },
+        {
+          "type": "CATEGORIZE",
+          "title": "Avtomatlaşdır, yoxsa manual saxla?",
+          "content": {
+            "instructions": "Hər testi uyğun qrupa at.",
+            "categories": [
+              {
+                "id": "auto",
+                "label": "Avtomatlaşdır"
+              },
+              {
+                "id": "manual",
+                "label": "Manual saxla"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "Hər release-dən əvvəl login regression testi",
+                "categoryId": "auto"
+              },
+              {
+                "id": "i2",
+                "text": "Checkout formasını 40 fərqli ünvanla yoxlamaq",
+                "categoryId": "auto"
+              },
+              {
+                "id": "i3",
+                "text": "Hər deploy-dan sonra smoke test",
+                "categoryId": "auto"
+              },
+              {
+                "id": "i4",
+                "text": "Yeni funksiyanı ilk dəfə exploratory test etmək",
+                "categoryId": "manual"
+              },
+              {
+                "id": "i5",
+                "text": "Yeni dizaynın istifadəçiyə rahat olub-olmadığını qiymətləndirmək",
+                "categoryId": "manual"
+              },
+              {
+                "id": "i6",
+                "text": "Hər gün dəyişən prototipi bir dəfə yoxlamaq",
+                "categoryId": "manual"
+              }
+            ],
+            "explanation": "Təkrarlanan, sabit və data ilə zəngin testlər avtomatlaşdırmaya uyğundur. İnsan mühakiməsi tələb edən və ya tez dəyişən şeylər manual qalır."
+          },
+          "id": "cmve390pb8ded428a22a5"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "ROI: avtomatlaşdırma nə vaxt özünü doğruldur?",
+            "level": 2
+          },
+          "id": "cmve390pb9d0b5d91aea7"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Avtomatlaşdırma pulsuz deyil: test yazmaq və onu **saxlamaq** (maintenance — UI dəyişəndə testi düzəltmək) vaxt aparır. ROI sualı sadədir: qənaət etdiyin vaxt sərf etdiyin vaxtdan çoxdurmu? Test nə qədər tez-tez işləyirsə, bir o qədər tez özünü ödəyir.",
+            "highlight": "normal"
+          },
+          "id": "cmve390pbdbc49b32e3a5"
+        },
+        {
+          "type": "EXAMPLE",
+          "content": {
+            "description": "Manual regression hər release-də 4 saat çəkir, həftədə 2 release var — həftədə 8 saat. Avtomatlaşdırmaq 40 saat aparır, sonra həftədə 2 saat maintenance lazımdır. Xalis qənaət: 8 − 2 = 6 saat/həftə. 40 ÷ 6 ≈ 7 həftədən sonra avtomatlaşdırma qazanc gətirməyə başlayır.",
+            "takeaway": "Tez-tez işləyən, sabit testlər ən yüksək ROI verir.",
+            "relatedImageUrl": null
+          },
+          "id": "cmve390pbf931c9e99211"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Test piramidası",
+            "level": 2
+          },
+          "id": "cmve390pb07eaf583904e"
+        },
+        {
+          "type": "TABLE",
+          "title": "Test piramidasının səviyyələri (aşağıdan yuxarı)",
+          "content": {
+            "headers": [
+              "Səviyyə",
+              "Nəyi yoxlayır",
+              "Say",
+              "Sürət"
+            ],
+            "rows": [
+              [
+                "Component (unit) testlər",
+                "Ayrıca funksiya və ya modul",
+                "Çox",
+                "Millisaniyələr"
+              ],
+              [
+                "Integration / API testlər",
+                "Modulların və servislərin birgə işi",
+                "Orta",
+                "Saniyələr"
+              ],
+              [
+                "UI / end-to-end (E2E) testlər",
+                "İstifadəçi axını brauzerdə, başdan sona",
+                "Az",
+                "Saniyələr–dəqiqələr"
+              ]
+            ]
+          },
+          "id": "cmve390pbd7578d608bb9"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Piramida deyir: testlərin çoxu aşağıda, sürətli səviyyədə olsun. UI testləri ən real yoxlamadır, amma ən yavaş və ən kövrəkdir — onları yalnız əsas istifadəçi axınları üçün yaz. Bu kursda Playwright ilə məhz yuxarı səviyyəni, UI testlərini öyrənəcəksən.",
+            "highlight": "normal"
+          },
+          "id": "cmve390pb6a9f53b1d6c9"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Alətlər və flaky testlər",
+            "level": 2
+          },
+          "id": "cmve390pbb763909e02aa"
+        },
+        {
+          "type": "TABLE",
+          "title": "Populyar UI avtomatlaşdırma alətləri",
+          "content": {
+            "headers": [
+              "Alət",
+              "Dillər",
+              "Güclü tərəfi"
+            ],
+            "rows": [
+              [
+                "Playwright (Microsoft)",
+                "JavaScript/TypeScript, Python, Java, .NET",
+                "Chromium, Firefox və WebKit; auto-waiting; hazır test runner və report"
+              ],
+              [
+                "Selenium",
+                "Java, Python, C#, JavaScript və s.",
+                "Ən köhnə və geniş yayılmış standart (WebDriver)"
+              ],
+              [
+                "Cypress",
+                "JavaScript/TypeScript",
+                "Rahat interaktiv runner, frontend komandalarında populyardır"
+              ]
+            ]
+          },
+          "id": "cmve390pb29b5b6fccbb8"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "warning",
+            "body": "**Flaky test** komandanın testlərə inamını öldürür. Əsas səbəblər: sabit gözləmələr (`sleep 3 saniyə`), testlərin bir-birindən asılı olması, paylaşılan və dəyişən test datası, yavaş mühit. Həll: elementi gözləyən alət (Playwright bunu özü edir), hər test üçün öz datası, testlərin müstəqil olması."
+          },
+          "id": "cmve390pbd0f52babbc26"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Avtomatlaşdırma təkrarlanan, sabit və kritik testləri sürətləndirir, manual testi əvəz etmir.",
+              "ROI: qənaət olunan vaxt yazma + maintenance vaxtından çox olmalıdır.",
+              "Test piramidası: çox component, orta API, az UI testi.",
+              "Playwright müasir, sürətli və auto-waiting olan UI alətidir; Selenium və Cypress alternativlərdir.",
+              "Flaky test kod dəyişmədən gah keçir, gah düşür — səbəbini tap və düzəlt."
+            ]
+          },
+          "id": "cmve390pbb8a6e1f0d901"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Hansı test avtomatlaşdırma üçün ən yaxşı namizəddir?",
+                "options": [
+                  "Yeni funksiyanın ilk exploratory testi",
+                  "Hər release-də təkrarlanan login regression testi",
+                  "Yeni loqonun gözəl görünüb-görünmədiyi",
+                  "Bir dəfə işlədiləcək data miqrasiyasının yoxlanışı"
+                ],
+                "correctIndex": 1,
+                "explanation": "Regression testi tez-tez və eyni addımlarla təkrarlanır — avtomatlaşdırma məhz burada vaxta qənaət edir.",
+                "imageUrl": null
+              },
+              {
+                "id": "q2",
+                "text": "Flaky test nədir?",
+                "options": [
+                  "Həmişə düşən test",
+                  "Kod dəyişmədən gah keçən, gah düşən test",
+                  "Çox yavaş işləyən test",
+                  "Hələ yazılmamış test"
+                ],
+                "correctIndex": 1,
+                "explanation": "Flaky testin nəticəsi qeyri-sabitdir, ona görə onun düşməsi baq olub-olmadığını göstərmir.",
+                "imageUrl": null
+              },
+              {
+                "id": "q3",
+                "text": "Test piramidasına görə ən çox hansı testlər olmalıdır?",
+                "options": [
+                  "UI / E2E testlər",
+                  "Manual testlər",
+                  "Component (unit) testlər",
+                  "Hamısı bərabər"
+                ],
+                "correctIndex": 2,
+                "explanation": "Component testləri ən sürətli və ən ucuzdur, ona görə piramidanın geniş təməlini təşkil edir.",
+                "imageUrl": null
+              },
+              {
+                "id": "q4",
+                "text": "Avtomatlaşdırmanın ROI-ni ən çox nə artırır?",
+                "options": [
+                  "Testin nadir hallarda işlədilməsi",
+                  "Testin tez-tez işlədilməsi və funksiyanın sabit olması",
+                  "Testə çoxlu sabit gözləmə əlavə etmək",
+                  "Testi yalnız bir brauzerdə işlətmək"
+                ],
+                "correctIndex": 1,
+                "explanation": "Hər işləmə manual vaxta qənaət edir, sabit funksiya isə maintenance xərcini azaldır.",
+                "imageUrl": null
+              },
+              {
+                "id": "q5",
+                "text": "Testdə `3 saniyə gözlə` kimi sabit gözləmə niyə problemlidir?",
+                "options": [
+                  "Kod daha qısa olur",
+                  "Mühit yavaş olanda test düşür, sürətli olanda vaxt itir — flaky olur",
+                  "Playwright bunu dəstəkləmir",
+                  "Testi daha sabit edir"
+                ],
+                "correctIndex": 1,
+                "explanation": "Sabit gözləmə real vəziyyəti nəzərə almır. Playwright əvəzində elementin hazır olmasını avtomatik gözləyir.",
+                "imageUrl": null
+              }
+            ]
+          },
+          "id": "cmve390pb5eb16b247cad"
+        }
+      ]
+    },
+    {
+      "id": "cmrb309ji0001r974uzdp7dzv",
+      "slug": "proqramlasdirma-esaslari-javascript",
+      "title": "JavaScript-ə ilk addım",
+      "shortDescription": "Proqram nədir, JavaScript kodu harada işləyir, console.log, şərhlər və sintaksisin əsas qaydaları.",
+      "estimatedMinutes": 12,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Proqramın nə olduğunu və kompüterin onu necə icra etdiyini izah edə biləcəksən",
+              "JavaScript faylını Node.js ilə işə sala biləcəksən",
+              "console.log ilə nəticəni ekrana çıxara biləcəksən",
+              "Şərh yaza və sadə sintaksis xətalarını düzəldə biləcəksən"
+            ]
+          },
+          "id": "cmve390pb2aef990880b5"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Program",
+                "az": "proqram",
+                "definition": "Kompüterin yuxarıdan aşağı, sırayla icra etdiyi təlimatlar toplusu."
+              },
+              {
+                "term": "JavaScript",
+                "az": "JS",
+                "definition": "Brauzerdə və Node.js-də işləyən proqramlaşdırma dili; Playwright testləri bu dildə yazılır."
+              },
+              {
+                "term": "Node.js",
+                "az": "JS mühərriki",
+                "definition": "JavaScript kodunu brauzerdən kənarda, kompüterində icra edən proqram."
+              },
+              {
+                "term": "Terminal",
+                "az": "əmr sətri",
+                "definition": "Kompüterə yazılı əmr verdiyin pəncərə."
+              },
+              {
+                "term": "Comment",
+                "az": "şərh",
+                "definition": "Kompüterin icra etmədiyi, insanlar üçün yazılan qeyd."
+              },
+              {
+                "term": "Syntax error",
+                "az": "sintaksis xətası",
+                "definition": "Kod dilin qaydalarına uymayanda yaranan xəta; kod işə düşmür."
+              }
+            ]
+          },
+          "id": "cmve390pbfb76357977d0"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Proqram nədir?",
+            "level": 2
+          },
+          "id": "cmve390pbe074330a4811"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Proqram kompüter üçün reseptdir: addım-addım təlimatlar. Fərq ondadır ki, kompüter heç nə təxmin etmir — yazdığını, yazdığın ardıcıllıqla, hərfi-hərfinə icra edir. Bir mötərizə əskik olsa, \"başa düşmədim\" deyib xəta verir.\n\nTestçi kimi bu sənə tanışdır: test case-də də addımlar dəqiq və birmənalı olmalıdır.",
+            "highlight": "normal"
+          },
+          "id": "cmve390pbb79644be7e06"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "JavaScript kodu harada işləyir?",
+            "level": 2
+          },
+          "id": "cmve390pb4c683c117a64"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "JavaScript iki yerdə işləyir: **brauzerdə** (saytların içində) və **Node.js**-də (kompüterində, brauzersiz). Playwright testləri Node.js-də işləyir. Bu dərslərdəki tapşırıqları isə birbaşa bu səhifədə, brauzerdə işə salacaqsan — heç nə quraşdırmadan.",
+            "highlight": "normal"
+          },
+          "id": "cmve390pb9d05cd738c95"
+        },
+        {
+          "type": "STEPPER",
+          "title": "Kompüterində ilk JS faylını işə salmaq",
+          "content": {
+            "steps": [
+              {
+                "title": "Node.js quraşdır",
+                "description": "nodejs.org saytından **LTS** (stabil) versiyanı yüklə və quraşdır."
+              },
+              {
+                "title": "Yoxla",
+                "description": "Terminalı aç (Mac: Cmd+Space → Terminal; Windows: PowerShell) və `node -v` yaz. Versiya nömrəsi görünməlidir, məsələn `v22.11.0`."
+              },
+              {
+                "title": "Fayl yarat",
+                "description": "VS Code-da `playwright-course` qovluğunu aç və `hello.js` faylı yarat. `.js` uzantısı faylın JavaScript olduğunu bildirir."
+              },
+              {
+                "title": "İşə sal",
+                "description": "VS Code-da Terminal → New Terminal aç və `node hello.js` yaz."
+              }
+            ]
+          },
+          "id": "cmve390pb6d290c1027fd"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "node -v          # Node.js versiyası, məsələn v22.11.0\nnpm -v           # paket meneceri, Node ilə birgə gəlir\nnode hello.js    # hello.js faylını icra et",
+            "language": "bash",
+            "caption": "Terminal əmrləri"
+          },
+          "id": "cmve390pb8622bd8d87e4"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "tip",
+            "body": "`node -v` yazanda \"command not found\" və ya \"not recognized\" görürsənsə, terminalı bağlayıb yenidən aç. Kömək etməsə, kompüteri yenidən başlat."
+          },
+          "id": "cmve390pbf095d4f797ea"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "console.log — nəticəni ekrana çıxarmaq",
+            "level": 2
+          },
+          "id": "cmve390pb62abba87d174"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "console.log(\"Salam, Dünya!\");\nconsole.log(\"Test başladı\");\nconsole.log(2 + 3);\nconsole.log(\"Keçən testlər:\", 12);",
+            "language": "javascript",
+            "caption": "hello.js"
+          },
+          "id": "cmve390pbcd6f51cc24cb"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "`console.log(...)` mötərizədəki dəyəri terminala çap edir. Yuxarıdakı kod sırayla `Salam, Dünya!`, `Test başladı`, `5` və `Keçən testlər: 12` çap edir.\n\n- Mətn dırnaq içində yazılır: `\"Salam\"` və ya `'Salam'`.\n- Rəqəm dırnaqsız yazılır və hesablanır: `2 + 3` → `5`.\n- Vergüllə bir neçə dəyəri bir sətirdə çap edə bilərsən.",
+            "highlight": "normal"
+          },
+          "id": "cmve390pb856db1dd3a32"
+        },
+        {
+          "type": "ORDERING",
+          "title": "İlk skripti işə salmaq",
+          "content": {
+            "instructions": "Addımları düzgün ardıcıllığa düz.",
+            "items": [
+              "Node.js-i quraşdırmaq",
+              "`node -v` ilə quraşdırmanı yoxlamaq",
+              "`hello.js` faylını yaratmaq və kodu yazmaq",
+              "Faylı saxlamaq",
+              "Terminalda `node hello.js` yazmaq",
+              "Terminalda nəticəni oxumaq"
+            ],
+            "explanation": "Əvvəl alət, sonra fayl, sonra icra. Faylı saxlamasan, Node.js köhnə versiyanı icra edəcək."
+          },
+          "id": "cmve390pbbf989accecd9"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Şərhlər və sintaksis qaydaları",
+            "level": 2
+          },
+          "id": "cmve390pbb98cb7a71884"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "// Bu bir sətirlik şərhdir — icra olunmur\nconsole.log(\"Login testi\"); // sətrin sonunda da yazmaq olar\n\n/*\n  Çox sətirlik şərh.\n  Kodun bir hissəsini müvəqqəti söndürmək üçün də işlədilir.\n*/",
+            "language": "javascript",
+            "caption": "Şərh növləri"
+          },
+          "id": "cmve390pba8f6394a3938"
+        },
+        {
+          "type": "TABLE",
+          "title": "JavaScript-in əsas sintaksis qaydaları",
+          "content": {
+            "headers": [
+              "Qayda",
+              "Düzgün",
+              "Səhv"
+            ],
+            "rows": [
+              [
+                "Böyük-kiçik hərf fərqlidir",
+                "`console.log`",
+                "`Console.Log`"
+              ],
+              [
+                "Mətn dırnaq içindədir və dırnaq bağlanır",
+                "`\"Salam\"`",
+                "`\"Salam`"
+              ],
+              [
+                "Hər açılan mötərizə bağlanır",
+                "`console.log(5)`",
+                "`console.log(5`"
+              ],
+              [
+                "Əmr nöqtəli vergüllə bitir (tövsiyə)",
+                "`console.log(1);`",
+                "—"
+              ],
+              [
+                "Kod yuxarıdan aşağı icra olunur",
+                "Xəta sətrindən sonrakılar işləmir",
+                "—"
+              ]
+            ]
+          },
+          "id": "cmve390pb44592e8919fb"
+        },
+        {
+          "type": "TABLE",
+          "title": "Ən çox rast gələcəyin xətalar",
+          "content": {
+            "headers": [
+              "Xəta mesajı",
+              "Səbəb"
+            ],
+            "rows": [
+              [
+                "SyntaxError: missing ) after argument list",
+                "Mötərizə bağlanmayıb"
+              ],
+              [
+                "SyntaxError: Invalid or unexpected token",
+                "Dırnaq bağlanmayıb"
+              ],
+              [
+                "TypeError: console.Log is not a function",
+                "Böyük hərf səhvi: `log` olmalıdır"
+              ],
+              [
+                "ReferenceError: x is not defined",
+                "Mövcud olmayan ada müraciət"
+              ],
+              [
+                "Cannot find module '.../hello.js'",
+                "Terminal başqa qovluqdadır və ya fayl adı səhvdir"
+              ]
+            ]
+          },
+          "id": "cmve390pbbd1bfe051127"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "remember",
+            "body": "Xəta mesajını oxu — o, problemin növünü və sətir nömrəsini deyir. Baq report-da \"actual result\" nə qədər vacibdirsə, proqramçı üçün xəta mesajı o qədər vacibdir."
+          },
+          "id": "cmve390pb518a25e0aee7"
+        },
+        {
+          "type": "CODE_EXERCISE",
+          "title": "Sintaksis xətalarını düzəlt",
+          "content": {
+            "language": "javascript",
+            "instructions": "Bu kodda 3 xəta var: bağlanmamış dırnaq, böyük hərf səhvi və bağlanmamış mötərizə. Hamısını düzəlt ki, kod işə düşsün. `const` sətirləri dəyər saxlayır — onları növbəti dərsdə öyrənəcəksən, dəyərlərini dəyişmə.",
+            "starterCode": "const testName = \"Login testi;\nconsole.Log(\"Test başladı: \" + testName);\nconst passed = true;\nconsole.log(\"Nəticə:\", passed;\n",
+            "solution": "const testName = \"Login testi\";\nconsole.log(\"Test başladı: \" + testName);\nconst passed = true;\nconsole.log(\"Nəticə:\", passed);\n",
+            "tests": [
+              {
+                "name": "Kod xətasız işləyir və testName düzgündür",
+                "assert": "testName === \"Login testi\""
+              },
+              {
+                "name": "passed dəyəri true-dur",
+                "assert": "passed === true"
+              }
+            ],
+            "hints": [
+              "Birinci sətirdə mətn açılır, amma bağlanmır: `\"Login testi\"`.",
+              "`console.Log` yox, `console.log` — hamısı kiçik hərflə.",
+              "Son sətirdə `passed`-dən sonra `)` əskikdir."
+            ]
+          },
+          "id": "cmve390pbba6f0eaa78ae"
+        },
+        {
+          "type": "CODE_EXERCISE",
+          "title": "Sətri şərhə çevir",
+          "content": {
+            "language": "javascript",
+            "instructions": "İkinci sətir hələ yazılmamış funksiyanı çağırır və kodu sındırır. Onu silmədən `//` ilə şərhə çevir ki, qalan kod işləsin.",
+            "starterCode": "console.log(\"Addım 1: səhifə açıldı\");\nrunPaymentStep();\nconst finished = true;\nconsole.log(\"Test bitdi\");\n",
+            "solution": "console.log(\"Addım 1: səhifə açıldı\");\n// runPaymentStep();\nconst finished = true;\nconsole.log(\"Test bitdi\");\n",
+            "tests": [
+              {
+                "name": "Kod sona qədər icra olundu",
+                "assert": "finished === true"
+              }
+            ],
+            "hints": [
+              "Sətrin əvvəlinə iki slash yaz: `// runPaymentStep();`"
+            ]
+          },
+          "id": "cmve390pb4e4eae5c821c"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Proqram kompüterin sırayla icra etdiyi dəqiq təlimatlardır.",
+              "JavaScript brauzerdə və Node.js-də işləyir; faylı `node fayl.js` ilə işə salırsan.",
+              "`console.log()` nəticəni terminala çap edir.",
+              "`//` və `/* */` şərhləri icra olunmur.",
+              "Böyük-kiçik hərf, dırnaq və mötərizə qaydaları sərtdir — xəta mesajı problemin yerini göstərir."
+            ]
+          },
+          "id": "cmve390pb6b127a838cd9"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "`console.log(4 + 4);` nə çap edir?",
+                "options": [
+                  "4 + 4",
+                  "8",
+                  "\"8\"",
+                  "44"
+                ],
+                "correctIndex": 1,
+                "explanation": "Rəqəmlər dırnaqsız yazıldığı üçün toplanır və nəticə 8 olur.",
+                "imageUrl": null
+              },
+              {
+                "id": "q2",
+                "text": "`app.js` faylını terminalda necə işə salırsan?",
+                "options": [
+                  "run app.js",
+                  "npm app.js",
+                  "node app.js",
+                  "start app.js"
+                ],
+                "correctIndex": 2,
+                "explanation": "Node.js faylı `node fayl_adı` formatında icra edir.",
+                "imageUrl": null
+              },
+              {
+                "id": "q3",
+                "text": "`// console.log(\"Salam\");` sətri nə edir?",
+                "options": [
+                  "Salam çap edir",
+                  "Heç nə — bu şərhdir",
+                  "Xəta verir",
+                  "Salam sözünü iki dəfə çap edir"
+                ],
+                "correctIndex": 1,
+                "explanation": "`//` ilə başlayan sətir şərhdir və icra olunmur.",
+                "imageUrl": null
+              },
+              {
+                "id": "q4",
+                "text": "`Console.log(\"Test\")` niyə işləmir?",
+                "options": [
+                  "Dırnaq səhvdir",
+                  "JavaScript böyük-kiçik hərfi fərqləndirir: `console` olmalıdır",
+                  "Nöqtəli vergül yoxdur",
+                  "Mətn çox qısadır"
+                ],
+                "correctIndex": 1,
+                "explanation": "JavaScript case-sensitive dildir: `Console` və `console` fərqli adlardır.",
+                "imageUrl": null
+              },
+              {
+                "id": "q5",
+                "text": "Playwright testləri harada icra olunur?",
+                "options": [
+                  "Yalnız Excel-də",
+                  "Node.js-də",
+                  "Yalnız telefonda",
+                  "Verilənlər bazasında"
+                ],
+                "correctIndex": 1,
+                "explanation": "Playwright Node.js üzərində işləyir və oradan brauzerləri idarə edir.",
+                "imageUrl": null
+              }
+            ]
+          },
+          "id": "cmve390pb4635477a19b5"
+        }
+      ]
+    },
+    {
+      "id": "cmrcfx3of0001c7wcq759ja75",
+      "slug": "deyisenler-ve-melumat-tipleri",
+      "title": "Dəyişənlər və məlumat tipləri",
+      "shortDescription": "let və const ilə dəyişən yaratmaq, string, number, boolean, null, undefined, typeof və template string.",
+      "estimatedMinutes": 13,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "let və const ilə dəyişən yarada və düzgün seçə biləcəksən",
+              "Beş əsas məlumat tipini fərqləndirə biləcəksən",
+              "typeof ilə dəyərin tipini yoxlaya biləcəksən",
+              "Template string ilə dinamik mətn qura biləcəksən"
+            ]
+          },
+          "id": "cmve390pbc23c15a055fa"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Variable",
+                "az": "dəyişən",
+                "definition": "Adı olan və içində dəyər saxlayan yaddaş qutusu."
+              },
+              {
+                "term": "const",
+                "az": "sabit",
+                "definition": "Dəyəri bir dəfə verilən, sonra yenidən təyin edilməyən dəyişən."
+              },
+              {
+                "term": "let",
+                "az": "dəyişə bilən",
+                "definition": "Dəyəri sonradan yenidən təyin oluna bilən dəyişən."
+              },
+              {
+                "term": "Data type",
+                "az": "məlumat tipi",
+                "definition": "Dəyərin növü: mətn, ədəd, doğru/yalan və s."
+              },
+              {
+                "term": "typeof",
+                "az": "tip operatoru",
+                "definition": "Dəyərin tipini mətn kimi qaytarır: \"string\", \"number\"..."
+              },
+              {
+                "term": "Template string",
+                "az": "şablon mətn",
+                "definition": "Backtick (`) içində yazılan və `${...}` ilə dəyər qoşulan mətn."
+              }
+            ]
+          },
+          "id": "cmve390pbc9707b4e2aa9"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Dəyişən nədir?",
+            "level": 2
+          },
+          "id": "cmve390pb5a8a53e7259f"
+        },
+        {
+          "type": "IMAGE",
+          "content": {
+            "url": "https://cdn.prod.website-files.com/6584d3c7e9c648618ca2ec43/65ce2f5c435c07afbc4d7bfc_Variables.png",
+            "alt": "Dəyişənin üzərində ad yazılmış və içində dəyər saxlanan qutu kimi təsviri",
+            "caption": "Dəyişən = ad + dəyər",
+            "alignment": "center"
+          },
+          "id": "cmve390pb0d23987e5cd4"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Dəyişən üzərinə etiket yapışdırılmış qutudur: etiket — ad, içindəki — dəyər. Dəyəri bir dəfə saxlayırsan, sonra adı ilə istənilən yerdə istifadə edirsən. Testdə eyni email-i 10 yerdə yazmaq əvəzinə onu bir dəyişəndə saxlayırsan — dəyişmək lazım olanda bir yerdə dəyişirsən.",
+            "highlight": "normal"
+          },
+          "id": "cmve390pb177d6886f11c"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "const userEmail = \"aysel@test.com\"; // dəyişməyəcək\nlet attempts = 0;                    // dəyişəcək\n\nattempts = attempts + 1;\nconsole.log(attempts); // 1\n\nuserEmail = \"new@test.com\"; // TypeError: Assignment to constant variable.",
+            "language": "javascript",
+            "caption": "const və let"
+          },
+          "id": "cmve390pb441d361d1a5b"
+        },
+        {
+          "type": "TABLE",
+          "title": "const, let və var",
+          "content": {
+            "headers": [
+              "Açar söz",
+              "Yenidən təyin etmək olar?",
+              "Nə vaxt istifadə et"
+            ],
+            "rows": [
+              [
+                "const",
+                "Xeyr",
+                "Default seçim — dəyər dəyişməyəcəksə"
+              ],
+              [
+                "let",
+                "Bəli",
+                "Yalnız dəyər dəyişəcəksə (sayğac, nəticə)"
+              ],
+              [
+                "var",
+                "Bəli",
+                "Köhnə üsul — müasir kodda işlətmə"
+              ]
+            ]
+          },
+          "id": "cmve390pb915d20b18ef8"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "tip",
+            "body": "Ad qaydaları: rəqəmlə başlamır, boşluq olmur, böyük-kiçik hərf fərqlidir (`email` ≠ `Email`). JavaScript-də **camelCase** işlədilir: `userEmail`, `isLoggedIn`. Mənalı ad seç: `x` yox, `errorMessage`."
+          },
+          "id": "cmve390pb90cf494d4fd1"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Beş əsas məlumat tipi",
+            "level": 2
+          },
+          "id": "cmve390pb61c985a63a78"
+        },
+        {
+          "type": "IMAGE",
+          "content": {
+            "url": "https://cdn.sanity.io/images/l5rq9j6r/production/7e0b82393d930a6330d85ac581f4b7ff3670018a-1500x939.jpg",
+            "alt": "JavaScript məlumat tiplərinin primitiv və obyekt tiplərinə bölündüyü sxem",
+            "caption": "JavaScript məlumat tipləri",
+            "alignment": "center"
+          },
+          "id": "cmve390pb73a07062dd11"
+        },
+        {
+          "type": "TABLE",
+          "title": "Əsas primitiv tiplər",
+          "content": {
+            "headers": [
+              "Tip",
+              "Mənası",
+              "QA nümunəsi"
+            ],
+            "rows": [
+              [
+                "string",
+                "Mətn, dırnaq içində",
+                "`\"standard_user\"`, `'Login'`"
+              ],
+              [
+                "number",
+                "Tam və ya kəsr ədəd",
+                "`200`, `19.99`, `-1`"
+              ],
+              [
+                "boolean",
+                "Yalnız `true` və ya `false`",
+                "`isVisible = true`"
+              ],
+              [
+                "null",
+                "Bilərəkdən \"boş\" qoyulmuş dəyər",
+                "`bugId = null` (hələ baq yoxdur)"
+              ],
+              [
+                "undefined",
+                "Dəyər heç verilməyib",
+                "`let result;`"
+              ]
+            ]
+          },
+          "id": "cmve390pb432bf108f29d"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "const username = \"standard_user\";\nconst statusCode = 200;\nconst isVisible = true;\nlet result;\n\nconsole.log(typeof username);   // \"string\"\nconsole.log(typeof statusCode); // \"number\"\nconsole.log(typeof isVisible);  // \"boolean\"\nconsole.log(typeof result);     // \"undefined\"\nconsole.log(typeof \"200\");      // \"string\" — dırnaq içindədir!",
+            "language": "javascript",
+            "caption": "typeof ilə tipi yoxlamaq"
+          },
+          "id": "cmve390pb91ed322b2361"
+        },
+        {
+          "type": "IMAGE",
+          "content": {
+            "url": "https://miro.medium.com/v2/1*2_HFHnNxBPA9vFl_hkllUg.png",
+            "alt": "null və undefined fərqini göstərən müqayisəli təsvir",
+            "caption": "null və undefined",
+            "alignment": "center"
+          },
+          "id": "cmve390pb16c890f67bf6"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "remember",
+            "body": "`null` — sən özün \"burada dəyər yoxdur\" deyirsən. `undefined` — dəyər heç verilməyib, JavaScript özü belə qoyur. Tələ: `typeof null` nəticəsi `\"object\"`-dir — bu, dilin köhnə xətasıdır, əzbərlə."
+          },
+          "id": "cmve390pb89136bbba7a4"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yoxla",
+          "content": {
+            "questions": [
+              {
+                "id": "m1",
+                "text": "`typeof \"42\"` nə qaytarır?",
+                "options": [
+                  "\"number\"",
+                  "\"string\"",
+                  "\"boolean\"",
+                  "\"undefined\""
+                ],
+                "correctIndex": 1,
+                "explanation": "Dırnaq içindəki hər şey mətndir, içində rəqəm olsa belə.",
+                "imageUrl": null
+              },
+              {
+                "id": "m2",
+                "text": "Testdə dəyişməyəcək URL-i hansı açar sözlə saxlamalısan?",
+                "options": [
+                  "var",
+                  "let",
+                  "const",
+                  "fixed"
+                ],
+                "correctIndex": 2,
+                "explanation": "Dəyər dəyişməyəcəksə `const` default seçimdir.",
+                "imageUrl": null
+              }
+            ]
+          },
+          "id": "cmve390pb5177afa72570"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Template string: dəyərləri mətnə qoşmaq",
+            "level": 2
+          },
+          "id": "cmve390pbb67fd3329d66"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "const user = \"aysel\";\nconst env = \"staging\";\n\n// köhnə üsul: + ilə birləşdirmək\nconsole.log(\"User \" + user + \" logged in on \" + env);\n\n// template string: backtick və ${}\nconsole.log(`User ${user} logged in on ${env}`);\n\n// tələ: string + number\nconsole.log(\"5\" + 3);         // \"53\" — mətn birləşdi\nconsole.log(Number(\"5\") + 3); // 8 — əvvəl ədədə çevirdik",
+            "language": "javascript",
+            "caption": "Template string və tip çevirmə"
+          },
+          "id": "cmve390pbcfe388a71be9"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "UI-dan oxuduğun hər şey (qiymət, say) **string** gəlir. Hesablamadan əvvəl `Number(...)` ilə ədədə çevir, yoxsa `+` toplamaq əvəzinə mətnləri yapışdırar.",
+            "highlight": "warning"
+          },
+          "id": "cmve390pba2e6252bed70"
+        },
+        {
+          "type": "CODE_EXERCISE",
+          "title": "Test datası üçün dəyişənlər",
+          "content": {
+            "language": "javascript",
+            "instructions": "Dörd dəyişən yarat:\n- `testName` — dəyəri `\"Login testi\"` olan **const**\n- `attempts` — dəyəri `3` olan **let**\n- `isPassed` — dəyəri `false` olan **const**\n- `bugId` — dəyəri `null` olan **let**",
+            "starterCode": "// dəyişənləri bura yaz\n",
+            "solution": "const testName = \"Login testi\";\nlet attempts = 3;\nconst isPassed = false;\nlet bugId = null;\n",
+            "tests": [
+              {
+                "name": "testName mətndir və dəyəri düzgündür",
+                "assert": "typeof testName === \"string\" && testName === \"Login testi\""
+              },
+              {
+                "name": "attempts ədəd 3-dür",
+                "assert": "typeof attempts === \"number\" && attempts === 3"
+              },
+              {
+                "name": "isPassed boolean false-dur",
+                "assert": "isPassed === false"
+              },
+              {
+                "name": "bugId null-dur",
+                "assert": "bugId === null"
+              }
+            ],
+            "hints": [
+              "Format: `const ad = dəyər;`",
+              "`3` dırnaqsız yazılır, yoxsa string olar. `false` və `null` da dırnaqsızdır."
+            ]
+          },
+          "id": "cmve390pb13c287b0121f"
+        },
+        {
+          "type": "CODE_EXERCISE",
+          "title": "Səbətin cəmini hesabla",
+          "content": {
+            "language": "javascript",
+            "instructions": "Saytdan oxunan qiymət mətndir: `priceText = \"25\"`. \n1. `total` adlı const yarat: qiyməti ədədə çevir və `quantity`-yə vur.\n2. `report` adlı const yarat və template string ilə `\"Cəmi: 50 AZN\"` formatında mətn qur (rəqəmi `${total}` ilə qoş).",
+            "starterCode": "const priceText = \"25\";\nconst quantity = 2;\n\n// total və report-u bura yaz\n",
+            "solution": "const priceText = \"25\";\nconst quantity = 2;\n\nconst total = Number(priceText) * quantity;\nconst report = `Cəmi: ${total} AZN`;\nconsole.log(report);\n",
+            "tests": [
+              {
+                "name": "total ədəddir və 50-yə bərabərdir",
+                "assert": "typeof total === \"number\" && total === 50"
+              },
+              {
+                "name": "report düzgün formatdadır",
+                "assert": "report === \"Cəmi: 50 AZN\""
+              }
+            ],
+            "hints": [
+              "`Number(priceText)` mətni ədədə çevirir.",
+              "Template string backtick ilə yazılır: `` `Cəmi: ${total} AZN` ``"
+            ]
+          },
+          "id": "cmve390pb0f544dacf32b"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Dəyişən = ad + dəyər; default `const`, dəyər dəyişəcəksə `let`, `var` işlətmə.",
+              "Əsas tiplər: string, number, boolean, null, undefined.",
+              "`typeof` dəyərin tipini qaytarır; `typeof null` tarixi səbəbdən `\"object\"`-dir.",
+              "Template string: `` `Salam, ${name}` `` — dəyərləri mətnə rahat qoşur.",
+              "UI-dan gələn rəqəmlər string-dir: hesablamadan əvvəl `Number()` ilə çevir."
+            ]
+          },
+          "id": "cmve390pb4796b3f3b38f"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "`const a = 5; a = 6;` nəticəsi nədir?",
+                "options": [
+                  "a 6 olur",
+                  "TypeError: Assignment to constant variable",
+                  "a 11 olur",
+                  "Heç nə baş vermir"
+                ],
+                "correctIndex": 1,
+                "explanation": "`const` ilə yaradılan dəyişən yenidən təyin edilə bilməz.",
+                "imageUrl": null
+              },
+              {
+                "id": "q2",
+                "text": "`let x; console.log(x);` nə çap edir?",
+                "options": [
+                  "null",
+                  "0",
+                  "undefined",
+                  "Xəta"
+                ],
+                "correctIndex": 2,
+                "explanation": "Dəyər verilməyən dəyişən avtomatik `undefined` olur.",
+                "imageUrl": null
+              },
+              {
+                "id": "q3",
+                "text": "`\"10\" + 5` nəticəsi nədir?",
+                "options": [
+                  "15",
+                  "\"105\"",
+                  "\"15\"",
+                  "Xəta"
+                ],
+                "correctIndex": 1,
+                "explanation": "Biri string olanda `+` mətnləri birləşdirir: \"105\".",
+                "imageUrl": null
+              },
+              {
+                "id": "q4",
+                "text": "Hansı dəyişən adı düzgündür?",
+                "options": [
+                  "2user",
+                  "user email",
+                  "userEmail",
+                  "user-email"
+                ],
+                "correctIndex": 2,
+                "explanation": "Ad rəqəmlə başlamır, boşluq və tire ola bilməz; camelCase standartdır.",
+                "imageUrl": null
+              },
+              {
+                "id": "q5",
+                "text": "`const n = \"QA\"; console.log(`Salam, ${n}`);` nə çap edir?",
+                "options": [
+                  "Salam, ${n}",
+                  "Salam, QA",
+                  "Salam, n",
+                  "Xəta"
+                ],
+                "correctIndex": 1,
+                "explanation": "Template string-də `${n}` dəyişənin dəyəri ilə əvəz olunur.",
+                "imageUrl": null
+              },
+              {
+                "id": "q6",
+                "text": "Baq hələ yaradılmayıbsa, `bugId` üçün hansı dəyər daha mənalıdır?",
+                "options": [
+                  "null",
+                  "\"null\"",
+                  "false",
+                  "0"
+                ],
+                "correctIndex": 0,
+                "explanation": "`null` bilərəkdən \"dəyər yoxdur\" deməkdir. \"null\" isə sadəcə mətndir.",
+                "imageUrl": null
+              }
+            ]
+          },
+          "id": "cmve390pb0919b39a474a"
+        }
+      ]
+    },
+    {
+      "id": "cmrdwp7c60001r7lmzx40p110",
+      "slug": "operatorlar-ve-sertler",
+      "title": "Operatorlar və şərtlər",
+      "shortDescription": "Riyazi, müqayisə və məntiqi operatorlar, === ilə == fərqi, if/else və ternary ilə qərar vermək.",
+      "estimatedMinutes": 14,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Riyazi və müqayisə operatorlarını tətbiq edə biləcəksən",
+              "=== və == arasındakı fərqi izah edə biləcəksən",
+              "&&, || və ! ilə şərtləri birləşdirə biləcəksən",
+              "if/else və ternary ilə kodda qərar verə biləcəksən"
+            ]
+          },
+          "id": "cmve390pbc79d1ce05790"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Operator",
+                "az": "operator",
+                "definition": "Dəyərlər üzərində əməliyyat edən simvol: `+`, `>`, `&&`."
+              },
+              {
+                "term": "Strict equality",
+                "az": "ciddi bərabərlik",
+                "definition": "`===` — həm dəyəri, həm tipi müqayisə edir."
+              },
+              {
+                "term": "Modulo",
+                "az": "qalıq",
+                "definition": "`%` — bölmədən qalan hissəni verir."
+              },
+              {
+                "term": "Logical operator",
+                "az": "məntiqi operator",
+                "definition": "Şərtləri birləşdirir: `&&` (və), `||` (və ya), `!` (deyil)."
+              },
+              {
+                "term": "Condition",
+                "az": "şərt",
+                "definition": "Nəticəsi true və ya false olan ifadə; if onun əsasında qərar verir."
+              },
+              {
+                "term": "Ternary",
+                "az": "üçlü operator",
+                "definition": "`şərt ? a : b` — qısa if/else."
+              }
+            ]
+          },
+          "id": "cmve390pb6c2e51728f3d"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Riyazi operatorlar",
+            "level": 2
+          },
+          "id": "cmve390pbdf4eeb39bac1"
+        },
+        {
+          "type": "TABLE",
+          "title": "Riyazi operatorlar",
+          "content": {
+            "headers": [
+              "Operator",
+              "Mənası",
+              "Nümunə",
+              "Nəticə"
+            ],
+            "rows": [
+              [
+                "+",
+                "Toplama",
+                "`5 + 3`",
+                "8"
+              ],
+              [
+                "-",
+                "Çıxma",
+                "`5 - 3`",
+                "2"
+              ],
+              [
+                "*",
+                "Vurma",
+                "`5 * 3`",
+                "15"
+              ],
+              [
+                "/",
+                "Bölmə",
+                "`10 / 4`",
+                "2.5"
+              ],
+              [
+                "%",
+                "Qalıq (modulo)",
+                "`10 % 3`",
+                "1"
+              ],
+              [
+                "+= / ++",
+                "Artırma",
+                "`total += 5`, `count++`",
+                "total 5 artır, count 1 artır"
+              ]
+            ]
+          },
+          "id": "cmve390pb1dfc3143e556"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "tip",
+            "body": "`%` ən çox cüt/tək yoxlamaq üçün işlədilir: `n % 2 === 0` olarsa, ədəd cütdür."
+          },
+          "id": "cmve390pba3ab8f27abb2"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Müqayisə: === həmişə",
+            "level": 2
+          },
+          "id": "cmve390pb3cfce2c81354"
+        },
+        {
+          "type": "TABLE",
+          "title": "Müqayisə operatorları (nəticə həmişə boolean)",
+          "content": {
+            "headers": [
+              "Operator",
+              "Mənası",
+              "Nümunə",
+              "Nəticə"
+            ],
+            "rows": [
+              [
+                "===",
+                "Tam bərabərdir (dəyər + tip)",
+                "`5 === \"5\"`",
+                "false"
+              ],
+              [
+                "!==",
+                "Tam bərabər deyil",
+                "`5 !== \"5\"`",
+                "true"
+              ],
+              [
+                "==",
+                "Bərabərdir, tipi çevirir",
+                "`5 == \"5\"`",
+                "true"
+              ],
+              [
+                ">  <",
+                "Böyük, kiçik",
+                "`7 > 5`",
+                "true"
+              ],
+              [
+                ">=  <=",
+                "Böyük/kiçik və ya bərabər",
+                "`5 >= 5`",
+                "true"
+              ]
+            ]
+          },
+          "id": "cmve390pbba8240c30be4"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "important",
+            "body": "Həmişə `===` və `!==` işlət. `==` tipləri gizlicə çevirir: `0 == \"\"` və `null == undefined` də `true` verir. Testdə bu, baqı gizlədə bilər: API `\"200\"` (mətn) qaytarırsa, `===` bunu tutar, `==` tutmaz."
+          },
+          "id": "cmve390pb703509e3efa4"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Məntiqi operatorlar",
+            "level": 2
+          },
+          "id": "cmve390pb96ee9e19eb39"
+        },
+        {
+          "type": "TABLE",
+          "title": "&&, || və !",
+          "content": {
+            "headers": [
+              "Operator",
+              "Adı",
+              "Nə vaxt true"
+            ],
+            "rows": [
+              [
+                "&&",
+                "VƏ (AND)",
+                "Hər iki tərəf true olanda"
+              ],
+              [
+                "||",
+                "VƏ YA (OR)",
+                "Ən azı bir tərəf true olanda"
+              ],
+              [
+                "!",
+                "DEYİL (NOT)",
+                "Dəyəri tərsinə çevirir: `!true` → false"
+              ]
+            ]
+          },
+          "id": "cmve390pb4b6f019f8d5c"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "const username = \"admin\";\nconst password = \"12345678\";\n\nconst canLogin = username === \"admin\" && password.length >= 8;\nconsole.log(canLogin); // true\n\nconst isWeekend = false;\nconst isHoliday = true;\nconsole.log(isWeekend || isHoliday); // true\nconsole.log(!canLogin);              // false",
+            "language": "javascript",
+            "caption": "Şərtləri birləşdirmək"
+          },
+          "id": "cmve390pbb6da4814c3c3"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "if / else və ternary",
+            "level": 2
+          },
+          "id": "cmve390pb85ba606cb796"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "const statusCode = 404;\n\nif (statusCode === 200) {\n  console.log(\"Uğurlu\");\n} else if (statusCode >= 500) {\n  console.log(\"Server xətası\");\n} else {\n  console.log(\"Başqa cavab:\", statusCode);\n}\n// \"Başqa cavab: 404\"\n\nconst passed = true;\nconst label = passed ? \"PASSED\" : \"FAILED\";\nconsole.log(label); // \"PASSED\"",
+            "language": "javascript",
+            "caption": "if/else if/else və ternary"
+          },
+          "id": "cmve390pbac0a9a36ed6a"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "`if` şərtləri yuxarıdan aşağı yoxlayır və **ilk** true olan bloku icra edir — qalanlarına baxmır. Ona görə daha dar şərti yuxarıya yaz. Ternary (`şərt ? a : b`) iki variantdan birini seçmək üçün qısa yazılışdır; mürəkkəb məntiq üçün adi `if` daha oxunaqlıdır.",
+            "highlight": "normal"
+          },
+          "id": "cmve390pb309f5568baa5"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yoxla",
+          "content": {
+            "questions": [
+              {
+                "id": "m1",
+                "text": "`\"7\" === 7` nəticəsi nədir?",
+                "options": [
+                  "true",
+                  "false",
+                  "7",
+                  "Xəta"
+                ],
+                "correctIndex": 1,
+                "explanation": "Tiplər fərqlidir (string və number), `===` isə tipi də yoxlayır.",
+                "imageUrl": null
+              },
+              {
+                "id": "m2",
+                "text": "`true && false || true` nəticəsi nədir?",
+                "options": [
+                  "true",
+                  "false",
+                  "undefined",
+                  "Xəta"
+                ],
+                "correctIndex": 0,
+                "explanation": "`&&` əvvəl hesablanır: `true && false` → false; sonra `false || true` → true.",
+                "imageUrl": null
+              }
+            ]
+          },
+          "id": "cmve390pb8461a36c3d1f"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "remember",
+            "body": "Aşağıdakı tapşırıqlarda kodun hazır funksiya içində olacaq, məsələn `function isEven(n) { ... }`. `n` — giriş dəyəri, `return` — nəticəni geri qaytarır. Sən yalnız içini yazırsan; funksiyaları ayrıca dərsdə öyrənəcəksən."
+          },
+          "id": "cmve390pb0a51d1f244b1"
+        },
+        {
+          "type": "CODE_EXERCISE",
+          "title": "Cüt ədəd",
+          "content": {
+            "language": "javascript",
+            "instructions": "`isEven(n)` funksiyasını tamamla: `n` cütdürsə `true`, təkdirsə `false` qaytarsın. `%` operatorundan istifadə et.",
+            "starterCode": "function isEven(n) {\n  // kodunu bura yaz\n}\n",
+            "solution": "function isEven(n) {\n  return n % 2 === 0;\n}\n",
+            "tests": [
+              {
+                "name": "isEven(4) → true",
+                "assert": "isEven(4) === true"
+              },
+              {
+                "name": "isEven(7) → false",
+                "assert": "isEven(7) === false"
+              },
+              {
+                "name": "isEven(0) → true",
+                "assert": "isEven(0) === true"
+              }
+            ],
+            "hints": [
+              "Cüt ədədin 2-yə bölünməsindən qalıq 0-dır.",
+              "`return n % 2 === 0;`"
+            ]
+          },
+          "id": "cmve390pb20dd4b9cacd3"
+        },
+        {
+          "type": "CODE_EXERCISE",
+          "title": "Test nəticəsi: PASSED və ya FAILED",
+          "content": {
+            "language": "javascript",
+            "instructions": "`getTestStatus(actual, expected)` funksiyasını tamamla. `actual` `expected`-ə **ciddi** bərabərdirsə `\"PASSED\"`, əks halda `\"FAILED\"` qaytarsın. Ternary operatoru ilə yaz.",
+            "starterCode": "function getTestStatus(actual, expected) {\n  // kodunu bura yaz\n}\n",
+            "solution": "function getTestStatus(actual, expected) {\n  return actual === expected ? \"PASSED\" : \"FAILED\";\n}\n",
+            "tests": [
+              {
+                "name": "Eyni mətn → PASSED",
+                "assert": "getTestStatus(\"Welcome\", \"Welcome\") === \"PASSED\""
+              },
+              {
+                "name": "Fərqli mətn → FAILED",
+                "assert": "getTestStatus(\"Error\", \"Welcome\") === \"FAILED\""
+              },
+              {
+                "name": "\"5\" və 5 → FAILED (tip fərqlidir)",
+                "assert": "getTestStatus(\"5\", 5) === \"FAILED\""
+              }
+            ],
+            "hints": [
+              "Format: `return şərt ? \"PASSED\" : \"FAILED\";`",
+              "`==` yox, `===` işlət — yoxsa son test düşəcək."
+            ]
+          },
+          "id": "cmve390pbd3053c1c789b"
+        },
+        {
+          "type": "CODE_EXERCISE",
+          "title": "HTTP status kodunu təsnif et",
+          "content": {
+            "language": "javascript",
+            "instructions": "`classifyStatus(code)` funksiyasını if/else if/else ilə yaz:\n- 200–299 → `\"success\"`\n- 400–499 → `\"client error\"`\n- 500–599 → `\"server error\"`\n- qalan hər şey → `\"unknown\"`",
+            "starterCode": "function classifyStatus(code) {\n  // kodunu bura yaz\n}\n",
+            "solution": "function classifyStatus(code) {\n  if (code >= 200 && code <= 299) {\n    return \"success\";\n  } else if (code >= 400 && code <= 499) {\n    return \"client error\";\n  } else if (code >= 500 && code <= 599) {\n    return \"server error\";\n  } else {\n    return \"unknown\";\n  }\n}\n",
+            "tests": [
+              {
+                "name": "200 → success",
+                "assert": "classifyStatus(200) === \"success\""
+              },
+              {
+                "name": "201 → success",
+                "assert": "classifyStatus(201) === \"success\""
+              },
+              {
+                "name": "404 → client error",
+                "assert": "classifyStatus(404) === \"client error\""
+              },
+              {
+                "name": "503 → server error",
+                "assert": "classifyStatus(503) === \"server error\""
+              },
+              {
+                "name": "302 → unknown",
+                "assert": "classifyStatus(302) === \"unknown\""
+              }
+            ],
+            "hints": [
+              "Aralığı `&&` ilə yoxla: `code >= 200 && code <= 299`.",
+              "Hər blokda `return` ilə mətni qaytar; son `else` `\"unknown\"` qaytarsın."
+            ]
+          },
+          "id": "cmve390pb4f5645eb2b63"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Riyazi operatorlar: `+ - * / %`; `%` qalığı verir və cüt/tək yoxlayır.",
+              "Müqayisə həmişə boolean qaytarır; `===` və `!==` işlət, `==` tipləri gizlicə çevirir.",
+              "`&&` — hər ikisi, `||` — ən azı biri, `!` — tərsi.",
+              "`if / else if / else` ilk true şərtin blokunu icra edir.",
+              "Ternary `şərt ? a : b` iki variantdan birini seçir."
+            ]
+          },
+          "id": "cmve390pbd5ee99fb1797"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "`17 % 5` nəticəsi nədir?",
+                "options": [
+                  "3",
+                  "2",
+                  "3.4",
+                  "12"
+                ],
+                "correctIndex": 1,
+                "explanation": "17-də 5 üç dəfə var (15), qalıq 2-dir.",
+                "imageUrl": null
+              },
+              {
+                "id": "q2",
+                "text": "Niyə `==` əvəzinə `===` işlətməliyik?",
+                "options": [
+                  "`===` daha qısadır",
+                  "`===` tipi də yoxlayır, gizli tip çevirməsi baqları gizlətmir",
+                  "`==` JavaScript-də yoxdur",
+                  "`===` yalnız rəqəmlər üçündür"
+                ],
+                "correctIndex": 1,
+                "explanation": "`==` `5 == \"5\"` kimi fərqli tipləri bərabər sayır; `===` isə yox.",
+                "imageUrl": null
+              },
+              {
+                "id": "q3",
+                "text": "`const age = 16; const msg = age >= 18 ? \"icazə\" : \"qadağa\";` — msg nədir?",
+                "options": [
+                  "\"icazə\"",
+                  "\"qadağa\"",
+                  "true",
+                  "undefined"
+                ],
+                "correctIndex": 1,
+                "explanation": "16 >= 18 false-dur, ona görə `:`-dən sonrakı dəyər seçilir.",
+                "imageUrl": null
+              },
+              {
+                "id": "q4",
+                "text": "`isLoggedIn && cartCount > 0` nə vaxt true-dur?",
+                "options": [
+                  "İstifadəçi daxil olub VƏ səbət boş deyil",
+                  "Ya daxil olub, ya da səbət boş deyil",
+                  "Səbət boşdur",
+                  "Həmişə"
+                ],
+                "correctIndex": 0,
+                "explanation": "`&&` hər iki şərtin true olmasını tələb edir.",
+                "imageUrl": null
+              },
+              {
+                "id": "q5",
+                "text": "`score = 95` üçün bu kod nə çap edir? `if (score >= 50) log(\"Kafi\") else if (score >= 90) log(\"Əla\")`",
+                "options": [
+                  "Əla",
+                  "Kafi",
+                  "Hər ikisi",
+                  "Heç nə"
+                ],
+                "correctIndex": 1,
+                "explanation": "İlk true şərt (`>= 50`) icra olunur, qalanlarına baxılmır. Daha dar şərti yuxarı yazmaq lazım idi.",
+                "imageUrl": null
+              }
+            ]
+          },
+          "id": "cmve390pbc3410f5ad532"
+        }
+      ]
+    },
+    {
+      "id": "cms07spdt0001139j363u4acd",
+      "slug": "dovrler-",
+      "title": "Dövrlər",
+      "shortDescription": "for, while və for...of ilə təkrarlanan işi avtomatlaşdırmaq, break və continue ilə dövrü idarə etmək.",
+      "estimatedMinutes": 13,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "for və while dövrlərini yaza və fərqləndirə biləcəksən",
+              "for...of ilə siyahının hər elementini gəzə biləcəksən",
+              "break və continue ilə dövrü idarə edə biləcəksən",
+              "Sonsuz dövrün səbəbini tapa biləcəksən"
+            ]
+          },
+          "id": "cmve390pb3b5041d9706a"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Loop",
+                "az": "dövr",
+                "definition": "Eyni kod blokunu şərt ödənənə qədər təkrar icra edən struktur."
+              },
+              {
+                "term": "Iteration",
+                "az": "iterasiya",
+                "definition": "Dövrün bir dəfə icrası (bir dövrə)."
+              },
+              {
+                "term": "Counter",
+                "az": "sayğac",
+                "definition": "Neçənci dövrədə olduğunu saxlayan dəyişən, adətən `i`."
+              },
+              {
+                "term": "Infinite loop",
+                "az": "sonsuz dövr",
+                "definition": "Şərti heç vaxt false olmayan və dayanmayan dövr."
+              },
+              {
+                "term": "break",
+                "az": "dayandır",
+                "definition": "Dövrdən dərhal çıxır."
+              },
+              {
+                "term": "continue",
+                "az": "keç",
+                "definition": "Cari dövrəni ötürür, növbətiyə keçir."
+              }
+            ]
+          },
+          "id": "cmve390pb3d7a69a73020"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Niyə dövr lazımdır?",
+            "level": 2
+          },
+          "id": "cmve390pb831f18e7e683"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Login formasını 50 fərqli istifadəçi ilə yoxlamaq lazımdır. Eyni kodu 50 dəfə kopyalamaq həm uzundur, həm də səhvə açıqdır. Dövr deyir: \"bu bloku hər istifadəçi üçün təkrarla\". Avtomatlaşdırmanın gücü məhz buradadır — data dəyişir, kod eyni qalır.",
+            "highlight": "normal"
+          },
+          "id": "cmve390pbba442d3279c1"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "for dövrü",
+            "level": 2
+          },
+          "id": "cmve390pbcbad22170765"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "for (let i = 1; i <= 5; i++) {\n  console.log(`Test #${i} işə düşdü`);\n}\n// Test #1 ... Test #5",
+            "language": "javascript",
+            "caption": "for dövrü"
+          },
+          "id": "cmve390pb35f355409d0d"
+        },
+        {
+          "type": "TABLE",
+          "title": "for dövrünün üç hissəsi",
+          "content": {
+            "headers": [
+              "Hissə",
+              "Nümunə",
+              "Nə edir"
+            ],
+            "rows": [
+              [
+                "Başlanğıc",
+                "`let i = 1`",
+                "Sayğacı bir dəfə yaradır"
+              ],
+              [
+                "Şərt",
+                "`i <= 5`",
+                "Hər dövrədən əvvəl yoxlanır; false olanda dövr bitir"
+              ],
+              [
+                "Addım",
+                "`i++`",
+                "Hər dövrədən sonra sayğacı 1 artırır"
+              ]
+            ]
+          },
+          "id": "cmve390pb97b70e0f36ba"
+        },
+        {
+          "type": "ORDERING",
+          "title": "for dövrü necə icra olunur",
+          "content": {
+            "instructions": "`for (let i = 0; i < 2; i++) { ... }` dövrünün icra ardıcıllığını düz.",
+            "items": [
+              "`let i = 0` — sayğac yaradılır",
+              "`i < 2` şərti yoxlanır (true)",
+              "Blokdakı kod icra olunur",
+              "`i++` — i 1 olur",
+              "Şərt yenidən yoxlanır və növbəti dövrə başlayır"
+            ],
+            "explanation": "Başlanğıc yalnız bir dəfə işləyir. Sonra hər dövrə: şərt → blok → addım."
+          },
+          "id": "cmve390pb8db82a4967bd"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "while dövrü",
+            "level": 2
+          },
+          "id": "cmve390pb1c0e4200882f"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "`while` şərt true olduğu müddətcə təkrarlayır. Neçə dəfə təkrarlanacağını əvvəlcədən bilməyəndə işlət — məsələn, uğurlu olana qədər yenidən cəhd etmək (retry).",
+            "highlight": "normal"
+          },
+          "id": "cmve390pbde7c16563c37"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "let attempt = 1;\nlet success = false;\n\nwhile (!success && attempt <= 3) {\n  console.log(`Cəhd ${attempt}`);\n  success = attempt === 2; // 2-ci cəhddə alındı\n  attempt++;\n}\n// Cəhd 1, Cəhd 2",
+            "language": "javascript",
+            "caption": "Retry məntiqi while ilə"
+          },
+          "id": "cmve390pbc80877640dc0"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "warning",
+            "body": "Sayğacı artırmağı (`attempt++`) unutsan, şərt heç vaxt false olmaz və dövr sonsuz davam edər — səhifə donar. Hər while-da özündən soruş: \"bu dövr nə vaxt bitəcək?\""
+          },
+          "id": "cmve390pb23103109a157"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "for...of — siyahını gəzmək",
+            "level": 2
+          },
+          "id": "cmve390pb0c4713216721"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "const results = [\"passed\", \"failed\", \"passed\"];\n\nfor (const result of results) {\n  console.log(result);\n}\n// passed, failed, passed",
+            "language": "javascript",
+            "caption": "for...of"
+          },
+          "id": "cmve390pbe651047df913"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "`[ ... ]` — **massiv** (siyahı), onu növbəti dərslərdə ətraflı öyrənəcəksən. `for...of` sayğac olmadan hər elementi sırayla götürür. Elementin özü lazımdırsa — `for...of`, nömrəsi (indeksi) lazımdırsa — adi `for` işlət. Siyahının uzunluğu `results.length` ilə alınır.",
+            "highlight": "normal"
+          },
+          "id": "cmve390pb918693d15961"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "break və continue",
+            "level": 2
+          },
+          "id": "cmve390pbaf41e89a5483"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "const results = [\"passed\", \"skipped\", \"failed\", \"passed\"];\n\nfor (const result of results) {\n  if (result === \"skipped\") {\n    continue; // bunu ötür, növbətiyə keç\n  }\n  if (result === \"failed\") {\n    console.log(\"İlk uğursuz test tapıldı, dayanıram\");\n    break; // dövrdən çıx\n  }\n  console.log(\"OK:\", result);\n}\n// OK: passed\n// İlk uğursuz test tapıldı, dayanıram",
+            "language": "javascript",
+            "caption": "break və continue"
+          },
+          "id": "cmve390pb45182bee9bd6"
+        },
+        {
+          "type": "CODE_EXERCISE",
+          "title": "1-dən n-ə qədər cəm",
+          "content": {
+            "language": "javascript",
+            "instructions": "`sumTo(n)` funksiyasını for dövrü ilə yaz: 1-dən `n`-ə qədər bütün ədədlərin cəmini qaytarsın. Məsələn, `sumTo(4)` → 1+2+3+4 = 10.",
+            "starterCode": "function sumTo(n) {\n  let sum = 0;\n  // dövrü bura yaz\n  return sum;\n}\n",
+            "solution": "function sumTo(n) {\n  let sum = 0;\n  for (let i = 1; i <= n; i++) {\n    sum += i;\n  }\n  return sum;\n}\n",
+            "tests": [
+              {
+                "name": "sumTo(4) → 10",
+                "assert": "sumTo(4) === 10"
+              },
+              {
+                "name": "sumTo(100) → 5050",
+                "assert": "sumTo(100) === 5050"
+              },
+              {
+                "name": "sumTo(0) → 0",
+                "assert": "sumTo(0) === 0"
+              }
+            ],
+            "hints": [
+              "`for (let i = 1; i <= n; i++)`",
+              "Dövrün içində `sum += i;` yaz."
+            ]
+          },
+          "id": "cmve390pbe0cdbddb630f"
+        },
+        {
+          "type": "CODE_EXERCISE",
+          "title": "Uğursuz testləri say",
+          "content": {
+            "language": "javascript",
+            "instructions": "`countFailed(results)` funksiyasını yaz: `results` siyahısında neçə `\"failed\"` olduğunu qaytarsın. `for...of` işlət.",
+            "starterCode": "function countFailed(results) {\n  // kodunu bura yaz\n}\n\nconsole.log(countFailed([\"passed\", \"failed\", \"failed\"])); // 2\n",
+            "solution": "function countFailed(results) {\n  let count = 0;\n  for (const result of results) {\n    if (result === \"failed\") {\n      count++;\n    }\n  }\n  return count;\n}\n\nconsole.log(countFailed([\"passed\", \"failed\", \"failed\"])); // 2\n",
+            "tests": [
+              {
+                "name": "İki failed → 2",
+                "assert": "countFailed([\"passed\", \"failed\", \"failed\"]) === 2"
+              },
+              {
+                "name": "Hamısı passed → 0",
+                "assert": "countFailed([\"passed\", \"passed\"]) === 0"
+              },
+              {
+                "name": "Boş siyahı → 0",
+                "assert": "countFailed([]) === 0"
+              }
+            ],
+            "hints": [
+              "Əvvəl `let count = 0;` yarat.",
+              "Hər `\"failed\"` üçün `count++` et, sonda `return count;`."
+            ]
+          },
+          "id": "cmve390pb3729f295da83"
+        },
+        {
+          "type": "CODE_EXERCISE",
+          "title": "İlk uğursuz testin yeri",
+          "content": {
+            "language": "javascript",
+            "instructions": "`findFirstFailed(results)` funksiyasını adi `for` ilə yaz: ilk `\"failed\"` elementin indeksini (0-dan sayılır) qaytarsın. Heç biri yoxdursa `-1` qaytarsın. Tapan kimi dövrü dayandır.",
+            "starterCode": "function findFirstFailed(results) {\n  // kodunu bura yaz\n}\n",
+            "solution": "function findFirstFailed(results) {\n  for (let i = 0; i < results.length; i++) {\n    if (results[i] === \"failed\") {\n      return i;\n    }\n  }\n  return -1;\n}\n",
+            "tests": [
+              {
+                "name": "İkinci element → 1",
+                "assert": "findFirstFailed([\"passed\", \"failed\", \"failed\"]) === 1"
+              },
+              {
+                "name": "Birinci element → 0",
+                "assert": "findFirstFailed([\"failed\"]) === 0"
+              },
+              {
+                "name": "failed yoxdur → -1",
+                "assert": "findFirstFailed([\"passed\", \"passed\"]) === -1"
+              }
+            ],
+            "hints": [
+              "`for (let i = 0; i < results.length; i++)` — `results[i]` cari elementdir.",
+              "Funksiya daxilində `return` həm dövrü, həm funksiyanı dayandırır — ayrıca `break` lazım deyil.",
+              "Dövr bitəndən sonra `return -1;` yaz."
+            ]
+          },
+          "id": "cmve390pb41b1648e4f2a"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Dövr eyni kodu dəfələrlə icra edir: data dəyişir, kod eyni qalır.",
+              "`for` — sayı məlum olanda; hissələri: başlanğıc, şərt, addım.",
+              "`while` — şərt true olduqca; sayğacı artırmağı unutma, yoxsa sonsuz dövr olur.",
+              "`for...of` — siyahının hər elementini sırayla götürür.",
+              "`break` dövrdən çıxır, `continue` cari dövrəni ötürür."
+            ]
+          },
+          "id": "cmve390pbcf7a65a30b6f"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "`for (let i = 0; i < 3; i++) console.log(i);` nə çap edir?",
+                "options": [
+                  "1, 2, 3",
+                  "0, 1, 2",
+                  "0, 1, 2, 3",
+                  "3"
+                ],
+                "correctIndex": 1,
+                "explanation": "i 0-dan başlayır və `i < 3` olduqca davam edir: 0, 1, 2.",
+                "imageUrl": null
+              },
+              {
+                "id": "q2",
+                "text": "while dövründə sayğacı artırmağı unutsan nə olur?",
+                "options": [
+                  "Dövr bir dəfə işləyir",
+                  "Sonsuz dövr yaranır",
+                  "SyntaxError",
+                  "Dövr heç işləmir"
+                ],
+                "correctIndex": 1,
+                "explanation": "Şərt heç vaxt false olmadığı üçün dövr dayanmır.",
+                "imageUrl": null
+              },
+              {
+                "id": "q3",
+                "text": "`continue` nə edir?",
+                "options": [
+                  "Dövrü tam dayandırır",
+                  "Cari dövrəni ötürüb növbətiyə keçir",
+                  "Dövrü əvvəldən başladır",
+                  "Funksiyadan çıxır"
+                ],
+                "correctIndex": 1,
+                "explanation": "`continue` qalan kodu bu dövrə üçün ötürür, dövr isə davam edir.",
+                "imageUrl": null
+              },
+              {
+                "id": "q4",
+                "text": "Retry kimi, neçə dəfə təkrarlanacağı əvvəlcədən bilinməyən hal üçün hansı dövr daha uyğundur?",
+                "options": [
+                  "for...of",
+                  "while",
+                  "Heç biri",
+                  "Yalnız break"
+                ],
+                "correctIndex": 1,
+                "explanation": "`while` şərt ödənənə qədər işləyir, say əvvəlcədən lazım deyil.",
+                "imageUrl": null
+              },
+              {
+                "id": "q5",
+                "text": "`for (const r of [\"a\", \"b\"])` — `r` nədir?",
+                "options": [
+                  "Elementin indeksi (0, 1)",
+                  "Elementin özü (\"a\", \"b\")",
+                  "Siyahının uzunluğu",
+                  "Həmişə undefined"
+                ],
+                "correctIndex": 1,
+                "explanation": "`for...of` elementlərin özünü verir; indeks lazımdırsa adi `for` işlədilir.",
+                "imageUrl": null
+              }
+            ]
+          },
+          "id": "cmve390pbf3464502b498"
+        }
+      ]
+    },
+    {
+      "slug": "funksiyalar",
+      "title": "Funksiyalar",
+      "shortDescription": "Təkrar istifadə olunan kod: funksiya elan etmək, parametr ötürmək, return və arrow funksiyalar.",
+      "estimatedMinutes": 13,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Funksiya elan edə və çağıra biləcəksən",
+              "Parametr ilə argumenti fərqləndirə biləcəksən",
+              "return ilə console.log arasındakı fərqi izah edə biləcəksən",
+              "Arrow function yaza və oxuya biləcəksən"
+            ]
+          },
+          "id": "cmve390pb4e6b4214077b"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Function",
+                "az": "funksiya",
+                "definition": "Adı olan, təkrar çağırıla bilən kod bloku."
+              },
+              {
+                "term": "Parameter",
+                "az": "parametr",
+                "definition": "Funksiya elan edilərkən mötərizədə yazılan giriş adı."
+              },
+              {
+                "term": "Argument",
+                "az": "arqument",
+                "definition": "Funksiya çağırılarkən ötürülən real dəyər."
+              },
+              {
+                "term": "return",
+                "az": "qaytarmaq",
+                "definition": "Nəticəni funksiyadan çağırana qaytarır və funksiyanı bitirir."
+              },
+              {
+                "term": "Arrow function",
+                "az": "ox funksiyası",
+                "definition": "`() => {}` şəklində qısa funksiya yazılışı; Playwright testlərində hər yerdədir."
+              }
+            ]
+          },
+          "id": "cmve390pb5117ab5340dd"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Funksiya nədir?",
+            "level": 2
+          },
+          "id": "cmve390pba4ba65861e71"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Funksiya adı olan resept kimidir: bir dəfə yazırsan, sonra adı ilə istənilən qədər çağırırsan. Testlərdə \"login ol\" addımları 20 testdə təkrarlanırsa, onları bir funksiyaya yığırsan. Login səhifəsi dəyişəndə yalnız bir yeri düzəldirsən.",
+            "highlight": "normal"
+          },
+          "id": "cmve390pb2ef612bee3be"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "// elan (declaration)\nfunction greet(name) {\n  return `Salam, ${name}!`;\n}\n\n// çağırış (call)\nconsole.log(greet(\"Aysel\")); // \"Salam, Aysel!\"\nconsole.log(greet(\"Murad\")); // \"Salam, Murad!\"",
+            "language": "javascript",
+            "caption": "Funksiya elanı və çağırışı"
+          },
+          "id": "cmve390pbae42d07c1f95"
+        },
+        {
+          "type": "TABLE",
+          "title": "Funksiyanın hissələri",
+          "content": {
+            "headers": [
+              "Hissə",
+              "Nümunədə",
+              "Mənası"
+            ],
+            "rows": [
+              [
+                "function",
+                "`function`",
+                "Funksiya yaradıram deyir"
+              ],
+              [
+                "Ad",
+                "`greet`",
+                "Çağırmaq üçün ad (fel ilə: `login`, `isValid`)"
+              ],
+              [
+                "Parametr",
+                "`name`",
+                "Giriş dəyərinin adı"
+              ],
+              [
+                "Bədən",
+                "`{ ... }`",
+                "Çağırılanda icra olunan kod"
+              ],
+              [
+                "Argument",
+                "`\"Aysel\"`",
+                "Çağırışda verilən real dəyər"
+              ]
+            ]
+          },
+          "id": "cmve390pb318ccf767c0b"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "return: nəticəni geri vermək",
+            "level": 2
+          },
+          "id": "cmve390pb02df28388bae"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "function addWithLog(a, b) {\n  console.log(a + b); // yalnız ekrana yazır\n}\n\nfunction add(a, b) {\n  return a + b; // nəticəni geri verir\n}\n\nconst x = addWithLog(2, 3); // ekranda 5, amma x === undefined\nconst y = add(2, 3);        // y === 5\nconsole.log(y * 10);        // 50",
+            "language": "javascript",
+            "caption": "return və console.log fərqi"
+          },
+          "id": "cmve390pb001e1f4ca7bd"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "important",
+            "body": "`console.log` nəticəni yalnız göstərir, `return` isə onu kodun istifadəsinə verir. `return` olmayan funksiya `undefined` qaytarır. `return`-dən sonrakı sətirlər icra olunmur."
+          },
+          "id": "cmve390pb1a807d03dc1f"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "tip",
+            "body": "Parametrə default dəyər vermək olar: `function login(user = \"standard_user\") { ... }`. Argument ötürülməsə, default dəyər işlədilir."
+          },
+          "id": "cmve390pbc17d6d9ee912"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Arrow function",
+            "level": 2
+          },
+          "id": "cmve390pb9270e585eba1"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "// adi funksiya\nfunction double(n) {\n  return n * 2;\n}\n\n// eyni şey arrow function ilə\nconst doubleArrow = (n) => {\n  return n * 2;\n};\n\n// bədən tək ifadədirsə — qısa forma, return gizlidir\nconst doubleShort = (n) => n * 2;\n\nconsole.log(doubleShort(4)); // 8",
+            "language": "javascript",
+            "caption": "Adi funksiyadan arrow function-a"
+          },
+          "id": "cmve390pb40f2218a3f1d"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Playwright testində arrow function-ı hər gün görəcəksən: `test(\"login\", async ({ page }) => { ... })`. Burada test adından sonra gələn hissə sadəcə arrow function-dır. `async` hissəsini Playwright dərsində izah edəcəyik.",
+            "highlight": "normal"
+          },
+          "id": "cmve390pb63d054844640"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yoxla",
+          "content": {
+            "questions": [
+              {
+                "id": "m1",
+                "text": "`function f() { console.log(1); }` — `const r = f();` olduqda `r` nədir?",
+                "options": [
+                  "1",
+                  "undefined",
+                  "null",
+                  "\"1\""
+                ],
+                "correctIndex": 1,
+                "explanation": "Funksiyada `return` yoxdur, ona görə nəticə `undefined`-dir; 1 yalnız ekrana çap olunur.",
+                "imageUrl": null
+              },
+              {
+                "id": "m2",
+                "text": "`const sq = (n) => n * n;` — `sq(3)` nədir?",
+                "options": [
+                  "6",
+                  "9",
+                  "undefined",
+                  "Xəta"
+                ],
+                "correctIndex": 1,
+                "explanation": "Qısa arrow function-da ifadənin nəticəsi avtomatik qaytarılır: 3 × 3 = 9.",
+                "imageUrl": null
+              }
+            ]
+          },
+          "id": "cmve390pb5a563e0ccd5a"
+        },
+        {
+          "type": "CODE_EXERCISE",
+          "title": "Email validasiyası",
+          "content": {
+            "language": "javascript",
+            "instructions": "`isValidEmail(email)` funksiyasını yaz. Email düzgün sayılır, əgər:\n- içində `\"@\"` var\n- içində `\".\"` var\n- içində boşluq **yoxdur**\n\n`email.includes(\"@\")` mətnin içində simvol olub-olmadığını (true/false) qaytarır.",
+            "starterCode": "function isValidEmail(email) {\n  // kodunu bura yaz\n}\n",
+            "solution": "function isValidEmail(email) {\n  return email.includes(\"@\") && email.includes(\".\") && !email.includes(\" \");\n}\n",
+            "tests": [
+              {
+                "name": "anar@test.com → true",
+                "assert": "isValidEmail(\"anar@test.com\") === true"
+              },
+              {
+                "name": "@ yoxdur → false",
+                "assert": "isValidEmail(\"anartest.com\") === false"
+              },
+              {
+                "name": "Nöqtə yoxdur → false",
+                "assert": "isValidEmail(\"anar@testcom\") === false"
+              },
+              {
+                "name": "Boşluq var → false",
+                "assert": "isValidEmail(\"an ar@test.com\") === false"
+              }
+            ],
+            "hints": [
+              "Üç şərti `&&` ilə birləşdir.",
+              "Boşluq olmamalıdır: `!email.includes(\" \")`."
+            ]
+          },
+          "id": "cmve390pb2c4ffc1087cd"
+        },
+        {
+          "type": "CODE_EXERCISE",
+          "title": "Pass rate (keçid faizi)",
+          "content": {
+            "language": "javascript",
+            "instructions": "`calculatePassRate` adlı **arrow function** yaz: `(passed, total)` alsın və keçən testlərin faizini tam ədədə yuvarlaqlaşdıraraq qaytarsın. `total` 0-dırsa, `0` qaytarsın.\n\n`Math.round(33.3)` → 33.",
+            "starterCode": "const calculatePassRate = (passed, total) => {\n  // kodunu bura yaz\n};\n",
+            "solution": "const calculatePassRate = (passed, total) => {\n  if (total === 0) {\n    return 0;\n  }\n  return Math.round((passed / total) * 100);\n};\n",
+            "tests": [
+              {
+                "name": "8 / 10 → 80",
+                "assert": "calculatePassRate(8, 10) === 80"
+              },
+              {
+                "name": "1 / 3 → 33",
+                "assert": "calculatePassRate(1, 3) === 33"
+              },
+              {
+                "name": "0 / 0 → 0",
+                "assert": "calculatePassRate(0, 0) === 0"
+              },
+              {
+                "name": "Arrow function-dır",
+                "assert": "typeof calculatePassRate === \"function\" && !calculatePassRate.prototype"
+              }
+            ],
+            "hints": [
+              "Faiz: `(passed / total) * 100`.",
+              "Əvvəl `total === 0` halını yoxla və `return 0;` et."
+            ]
+          },
+          "id": "cmve390pb06cb9fd4b466"
+        },
+        {
+          "type": "CODE_EXERCISE",
+          "title": "Baq başlığını formatla",
+          "content": {
+            "language": "javascript",
+            "instructions": "`formatBugTitle(severity, title)` funksiyasını yaz. Nəticə: severity böyük hərflə kvadrat mötərizədə, sonra boşluq və başlıq. Məsələn, `formatBugTitle(\"major\", \"Login düyməsi işləmir\")` → `\"[MAJOR] Login düyməsi işləmir\"`.\n\n`\"major\".toUpperCase()` → `\"MAJOR\"`.",
+            "starterCode": "function formatBugTitle(severity, title) {\n  // kodunu bura yaz\n}\n",
+            "solution": "function formatBugTitle(severity, title) {\n  return `[${severity.toUpperCase()}] ${title}`;\n}\n",
+            "tests": [
+              {
+                "name": "major nümunəsi",
+                "assert": "formatBugTitle(\"major\", \"Login düyməsi işləmir\") === \"[MAJOR] Login düyməsi işləmir\""
+              },
+              {
+                "name": "critical nümunəsi",
+                "assert": "formatBugTitle(\"critical\", \"Ödəniş alınmır\") === \"[CRITICAL] Ödəniş alınmır\""
+              }
+            ],
+            "hints": [
+              "Template string işlət: `` `[${...}] ${title}` ``",
+              "Mötərizənin içinə `severity.toUpperCase()` qoy."
+            ]
+          },
+          "id": "cmve390pbdf358e25315a"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Funksiya təkrar istifadə olunan, adı olan kod blokudur: bir dəfə yaz, çox çağır.",
+              "Parametr — elandakı ad, argument — çağırışdakı real dəyər.",
+              "`return` nəticəni qaytarır və funksiyanı bitirir; `return` yoxdursa nəticə `undefined`-dir.",
+              "Arrow function: `(a, b) => a + b`; Playwright testləri bu formadadır."
+            ]
+          },
+          "id": "cmve390pbf184864b7956"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "`function login(user) {}` və `login(\"admin\")` — burada `\"admin\"` nədir?",
+                "options": [
+                  "Parametr",
+                  "Argument",
+                  "Return dəyəri",
+                  "Funksiya adı"
+                ],
+                "correctIndex": 1,
+                "explanation": "Çağırışda ötürülən real dəyər argumentdir; `user` isə parametrdir.",
+                "imageUrl": null
+              },
+              {
+                "id": "q2",
+                "text": "`return`-dən sonra gələn sətirlərə nə olur?",
+                "options": [
+                  "Normal icra olunur",
+                  "İcra olunmur — funksiya bitir",
+                  "Xəta verir",
+                  "İki dəfə icra olunur"
+                ],
+                "correctIndex": 1,
+                "explanation": "`return` funksiyanı dərhal dayandırır.",
+                "imageUrl": null
+              },
+              {
+                "id": "q3",
+                "text": "Hansı arrow function iki ədədin cəmini qaytarır?",
+                "options": [
+                  "`const sum = (a, b) => { a + b };`",
+                  "`const sum = (a, b) => a + b;`",
+                  "`const sum = a, b => a + b;`",
+                  "`const sum => (a, b) a + b;`"
+                ],
+                "correctIndex": 1,
+                "explanation": "Fiqurlu mötərizə olmadan ifadə avtomatik qaytarılır. Birinci variantda `{}` var, amma `return` yoxdur — `undefined` qaytarır.",
+                "imageUrl": null
+              },
+              {
+                "id": "q4",
+                "text": "Login addımlarını funksiyaya çıxarmağın əsas faydası nədir?",
+                "options": [
+                  "Testlər daha yavaş işləyir",
+                  "Dəyişiklik bir yerdə edilir, kod təkrarlanmır",
+                  "Brauzer lazım olmur",
+                  "Testlər həmişə keçir"
+                ],
+                "correctIndex": 1,
+                "explanation": "Funksiya təkrarı aradan qaldırır; login səhifəsi dəyişəndə yalnız funksiyanı düzəldirsən.",
+                "imageUrl": null
+              },
+              {
+                "id": "q5",
+                "text": "`function greet(name = \"QA\") { return name; }` — `greet()` nə qaytarır?",
+                "options": [
+                  "undefined",
+                  "\"QA\"",
+                  "null",
+                  "Xəta"
+                ],
+                "correctIndex": 1,
+                "explanation": "Argument verilmədikdə default parametr dəyəri işlədilir.",
+                "imageUrl": null
+              }
+            ]
+          },
+          "id": "cmve390pbb12a3601eeeb"
+        }
+      ]
+    },
+    {
+      "slug": "massivler-ve-obyektler",
+      "title": "Massivlər və obyektlər",
+      "shortDescription": "Array və object ilə test datası saxlamaq: index, push, length, map, filter və obyekt massivləri.",
+      "estimatedMinutes": 15,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Massiv yarada, elementlərinə indekslə müraciət edə və element əlavə edə biləcəksən",
+              "map və filter ilə massivdən yeni massiv ala biləcəksən",
+              "Obyekt yarada və xassələrinə nöqtə ilə müraciət edə biləcəksən",
+              "Test datasını obyektlər massivi kimi təşkil edə biləcəksən"
+            ]
+          },
+          "id": "cmve390pbaa5b045ca7af"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Array",
+                "az": "massiv",
+                "definition": "Sıralı dəyərlər siyahısı: `[\"chromium\", \"firefox\"]`."
+              },
+              {
+                "term": "Index",
+                "az": "indeks",
+                "definition": "Elementin massivdəki yeri; 0-dan başlayır."
+              },
+              {
+                "term": "Object",
+                "az": "obyekt",
+                "definition": "Adlandırılmış dəyərlər toplusu: `{ username: \"aysel\" }`."
+              },
+              {
+                "term": "Property",
+                "az": "xassə",
+                "definition": "Obyektdə `açar: dəyər` cütü."
+              },
+              {
+                "term": "Method",
+                "az": "metod",
+                "definition": "Dəyərə bağlı funksiya: `push()`, `filter()`."
+              }
+            ]
+          },
+          "id": "cmve390pbcbd5510b3334"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Massiv (array)",
+            "level": 2
+          },
+          "id": "cmve390pb25df0a862f61"
+        },
+        {
+          "type": "IMAGE",
+          "content": {
+            "url": "https://media.geeksforgeeks.org/wp-content/uploads/20240111105218/array.png",
+            "alt": "Massiv elementlərinin 0-dan başlayan indekslərlə sıra şəklində düzüldüyü sxem",
+            "caption": "Massivdə indeks 0-dan başlayır",
+            "alignment": "center"
+          },
+          "id": "cmve390pbb84f7243fb7c"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "const browsers = [\"chromium\", \"firefox\", \"webkit\"];\n\nconsole.log(browsers[0]);      // \"chromium\" — ilk element\nconsole.log(browsers.length);  // 3\nconsole.log(browsers[browsers.length - 1]); // \"webkit\" — son element\nconsole.log(browsers[5]);      // undefined — belə element yoxdur\n\nbrowsers.push(\"edge\");         // sona əlavə edir\nconsole.log(browsers.length);  // 4\nconsole.log(browsers.includes(\"firefox\")); // true",
+            "language": "javascript",
+            "caption": "Massivlə əsas əməliyyatlar"
+          },
+          "id": "cmve390pbf5bc705179df"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "important",
+            "body": "İndeks 0-dan başlayır: ilk element `[0]`, son element `[length - 1]`. `const` massivə `push` etmək olar — `const` yalnız dəyişənin başqa massivə yönəldilməsini qadağan edir, içini dəyişməyi yox."
+          },
+          "id": "cmve390pbc59c31332044"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "map və filter",
+            "level": 2
+          },
+          "id": "cmve390pb75c794f795f6"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "const durations = [120, 340, 95];\nconst seconds = durations.map((ms) => ms / 1000);\nconsole.log(seconds); // [0.12, 0.34, 0.095]\n\nconst statusCodes = [200, 404, 200, 500];\nconst errors = statusCodes.filter((code) => code >= 400);\nconsole.log(errors); // [404, 500]\nconsole.log(statusCodes); // dəyişmədi: [200, 404, 200, 500]",
+            "language": "javascript",
+            "caption": "map və filter"
+          },
+          "id": "cmve390pb74d179e7b55a"
+        },
+        {
+          "type": "TABLE",
+          "title": "forEach, map və filter",
+          "content": {
+            "headers": [
+              "Metod",
+              "Nə edir",
+              "Qaytarır"
+            ],
+            "rows": [
+              [
+                "forEach",
+                "Hər element üçün əməliyyat edir (məs. çap)",
+                "Heç nə (undefined)"
+              ],
+              [
+                "map",
+                "Hər elementi çevirir",
+                "Eyni uzunluqda yeni massiv"
+              ],
+              [
+                "filter",
+                "Şərti true olanları saxlayır",
+                "Daha qısa (və ya eyni) yeni massiv"
+              ]
+            ]
+          },
+          "id": "cmve390pbd99c08942aaa"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Obyekt (object)",
+            "level": 2
+          },
+          "id": "cmve390pbfa3015f05e22"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "const user = {\n  username: \"standard_user\",\n  password: \"secret_sauce\",\n  isLocked: false,\n};\n\nconsole.log(user.username);    // \"standard_user\"\nconsole.log(user[\"password\"]); // \"secret_sauce\" — kvadrat mötərizə ilə də olar\n\nuser.isLocked = true;          // xassəni dəyişmək\nuser.role = \"admin\";           // yeni xassə əlavə etmək\nconsole.log(user.email);       // undefined — belə xassə yoxdur",
+            "language": "javascript",
+            "caption": "Obyekt yaratmaq və xassələrə müraciət"
+          },
+          "id": "cmve390pb0eb2ca5152b8"
+        },
+        {
+          "type": "IMAGE",
+          "content": {
+            "url": "https://miro.medium.com/v2/1*Rt4TljlpIB5iBjlqTj386Q.png",
+            "alt": "JavaScript-də massiv və obyektin quruluşunu yan-yana müqayisə edən təsvir",
+            "caption": "Massiv və obyekt",
+            "alignment": "center"
+          },
+          "id": "cmve390pb9a06fa3289ad"
+        },
+        {
+          "type": "CALLOUT",
+          "content": {
+            "emoji": "📦",
+            "title": "Massiv, yoxsa obyekt?",
+            "body": "**Massiv** — eyni növ şeylərin sıralı siyahısı, nömrə ilə müraciət: `browsers[0]`.\n**Obyekt** — bir şeyin xassələri, ad ilə müraciət: `user.username`.",
+            "color": "purple"
+          },
+          "id": "cmve390pb6c00767cb8ed"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yoxla",
+          "content": {
+            "questions": [
+              {
+                "id": "m1",
+                "text": "`const a = [10, 20, 30];` — `a[a.length - 1]` nədir?",
+                "options": [
+                  "3",
+                  "30",
+                  "20",
+                  "undefined"
+                ],
+                "correctIndex": 1,
+                "explanation": "`length` 3-dür, son indeks 3 − 1 = 2, `a[2]` isə 30-dur.",
+                "imageUrl": null
+              },
+              {
+                "id": "m2",
+                "text": "`[1, 2, 3, 4].filter((n) => n > 2)` nə qaytarır?",
+                "options": [
+                  "[3, 4]",
+                  "[true, true]",
+                  "2",
+                  "[1, 2]"
+                ],
+                "correctIndex": 0,
+                "explanation": "filter şərti true olan elementləri yeni massivdə saxlayır.",
+                "imageUrl": null
+              }
+            ]
+          },
+          "id": "cmve390pb1126abb6de63"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Obyektlər massivi: test datası",
+            "level": 2
+          },
+          "id": "cmve390pb8ea1ef4d2dfb"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "const users = [\n  { username: \"standard_user\", shouldLogin: true },\n  { username: \"locked_out_user\", shouldLogin: false },\n  { username: \"problem_user\", shouldLogin: true },\n];\n\nfor (const user of users) {\n  console.log(`${user.username} → ${user.shouldLogin ? \"giriş\" : \"xəta\"}`);\n}\n\nconst blocked = users.filter((u) => !u.shouldLogin).map((u) => u.username);\nconsole.log(blocked); // [\"locked_out_user\"]",
+            "language": "javascript",
+            "caption": "Data-driven test üçün test datası"
+          },
+          "id": "cmve390pb12c97332b96e"
+        },
+        {
+          "type": "EXAMPLE",
+          "content": {
+            "description": "Bu, **data-driven testing**-in əsasıdır: test məntiqi bir dəfə yazılır, dövr isə onu massivdəki hər istifadəçi üçün işə salır. Yeni ssenari lazımdırsa, kodu yox, sadəcə massivə bir sətir əlavə edirsən.",
+            "takeaway": "Test datası = obyektlər massivi; test = dövr + yoxlama.",
+            "relatedImageUrl": null
+          },
+          "id": "cmve390pb75ddf38e94f5"
+        },
+        {
+          "type": "CODE_EXERCISE",
+          "title": "Brauzer siyahısı",
+          "content": {
+            "language": "javascript",
+            "instructions": "`browsers` massivinin sonuna `push` ilə `\"webkit\"` əlavə et. Sonra `firstBrowser` adlı const yarat və ona massivin ilk elementini indeks ilə ver.",
+            "starterCode": "const browsers = [\"chromium\", \"firefox\"];\n\n// kodunu bura yaz\n",
+            "solution": "const browsers = [\"chromium\", \"firefox\"];\n\nbrowsers.push(\"webkit\");\nconst firstBrowser = browsers[0];\n",
+            "tests": [
+              {
+                "name": "Massivdə 3 element var",
+                "assert": "browsers.length === 3"
+              },
+              {
+                "name": "Son element webkit-dir",
+                "assert": "browsers[2] === \"webkit\""
+              },
+              {
+                "name": "firstBrowser chromium-dur",
+                "assert": "firstBrowser === \"chromium\""
+              }
+            ],
+            "hints": [
+              "`browsers.push(\"webkit\");`",
+              "İlk element indeks 0-dadır: `browsers[0]`."
+            ]
+          },
+          "id": "cmve390pbe0221f950879"
+        },
+        {
+          "type": "CODE_EXERCISE",
+          "title": "Uğursuz testlərin adları",
+          "content": {
+            "language": "javascript",
+            "instructions": "`getFailedTests(results)` funksiyasını yaz. `results` — `{ name, status }` obyektlərindən ibarət massivdir. Statusu `\"failed\"` olan testlərin yalnız **adlarını** massiv kimi qaytar. `filter` və `map` işlət.",
+            "starterCode": "const results = [\n  { name: \"login\", status: \"passed\" },\n  { name: \"checkout\", status: \"failed\" },\n  { name: \"search\", status: \"failed\" },\n];\n\nfunction getFailedTests(results) {\n  // kodunu bura yaz\n}\n\nconsole.log(getFailedTests(results));\n",
+            "solution": "const results = [\n  { name: \"login\", status: \"passed\" },\n  { name: \"checkout\", status: \"failed\" },\n  { name: \"search\", status: \"failed\" },\n];\n\nfunction getFailedTests(results) {\n  return results\n    .filter((r) => r.status === \"failed\")\n    .map((r) => r.name);\n}\n\nconsole.log(getFailedTests(results));\n",
+            "tests": [
+              {
+                "name": "İki uğursuz testin adı qaytarılır",
+                "assert": "JSON.stringify(getFailedTests(results)) === JSON.stringify([\"checkout\", \"search\"])"
+              },
+              {
+                "name": "Uğursuz test yoxdursa boş massiv",
+                "assert": "getFailedTests([{ name: \"a\", status: \"passed\" }]).length === 0"
+              }
+            ],
+            "hints": [
+              "Əvvəl `filter((r) => r.status === \"failed\")` ilə uyğun obyektləri seç.",
+              "Sonra `.map((r) => r.name)` ilə yalnız adları götür və nəticəni `return` et."
+            ]
+          },
+          "id": "cmve390pbbb060f182068"
+        },
+        {
+          "type": "CODE_EXERCISE",
+          "title": "Nəticələri say",
+          "content": {
+            "language": "javascript",
+            "instructions": "`countByStatus(results)` funksiyasını yaz: `{ passed: N, failed: M }` formatında obyekt qaytarsın. `results` — `\"passed\"` və `\"failed\"` mətnlərindən ibarət massivdir.",
+            "starterCode": "function countByStatus(results) {\n  const summary = { passed: 0, failed: 0 };\n  // kodunu bura yaz\n  return summary;\n}\n",
+            "solution": "function countByStatus(results) {\n  const summary = { passed: 0, failed: 0 };\n  for (const result of results) {\n    if (result === \"passed\") {\n      summary.passed++;\n    } else if (result === \"failed\") {\n      summary.failed++;\n    }\n  }\n  return summary;\n}\n",
+            "tests": [
+              {
+                "name": "2 passed, 1 failed",
+                "assert": "JSON.stringify(countByStatus([\"passed\", \"failed\", \"passed\"])) === JSON.stringify({ passed: 2, failed: 1 })"
+              },
+              {
+                "name": "Boş massiv → hər ikisi 0",
+                "assert": "countByStatus([]).passed === 0 && countByStatus([]).failed === 0"
+              }
+            ],
+            "hints": [
+              "`for...of` ilə massivi gəz.",
+              "Uyğun xassəni artır: `summary.passed++` və ya `summary.failed++`."
+            ]
+          },
+          "id": "cmve390pbf6db2e303ce9"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Massiv sıralı siyahıdır; indeks 0-dan başlayır, son element `[length - 1]`-dir.",
+              "`push` sona əlavə edir, `length` sayı verir, `includes` elementi yoxlayır.",
+              "`map` hər elementi çevirir, `filter` şərtə uyğunları seçir; ikisi də yeni massiv qaytarır.",
+              "Obyekt `açar: dəyər` cütləridir; xassəyə `user.username` ilə müraciət olunur.",
+              "Obyektlər massivi test datası üçün idealdır: data-driven testlərin əsası."
+            ]
+          },
+          "id": "cmve390pb6708065718ca"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "`const t = [\"a\", \"b\", \"c\"];` — `t[1]` nədir?",
+                "options": [
+                  "\"a\"",
+                  "\"b\"",
+                  "\"c\"",
+                  "undefined"
+                ],
+                "correctIndex": 1,
+                "explanation": "İndeks 0-dan başlayır: `t[0]` — \"a\", `t[1]` — \"b\".",
+                "imageUrl": null
+              },
+              {
+                "id": "q2",
+                "text": "`[1, 2, 3].map((n) => n * 10)` nə qaytarır?",
+                "options": [
+                  "[10, 20, 30]",
+                  "60",
+                  "[1, 2, 3]",
+                  "[true, true, true]"
+                ],
+                "correctIndex": 0,
+                "explanation": "map hər elementi çevirir və eyni uzunluqda yeni massiv qaytarır.",
+                "imageUrl": null
+              },
+              {
+                "id": "q3",
+                "text": "`const user = { name: \"Ali\" };` — `user.age` nədir?",
+                "options": [
+                  "null",
+                  "0",
+                  "undefined",
+                  "Xəta"
+                ],
+                "correctIndex": 2,
+                "explanation": "Mövcud olmayan xassə `undefined` qaytarır, xəta vermir.",
+                "imageUrl": null
+              },
+              {
+                "id": "q4",
+                "text": "Bir istifadəçinin username, password və rolunu saxlamaq üçün nə daha uyğundur?",
+                "options": [
+                  "Massiv",
+                  "Obyekt",
+                  "Üç ayrı massiv",
+                  "Boolean"
+                ],
+                "correctIndex": 1,
+                "explanation": "Bir şeyin adlandırılmış xassələri obyektdə saxlanır.",
+                "imageUrl": null
+              },
+              {
+                "id": "q5",
+                "text": "`const list = []; list.push(\"x\");` niyə xəta vermir?",
+                "options": [
+                  "const massivlərdə işləmir",
+                  "const yalnız yenidən təyini qadağan edir, içini dəyişməyi yox",
+                  "push xəta verir",
+                  "list let-dir"
+                ],
+                "correctIndex": 1,
+                "explanation": "`const` dəyişənin başqa dəyərə yönəldilməsini qadağan edir; massivin içi dəyişə bilər.",
+                "imageUrl": null
+              },
+              {
+                "id": "q6",
+                "text": "Statusu \"failed\" olan testləri seçmək üçün hansı metod işlədilir?",
+                "options": [
+                  "map",
+                  "push",
+                  "filter",
+                  "length"
+                ],
+                "correctIndex": 2,
+                "explanation": "filter şərtə uyğun elementləri yeni massivdə saxlayır.",
+                "imageUrl": null
+              }
+            ]
+          },
+          "id": "cmve390pb736a2e8f5612"
+        }
+      ]
+    },
+    {
+      "slug": "playwright-qurasdirma-ve-ilk-test",
+      "title": "Playwright: quraşdırma və ilk test",
+      "shortDescription": "Playwright layihəsi yaratmaq, strukturunu anlamaq, ilk testi yazmaq, UI mode və HTML report ilə işə salmaq.",
+      "estimatedMinutes": 14,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Playwright layihəsini sıfırdan qura biləcəksən",
+              "Layihənin əsas fayl və qovluqlarını izah edə biləcəksən",
+              "test və expect ilə sadə test yaza biləcəksən",
+              "Testləri terminalda, UI mode-da işə sala və HTML report-u aça biləcəksən"
+            ]
+          },
+          "id": "cmve390pbd68bb0331039"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Playwright",
+                "az": "Playwright",
+                "definition": "Microsoft-un açıq mənbəli brauzer avtomatlaşdırma aləti və test runner-i."
+              },
+              {
+                "term": "npm",
+                "az": "paket meneceri",
+                "definition": "Node.js ilə gələn, kitabxanaları quraşdıran alət."
+              },
+              {
+                "term": "Test runner",
+                "az": "test icraçısı",
+                "definition": "Testləri tapan, işə salan və nəticəni hesabat kimi göstərən alət."
+              },
+              {
+                "term": "Headless",
+                "az": "başsız rejim",
+                "definition": "Brauzerin pəncərə göstərmədən işləməsi; default rejim."
+              },
+              {
+                "term": "Spec file",
+                "az": "test faylı",
+                "definition": "`.spec.ts` ilə bitən, testləri saxlayan fayl."
+              },
+              {
+                "term": "HTML report",
+                "az": "HTML hesabat",
+                "definition": "Hər testin nəticəsini, addımlarını və xətalarını göstərən veb səhifə."
+              }
+            ]
+          },
+          "id": "cmve390pb89874d708ce5"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Playwright nədir?",
+            "level": 2
+          },
+          "id": "cmve390pbd3dc0bdac84d"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Playwright Microsoft-un açıq mənbəli alətidir: Chromium (Chrome, Edge), Firefox və WebKit (Safari) brauzerlərini kodla idarə edir. `@playwright/test` paketi hazır test runner verir: testləri paralel işlədir, elementləri avtomatik gözləyir və report yaradır. Testləri **TypeScript**-də yazacağıq — bu, tiplər əlavə olunmuş JavaScript-dir; öyrəndiyin hər şey eynilə işləyir.",
+            "highlight": "normal"
+          },
+          "id": "cmve390pbcc8e992d1e38"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Quraşdırma",
+            "level": 2
+          },
+          "id": "cmve390pb66caf651e68c"
+        },
+        {
+          "type": "STEPPER",
+          "title": "Yeni Playwright layihəsi",
+          "content": {
+            "steps": [
+              {
+                "title": "Node.js-i yoxla",
+                "description": "Terminalda `node -v` yaz. Node.js LTS versiyası (20 və ya daha yeni) lazımdır."
+              },
+              {
+                "title": "Qovluq yarat və aç",
+                "description": "`playwright-course` qovluğunu VS Code-da aç, Terminal → New Terminal."
+              },
+              {
+                "title": "Layihəni yarat",
+                "description": "`npm init playwright@latest` yaz və suallara cavab ver."
+              },
+              {
+                "title": "Suallar",
+                "description": "Dil: **TypeScript**; testlər qovluğu: `tests`; GitHub Actions workflow: hələlik yox; brauzerləri quraşdır: **bəli**."
+              },
+              {
+                "title": "VS Code extension",
+                "description": "Extensions bölməsində **Playwright Test for VSCode** quraşdır — testləri redaktordan işə salmaq üçün."
+              }
+            ]
+          },
+          "id": "cmve390pb949688a1dd55"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "node -v                      # v20+ olmalıdır\nnpm init playwright@latest   # layihəni və brauzerləri quraşdırır\nnpx playwright test          # bütün testləri işə salır",
+            "language": "bash",
+            "caption": "Quraşdırma əmrləri"
+          },
+          "id": "cmve390pb8373f7a47ce3"
+        },
+        {
+          "type": "TABLE",
+          "title": "Playwright layihəsinin strukturu",
+          "content": {
+            "headers": [
+              "Fayl / qovluq",
+              "Nə üçündür"
+            ],
+            "rows": [
+              [
+                "`tests/`",
+                "Test faylların; nümunə `example.spec.ts` burada yaranır"
+              ],
+              [
+                "`playwright.config.ts`",
+                "Ayarlar: brauzerlər (projects), timeout, baseURL, reporter"
+              ],
+              [
+                "`package.json`",
+                "Layihənin asılılıqları (`@playwright/test`) və skriptləri"
+              ],
+              [
+                "`node_modules/`",
+                "Quraşdırılmış paketlər — əl ilə toxunma"
+              ],
+              [
+                "`playwright-report/`",
+                "Son işləmənin HTML report-u"
+              ],
+              [
+                "`test-results/`",
+                "Uğursuz testlərin ekran görüntüləri, trace və s."
+              ]
+            ]
+          },
+          "id": "cmve390pb08731e7fb6c3"
+        },
+        {
+          "type": "ORDERING",
+          "title": "Sıfırdan ilk report-a qədər",
+          "content": {
+            "instructions": "Addımları düzgün ardıcıllığa düz.",
+            "items": [
+              "`node -v` ilə Node.js-i yoxlamaq",
+              "Layihə qovluğunu VS Code-da açmaq",
+              "`npm init playwright@latest` işə salmaq",
+              "`tests/` qovluğunda test faylı yazmaq",
+              "`npx playwright test` ilə testləri işə salmaq",
+              "`npx playwright show-report` ilə nəticəyə baxmaq"
+            ],
+            "explanation": "Əvvəl mühit, sonra layihə, sonra test, icra və hesabat."
+          },
+          "id": "cmve390pb1acb78d6a1d8"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "İlk test",
+            "level": 2
+          },
+          "id": "cmve390pb1d9ed1d6e8d9"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "import { test, expect } from '@playwright/test';\n\ntest('ana səhifənin başlığında Playwright var', async ({ page }) => {\n  await page.goto('https://playwright.dev/');\n  await expect(page).toHaveTitle(/Playwright/);\n});",
+            "language": "typescript",
+            "caption": "tests/first.spec.ts"
+          },
+          "id": "cmve390pb31efd9959d22"
+        },
+        {
+          "type": "TABLE",
+          "title": "Testin sətir-sətir izahı",
+          "content": {
+            "headers": [
+              "Kod",
+              "Mənası"
+            ],
+            "rows": [
+              [
+                "`import { test, expect }`",
+                "Playwright-dan `test` və `expect` funksiyalarını götürür"
+              ],
+              [
+                "`test('ad', async ({ page }) => { ... })`",
+                "Test elan edir: ad + arrow function. `page` — hər test üçün təzə brauzer tabı"
+              ],
+              [
+                "`async` / `await`",
+                "Brauzer əməliyyatı vaxt aparır; `await` onun bitməsini gözləyir"
+              ],
+              [
+                "`page.goto(url)`",
+                "Səhifəni açır"
+              ],
+              [
+                "`expect(page).toHaveTitle(/Playwright/)`",
+                "Yoxlama (assertion): başlıqda \"Playwright\" sözü olmalıdır"
+              ]
+            ]
+          },
+          "id": "cmve390pb912eb70d9bbf"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "warning",
+            "body": "Hər brauzer əmrindən əvvəl `await` yaz. Unutsan, Playwright əmrin bitməsini gözləmir və test qəribə, qeyri-sabit şəkildə düşür."
+          },
+          "id": "cmve390pb75cd23c02cc2"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Testləri işə salmaq və nəticəni oxumaq",
+            "level": 2
+          },
+          "id": "cmve390pbf9d1d7ac1b88"
+        },
+        {
+          "type": "TABLE",
+          "title": "Ən çox işlədilən əmrlər",
+          "content": {
+            "headers": [
+              "Əmr",
+              "Nə edir"
+            ],
+            "rows": [
+              [
+                "`npx playwright test`",
+                "Bütün testləri 3 brauzerdə, headless və paralel işə salır"
+              ],
+              [
+                "`npx playwright test first.spec.ts`",
+                "Yalnız bir faylı işə salır"
+              ],
+              [
+                "`npx playwright test --project=chromium`",
+                "Yalnız Chromium-da"
+              ],
+              [
+                "`npx playwright test --headed`",
+                "Brauzer pəncərəsini göstərir"
+              ],
+              [
+                "`npx playwright test --ui`",
+                "UI mode: testləri seçib işə salmaq, hər addımı izləmək"
+              ],
+              [
+                "`npx playwright show-report`",
+                "Son HTML report-u açır"
+              ]
+            ]
+          },
+          "id": "cmve390pbc99810ff9a51"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Nümunə `example.spec.ts`-də 2 test var və config 3 brauzer işlədir, ona görə terminalda `6 passed` görəcəksən. Test düşəndə HTML report avtomatik açılır: orada hansı addımın uğursuz olduğunu, gözlənilən və real nəticəni görürsən. **UI mode** isə test yazarkən ən rahat yerdir: hər addımda səhifənin necə göründüyünü göstərir.",
+            "highlight": "normal"
+          },
+          "id": "cmve390pb3606ca2050db"
+        },
+        {
+          "type": "TASK",
+          "title": "Layihəni qur və işə sal",
+          "content": {
+            "instructions": "Öz kompüterində Playwright layihəsi yarat, `tests/first.spec.ts` faylına yuxarıdakı testi yaz və `npx playwright test` işə sal. Terminalda çıxan son nəticəni (məsələn, `9 passed`) buraya yapışdır. Sonra `npx playwright test --ui` ilə testi UI mode-da aç və orada nə gördüyünü bir-iki cümlə ilə yaz.",
+            "placeholder": "Running 9 tests using 4 workers\n  9 passed (12.3s)\n\nUI mode-da...",
+            "required": true
+          },
+          "id": "cmve390pb4ea41f609112"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Playwright Chromium, Firefox və WebKit-i kodla idarə edir və hazır test runner verir.",
+              "Layihə `npm init playwright@latest` ilə yaradılır; testlər `tests/` qovluğunda, ayarlar `playwright.config.ts`-dədir.",
+              "Test = `test('ad', async ({ page }) => { ... })`; yoxlama `expect` ilə edilir.",
+              "Hər brauzer əmrindən əvvəl `await` yazılır.",
+              "`npx playwright test` işə salır, `--ui` UI mode-u açır, `show-report` HTML report-u göstərir."
+            ]
+          },
+          "id": "cmve390pba783ababdf7a"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Yeni Playwright layihəsini hansı əmr yaradır?",
+                "options": [
+                  "`npm install selenium`",
+                  "`npm init playwright@latest`",
+                  "`node playwright.js`",
+                  "`npx create-test`"
+                ],
+                "correctIndex": 1,
+                "explanation": "`npm init playwright@latest` paketi, config-i, nümunə testi və brauzerləri quraşdırır.",
+                "imageUrl": null
+              },
+              {
+                "id": "q2",
+                "text": "Brauzerlər, timeout və reporter ayarları harada saxlanır?",
+                "options": [
+                  "`package.json`",
+                  "`tests/example.spec.ts`",
+                  "`playwright.config.ts`",
+                  "`node_modules/`"
+                ],
+                "correctIndex": 2,
+                "explanation": "Bütün test ayarları `playwright.config.ts` faylındadır.",
+                "imageUrl": null
+              },
+              {
+                "id": "q3",
+                "text": "Testdə `{ page }` nədir?",
+                "options": [
+                  "Bütün sayt",
+                  "Hər test üçün yaradılan təzə brauzer tabı",
+                  "HTML report",
+                  "Test faylının adı"
+                ],
+                "correctIndex": 1,
+                "explanation": "`page` Playwright-ın hər testə verdiyi izolə olunmuş brauzer səhifəsidir.",
+                "imageUrl": null
+              },
+              {
+                "id": "q4",
+                "text": "`page.goto(...)`-dan əvvəl `await` yazmasan nə olar?",
+                "options": [
+                  "Test daha sürətli və sabit olur",
+                  "Playwright əmrin bitməsini gözləmir, test qeyri-sabit düşə bilər",
+                  "Kod kompilyasiya olunmur",
+                  "Brauzer açılmır, amma test keçir"
+                ],
+                "correctIndex": 1,
+                "explanation": "`await` olmadan növbəti sətir səhifə açılmamış icra olunur.",
+                "imageUrl": null
+              },
+              {
+                "id": "q5",
+                "text": "Testləri seçib addım-addım izləmək üçün hansı rejim ən rahatdır?",
+                "options": [
+                  "`--headless`",
+                  "`--ui`",
+                  "`show-report`",
+                  "`--project=webkit`"
+                ],
+                "correctIndex": 1,
+                "explanation": "UI mode hər addımı və səhifənin vəziyyətini vizual göstərir.",
+                "imageUrl": null
+              },
+              {
+                "id": "q6",
+                "text": "Default olaraq `npx playwright test` testləri necə işə salır?",
+                "options": [
+                  "Yalnız Chrome-da, pəncərə ilə",
+                  "Config-dəki brauzerlərdə, headless və paralel",
+                  "Yalnız bir-bir, ardıcıl",
+                  "Yalnız UI mode-da"
+                ],
+                "correctIndex": 1,
+                "explanation": "Default olaraq testlər headless rejimdə, bir neçə worker ilə paralel və config-dəki bütün projects üzrə işləyir.",
+                "imageUrl": null
+              }
+            ]
+          },
+          "id": "cmve390pb6b901561ac84"
+        }
+      ]
+    },
+    {
+      "slug": "playwright-locatorlar-ve-assertionlar",
+      "title": "Playwright: locator-lar və assertion-lar",
+      "shortDescription": "Elementləri getByRole, getByLabel, getByText, getByTestId ilə tapmaq, auto-waiting və expect ilə yoxlamaq.",
+      "estimatedMinutes": 15,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Element üçün ən uyğun locator-u seçə biləcəksən",
+              "Auto-waiting-in flaky testlərin qarşısını necə aldığını izah edə biləcəksən",
+              "expect ilə görünmə, mətn və URL yoxlamaları yaza biləcəksən",
+              "saucedemo.com üçün tam login testi yaza biləcəksən"
+            ]
+          },
+          "id": "cmve390pbfb159d3aba7a"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Locator",
+                "az": "lokator",
+                "definition": "Səhifədə elementi tapmaq üçün qayda; element lazım olanda axtarılır."
+              },
+              {
+                "term": "Role",
+                "az": "rol",
+                "definition": "Elementin əlçatanlıq (accessibility) növü: button, link, textbox, heading."
+              },
+              {
+                "term": "Test ID",
+                "az": "test identifikatoru",
+                "definition": "Yalnız testlər üçün əlavə olunan atribut, məs. `data-testid`."
+              },
+              {
+                "term": "Auto-waiting",
+                "az": "avtomatik gözləmə",
+                "definition": "Playwright əməliyyatdan əvvəl elementin hazır olmasını özü gözləyir."
+              },
+              {
+                "term": "Web-first assertion",
+                "az": "veb-yönümlü yoxlama",
+                "definition": "Şərt ödənənə qədər təkrar yoxlayan `expect`, default 5 saniyə."
+              }
+            ]
+          },
+          "id": "cmve390pb836e2f16daf8"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Locator nədir?",
+            "level": 2
+          },
+          "id": "cmve390pbc355ad1b7c24"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Manual testdə \"Login düyməsinə bas\" deyirsən və düyməni gözlə tapırsan. Playwright-a da elementi necə tapacağını demək lazımdır — bu, **locator**-dur. Yaxşı locator istifadəçinin gördüyünə əsaslanır (düymənin adı, sahənin etiketi), CSS class kimi tez dəyişən detallara yox.",
+            "highlight": "normal"
+          },
+          "id": "cmve390pba37c623b13c5"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "await page.getByRole('button', { name: 'Login' }).click();\nawait page.getByLabel('Email').fill('aysel@test.com');\nawait page.getByPlaceholder('Username').fill('standard_user');\nawait page.getByText('Sauce Labs Backpack').click();\nawait page.getByTestId('submit').click();\nawait page.locator('[data-test=\"error\"]').textContent();",
+            "language": "typescript",
+            "caption": "Əsas locator-lar"
+          },
+          "id": "cmve390pb944c722b957b"
+        },
+        {
+          "type": "TABLE",
+          "title": "Locator seçimi: yuxarıdan aşağı üstünlük",
+          "content": {
+            "headers": [
+              "Locator",
+              "Nəyə görə tapır",
+              "Nə vaxt işlət"
+            ],
+            "rows": [
+              [
+                "`getByRole`",
+                "Rol + əlçatan ad",
+                "Birinci seçim: düymə, link, başlıq, checkbox"
+              ],
+              [
+                "`getByLabel`",
+                "`<label>` mətni",
+                "Etiketi olan form sahələri"
+              ],
+              [
+                "`getByPlaceholder`",
+                "placeholder mətni",
+                "Etiketi olmayan input-lar"
+              ],
+              [
+                "`getByText`",
+                "Görünən mətn",
+                "Mesajlar, interaktiv olmayan elementlər"
+              ],
+              [
+                "`getByTestId`",
+                "`data-testid` atributu",
+                "Mətn və rol dəyişkəndirsə; developer-lə razılaşdırılır"
+              ],
+              [
+                "`locator('css')`",
+                "CSS selector",
+                "Son çarə — dizayn dəyişəndə tez sınır"
+              ]
+            ]
+          },
+          "id": "cmve390pb0c78bcef4556"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "tip",
+            "body": "Locator-u tapmağa çətinlik çəkirsən? `npx playwright codegen https://www.saucedemo.com` işə sal: səhifədə kliklədikcə Playwright uyğun locator-ları özü yazır. UI mode-dakı \"Pick locator\" düyməsi də eyni işi görür."
+          },
+          "id": "cmve390pb309f6a6b9c5c"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Auto-waiting: sleep yazma",
+            "level": 2
+          },
+          "id": "cmve390pb14d06bbb1b2b"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "`click()` çağıranda Playwright dərhal klikləmir. Əvvəl elementin səhifədə olmasını, görünməsini, hərəkət etməməsini və aktiv olmasını gözləyir (default timeout daxilində). Ona görə \"3 saniyə gözlə\" yazmağa ehtiyac yoxdur — element hazır olan kimi əməliyyat icra olunur.",
+            "highlight": "normal"
+          },
+          "id": "cmve390pbb827240696ec"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "warning",
+            "body": "`page.waitForTimeout(3000)` kimi sabit gözləmələrdən qaç. Sürətli mühitdə vaxt itirir, yavaş mühitdə isə yenə də çatmır — klassik flaky test səbəbidir."
+          },
+          "id": "cmve390pb4e021329f914"
+        },
+        {
+          "type": "CATEGORIZE",
+          "title": "Locator, action, yoxsa assertion?",
+          "content": {
+            "instructions": "Hər kod parçasını uyğun qrupa at.",
+            "categories": [
+              {
+                "id": "loc",
+                "label": "Locator (elementi tapır)"
+              },
+              {
+                "id": "act",
+                "label": "Action (əməliyyat edir)"
+              },
+              {
+                "id": "assert",
+                "label": "Assertion (yoxlayır)"
+              }
+            ],
+            "items": [
+              {
+                "id": "c1",
+                "text": "`page.getByRole('button', { name: 'Login' })`",
+                "categoryId": "loc"
+              },
+              {
+                "id": "c2",
+                "text": "`page.getByPlaceholder('Password')`",
+                "categoryId": "loc"
+              },
+              {
+                "id": "c3",
+                "text": "`.click()`",
+                "categoryId": "act"
+              },
+              {
+                "id": "c4",
+                "text": "`.fill('secret_sauce')`",
+                "categoryId": "act"
+              },
+              {
+                "id": "c5",
+                "text": "`expect(page).toHaveURL(/inventory/)`",
+                "categoryId": "assert"
+              },
+              {
+                "id": "c6",
+                "text": "`expect(error).toBeVisible()`",
+                "categoryId": "assert"
+              }
+            ],
+            "explanation": "Test həmişə bu üç hissədən qurulur: elementi tap → onunla nəsə et → nəticəni yoxla."
+          },
+          "id": "cmve390pbaa96fafa92bd"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Assertion-lar: expect",
+            "level": 2
+          },
+          "id": "cmve390pb33f49b49de8c"
+        },
+        {
+          "type": "TABLE",
+          "title": "Ən çox işlədilən assertion-lar",
+          "content": {
+            "headers": [
+              "Assertion",
+              "Nəyi yoxlayır"
+            ],
+            "rows": [
+              [
+                "`toBeVisible()`",
+                "Element görünür"
+              ],
+              [
+                "`toHaveText('...')`",
+                "Elementin mətni tam uyğundur"
+              ],
+              [
+                "`toContainText('...')`",
+                "Mətnin içində bu hissə var"
+              ],
+              [
+                "`toHaveURL(/inventory/)`",
+                "Səhifənin URL-i uyğundur"
+              ],
+              [
+                "`toHaveTitle(/Swag Labs/)`",
+                "Səhifə başlığı uyğundur"
+              ],
+              [
+                "`toHaveValue('...')`",
+                "Input-un dəyəri uyğundur"
+              ]
+            ]
+          },
+          "id": "cmve390pba72065c5b983"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Bunlar **web-first assertion**-lardır: şərt dərhal ödənməsə, Playwright onu default 5 saniyə ərzində təkrar yoxlayır. Ona görə həmişə `await expect(...)` yaz. Diqqət: `getByText` və `getByRole`-un `name`-i default olaraq hissəvi və böyük-kiçik hərfə həssas olmayan uyğunluq axtarır; tam uyğunluq üçün `{ exact: true }` ver.",
+            "highlight": "normal"
+          },
+          "id": "cmve390pb003d51b77c76"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Tam nümunə: saucedemo.com login",
+            "level": 2
+          },
+          "id": "cmve390pb5946bcc77e0c"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "saucedemo.com — testçilər üçün demo mağaza. Login səhifəsində input-ların `<label>`-i yoxdur, ona görə `getByLabel` işləməz — `getByPlaceholder` seçirik. Düymə `Login` adlı `button` roluna malikdir.",
+            "highlight": "normal"
+          },
+          "id": "cmve390pb36fecb5cf59c"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "import { test, expect } from '@playwright/test';\n\ntest('düzgün məlumatla daxil olmaq', async ({ page }) => {\n  await page.goto('https://www.saucedemo.com/');\n\n  await page.getByPlaceholder('Username').fill('standard_user');\n  await page.getByPlaceholder('Password').fill('secret_sauce');\n  await page.getByRole('button', { name: 'Login' }).click();\n\n  await expect(page).toHaveURL(/inventory\\.html/);\n  await expect(page.getByText('Products', { exact: true })).toBeVisible();\n});\n\ntest('bloklanmış istifadəçi xəta mesajı görür', async ({ page }) => {\n  await page.goto('https://www.saucedemo.com/');\n\n  await page.getByPlaceholder('Username').fill('locked_out_user');\n  await page.getByPlaceholder('Password').fill('secret_sauce');\n  await page.getByRole('button', { name: 'Login' }).click();\n\n  await expect(page.locator('[data-test=\"error\"]')).toHaveText(\n    'Epic sadface: Sorry, this user has been locked out.'\n  );\n  await expect(page).toHaveURL('https://www.saucedemo.com/');\n});",
+            "language": "typescript",
+            "caption": "tests/login.spec.ts"
+          },
+          "id": "cmve390pbd22dfdcf3c88"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "remember",
+            "body": "saucedemo test atributu kimi `data-testid` yox, `data-test` işlədir. `getByTestId('error')` yazmaq istəyirsənsə, `playwright.config.ts`-də `use: { testIdAttribute: 'data-test' }` əlavə et."
+          },
+          "id": "cmve390pb8e6a8829c7c1"
+        },
+        {
+          "type": "TASK",
+          "title": "Üçüncü test: səhv şifrə",
+          "content": {
+            "instructions": "`tests/login.spec.ts` faylına üçüncü test əlavə et: `standard_user` və səhv şifrə (`wrong_password`) ilə daxil olmağa çalış. Xəta mesajının `Epic sadface: Username and password do not match any user in this service` olduğunu və URL-in dəyişmədiyini yoxla. Testi `npx playwright test login --ui` ilə işə sal və kodunu buraya yapışdır.",
+            "placeholder": "test('səhv şifrə ilə xəta', async ({ page }) => {\n  ...\n});",
+            "required": true
+          },
+          "id": "cmve390pb5118c56ed294"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Locator elementi tapır; üstünlük sırası: getByRole → getByLabel/getByPlaceholder → getByText → getByTestId → CSS.",
+              "Auto-waiting elementin hazır olmasını özü gözləyir — sabit `waitForTimeout` yazma.",
+              "Web-first assertion-lar (`toBeVisible`, `toHaveText`, `toHaveURL`) şərti 5 saniyəyə qədər təkrar yoxlayır.",
+              "Test strukturu: tap → et → yoxla; hər addımdan əvvəl `await`.",
+              "codegen və UI mode-dakı \"Pick locator\" locator tapmağı sürətləndirir."
+            ]
+          },
+          "id": "cmve390pb28c11cd089a0"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "\"Add to cart\" düyməsi üçün ən yaxşı locator hansıdır?",
+                "options": [
+                  "`page.locator('.btn.btn_primary.btn_small')`",
+                  "`page.getByRole('button', { name: 'Add to cart' })`",
+                  "`page.locator('div > div:nth-child(3) > button')`",
+                  "`page.locator('#item_4')`"
+                ],
+                "correctIndex": 1,
+                "explanation": "getByRole istifadəçinin gördüyünə əsaslanır və dizayn dəyişikliklərinə davamlıdır.",
+                "imageUrl": null
+              },
+              {
+                "id": "q2",
+                "text": "Auto-waiting nə edir?",
+                "options": [
+                  "Hər addımdan sonra 3 saniyə gözləyir",
+                  "Əməliyyatdan əvvəl elementin görünən, sabit və aktiv olmasını gözləyir",
+                  "Testi yalnız gecə işə salır",
+                  "Uğursuz testi avtomatik silir"
+                ],
+                "correctIndex": 1,
+                "explanation": "Playwright actionability yoxlamaları edir və element hazır olan kimi əməliyyatı icra edir.",
+                "imageUrl": null
+              },
+              {
+                "id": "q3",
+                "text": "Login-dən sonra inventory səhifəsinə keçidi hansı assertion yoxlayır?",
+                "options": [
+                  "`toBeVisible()`",
+                  "`toHaveValue()`",
+                  "`toHaveURL(/inventory/)`",
+                  "`toHaveTitle()`"
+                ],
+                "correctIndex": 2,
+                "explanation": "`toHaveURL` səhifənin ünvanını yoxlayır.",
+                "imageUrl": null
+              },
+              {
+                "id": "q4",
+                "text": "saucedemo-da `getByLabel('Username')` niyə işləmir?",
+                "options": [
+                  "Playwright getByLabel-i dəstəkləmir",
+                  "Input-ların `<label>` elementi yoxdur",
+                  "Sayt HTTPS deyil",
+                  "Username sahəsi gizlidir"
+                ],
+                "correctIndex": 1,
+                "explanation": "getByLabel `<label>` mətninə görə axtarır; saucedemo yalnız placeholder işlədir.",
+                "imageUrl": null
+              },
+              {
+                "id": "q5",
+                "text": "Niyə `await expect(...)` yazmaq lazımdır?",
+                "options": [
+                  "`expect` şərti bir neçə saniyə təkrar yoxlayır və bunun bitməsini gözləmək lazımdır",
+                  "Kod daha qısa olur",
+                  "Yalnız TypeScript bunu tələb edir",
+                  "`await` testi sürətləndirir"
+                ],
+                "correctIndex": 0,
+                "explanation": "Web-first assertion-lar asinxrondur: `await` olmadan test yoxlamanın nəticəsini gözləmir.",
+                "imageUrl": null
+              },
+              {
+                "id": "q6",
+                "text": "`page.waitForTimeout(5000)` niyə pis təcrübədir?",
+                "options": [
+                  "Playwright-da belə metod yoxdur",
+                  "Sabit gözləmədir: ya vaxt itirir, ya da yavaş mühitdə çatmır — test flaky olur",
+                  "Brauzeri bağlayır",
+                  "Yalnız Firefox-da işləyir"
+                ],
+                "correctIndex": 1,
+                "explanation": "Elementi və ya şərti gözləyən auto-waiting və web-first assertion-lar sabit gözləmədən həmişə daha etibarlıdır.",
+                "imageUrl": null
+              }
+            ]
+          },
+          "id": "cmve390pb82c53badca30"
+        }
+      ]
+    }
+  ]
+}

@@ -1,24 +1,22 @@
 import { redirect } from "next/navigation";
 import { getSession } from "@/lib/auth";
-import StudentSidebar from "@/components/student/StudentSidebar";
+import { prisma } from "@/lib/prisma";
+import { AppShell } from "@/components/layout/AppShell";
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const session = await getSession();
   if (!session) redirect("/login");
   if (session.role === "TEACHER") redirect("/admin");
 
+  const [user, reviewDue] = await Promise.all([
+    prisma.user.findUnique({ where: { id: session.userId }, select: { name: true, avatarUrl: true, xp: true, streakCount: true } }),
+    prisma.reviewItem.count({ where: { userId: session.userId, dueAt: { lte: new Date() } } }),
+  ]);
+  if (!user) redirect("/login");
+
   return (
-    <div className="flex h-screen overflow-hidden bg-surface">
-      <StudentSidebar session={session} />
-      <main className="flex-1 overflow-y-auto">
-        {/* Mobile top padding for fixed header */}
-        <div className="lg:hidden h-14 shrink-0" />
-        <div className="max-w-3xl mx-auto px-4 py-6 lg:px-8 lg:py-8">
-          {children}
-        </div>
-        {/* Mobile bottom padding for bottom nav */}
-        <div className="lg:hidden h-20 shrink-0" />
-      </main>
-    </div>
+    <AppShell role="STUDENT" user={{ name: user.name, avatarUrl: user.avatarUrl, xp: user.xp, streak: user.streakCount, reviewDue }}>
+      {children}
+    </AppShell>
   );
 }
