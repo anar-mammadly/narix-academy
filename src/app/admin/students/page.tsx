@@ -1,3 +1,4 @@
+import { requestTime } from "@/lib/utils";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { UserPlus } from "lucide-react";
@@ -24,7 +25,7 @@ export default async function AdminStudentsPage({ searchParams }: { searchParams
           </Link>
         }
       />
-      <StudentsClient rows={rows} totalLessons={totalLessons} initialFilter={sp.filter === "inactive" ? "inactive" : "all"} />
+      <StudentsClient rows={rows} totalLessons={totalLessons} initialFilter={sp.filter === "inactive" ? "inactive" : "all"} serverNow={requestTime()} />
     </div>
   );
 }

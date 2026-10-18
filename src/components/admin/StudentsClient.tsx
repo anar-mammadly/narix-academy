@@ -13,7 +13,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Select } from "@/components/ui/Select";
 import { buttonStyles } from "@/components/ui/Button";
 import { Table, TableBody, TableHead, TableRow, TableTd, TableTh } from "@/components/ui/Table";
-import { cn, formatNumber } from "@/lib/utils";
+import { cn, compareAz, formatNumber } from "@/lib/utils";
 import type { StudentRow } from "./student-stats";
 
 type Filter = "all" | "active" | "inactive";
@@ -45,11 +45,11 @@ function Xp({ n }: { n: number }) {
   );
 }
 
-export function StudentsClient({ rows, totalLessons, initialFilter }: { rows: StudentRow[]; totalLessons: number; initialFilter: Filter }) {
+export function StudentsClient({ rows, totalLessons, initialFilter, serverNow }: { rows: StudentRow[]; totalLessons: number; initialFilter: Filter; serverNow: number }) {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<Filter>(initialFilter);
   const [sort, setSort] = useState<Sort>("name");
-  const [now] = useState(() => Date.now());
+  const [now] = useState(serverNow);
 
   const counts = useMemo(() => {
     const inactive = rows.filter((r) => isInactive(r, now)).length;
@@ -65,7 +65,7 @@ export function StudentsClient({ rows, totalLessons, initialFilter }: { rows: St
         if (sort === "progress") return b.progress - a.progress;
         if (sort === "xp") return b.xp - a.xp;
         if (sort === "last") return (b.lastActive ?? "").localeCompare(a.lastActive ?? "");
-        return a.name.localeCompare(b.name, "az");
+        return compareAz(a.name, b.name);
       });
   }, [rows, query, filter, sort, now]);
 

@@ -49,3 +49,23 @@ export function getScoreColor(score: number): string {
 export function formatNumber(n: number): string {
   return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "\u00a0");
 }
+
+const AZ_ALPHABET = "aâbcçdeəfgğhxıijkqlmnoöprsştuüvyz";
+
+/** Azerbaijani alphabetical order without relying on the runtime's ICU data. */
+export function compareAz(a: string, b: string): number {
+  const x = a.toLocaleLowerCase("az"), y = b.toLocaleLowerCase("az");
+  const n = Math.min(x.length, y.length);
+  for (let i = 0; i < n; i++) {
+    if (x[i] === y[i]) continue;
+    const ix = AZ_ALPHABET.indexOf(x[i]), iy = AZ_ALPHABET.indexOf(y[i]);
+    if (ix !== -1 && iy !== -1) return ix - iy;
+    return x.charCodeAt(i) - y.charCodeAt(i);
+  }
+  return x.length - y.length;
+}
+
+/** Request timestamp for server components, passed to clients so both sides agree on "now". */
+export function requestTime(): number {
+  return Date.now();
+}

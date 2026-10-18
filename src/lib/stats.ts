@@ -1,5 +1,6 @@
 import "server-only";
 import { prisma } from "./prisma";
+import { compareAz } from "./utils";
 import { dayKey, lastWeekDays, levelFromXp } from "./game";
 
 /** "Aysel Məmmədova" → "Aysel M." — leaderboards show no more than needed. */
@@ -25,7 +26,7 @@ export async function leaderboard(range: "week" | "all", limit = 50): Promise<Bo
   }
   return students
     .map((s) => ({ userId: s.id, name: publicName(s.name), avatarUrl: s.avatarUrl, xp: score.get(s.id) ?? 0, level: levelFromXp(s.xp).level, streak: s.streakCount, rank: 0 }))
-    .sort((a, b) => b.xp - a.xp || a.name.localeCompare(b.name, "az"))
+    .sort((a, b) => b.xp - a.xp || compareAz(a.name, b.name))
     .map((r, i) => ({ ...r, rank: i + 1 }))
     .slice(0, limit);
 }
