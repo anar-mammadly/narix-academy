@@ -3,6 +3,7 @@
 import { RelativeTime } from "@/components/ui/RelativeTime";
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Flame, Search, UserPlus, Users, Zap } from "lucide-react";
 import { Input } from "@/components/ui/Input";
 import { Tabs } from "@/components/ui/Tabs";
@@ -11,7 +12,7 @@ import { ProgressBar } from "@/components/ui/ProgressBar";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Badge } from "@/components/ui/Badge";
 import { Select } from "@/components/ui/Select";
-import { buttonStyles } from "@/components/ui/Button";
+import { Button, buttonStyles } from "@/components/ui/Button";
 import { Table, TableBody, TableHead, TableRow, TableTd, TableTh } from "@/components/ui/Table";
 import { cn, compareAz, formatNumber } from "@/lib/utils";
 import type { StudentRow } from "./student-stats";
@@ -46,6 +47,46 @@ function Xp({ n }: { n: number }) {
 }
 
 export function StudentsClient({ rows, totalLessons, initialFilter, serverNow }: { rows: StudentRow[]; totalLessons: number; initialFilter: Filter; serverNow: number }) {
+  const router = useRouter();
+  const [busy, setBusy] = useState<string | null>(null);
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+
+  async function changeAccount(student: StudentRow, remove = false) {
+    if (busy) return;
+    const prompt = remove
+      ? `${student.name} hesabını silmək istəyirsiniz? Tələbənin irəliləyişi, cavabları və digər hesab məlumatları həmişəlik silinəcək. Bu əməliyyat geri qaytarılmır.`
+      : `${student.name} hesabını deaktiv etmək istəyirsiniz? Tələbə hesaba daxil ola bilməyəcək və mövcud sessiyaları etibarsız olacaq.`;
+    if ((remove || student.isActive) && !window.confirm(prompt)) return;
+    setBusy(student.id);
+    setError("");
+    setMessage("");
+    try {
+      const res = await fetch(`/api/students/${encodeURIComponent(student.id)}`, {
+        method: remove ? "DELETE" : "PATCH",
+        headers: { "Content-Type": "application/json" },
+        ...(remove ? {} : { body: JSON.stringify({ isActive: !student.isActive }) }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? "Əməliyyat baş tutmadı");
+      setMessage(remove ? "Tələbə hesabı silindi." : student.isActive ? "Hesab deaktiv edildi." : "Hesab aktiv edildi.");
+      router.refresh();
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Əməliyyat baş tutmadı");
+    } finally {
+      setBusy(null);
+    }
+  }
+
+  function accountActions(student: StudentRow) {
+    return <div className="flex flex-wrap gap-2">
+      <Button size="sm" variant="secondary" disabled={busy !== null} loading={busy === student.id} onClick={() => changeAccount(student)} aria-label={`${student.name}: ${student.isActive ? "deaktiv et" : "aktiv et"}`}>
+        {student.isActive ? "Deaktiv et" : "Aktiv et"}
+      </Button>
+      <Button size="sm" variant="danger-ghost" disabled={busy !== null} onClick={() => changeAccount(student, true)} aria-label={`${student.name}: hesabı sil`}>Sil</Button>
+    </div>;
+  }
+
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<Filter>(initialFilter);
   const [sort, setSort] = useState<Sort>("name");
@@ -82,6 +123,8 @@ export function StudentsClient({ rows, totalLessons, initialFilter, serverNow }:
 
   return (
     <div className="space-y-4">
+      {error && <p role="alert" className="text-sm text-bug">{error}</p>}
+      {message && <p role="status" className="text-sm text-ink">{message}</p>}
       <div className="flex flex-col gap-3 md:flex-row md:items-center">
         <div className="relative min-w-0 flex-1">
           <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" aria-hidden />
@@ -130,6 +173,8 @@ export function StudentsClient({ rows, totalLessons, initialFilter, serverNow }:
                   <TableTh>Səviyyə</TableTh>
                   <TableTh>Seriya</TableTh>
                   <TableTh>Son aktivlik</TableTh>
+                  <TableTh>Hesab</TableTh>
+                  <TableTh>Əməliyyatlar</TableTh>
                 </tr>
               </TableHead>
               <TableBody className="bg-surface">
@@ -158,6 +203,8 @@ export function StudentsClient({ rows, totalLessons, initialFilter, serverNow }:
                     </TableTd>
                     <TableTd className="min-w-20"><Streak n={r.streak} /></TableTd>
                     <TableTd className={cn("min-w-32 whitespace-nowrap", isInactive(r, now) && "text-flame")}>{lastLabel(r.lastActive)}</TableTd>
+                    <TableTd><Badge>{r.isActive ? "Aktiv hesab" : "Deaktiv hesab"}</Badge></TableTd>
+                    <TableTd>{accountActions(r)}</TableTd>
                   </TableRow>
                 ))}
               </TableBody>
@@ -184,6 +231,10 @@ export function StudentsClient({ rows, totalLessons, initialFilter, serverNow }:
                   <Xp n={r.xp} />
                   <Streak n={r.streak} />
                   <span className={cn("ml-auto text-xs", isInactive(r, now) ? "font-medium text-flame" : "text-muted")}>{lastLabel(r.lastActive)}</span>
+                </div>
+                <div className="mt-3 space-y-2 border-t border-line pt-3">
+                  <Badge>{r.isActive ? "Aktiv hesab" : "Deaktiv hesab"}</Badge>
+                  {accountActions(r)}
                 </div>
               </li>
             ))}

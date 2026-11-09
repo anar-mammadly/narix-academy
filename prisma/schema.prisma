@@ -13,6 +13,8 @@ model User {
   passwordHash String
   name         String
   role         String   @default("STUDENT")
+  isActive     Boolean  @default(true)
+  sessionVersion Int    @default(0)
   avatarUrl    String?
   bio          String?
   phone        String?

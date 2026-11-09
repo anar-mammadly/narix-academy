@@ -17,7 +17,13 @@ export async function POST(req: NextRequest) {
     const valid = user ? await bcrypt.compare(password, user.passwordHash) : false;
     if (!user || !valid) return NextResponse.json({ error: "Email və ya şifrə yanlışdır" }, { status: 401 });
 
-    const token = await signToken({ userId: user.id, email: user.email, name: user.name, role: user.role, language: user.language ?? "az" });
+    if (!user.isActive) {
+      const res = NextResponse.json({ error: "Hesabınız deaktiv edilib. Müəlliminizlə əlaqə saxlayın." }, { status: 403 });
+      res.cookies.delete("session");
+      return res;
+    }
+
+    const token = await signToken({ userId: user.id, email: user.email, name: user.name, role: user.role, language: user.language ?? "az", sessionVersion: user.sessionVersion });
     const res = NextResponse.json({ role: user.role });
     res.cookies.set("session", token, {
       httpOnly: true,

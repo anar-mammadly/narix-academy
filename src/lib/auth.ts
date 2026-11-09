@@ -1,44 +1,21 @@
+import "server-only";
 import { cookies } from "next/headers";
-import { SignJWT, jwtVerify } from "jose";
-
-if (!process.env.JWT_SECRET && process.env.NODE_ENV === "production") {
-  throw new Error("JWT_SECRET must be set in production");
-}
-
-const SECRET = new TextEncoder().encode(
-  process.env.JWT_SECRET ?? "narix-academy-dev-only-secret-min-32-chars!!"
-);
-
-export type SessionPayload = {
-  userId: string;
-  email: string;
-  name: string;
-  role: string;
-  language: string;
-};
-
-export async function signToken(payload: SessionPayload): Promise<string> {
-  return new SignJWT({ ...payload })
-    .setProtectedHeader({ alg: "HS256" })
-    .setIssuedAt()
-    .setExpirationTime("7d")
-    .sign(SECRET);
-}
-
-export async function verifyToken(token: string): Promise<SessionPayload | null> {
-  try {
-    const { payload } = await jwtVerify(token, SECRET);
-    return payload as unknown as SessionPayload;
-  } catch {
-    return null;
-  }
-}
+import { prisma } from "@/lib/prisma";
+import { verifyToken, type SessionPayload } from "@/lib/session-token";
+export { signToken, verifyToken, type SessionPayload } from "@/lib/session-token";
 
 export async function getSession(): Promise<SessionPayload | null> {
   const cookieStore = await cookies();
   const token = cookieStore.get("session")?.value;
   if (!token) return null;
-  return verifyToken(token);
+  const session = await verifyToken(token);
+  if (!session || typeof session.userId !== "string") return null;
+  const user = await prisma.user.findUnique({
+    where: { id: session.userId },
+    select: { id: true, email: true, name: true, role: true, language: true, isActive: true, sessionVersion: true },
+  });
+  if (!user?.isActive || user.sessionVersion !== (session.sessionVersion ?? 0)) return null;
+  return { userId: user.id, email: user.email, name: user.name, role: user.role, language: user.language, sessionVersion: user.sessionVersion };
 }
 
 export async function requireSession(): Promise<SessionPayload> {

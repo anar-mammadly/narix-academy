@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { verifyToken } from "@/lib/auth";
+import { verifyToken } from "@/lib/session-token";
 
 const PUBLIC_PATHS = ["/login", "/api/auth/login", "/verify"];
 const TEACHER_PATHS = ["/admin", "/preview"];

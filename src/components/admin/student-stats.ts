@@ -6,6 +6,7 @@ export type StudentRow = {
   id: string;
   name: string;
   email: string;
+  isActive: boolean;
   avatarUrl: string | null;
   createdAt: string;
   xp: number;
@@ -27,7 +28,7 @@ export async function loadStudentRows(): Promise<{ rows: StudentRow[]; totalLess
     prisma.user.findMany({
       where: { role: "STUDENT" },
       orderBy: { name: "asc" },
-      select: { id: true, name: true, email: true, avatarUrl: true, createdAt: true, xp: true, streakCount: true, lastActiveDay: true },
+      select: { id: true, name: true, email: true, isActive: true, avatarUrl: true, createdAt: true, xp: true, streakCount: true, lastActiveDay: true },
     }),
     prisma.lesson.count({ where: publishedWhere }),
     prisma.progress.groupBy({ by: ["userId"], where: { completed: true, lesson: publishedWhere }, _count: { _all: true } }),
@@ -51,6 +52,7 @@ export async function loadStudentRows(): Promise<{ rows: StudentRow[]; totalLess
       id: s.id,
       name: s.name,
       email: s.email,
+      isActive: s.isActive,
       avatarUrl: s.avatarUrl,
       createdAt: s.createdAt.toISOString(),
       xp: s.xp,

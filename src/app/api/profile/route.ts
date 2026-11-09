@@ -15,7 +15,7 @@ export async function PATCH(req: NextRequest) {
     const session = await requireSession();
     const data = Body.parse(await req.json());
     const user = await prisma.user.update({ where: { id: session.userId }, data });
-    const token = await signToken({ userId: user.id, email: user.email, name: user.name, role: user.role, language: user.language });
+    const token = await signToken({ userId: user.id, email: user.email, name: user.name, role: user.role, language: user.language, sessionVersion: session.sessionVersion });
     const res = NextResponse.json({ ok: true });
     res.cookies.set("session", token, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", maxAge: 60 * 60 * 24 * 7, path: "/" });
     return res;

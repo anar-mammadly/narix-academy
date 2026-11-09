@@ -17,7 +17,7 @@ export async function GET() {
     await requireTeacher();
     const students = await prisma.user.findMany({
       where: { role: "STUDENT" },
-      select: { id: true, name: true, email: true, createdAt: true, language: true, xp: true, streakCount: true, lastActiveDay: true },
+      select: { id: true, name: true, email: true, isActive: true, createdAt: true, language: true, xp: true, streakCount: true, lastActiveDay: true },
       orderBy: { createdAt: "asc" },
     });
     return NextResponse.json(students);
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
     const passwordHash = await bcrypt.hash(password, 12);
     const user = await prisma.user.create({
       data: { name, email, passwordHash, role: "STUDENT", language: language ?? "az" },
-      select: { id: true, name: true, email: true, createdAt: true },
+      select: { id: true, name: true, email: true, isActive: true, createdAt: true },
     });
     return NextResponse.json(user, { status: 201 });
   } catch (e) {
