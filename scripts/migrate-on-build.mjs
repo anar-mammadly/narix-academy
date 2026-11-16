@@ -6,6 +6,7 @@
 //
 // - No database URL in the build environment → skipped (e.g. CI, local builds).
 // - SKIP_MIGRATE=1 → skipped.
+// - Vercel preview builds → skipped (only the production build migrates).
 // - A pooled Neon URL is swapped for the direct one: migrations need a real
 //   session, which the connection pooler does not give.
 import { execSync } from "node:child_process";
@@ -28,8 +29,12 @@ function directUrl() {
 }
 
 const url = directUrl();
-if (process.env.SKIP_MIGRATE === "1" || !url) {
-  console.log("[migrate] skipped:", url ? "SKIP_MIGRATE=1" : "no DATABASE_URL in this environment");
+// On Vercel, preview builds (pull requests) often share the production
+// database. A pull request must not change the live schema before it is
+// merged, so only the production build migrates.
+const preview = !!process.env.VERCEL_ENV && process.env.VERCEL_ENV !== "production";
+if (process.env.SKIP_MIGRATE === "1" || !url || preview) {
+  console.log("[migrate] skipped:", preview ? "preview build" : url ? "SKIP_MIGRATE=1" : "no DATABASE_URL in this environment");
   process.exit(0);
 }
 

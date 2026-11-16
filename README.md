@@ -89,3 +89,9 @@ Ardıcıllıq vacibdir. Məzmun yeni kod deploy olunmazdan **əvvəl** sync olun
 ---
 
 Narix Academy © 2026
+
+## Deploy
+
+`npm run build` bazanın miqrasiyalarını özü tətbiq edir (`scripts/migrate-on-build.mjs`): production build-də `prisma migrate deploy` işləyir, preview build-lərdə və `DATABASE_URL` olmayan mühitdə ötürülür. Sxemi yeniləmək alınmasa, build dayanır və canlıdakı versiya işləməyə davam edir.
+
+Platforma ilə gələn, amma bazada olmayan dərslər **Admin → Modullar və dərslər** səhifəsində “Yeni dərsləri əlavə et” düyməsi ilə yüklənir. Mövcud dərslərin mətninə toxunulmur. Faylları əsas götürüb hər şeyi yenidən yazmaq üçün terminalda `npm run content:sync` qalır.
