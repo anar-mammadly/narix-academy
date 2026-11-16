@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { flattenPath, getStudentPath } from "@/lib/curriculum";
 import { loadLesson, loadStudentLessonState, toPlayerLesson } from "@/lib/lesson-data";
 import LessonPlayer from "@/components/lesson/LessonPlayer";
+import { getAppearance } from "@/lib/site-settings";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -38,7 +39,7 @@ export default async function LearnPage({ params }: Props) {
 
   return (
     <LessonPlayer
-      lesson={toPlayerLesson(lesson)}
+      lesson={toPlayerLesson(lesson, { visuals: (await getAppearance()).lessonVisuals })}
       {...state}
       prev={prev ? { slug: prev.slug, title: prev.title } : null}
       next={next ? { slug: next.slug, title: next.title, locked: next.status === "locked" } : null}

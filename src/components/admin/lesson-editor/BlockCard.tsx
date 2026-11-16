@@ -3,7 +3,7 @@
 import { memo, useCallback, useEffect, useId, useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { AlertTriangle, Braces, ChevronDown, Copy, GripVertical, ListPlus, RotateCw, Trash2, FormInput } from "lucide-react";
+import { AlertTriangle, Braces, ChevronDown, Copy, EyeOff, GripVertical, ListPlus, RotateCw, Trash2, FormInput } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { BLOCK_XP } from "@/lib/game";
 import { Button } from "@/components/ui/Button";
@@ -15,6 +15,8 @@ import { SaveIndicator } from "./SaveIndicator";
 import { blockSummary } from "./summary";
 import { checkBlock } from "./validate";
 import { useBlockAutosave } from "./useBlockAutosave";
+import { Switch } from "../Switch";
+import { requestJson } from "../request";
 import type { CardStatus, EditorBlock } from "./types";
 
 const toneTile: Record<string, string> = {
@@ -103,6 +105,16 @@ function KnownBlock({ lessonId, block, index, expanded, onToggle, onStatus, onDe
   const [jsonKey, setJsonKey] = useState(0);
 
   const { status, error, schedule, flush } = useBlockAutosave(lessonId, block.id);
+  // Switched off = kept here with everything in it, but left out of the lesson students see.
+  const [hidden, setHidden] = useState(!!block.hidden);
+  const toggleHidden = async (visible: boolean) => {
+    setHidden(!visible);
+    try {
+      await requestJson(`/api/lessons/${lessonId}/blocks/${block.id}`, "PATCH", { hidden: !visible });
+    } catch {
+      setHidden(visible); // the change did not reach the server
+    }
+  };
 
   useEffect(() => {
     onStatus(block.id, issues ? "invalid" : status);
@@ -157,7 +169,12 @@ function KnownBlock({ lessonId, block, index, expanded, onToggle, onStatus, onDe
           <span className="min-w-0 flex-1">
             <span className="flex items-center gap-2">
               <span className="text-xs font-semibold tabular-nums text-muted">{index + 1}</span>
-              <span className="truncate text-sm font-semibold text-ink">{title || meta.label}</span>
+              <span className={cn("truncate text-sm font-semibold text-ink", hidden && "text-muted line-through decoration-1")}>{title || meta.label}</span>
+              {hidden && (
+                <span className="flex shrink-0 items-center gap-1 rounded-full bg-surface-3 px-1.5 text-[0.7rem] font-semibold text-ink-2">
+                  <EyeOff className="h-3 w-3" aria-hidden /> Söndürülüb
+                </span>
+              )}
               {xp ? <span className="hidden shrink-0 rounded-full bg-xp-soft px-1.5 text-[0.7rem] font-semibold text-xp xs:inline">+{xp} XP</span> : null}
             </span>
             {summary && <span className="mt-0.5 block truncate text-xs text-muted">{title ? `${meta.label} · ` : ""}{summary}</span>}
@@ -178,6 +195,7 @@ function KnownBlock({ lessonId, block, index, expanded, onToggle, onStatus, onDe
           <div className="space-y-4 p-3 sm:p-5">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <p className="text-sm text-muted">{meta.description}</p>
+              <Switch checked={!hidden} onCheckedChange={toggleHidden} label="Tələbələrə göstər" className="items-center gap-3" />
               {formAvailable && (
                 <div role="group" aria-label="Redaktə rejimi" className="inline-flex rounded-lg bg-surface-2 p-0.5">
                   <button

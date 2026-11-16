@@ -6,6 +6,14 @@
  *   npx tsx scripts/backfill-xp.ts [--dry-run]
  */
 import { PrismaClient } from "@prisma/client";
+
+// `tsx` does not read .env the way the Prisma CLI does; load it here so the
+// script works with a plain `npm run …`. On a server the variables are already set.
+try {
+  process.loadEnvFile();
+} catch {
+  // no .env file: rely on the environment
+}
 import { LESSON_XP, dayKey } from "../src/lib/game";
 
 const DRY = process.argv.includes("--dry-run");

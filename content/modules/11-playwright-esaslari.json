@@ -1,0 +1,1929 @@
+{
+  "id": "cnarixacadplaywright00011",
+  "key": "playwright-esaslari",
+  "order": 11,
+  "title": "Playwright əsasları",
+  "description": "İlk testdən etibarlı testə: quruluş, locator-lar, hərəkətlər, yoxlamalar və hook-lar.",
+  "icon": "Bot",
+  "color": "#22C55E",
+  "track": "automation",
+  "lessons": [
+    {
+      "slug": "playwright-qurasdirma-ve-ilk-test",
+      "title": "Playwright: quraşdırma və ilk test",
+      "shortDescription": "Playwright layihəsi yaratmaq, strukturunu anlamaq, ilk testi yazmaq, UI mode və HTML report ilə işə salmaq.",
+      "estimatedMinutes": 14,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Playwright layihəsini sıfırdan qura biləcəksən",
+              "Layihənin əsas fayl və qovluqlarını izah edə biləcəksən",
+              "test və expect ilə sadə test yaza biləcəksən",
+              "Testləri terminalda, UI mode-da işə sala və HTML report-u aça biləcəksən"
+            ]
+          },
+          "id": "cmve390pbd68bb0331039"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Playwright",
+                "az": "Playwright",
+                "definition": "Microsoft-un açıq mənbəli brauzer avtomatlaşdırma aləti və test runner-i."
+              },
+              {
+                "term": "npm",
+                "az": "paket meneceri",
+                "definition": "Node.js ilə gələn, kitabxanaları quraşdıran alət."
+              },
+              {
+                "term": "Test runner",
+                "az": "test icraçısı",
+                "definition": "Testləri tapan, işə salan və nəticəni hesabat kimi göstərən alət."
+              },
+              {
+                "term": "Headless",
+                "az": "başsız rejim",
+                "definition": "Brauzerin pəncərə göstərmədən işləməsi; default rejim."
+              },
+              {
+                "term": "Spec file",
+                "az": "test faylı",
+                "definition": "`.spec.ts` ilə bitən, testləri saxlayan fayl."
+              },
+              {
+                "term": "HTML report",
+                "az": "HTML hesabat",
+                "definition": "Hər testin nəticəsini, addımlarını və xətalarını göstərən veb səhifə."
+              }
+            ]
+          },
+          "id": "cmve390pb89874d708ce5"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Playwright nədir?",
+            "level": 2
+          },
+          "id": "cmve390pbd3dc0bdac84d"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Playwright Microsoft-un açıq mənbəli alətidir: Chromium (Chrome, Edge), Firefox və WebKit (Safari) brauzerlərini kodla idarə edir. `@playwright/test` paketi hazır test runner verir: testləri paralel işlədir, elementləri avtomatik gözləyir və report yaradır. Testləri **TypeScript**-də yazacağıq — bu, tiplər əlavə olunmuş JavaScript-dir; öyrəndiyin hər şey eynilə işləyir.",
+            "highlight": "normal"
+          },
+          "id": "cmve390pbcc8e992d1e38"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Quraşdırma",
+            "level": 2
+          },
+          "id": "cmve390pb66caf651e68c"
+        },
+        {
+          "type": "STEPPER",
+          "title": "Yeni Playwright layihəsi",
+          "content": {
+            "steps": [
+              {
+                "title": "Node.js-i yoxla",
+                "description": "Terminalda `node -v` yaz. Node.js LTS versiyası (20 və ya daha yeni) lazımdır."
+              },
+              {
+                "title": "Qovluq yarat və aç",
+                "description": "`playwright-course` qovluğunu VS Code-da aç, Terminal → New Terminal."
+              },
+              {
+                "title": "Layihəni yarat",
+                "description": "`npm init playwright@latest` yaz və suallara cavab ver."
+              },
+              {
+                "title": "Suallar",
+                "description": "Dil: **TypeScript**; testlər qovluğu: `tests`; GitHub Actions workflow: hələlik yox; brauzerləri quraşdır: **bəli**."
+              },
+              {
+                "title": "VS Code extension",
+                "description": "Extensions bölməsində **Playwright Test for VSCode** quraşdır — testləri redaktordan işə salmaq üçün."
+              }
+            ]
+          },
+          "id": "cmve390pb949688a1dd55"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "node -v                      # v20+ olmalıdır\nnpm init playwright@latest   # layihəni və brauzerləri quraşdırır\nnpx playwright test          # bütün testləri işə salır",
+            "language": "bash",
+            "caption": "Quraşdırma əmrləri"
+          },
+          "id": "cmve390pb8373f7a47ce3"
+        },
+        {
+          "type": "TABLE",
+          "title": "Playwright layihəsinin strukturu",
+          "content": {
+            "headers": [
+              "Fayl / qovluq",
+              "Nə üçündür"
+            ],
+            "rows": [
+              [
+                "`tests/`",
+                "Test faylların; nümunə `example.spec.ts` burada yaranır"
+              ],
+              [
+                "`playwright.config.ts`",
+                "Ayarlar: brauzerlər (projects), timeout, baseURL, reporter"
+              ],
+              [
+                "`package.json`",
+                "Layihənin asılılıqları (`@playwright/test`) və skriptləri"
+              ],
+              [
+                "`node_modules/`",
+                "Quraşdırılmış paketlər — əl ilə toxunma"
+              ],
+              [
+                "`playwright-report/`",
+                "Son işləmənin HTML report-u"
+              ],
+              [
+                "`test-results/`",
+                "Uğursuz testlərin ekran görüntüləri, trace və s."
+              ]
+            ]
+          },
+          "id": "cmve390pb08731e7fb6c3"
+        },
+        {
+          "type": "ORDERING",
+          "title": "Sıfırdan ilk report-a qədər",
+          "content": {
+            "instructions": "Addımları düzgün ardıcıllığa düz.",
+            "items": [
+              "`node -v` ilə Node.js-i yoxlamaq",
+              "Layihə qovluğunu VS Code-da açmaq",
+              "`npm init playwright@latest` işə salmaq",
+              "`tests/` qovluğunda test faylı yazmaq",
+              "`npx playwright test` ilə testləri işə salmaq",
+              "`npx playwright show-report` ilə nəticəyə baxmaq"
+            ],
+            "explanation": "Əvvəl mühit, sonra layihə, sonra test, icra və hesabat."
+          },
+          "id": "cmve390pb1acb78d6a1d8"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "İlk test",
+            "level": 2
+          },
+          "id": "cmve390pb1d9ed1d6e8d9"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "import { test, expect } from '@playwright/test';\n\ntest('ana səhifənin başlığında Playwright var', async ({ page }) => {\n  await page.goto('https://playwright.dev/');\n  await expect(page).toHaveTitle(/Playwright/);\n});",
+            "language": "typescript",
+            "caption": "tests/first.spec.ts"
+          },
+          "id": "cmve390pb31efd9959d22"
+        },
+        {
+          "type": "TABLE",
+          "title": "Testin sətir-sətir izahı",
+          "content": {
+            "headers": [
+              "Kod",
+              "Mənası"
+            ],
+            "rows": [
+              [
+                "`import { test, expect }`",
+                "Playwright-dan `test` və `expect` funksiyalarını götürür"
+              ],
+              [
+                "`test('ad', async ({ page }) => { ... })`",
+                "Test elan edir: ad + arrow function. `page` — hər test üçün təzə brauzer tabı"
+              ],
+              [
+                "`async` / `await`",
+                "Brauzer əməliyyatı vaxt aparır; `await` onun bitməsini gözləyir"
+              ],
+              [
+                "`page.goto(url)`",
+                "Səhifəni açır"
+              ],
+              [
+                "`expect(page).toHaveTitle(/Playwright/)`",
+                "Yoxlama (assertion): başlıqda \"Playwright\" sözü olmalıdır"
+              ]
+            ]
+          },
+          "id": "cmve390pb912eb70d9bbf"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "warning",
+            "body": "Hər brauzer əmrindən əvvəl `await` yaz. Unutsan, Playwright əmrin bitməsini gözləmir və test qəribə, qeyri-sabit şəkildə düşür."
+          },
+          "id": "cmve390pb75cd23c02cc2"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Testləri işə salmaq və nəticəni oxumaq",
+            "level": 2
+          },
+          "id": "cmve390pbf9d1d7ac1b88"
+        },
+        {
+          "type": "TABLE",
+          "title": "Ən çox işlədilən əmrlər",
+          "content": {
+            "headers": [
+              "Əmr",
+              "Nə edir"
+            ],
+            "rows": [
+              [
+                "`npx playwright test`",
+                "Bütün testləri 3 brauzerdə, headless və paralel işə salır"
+              ],
+              [
+                "`npx playwright test first.spec.ts`",
+                "Yalnız bir faylı işə salır"
+              ],
+              [
+                "`npx playwright test --project=chromium`",
+                "Yalnız Chromium-da"
+              ],
+              [
+                "`npx playwright test --headed`",
+                "Brauzer pəncərəsini göstərir"
+              ],
+              [
+                "`npx playwright test --ui`",
+                "UI mode: testləri seçib işə salmaq, hər addımı izləmək"
+              ],
+              [
+                "`npx playwright show-report`",
+                "Son HTML report-u açır"
+              ]
+            ]
+          },
+          "id": "cmve390pbc99810ff9a51"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Nümunə `example.spec.ts`-də 2 test var və config 3 brauzer işlədir, ona görə terminalda `6 passed` görəcəksən. Test düşəndə HTML report avtomatik açılır: orada hansı addımın uğursuz olduğunu, gözlənilən və real nəticəni görürsən. **UI mode** isə test yazarkən ən rahat yerdir: hər addımda səhifənin necə göründüyünü göstərir.",
+            "highlight": "normal"
+          },
+          "id": "cmve390pb3606ca2050db"
+        },
+        {
+          "type": "TASK",
+          "title": "Layihəni qur və işə sal",
+          "content": {
+            "instructions": "Öz kompüterində Playwright layihəsi yarat, `tests/first.spec.ts` faylına yuxarıdakı testi yaz və `npx playwright test` işə sal. Terminalda çıxan son nəticəni (məsələn, `9 passed`) buraya yapışdır. Sonra `npx playwright test --ui` ilə testi UI mode-da aç və orada nə gördüyünü bir-iki cümlə ilə yaz.",
+            "placeholder": "Running 9 tests using 4 workers\n  9 passed (12.3s)\n\nUI mode-da...",
+            "required": true
+          },
+          "id": "cmve390pb4ea41f609112"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Playwright Chromium, Firefox və WebKit-i kodla idarə edir və hazır test runner verir.",
+              "Layihə `npm init playwright@latest` ilə yaradılır; testlər `tests/` qovluğunda, ayarlar `playwright.config.ts`-dədir.",
+              "Test = `test('ad', async ({ page }) => { ... })`; yoxlama `expect` ilə edilir.",
+              "Hər brauzer əmrindən əvvəl `await` yazılır.",
+              "`npx playwright test` işə salır, `--ui` UI mode-u açır, `show-report` HTML report-u göstərir."
+            ]
+          },
+          "id": "cmve390pba783ababdf7a"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Yeni Playwright layihəsini hansı əmr yaradır?",
+                "options": [
+                  "`npm install selenium`",
+                  "`npm init playwright@latest`",
+                  "`node playwright.js`",
+                  "`npx create-test`"
+                ],
+                "correctIndex": 1,
+                "explanation": "`npm init playwright@latest` paketi, config-i, nümunə testi və brauzerləri quraşdırır.",
+                "imageUrl": null
+              },
+              {
+                "id": "q2",
+                "text": "Brauzerlər, timeout və reporter ayarları harada saxlanır?",
+                "options": [
+                  "`package.json`",
+                  "`tests/example.spec.ts`",
+                  "`playwright.config.ts`",
+                  "`node_modules/`"
+                ],
+                "correctIndex": 2,
+                "explanation": "Bütün test ayarları `playwright.config.ts` faylındadır.",
+                "imageUrl": null
+              },
+              {
+                "id": "q3",
+                "text": "Testdə `{ page }` nədir?",
+                "options": [
+                  "Bütün sayt",
+                  "Hər test üçün yaradılan təzə brauzer tabı",
+                  "HTML report",
+                  "Test faylının adı"
+                ],
+                "correctIndex": 1,
+                "explanation": "`page` Playwright-ın hər testə verdiyi izolə olunmuş brauzer səhifəsidir.",
+                "imageUrl": null
+              },
+              {
+                "id": "q4",
+                "text": "`page.goto(...)`-dan əvvəl `await` yazmasan nə olar?",
+                "options": [
+                  "Test daha sürətli və sabit olur",
+                  "Playwright əmrin bitməsini gözləmir, test qeyri-sabit düşə bilər",
+                  "Kod kompilyasiya olunmur",
+                  "Brauzer açılmır, amma test keçir"
+                ],
+                "correctIndex": 1,
+                "explanation": "`await` olmadan növbəti sətir səhifə açılmamış icra olunur.",
+                "imageUrl": null
+              },
+              {
+                "id": "q5",
+                "text": "Testləri seçib addım-addım izləmək üçün hansı rejim ən rahatdır?",
+                "options": [
+                  "`--headless`",
+                  "`--ui`",
+                  "`show-report`",
+                  "`--project=webkit`"
+                ],
+                "correctIndex": 1,
+                "explanation": "UI mode hər addımı və səhifənin vəziyyətini vizual göstərir.",
+                "imageUrl": null
+              },
+              {
+                "id": "q6",
+                "text": "Default olaraq `npx playwright test` testləri necə işə salır?",
+                "options": [
+                  "Yalnız Chrome-da, pəncərə ilə",
+                  "Config-dəki brauzerlərdə, headless və paralel",
+                  "Yalnız bir-bir, ardıcıl",
+                  "Yalnız UI mode-da"
+                ],
+                "correctIndex": 1,
+                "explanation": "Default olaraq testlər headless rejimdə, bir neçə worker ilə paralel və config-dəki bütün projects üzrə işləyir.",
+                "imageUrl": null
+              }
+            ]
+          },
+          "id": "cmve390pb6b901561ac84"
+        }
+      ]
+    },
+    {
+      "slug": "playwright-test-qurulusu",
+      "title": "Testin quruluşu: browser, context, page",
+      "shortDescription": "Playwright testinin anatomiyası, brauzer–context–page iyerarxiyası və playwright.config faylının əsas ayarları.",
+      "estimatedMinutes": 13,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Testin hissələrini (import, test, ad, async funksiya, addımlar, yoxlama) göstərə biləcəksən",
+              "Browser, context və page arasındakı fərqi izah edə biləcəksən",
+              "`baseURL` ayarından istifadə edib qısa ünvanla səhifə aça biləcəksən"
+            ]
+          },
+          "id": "cmwis895f7f22b00a57fc"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Browser",
+                "az": "brauzer",
+                "definition": "Chromium, Firefox və ya WebKit prosesi"
+              },
+              {
+                "term": "Context",
+                "az": "kontekst",
+                "definition": "Brauzerin içində təmiz, ayrı sessiya: öz cookie-ləri və yaddaşı ilə (gizli pəncərə kimi)"
+              },
+              {
+                "term": "Page",
+                "az": "səhifə",
+                "definition": "Context-in içindəki bir tab"
+              },
+              {
+                "term": "Test isolation",
+                "az": "test izolyasiyası",
+                "definition": "Hər testin öz təmiz context-ində işləməsi: testlər bir-birinə təsir etmir"
+              }
+            ]
+          },
+          "id": "cmwis895fbb3c46f5a3fb"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Bir testin anatomiyası",
+            "level": 2
+          },
+          "id": "cmwis895f3dade2da7aa1"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "import { test, expect } from '@playwright/test';      // 1. alətləri götür\n\ntest('axtarış nəticə göstərir', async ({ page }) => {  // 2. ad + async funksiya\n  await page.goto('/');                                // 3. addımlar\n  await page.getByPlaceholder('Məhsul axtar').fill('klaviatura');\n  await page.keyboard.press('Enter');\n\n  await expect(page.getByRole('heading', { name: 'Nəticələr' })).toBeVisible(); // 4. yoxlama\n});",
+            "language": "javascript",
+            "caption": "Manual test case-in eyni quruluşu: ad, addımlar, gözlənilən nəticə. Sadəcə addımları sən yox, kod icra edir."
+          },
+          "id": "cmwis895f3ae33de9d2dc"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Browser → Context → Page",
+            "level": 2
+          },
+          "id": "cmwis895f20d37631632d"
+        },
+        {
+          "type": "DIAGRAM",
+          "content": {
+            "code": "flowchart TD\n  B[Browser: Chromium] --> C1[Context 1: test A]\n  B --> C2[Context 2: test B]\n  C1 --> P1[Page]\n  C2 --> P2[Page]\n  C2 --> P3[Page: yeni tab]",
+            "caption": "Playwright hər test üçün yeni context yaradır. Test A-da daxil olan istifadəçi test B-də daxil olmuş sayılmır."
+          },
+          "id": "cmwis895fd1bcfa7b8e46"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "`{ page }` yazanda Playwright sənin üçün brauzeri açır, təmiz context yaradır, içində səhifə açır və testdən sonra hamısını bağlayır. Bunu əl ilə etmirsən. Nəticə: testləri istənilən sıra ilə və paralel işə salmaq olur."
+          },
+          "id": "cmwis895f06106bb33776"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "playwright.config: ümumi ayarlar",
+            "level": 2
+          },
+          "id": "cmwis895fe0e64563d2ac"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "import { defineConfig, devices } from '@playwright/test';\n\nexport default defineConfig({\n  testDir: './tests',\n  use: {\n    baseURL: 'https://magaza.example.com', // page.goto('/') bu ünvanı açır\n    trace: 'on-first-retry',\n  },\n  projects: [\n    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },\n    { name: 'firefox', use: { ...devices['Desktop Firefox'] } },\n  ],\n});",
+            "language": "javascript",
+            "caption": "`...devices[...]` — spread dərsindən tanışdır. `projects` eyni testləri bir neçə brauzerdə işə salır."
+          },
+          "id": "cmwis895f01ac60cad9a4"
+        },
+        {
+          "type": "TABLE",
+          "content": {
+            "headers": [
+              "Əmr",
+              "Nə edir"
+            ],
+            "rows": [
+              [
+                "`npx playwright test`",
+                "Bütün testləri görünməz (headless) rejimdə işə salır"
+              ],
+              [
+                "`npx playwright test --headed`",
+                "Brauzer pəncərəsini göstərir"
+              ],
+              [
+                "`npx playwright test login.spec.js`",
+                "Yalnız bir faylı işə salır"
+              ],
+              [
+                "`npx playwright test --project=chromium`",
+                "Yalnız bir brauzerdə"
+              ],
+              [
+                "`npx playwright test --ui`",
+                "UI rejimi: testləri addım-addım izləmək üçün"
+              ]
+            ]
+          },
+          "id": "cmwis895f90fff7ec01ee"
+        },
+        {
+          "type": "ORDERING",
+          "content": {
+            "instructions": "Playwright `test(...)` blokunu işə salanda arxa planda nə baş verir?",
+            "items": [
+              "Brauzer işə düşür",
+              "Yeni təmiz context yaranır",
+              "Context-də page açılır",
+              "Test funksiyasının addımları icra olunur",
+              "Context bağlanır və bütün məlumat silinir"
+            ]
+          },
+          "id": "cmwis895f742e0dc7ce79"
+        },
+        {
+          "type": "TASK",
+          "content": {
+            "instructions": "Quraşdırdığın Playwright layihəsində `playwright.config` faylını aç. `baseURL`-i test etmək istədiyin sayta dəyiş (məsələn `https://playwright.dev`). Sonra `tests/ilk.spec.js` faylında `page.goto('/')` ilə ana səhifəni açan və başlığı (`toHaveTitle`) yoxlayan test yaz. Testi `--headed` və `--ui` rejimlərində işə sal.\n\nCavabında test kodunu və iki rejim arasında gördüyün fərqi yaz.",
+            "required": true,
+            "placeholder": "Test kodum:\n\n…"
+          },
+          "title": "Praktika: baseURL və ilk öz testin",
+          "id": "cmwis895f04fc632587fd"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Test: ad, async funksiya, addımlar və `expect` yoxlaması",
+              "Browser → Context → Page; hər test öz təmiz context-ini alır",
+              "`baseURL` ünvanı bir yerdə saxlayır, testlərdə `page.goto('/')` yazırsan",
+              "`--headed` və `--ui` testin nə etdiyini gözlə görməyə imkan verir"
+            ]
+          },
+          "id": "cmwis895f4bbcd4fcf769"
+        },
+        {
+          "type": "QUIZ",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Context nədir?",
+                "options": [
+                  "Test faylı",
+                  "Brauzerin içində ayrı, təmiz sessiya",
+                  "Brauzerin başqa adı",
+                  "Konfiqurasiya faylı"
+                ],
+                "correctIndex": 1,
+                "explanation": "Context gizli pəncərə kimidir: öz cookie və yaddaşı var."
+              },
+              {
+                "id": "q2",
+                "text": "Niyə hər test yeni context-də işləyir?",
+                "options": [
+                  "Daha gözəl görünsün deyə",
+                  "Testlər bir-birinin məlumatına təsir etməsin deyə",
+                  "Brauzer başqa cür işləmir",
+                  "Yaddaşa qənaət üçün"
+                ],
+                "correctIndex": 1,
+                "explanation": "İzolyasiya sayəsində testin nəticəsi əvvəlki testdən asılı olmur."
+              },
+              {
+                "id": "q3",
+                "text": "`baseURL: 'https://sayt.az'` olduqda `page.goto('/sebet')` hansı ünvanı açır?",
+                "options": [
+                  "`/sebet`",
+                  "`https://sayt.az/sebet`",
+                  "`https://sebet`",
+                  "Xəta verir"
+                ],
+                "correctIndex": 1,
+                "explanation": "Nisbi yol `baseURL`-ə əlavə olunur."
+              },
+              {
+                "id": "q4",
+                "text": "Testin addımlarını brauzer pəncərəsində görmək üçün hansı bayraq lazımdır?",
+                "options": [
+                  "`--project`",
+                  "`--headed`",
+                  "`--grep`",
+                  "`--workers`"
+                ],
+                "correctIndex": 1,
+                "explanation": "Standart rejim headless-dir; `--headed` pəncərəni göstərir."
+              }
+            ]
+          },
+          "id": "cmwis895f6565b2b2c84c"
+        }
+      ]
+    },
+    {
+      "slug": "playwright-locatorlar-ve-assertionlar",
+      "title": "Playwright: locator-lar və assertion-lar",
+      "shortDescription": "Elementləri getByRole, getByLabel, getByText, getByTestId ilə tapmaq, auto-waiting və expect ilə yoxlamaq.",
+      "estimatedMinutes": 15,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Element üçün ən uyğun locator-u seçə biləcəksən",
+              "Auto-waiting-in flaky testlərin qarşısını necə aldığını izah edə biləcəksən",
+              "expect ilə görünmə, mətn və URL yoxlamaları yaza biləcəksən",
+              "saucedemo.com üçün tam login testi yaza biləcəksən"
+            ]
+          },
+          "id": "cmve390pbfb159d3aba7a"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Locator",
+                "az": "lokator",
+                "definition": "Səhifədə elementi tapmaq üçün qayda; element lazım olanda axtarılır."
+              },
+              {
+                "term": "Role",
+                "az": "rol",
+                "definition": "Elementin əlçatanlıq (accessibility) növü: button, link, textbox, heading."
+              },
+              {
+                "term": "Test ID",
+                "az": "test identifikatoru",
+                "definition": "Yalnız testlər üçün əlavə olunan atribut, məs. `data-testid`."
+              },
+              {
+                "term": "Auto-waiting",
+                "az": "avtomatik gözləmə",
+                "definition": "Playwright əməliyyatdan əvvəl elementin hazır olmasını özü gözləyir."
+              },
+              {
+                "term": "Web-first assertion",
+                "az": "veb-yönümlü yoxlama",
+                "definition": "Şərt ödənənə qədər təkrar yoxlayan `expect`, default 5 saniyə."
+              }
+            ]
+          },
+          "id": "cmve390pb836e2f16daf8"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Locator nədir?",
+            "level": 2
+          },
+          "id": "cmve390pbc355ad1b7c24"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Manual testdə \"Login düyməsinə bas\" deyirsən və düyməni gözlə tapırsan. Playwright-a da elementi necə tapacağını demək lazımdır — bu, **locator**-dur. Yaxşı locator istifadəçinin gördüyünə əsaslanır (düymənin adı, sahənin etiketi), CSS class kimi tez dəyişən detallara yox.",
+            "highlight": "normal"
+          },
+          "id": "cmve390pba37c623b13c5"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "await page.getByRole('button', { name: 'Login' }).click();\nawait page.getByLabel('Email').fill('aysel@test.com');\nawait page.getByPlaceholder('Username').fill('standard_user');\nawait page.getByText('Sauce Labs Backpack').click();\nawait page.getByTestId('submit').click();\nawait page.locator('[data-test=\"error\"]').textContent();",
+            "language": "typescript",
+            "caption": "Əsas locator-lar"
+          },
+          "id": "cmve390pb944c722b957b"
+        },
+        {
+          "type": "TABLE",
+          "title": "Locator seçimi: yuxarıdan aşağı üstünlük",
+          "content": {
+            "headers": [
+              "Locator",
+              "Nəyə görə tapır",
+              "Nə vaxt işlət"
+            ],
+            "rows": [
+              [
+                "`getByRole`",
+                "Rol + əlçatan ad",
+                "Birinci seçim: düymə, link, başlıq, checkbox"
+              ],
+              [
+                "`getByLabel`",
+                "`<label>` mətni",
+                "Etiketi olan form sahələri"
+              ],
+              [
+                "`getByPlaceholder`",
+                "placeholder mətni",
+                "Etiketi olmayan input-lar"
+              ],
+              [
+                "`getByText`",
+                "Görünən mətn",
+                "Mesajlar, interaktiv olmayan elementlər"
+              ],
+              [
+                "`getByTestId`",
+                "`data-testid` atributu",
+                "Mətn və rol dəyişkəndirsə; developer-lə razılaşdırılır"
+              ],
+              [
+                "`locator('css')`",
+                "CSS selector",
+                "Son çarə — dizayn dəyişəndə tez sınır"
+              ]
+            ]
+          },
+          "id": "cmve390pb0c78bcef4556"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "tip",
+            "body": "Locator-u tapmağa çətinlik çəkirsən? `npx playwright codegen https://www.saucedemo.com` işə sal: səhifədə kliklədikcə Playwright uyğun locator-ları özü yazır. UI mode-dakı \"Pick locator\" düyməsi də eyni işi görür."
+          },
+          "id": "cmve390pb309f6a6b9c5c"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Auto-waiting: sleep yazma",
+            "level": 2
+          },
+          "id": "cmve390pb14d06bbb1b2b"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "`click()` çağıranda Playwright dərhal klikləmir. Əvvəl elementin səhifədə olmasını, görünməsini, hərəkət etməməsini və aktiv olmasını gözləyir (default timeout daxilində). Ona görə \"3 saniyə gözlə\" yazmağa ehtiyac yoxdur — element hazır olan kimi əməliyyat icra olunur.",
+            "highlight": "normal"
+          },
+          "id": "cmve390pbb827240696ec"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "warning",
+            "body": "`page.waitForTimeout(3000)` kimi sabit gözləmələrdən qaç. Sürətli mühitdə vaxt itirir, yavaş mühitdə isə yenə də çatmır — klassik flaky test səbəbidir."
+          },
+          "id": "cmve390pb4e021329f914"
+        },
+        {
+          "type": "CATEGORIZE",
+          "title": "Locator, action, yoxsa assertion?",
+          "content": {
+            "instructions": "Hər kod parçasını uyğun qrupa at.",
+            "categories": [
+              {
+                "id": "loc",
+                "label": "Locator (elementi tapır)"
+              },
+              {
+                "id": "act",
+                "label": "Action (əməliyyat edir)"
+              },
+              {
+                "id": "assert",
+                "label": "Assertion (yoxlayır)"
+              }
+            ],
+            "items": [
+              {
+                "id": "c1",
+                "text": "`page.getByRole('button', { name: 'Login' })`",
+                "categoryId": "loc"
+              },
+              {
+                "id": "c2",
+                "text": "`page.getByPlaceholder('Password')`",
+                "categoryId": "loc"
+              },
+              {
+                "id": "c3",
+                "text": "`.click()`",
+                "categoryId": "act"
+              },
+              {
+                "id": "c4",
+                "text": "`.fill('secret_sauce')`",
+                "categoryId": "act"
+              },
+              {
+                "id": "c5",
+                "text": "`expect(page).toHaveURL(/inventory/)`",
+                "categoryId": "assert"
+              },
+              {
+                "id": "c6",
+                "text": "`expect(error).toBeVisible()`",
+                "categoryId": "assert"
+              }
+            ],
+            "explanation": "Test həmişə bu üç hissədən qurulur: elementi tap → onunla nəsə et → nəticəni yoxla."
+          },
+          "id": "cmve390pbaa96fafa92bd"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Assertion-lar: expect",
+            "level": 2
+          },
+          "id": "cmve390pb33f49b49de8c"
+        },
+        {
+          "type": "TABLE",
+          "title": "Ən çox işlədilən assertion-lar",
+          "content": {
+            "headers": [
+              "Assertion",
+              "Nəyi yoxlayır"
+            ],
+            "rows": [
+              [
+                "`toBeVisible()`",
+                "Element görünür"
+              ],
+              [
+                "`toHaveText('...')`",
+                "Elementin mətni tam uyğundur"
+              ],
+              [
+                "`toContainText('...')`",
+                "Mətnin içində bu hissə var"
+              ],
+              [
+                "`toHaveURL(/inventory/)`",
+                "Səhifənin URL-i uyğundur"
+              ],
+              [
+                "`toHaveTitle(/Swag Labs/)`",
+                "Səhifə başlığı uyğundur"
+              ],
+              [
+                "`toHaveValue('...')`",
+                "Input-un dəyəri uyğundur"
+              ]
+            ]
+          },
+          "id": "cmve390pba72065c5b983"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Bunlar **web-first assertion**-lardır: şərt dərhal ödənməsə, Playwright onu default 5 saniyə ərzində təkrar yoxlayır. Ona görə həmişə `await expect(...)` yaz. Diqqət: `getByText` və `getByRole`-un `name`-i default olaraq hissəvi və böyük-kiçik hərfə həssas olmayan uyğunluq axtarır; tam uyğunluq üçün `{ exact: true }` ver.",
+            "highlight": "normal"
+          },
+          "id": "cmve390pb003d51b77c76"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Tam nümunə: saucedemo.com login",
+            "level": 2
+          },
+          "id": "cmve390pb5946bcc77e0c"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "saucedemo.com — testçilər üçün demo mağaza. Login səhifəsində input-ların `<label>`-i yoxdur, ona görə `getByLabel` işləməz — `getByPlaceholder` seçirik. Düymə `Login` adlı `button` roluna malikdir.",
+            "highlight": "normal"
+          },
+          "id": "cmve390pb36fecb5cf59c"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "import { test, expect } from '@playwright/test';\n\ntest('düzgün məlumatla daxil olmaq', async ({ page }) => {\n  await page.goto('https://www.saucedemo.com/');\n\n  await page.getByPlaceholder('Username').fill('standard_user');\n  await page.getByPlaceholder('Password').fill('secret_sauce');\n  await page.getByRole('button', { name: 'Login' }).click();\n\n  await expect(page).toHaveURL(/inventory\\.html/);\n  await expect(page.getByText('Products', { exact: true })).toBeVisible();\n});\n\ntest('bloklanmış istifadəçi xəta mesajı görür', async ({ page }) => {\n  await page.goto('https://www.saucedemo.com/');\n\n  await page.getByPlaceholder('Username').fill('locked_out_user');\n  await page.getByPlaceholder('Password').fill('secret_sauce');\n  await page.getByRole('button', { name: 'Login' }).click();\n\n  await expect(page.locator('[data-test=\"error\"]')).toHaveText(\n    'Epic sadface: Sorry, this user has been locked out.'\n  );\n  await expect(page).toHaveURL('https://www.saucedemo.com/');\n});",
+            "language": "typescript",
+            "caption": "tests/login.spec.ts"
+          },
+          "id": "cmve390pbd22dfdcf3c88"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "remember",
+            "body": "saucedemo test atributu kimi `data-testid` yox, `data-test` işlədir. `getByTestId('error')` yazmaq istəyirsənsə, `playwright.config.ts`-də `use: { testIdAttribute: 'data-test' }` əlavə et."
+          },
+          "id": "cmve390pb8e6a8829c7c1"
+        },
+        {
+          "type": "TASK",
+          "title": "Üçüncü test: səhv şifrə",
+          "content": {
+            "instructions": "`tests/login.spec.ts` faylına üçüncü test əlavə et: `standard_user` və səhv şifrə (`wrong_password`) ilə daxil olmağa çalış. Xəta mesajının `Epic sadface: Username and password do not match any user in this service` olduğunu və URL-in dəyişmədiyini yoxla. Testi `npx playwright test login --ui` ilə işə sal və kodunu buraya yapışdır.",
+            "placeholder": "test('səhv şifrə ilə xəta', async ({ page }) => {\n  ...\n});",
+            "required": true
+          },
+          "id": "cmve390pb5118c56ed294"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Locator elementi tapır; üstünlük sırası: getByRole → getByLabel/getByPlaceholder → getByText → getByTestId → CSS.",
+              "Auto-waiting elementin hazır olmasını özü gözləyir — sabit `waitForTimeout` yazma.",
+              "Web-first assertion-lar (`toBeVisible`, `toHaveText`, `toHaveURL`) şərti 5 saniyəyə qədər təkrar yoxlayır.",
+              "Test strukturu: tap → et → yoxla; hər addımdan əvvəl `await`.",
+              "codegen və UI mode-dakı \"Pick locator\" locator tapmağı sürətləndirir."
+            ]
+          },
+          "id": "cmve390pb28c11cd089a0"
+        },
+        {
+          "type": "QUIZ",
+          "title": "Yekun test",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "\"Add to cart\" düyməsi üçün ən yaxşı locator hansıdır?",
+                "options": [
+                  "`page.locator('.btn.btn_primary.btn_small')`",
+                  "`page.getByRole('button', { name: 'Add to cart' })`",
+                  "`page.locator('div > div:nth-child(3) > button')`",
+                  "`page.locator('#item_4')`"
+                ],
+                "correctIndex": 1,
+                "explanation": "getByRole istifadəçinin gördüyünə əsaslanır və dizayn dəyişikliklərinə davamlıdır.",
+                "imageUrl": null
+              },
+              {
+                "id": "q2",
+                "text": "Auto-waiting nə edir?",
+                "options": [
+                  "Hər addımdan sonra 3 saniyə gözləyir",
+                  "Əməliyyatdan əvvəl elementin görünən, sabit və aktiv olmasını gözləyir",
+                  "Testi yalnız gecə işə salır",
+                  "Uğursuz testi avtomatik silir"
+                ],
+                "correctIndex": 1,
+                "explanation": "Playwright actionability yoxlamaları edir və element hazır olan kimi əməliyyatı icra edir.",
+                "imageUrl": null
+              },
+              {
+                "id": "q3",
+                "text": "Login-dən sonra inventory səhifəsinə keçidi hansı assertion yoxlayır?",
+                "options": [
+                  "`toBeVisible()`",
+                  "`toHaveValue()`",
+                  "`toHaveURL(/inventory/)`",
+                  "`toHaveTitle()`"
+                ],
+                "correctIndex": 2,
+                "explanation": "`toHaveURL` səhifənin ünvanını yoxlayır.",
+                "imageUrl": null
+              },
+              {
+                "id": "q4",
+                "text": "saucedemo-da `getByLabel('Username')` niyə işləmir?",
+                "options": [
+                  "Playwright getByLabel-i dəstəkləmir",
+                  "Input-ların `<label>` elementi yoxdur",
+                  "Sayt HTTPS deyil",
+                  "Username sahəsi gizlidir"
+                ],
+                "correctIndex": 1,
+                "explanation": "getByLabel `<label>` mətninə görə axtarır; saucedemo yalnız placeholder işlədir.",
+                "imageUrl": null
+              },
+              {
+                "id": "q5",
+                "text": "Niyə `await expect(...)` yazmaq lazımdır?",
+                "options": [
+                  "`expect` şərti bir neçə saniyə təkrar yoxlayır və bunun bitməsini gözləmək lazımdır",
+                  "Kod daha qısa olur",
+                  "Yalnız TypeScript bunu tələb edir",
+                  "`await` testi sürətləndirir"
+                ],
+                "correctIndex": 0,
+                "explanation": "Web-first assertion-lar asinxrondur: `await` olmadan test yoxlamanın nəticəsini gözləmir.",
+                "imageUrl": null
+              },
+              {
+                "id": "q6",
+                "text": "`page.waitForTimeout(5000)` niyə pis təcrübədir?",
+                "options": [
+                  "Playwright-da belə metod yoxdur",
+                  "Sabit gözləmədir: ya vaxt itirir, ya da yavaş mühitdə çatmır — test flaky olur",
+                  "Brauzeri bağlayır",
+                  "Yalnız Firefox-da işləyir"
+                ],
+                "correctIndex": 1,
+                "explanation": "Elementi və ya şərti gözləyən auto-waiting və web-first assertion-lar sabit gözləmədən həmişə daha etibarlıdır.",
+                "imageUrl": null
+              }
+            ]
+          },
+          "id": "cmve390pb82c53badca30"
+        }
+      ]
+    },
+    {
+      "slug": "playwright-actions",
+      "title": "Actions: klik, yazmaq, seçmək",
+      "shortDescription": "İstifadəçi hərəkətlərini kodla etmək: click, fill, check, selectOption, hover, klaviatura. Playwright-in hərəkətdən əvvəl nəyi gözlədiyi.",
+      "estimatedMinutes": 13,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Forma doldurub göndərən testi yaza biləcəksən",
+              "Hər element növü üçün düzgün action seçə biləcəksən",
+              "Actionability yoxlamalarının nə olduğunu izah edə biləcəksən"
+            ]
+          },
+          "id": "cmwis895fe35c52b93762"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Action",
+                "az": "hərəkət",
+                "definition": "Elementlə istifadəçi kimi qarşılıqlı əlaqə: klik, yazmaq, seçmək"
+              },
+              {
+                "term": "Actionability",
+                "az": "hərəkətə hazırlıq",
+                "definition": "Playwright-in hərəkətdən əvvəl elementin görünən, sabit və aktiv olduğunu yoxlaması"
+              },
+              {
+                "term": "Auto-waiting",
+                "az": "avtomatik gözləmə",
+                "definition": "Element hazır olana qədər Playwright-in özünün gözləməsi"
+              }
+            ]
+          },
+          "id": "cmwis895fe73a129173d1"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Əsas hərəkətlər",
+            "level": 2
+          },
+          "id": "cmwis895fa821a19b1a78"
+        },
+        {
+          "type": "TABLE",
+          "content": {
+            "headers": [
+              "Element",
+              "Action",
+              "Nümunə"
+            ],
+            "rows": [
+              [
+                "Düymə, keçid",
+                "`click()`",
+                "`await page.getByRole('button', { name: 'Səbətə at' }).click()`"
+              ],
+              [
+                "Mətn sahəsi",
+                "`fill()`",
+                "`await page.getByLabel('Email').fill('test@mail.az')`"
+              ],
+              [
+                "Checkbox, radio",
+                "`check()` / `uncheck()`",
+                "`await page.getByLabel('Şərtlərlə razıyam').check()`"
+              ],
+              [
+                "Açılan siyahı (`<select>`)",
+                "`selectOption()`",
+                "`await page.getByLabel('Şəhər').selectOption('Bakı')`"
+              ],
+              [
+                "Üzərinə gəlmək",
+                "`hover()`",
+                "`await page.getByText('Kateqoriyalar').hover()`"
+              ],
+              [
+                "Klaviatura",
+                "`press()`",
+                "`await page.getByLabel('Axtar').press('Enter')`"
+              ],
+              [
+                "Fayl seçmək",
+                "`setInputFiles()`",
+                "`await page.getByLabel('Şəkil').setInputFiles('foto.png')`"
+              ]
+            ]
+          },
+          "id": "cmwis895f12aa320c268b"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "import { test, expect } from '@playwright/test';\n\ntest('qeydiyyat forması göndərilir', async ({ page }) => {\n  await page.goto('/qeydiyyat');\n\n  await page.getByLabel('Ad').fill('Aysel');\n  await page.getByLabel('Email').fill('aysel@mail.az');\n  await page.getByLabel('Şifrə', { exact: true }).fill('Test123!');\n  await page.getByLabel('Şəhər').selectOption('Bakı');\n  await page.getByLabel('Şərtlərlə razıyam').check();\n  await page.getByRole('button', { name: 'Qeydiyyatdan keç' }).click();\n\n  await expect(page.getByText('Xoş gəldin, Aysel')).toBeVisible();\n});",
+            "language": "javascript",
+            "caption": "Kodu yuxarıdan aşağı oxu: manual test case-in addımları ilə eynidir."
+          },
+          "id": "cmwis895f0277bb098244"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "remember",
+            "body": "`fill()` sahəni əvvəlcə təmizləyir, sonra mətni yazır. Hərf-hərf yazmaq (məsələn, axtarış təklifləri üçün) lazımdırsa, `pressSequentially()` var; adi hallarda `fill` kifayətdir."
+          },
+          "id": "cmwis895f648031f140ab"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Playwright hərəkətdən əvvəl nəyi gözləyir",
+            "level": 2
+          },
+          "id": "cmwis895f169505961ec3"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "`click()` yazanda Playwright dərhal klikləmir. Əvvəl elementin **hazır** olduğunu yoxlayır və hazır deyilsə, gözləyir (standart olaraq 30 saniyəyə qədər). Buna görə köhnə alətlərdəki `sleep(3000)` kimi gözləmələrə ehtiyac yoxdur."
+          },
+          "id": "cmwis895fec1abff4d717"
+        },
+        {
+          "type": "STEPPER",
+          "content": {
+            "steps": [
+              {
+                "title": "Element tapılır",
+                "description": "Locator dəqiq bir elementə uyğun gəlməlidir."
+              },
+              {
+                "title": "Görünür",
+                "description": "Gizli və ya ölçüsü sıfır deyil."
+              },
+              {
+                "title": "Sabitdir",
+                "description": "Animasiya bitib, yerində dayanıb."
+              },
+              {
+                "title": "Üstü örtülməyib",
+                "description": "Başqa element (məsələn, yüklənmə pərdəsi) klik nöqtəsini tutmur."
+              },
+              {
+                "title": "Aktivdir",
+                "description": "`disabled` deyil."
+              }
+            ]
+          },
+          "title": "click() üçün actionability yoxlamaları",
+          "id": "cmwis895f4f2e51a40399"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "warning",
+            "body": "`await page.waitForTimeout(3000)` yazma. Səhifə 1 saniyəyə hazır olsa 2 saniyə boşa gedir, 4 saniyəyə hazır olsa test sınır. Gözləmək lazımdırsa, **nəyi** gözlədiyini yaz: `await expect(...).toBeVisible()`."
+          },
+          "id": "cmwis895fbf4b8f7e62b3"
+        },
+        {
+          "type": "CATEGORIZE",
+          "content": {
+            "instructions": "Hər vəziyyət üçün düzgün action seç",
+            "categories": [
+              {
+                "id": "click",
+                "label": "click()"
+              },
+              {
+                "id": "fill",
+                "label": "fill()"
+              },
+              {
+                "id": "check",
+                "label": "check()"
+              },
+              {
+                "id": "select",
+                "label": "selectOption()"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "\"Sifarişi təsdiqlə\" düyməsi",
+                "categoryId": "click"
+              },
+              {
+                "id": "i2",
+                "text": "Telefon nömrəsi sahəsi",
+                "categoryId": "fill"
+              },
+              {
+                "id": "i3",
+                "text": "\"Məni xatırla\" qutusu",
+                "categoryId": "check"
+              },
+              {
+                "id": "i4",
+                "text": "Ölkə siyahısı (`<select>`)",
+                "categoryId": "select"
+              },
+              {
+                "id": "i5",
+                "text": "\"Şifrəni unutdum\" keçidi",
+                "categoryId": "click"
+              },
+              {
+                "id": "i6",
+                "text": "Çatdırılma ünvanı sahəsi",
+                "categoryId": "fill"
+              }
+            ]
+          },
+          "id": "cmwis895f73d8b93bfce2"
+        },
+        {
+          "type": "TASK",
+          "content": {
+            "instructions": "`https://demo.playwright.dev/todomvc` saytı üçün test yaz:\n\n1. Səhifəni aç.\n2. \"What needs to be done?\" sahəsinə \"Süd al\" yazıb Enter bas.\n3. İkinci tapşırıq əlavə et: \"Test yaz\".\n4. Birinci tapşırığın checkbox-unu işarələ.\n5. Yoxla ki, siyahıda 2 tapşırıq var (`toHaveCount(2)`).\n\nTest kodunu aşağıya yapışdır və hansı locator-ları seçdiyini bir cümlə ilə izah et.",
+            "required": true,
+            "placeholder": "import { test, expect } from '@playwright/test';\n\n…"
+          },
+          "title": "Praktika: TodoMVC testi",
+          "id": "cmwis895f8947abe5c676"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "`click`, `fill`, `check`, `selectOption`, `hover`, `press` istifadəçi hərəkətlərinin qarşılığıdır",
+              "Hər action `await` ilə yazılır",
+              "Playwright hərəkətdən əvvəl elementin görünən, sabit, örtülməmiş və aktiv olmasını özü gözləyir",
+              "`waitForTimeout` əvəzinə konkret vəziyyəti gözlə"
+            ]
+          },
+          "id": "cmwis895ffc8c9dac7834"
+        },
+        {
+          "type": "QUIZ",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Mətn sahəsinə dəyər yazmaq üçün əsas metod hansıdır?",
+                "options": [
+                  "`type()`",
+                  "`fill()`",
+                  "`click()`",
+                  "`write()`"
+                ],
+                "correctIndex": 1,
+                "explanation": "`fill` sahəni təmizləyib dəyəri yazır və ən sürətli yoldur."
+              },
+              {
+                "id": "q2",
+                "text": "`<select>` siyahısından variant seçmək üçün nə işlədilir?",
+                "options": [
+                  "`click()` iki dəfə",
+                  "`selectOption()`",
+                  "`fill()`",
+                  "`check()`"
+                ],
+                "correctIndex": 1,
+                "explanation": "`selectOption` dəyərə və ya görünən mətnə görə seçir."
+              },
+              {
+                "id": "q3",
+                "text": "Düymə hələ `disabled`-dirsə, `click()` nə edir?",
+                "options": [
+                  "Dərhal xəta verir",
+                  "Düymə aktiv olana qədər gözləyir (timeout-a qədər)",
+                  "Yenə də klikləyir",
+                  "Testi ötürür"
+                ],
+                "correctIndex": 1,
+                "explanation": "Actionability yoxlaması elementin aktiv olmasını gözləyir."
+              },
+              {
+                "id": "q4",
+                "text": "Niyə `waitForTimeout(3000)` pis praktikadır?",
+                "options": [
+                  "Sintaksis səhvidir",
+                  "Ya vaxt itirir, ya da kifayət etmir; test qeyri-sabit olur",
+                  "Yalnız Firefox-da işləyir",
+                  "Brauzeri bağlayır"
+                ],
+                "correctIndex": 1,
+                "explanation": "Sabit gözləmə real vəziyyəti bilmir; şərtə görə gözləmək həm sürətli, həm etibarlıdır."
+              }
+            ]
+          },
+          "id": "cmwis895fa2fce2d56901"
+        }
+      ]
+    },
+    {
+      "slug": "playwright-assertions-ve-gozleme",
+      "title": "Assertions və avtomatik gözləmə",
+      "shortDescription": "Web-first assertion-lar necə təkrar yoxlayır, timeout nədir, soft assertion və ən çox işlənən yoxlamalar.",
+      "estimatedMinutes": 13,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Vəziyyətə uyğun assertion seçə biləcəksən",
+              "Web-first assertion-un adi yoxlamadan fərqini izah edə biləcəksən",
+              "Uğursuz assertion mesajını oxuyub səbəbi tapa biləcəksən"
+            ]
+          },
+          "id": "cmwis895ff6233cb5c281"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Assertion",
+                "az": "yoxlama",
+                "definition": "Gözlənilən nəticənin faktiki nəticə ilə müqayisəsi; uyğun gəlməsə test uğursuz olur"
+              },
+              {
+                "term": "Web-first assertion",
+                "az": "",
+                "definition": "Şərt ödənənə qədər öz-özünə təkrar yoxlayan assertion (`await expect(locator)...`)"
+              },
+              {
+                "term": "Timeout",
+                "az": "vaxt limiti",
+                "definition": "Gözləmənin maksimum müddəti; assertion üçün standart 5 saniyə"
+              },
+              {
+                "term": "Soft assertion",
+                "az": "yumşaq yoxlama",
+                "definition": "Uğursuz olsa da testi dayandırmayan yoxlama"
+              }
+            ]
+          },
+          "id": "cmwis895f1f5d549bc340"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Yoxlamasız test heç nə sübut etmir",
+            "level": 2
+          },
+          "id": "cmwis895f115f2fb18d8e"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Yalnız klikləyən və heç nəyi yoxlamayan test həmişə \"keçir\", hətta səhifədə xəta mesajı çıxsa belə. Hər test ən azı bir **gözlənilən nəticəni** yoxlamalıdır: manual test case-dəki \"Expected result\" sütunu."
+          },
+          "id": "cmwis895f7b37377bfb55"
+        },
+        {
+          "type": "TABLE",
+          "content": {
+            "headers": [
+              "Nəyi yoxlayırsan",
+              "Assertion"
+            ],
+            "rows": [
+              [
+                "Element görünür / görünmür",
+                "`await expect(locator).toBeVisible()` / `.toBeHidden()`"
+              ],
+              [
+                "Elementin mətni",
+                "`await expect(locator).toHaveText('Sifariş qəbul olundu')`"
+              ],
+              [
+                "Mətnin bir hissəsi",
+                "`await expect(locator).toContainText('qəbul')`"
+              ],
+              [
+                "Sahədəki dəyər",
+                "`await expect(locator).toHaveValue('aysel@mail.az')`"
+              ],
+              [
+                "Elementlərin sayı",
+                "`await expect(locator).toHaveCount(3)`"
+              ],
+              [
+                "Düymə aktiv / deaktiv",
+                "`await expect(locator).toBeEnabled()` / `.toBeDisabled()`"
+              ],
+              [
+                "Checkbox işarəlidir",
+                "`await expect(locator).toBeChecked()`"
+              ],
+              [
+                "Səhifənin ünvanı",
+                "`await expect(page).toHaveURL(/\\/sifaris/)`"
+              ],
+              [
+                "Səhifənin başlığı",
+                "`await expect(page).toHaveTitle('Səbət')`"
+              ]
+            ]
+          },
+          "id": "cmwis895fca3c7d719342"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Web-first: təkrar-təkrar yoxlayır",
+            "level": 2
+          },
+          "id": "cmwis895fcf52a28d5ace"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "// YANLIŞ: mətni bir dəfə, dərhal oxuyur. Mesaj hələ çıxmayıbsa test sınır.\nconst metn = await page.getByRole('alert').textContent();\nexpect(metn).toBe('Sifariş qəbul olundu');\n\n// DÜZGÜN: mesaj çıxana qədər (5 saniyəyə qədər) təkrar yoxlayır.\nawait expect(page.getByRole('alert')).toHaveText('Sifariş qəbul olundu');",
+            "language": "javascript",
+            "caption": "Fərq `await`-in yerindədir: `await expect(locator)` — Playwright gözləyir; `expect(dəyər)` — bir dəfə müqayisə edir."
+          },
+          "id": "cmwis895fb4c246a9cdcf"
+        },
+        {
+          "type": "CHART",
+          "content": {
+            "kind": "columns",
+            "data": [
+              {
+                "label": "0.1 san",
+                "value": 0
+              },
+              {
+                "label": "0.5 san",
+                "value": 0
+              },
+              {
+                "label": "1 san",
+                "value": 0
+              },
+              {
+                "label": "1.4 san",
+                "value": 1
+              }
+            ],
+            "caption": "Web-first assertion şərti qısa fasilələrlə təkrar yoxlayır. Burada mesaj 1.4 saniyədə çıxdı: ilk üç cəhd uğursuz (0), dördüncü uğurlu (1) oldu və test dərhal davam etdi."
+          },
+          "title": "Bir assertion-un cəhdləri",
+          "id": "cmwis895f2488f66a6c2c"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Uğursuz assertion-u oxumaq",
+            "level": 2
+          },
+          "id": "cmwis895f0048677ab2fc"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "Error: expect(locator).toHaveText(expected)\n\nLocator: getByRole('alert')\nExpected string: \"Sifariş qəbul olundu\"\nReceived string: \"Kart rədd edildi\"\n\n  22 |   await page.getByRole('button', { name: 'Ödə' }).click();\n> 23 |   await expect(page.getByRole('alert')).toHaveText('Sifariş qəbul olundu');",
+            "language": "text",
+            "caption": "Expected: nə gözləyirdin. Received: nə gəldi. `>` işarəsi: hansı sətir. Bu, hazır bug report materialıdır."
+          },
+          "id": "cmwis895f8a1bfd942b87"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Soft assertion",
+            "level": 2
+          },
+          "id": "cmwis895fcbe067a4cbf4"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "await expect.soft(page.getByTestId('ad')).toHaveText('Klaviatura');\nawait expect.soft(page.getByTestId('qiymet')).toHaveText('45 AZN');\nawait expect.soft(page.getByTestId('stok')).toHaveText('Stokda var');\n// üçü də yoxlanır; uğursuz olanların hamısı hesabatda görünür",
+            "language": "javascript",
+            "caption": "Bir səhifədə bir neçə müstəqil sahəni yoxlayanda faydalıdır. Növbəti addım əvvəlkindən asılıdırsa, adi `expect` işlət."
+          },
+          "id": "cmwis895f25c357f82ab3"
+        },
+        {
+          "type": "CATEGORIZE",
+          "content": {
+            "instructions": "Hər yoxlama üçün assertion seç",
+            "categories": [
+              {
+                "id": "vis",
+                "label": "toBeVisible"
+              },
+              {
+                "id": "text",
+                "label": "toHaveText"
+              },
+              {
+                "id": "count",
+                "label": "toHaveCount"
+              },
+              {
+                "id": "url",
+                "label": "toHaveURL"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "Girişdən sonra idarə panelinə yönləndirildi",
+                "categoryId": "url"
+              },
+              {
+                "id": "i2",
+                "text": "Səbətdə 3 məhsul var",
+                "categoryId": "count"
+              },
+              {
+                "id": "i3",
+                "text": "Xəta mesajı \"Şifrə yanlışdır\" yazır",
+                "categoryId": "text"
+              },
+              {
+                "id": "i4",
+                "text": "\"Çıxış\" düyməsi göründü",
+                "categoryId": "vis"
+              },
+              {
+                "id": "i5",
+                "text": "Axtarış 12 nəticə qaytardı",
+                "categoryId": "count"
+              }
+            ]
+          },
+          "id": "cmwis895fcbdd84b89274"
+        },
+        {
+          "type": "TASK",
+          "content": {
+            "instructions": "Əvvəlki dərsdəki TodoMVC testini genişləndir. Bu yoxlamaları əlavə et:\n\n1. Yeni tapşırıq əlavə olunandan sonra giriş sahəsi boşdur (`toHaveValue('')`).\n2. İşarələnmiş tapşırığın checkbox-u `toBeChecked()`.\n3. Aşağıdakı sayğac \"1 item left\" yazır.\n4. \"Completed\" filtrinə keçəndə URL `#/completed` ilə bitir.\n\nSonra bir assertion-u bilərəkdən səhv yaz (məsələn \"5 items left\"), testi işə sal və xəta mesajındakı Expected və Received sətirlərini cavabına köçür.",
+            "required": true,
+            "placeholder": "Test kodum:\n\n…\n\nXəta mesajı:\nExpected: …\nReceived: …"
+          },
+          "title": "Praktika: yoxlamalar və uğursuzluğu oxumaq",
+          "id": "cmwis895fcea2d5c1e324"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Hər testdə ən azı bir gözlənilən nəticə yoxlanmalıdır",
+              "`await expect(locator)` şərt ödənənə qədər təkrar yoxlayır (standart 5 saniyə)",
+              "Xəta mesajında Expected, Received və sətir nömrəsi olur",
+              "`expect.soft` müstəqil yoxlamaların hamısını icra edir"
+            ]
+          },
+          "id": "cmwis895f2a8224ceb604"
+        },
+        {
+          "type": "QUIZ",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Web-first assertion-un əsas üstünlüyü nədir?",
+                "options": [
+                  "Daha qısa yazılır",
+                  "Şərt ödənənə qədər avtomatik təkrar yoxlayır",
+                  "Yalnız Chromium-da işləyir",
+                  "Xəta mesajı vermir"
+                ],
+                "correctIndex": 1,
+                "explanation": "Element gec görünsə belə, test sabit qalır."
+              },
+              {
+                "id": "q2",
+                "text": "Assertion üçün standart timeout nə qədərdir?",
+                "options": [
+                  "1 saniyə",
+                  "5 saniyə",
+                  "30 saniyə",
+                  "Limitsiz"
+                ],
+                "correctIndex": 1,
+                "explanation": "`expect` üçün 5 saniyə, bütöv test üçün 30 saniyə standartdır."
+              },
+              {
+                "id": "q3",
+                "text": "Səbətdə dəqiq 3 məhsul olduğunu necə yoxlayırsan?",
+                "options": [
+                  "`toBeVisible()`",
+                  "`toHaveText('3')`",
+                  "`toHaveCount(3)`",
+                  "`toHaveURL(3)`"
+                ],
+                "correctIndex": 2,
+                "explanation": "`toHaveCount` locator-un tapdığı elementlərin sayını yoxlayır."
+              },
+              {
+                "id": "q4",
+                "text": "`expect.soft` uğursuz olduqda nə baş verir?",
+                "options": [
+                  "Test dərhal dayanır",
+                  "Test davam edir, sonda uğursuz kimi qeyd olunur",
+                  "Xəta gizlədilir",
+                  "Test ötürülür"
+                ],
+                "correctIndex": 1,
+                "explanation": "Soft assertion bütün yoxlamaları toplayır; test yenə də uğursuz sayılır."
+              }
+            ]
+          },
+          "id": "cmwis895fcdc5f3d69abc"
+        }
+      ]
+    },
+    {
+      "slug": "playwright-hooks-ve-qruplasdirma",
+      "title": "Hooks və testləri qruplaşdırmaq",
+      "shortDescription": "Təkrarlanan hazırlığı beforeEach-ə çıxarmaq, describe ilə qruplaşdırmaq, only, skip və teqlərlə testləri seçmək.",
+      "estimatedMinutes": 12,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Təkrarlanan addımları `beforeEach`-ə çıxara biləcəksən",
+              "`test.describe` ilə əlaqəli testləri qruplaşdıra biləcəksən",
+              "`only`, `skip` və `--grep` ilə işə salınacaq testləri seçə biləcəksən"
+            ]
+          },
+          "id": "cmwis895f4e2b41d9619e"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Hook",
+                "az": "qarmaq",
+                "definition": "Testlərdən əvvəl və ya sonra avtomatik işləyən funksiya"
+              },
+              {
+                "term": "beforeEach",
+                "az": "",
+                "definition": "Qrupdakı **hər** testdən əvvəl işləyir"
+              },
+              {
+                "term": "describe",
+                "az": "",
+                "definition": "Əlaqəli testləri bir ad altında toplayan blok"
+              },
+              {
+                "term": "Tag",
+                "az": "teq",
+                "definition": "Testin adına yazılan `@smoke` kimi nişan; testləri seçmək üçündür"
+              }
+            ]
+          },
+          "id": "cmwis895f4801121c91a5"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Problem: eyni addımlar hər testdə",
+            "level": 2
+          },
+          "id": "cmwis895fcd9d46739d46"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "test('səbətə məhsul əlavə olunur', async ({ page }) => {\n  await page.goto('/mehsullar');   // təkrarlanır\n  // ...\n});\n\ntest('məhsul səbətdən silinir', async ({ page }) => {\n  await page.goto('/mehsullar');   // təkrarlanır\n  // ...\n});",
+            "language": "javascript"
+          },
+          "id": "cmwis895fef4eac172d14"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Həll: describe və beforeEach",
+            "level": 2
+          },
+          "id": "cmwis895ff0170e738bc0"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "import { test, expect } from '@playwright/test';\n\ntest.describe('Səbət', () => {\n  test.beforeEach(async ({ page }) => {\n    await page.goto('/mehsullar');\n  });\n\n  test('məhsul əlavə olunur', async ({ page }) => {\n    await page.getByRole('button', { name: 'Səbətə at' }).first().click();\n    await expect(page.getByTestId('sebet-sayi')).toHaveText('1');\n  });\n\n  test('boş səbətdə mesaj görünür', async ({ page }) => {\n    await page.getByRole('link', { name: 'Səbət' }).click();\n    await expect(page.getByText('Səbətiniz boşdur')).toBeVisible();\n  });\n});",
+            "language": "javascript",
+            "caption": "Hər test yenə də öz təmiz səhifəsini alır; `beforeEach` sadəcə hər birindən əvvəl ünvanı açır."
+          },
+          "id": "cmwis895f64567e48f33e"
+        },
+        {
+          "type": "TABLE",
+          "content": {
+            "headers": [
+              "Hook",
+              "Nə vaxt işləyir",
+              "Tipik istifadə"
+            ],
+            "rows": [
+              [
+                "`beforeEach`",
+                "Hər testdən əvvəl",
+                "Səhifəni açmaq, daxil olmaq"
+              ],
+              [
+                "`afterEach`",
+                "Hər testdən sonra",
+                "Yaradılan məlumatı silmək"
+              ],
+              [
+                "`beforeAll`",
+                "Qrupdakı ilk testdən əvvəl bir dəfə",
+                "Test məlumatını API ilə hazırlamaq"
+              ],
+              [
+                "`afterAll`",
+                "Son testdən sonra bir dəfə",
+                "Ümumi təmizlik"
+              ]
+            ]
+          },
+          "id": "cmwis895f4d01c5bac4f8"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "warning",
+            "body": "Testlər bir-birindən asılı olmamalıdır. \"Test 2 yalnız test 1-dən sonra keçir\" vəziyyəti varsa, test 1 uğursuz olanda test 2 də yalançı uğursuzluq verəcək. Hər test öz hazırlığını `beforeEach`-də görür."
+          },
+          "id": "cmwis895fdd845057744c"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Hansı testlər işə düşsün",
+            "level": 2
+          },
+          "id": "cmwis895f0cf16964002b"
+        },
+        {
+          "type": "TABLE",
+          "content": {
+            "headers": [
+              "Yazılış",
+              "Nəticə"
+            ],
+            "rows": [
+              [
+                "`test.only('...', ...)`",
+                "Yalnız bu test işə düşür (sazlama üçün; commit etmə)"
+              ],
+              [
+                "`test.skip('...', ...)`",
+                "Bu test ötürülür"
+              ],
+              [
+                "`test('giriş @smoke', ...)`",
+                "Testə teq verir"
+              ],
+              [
+                "`npx playwright test --grep @smoke`",
+                "Yalnız `@smoke` teqli testlər"
+              ],
+              [
+                "`npx playwright test --grep-invert @slow`",
+                "`@slow` teqlilərdən başqa hamısı"
+              ]
+            ]
+          },
+          "id": "cmwis895f13da8b9d2f2e"
+        },
+        {
+          "type": "EXAMPLE",
+          "content": {
+            "description": "Komandada 400 test var və tam icra 25 dəqiqə çəkir. Ən vacib 30 testə `@smoke` teqi verilib. Hər commit-dən sonra yalnız `--grep @smoke` işə düşür (2 dəqiqə), tam dəst isə gecə işləyir.",
+            "takeaway": "Manual testdəki smoke və regression bölgüsü avtomatlaşdırmada teqlərlə qurulur."
+          },
+          "id": "cmwis895ff29a56575c6f"
+        },
+        {
+          "type": "ORDERING",
+          "content": {
+            "instructions": "Bir `describe` blokunda `beforeAll`, `beforeEach`, `afterEach` və iki test var. İcra ardıcıllığını düz",
+            "items": [
+              "beforeAll",
+              "beforeEach",
+              "test 1",
+              "afterEach",
+              "beforeEach (yenidən)",
+              "test 2",
+              "afterEach (yenidən)"
+            ]
+          },
+          "id": "cmwis895fd608de2162b5"
+        },
+        {
+          "type": "TASK",
+          "content": {
+            "instructions": "TodoMVC testlərini bir `test.describe('Tapşırıqlar', ...)` blokuna topla:\n\n1. `beforeEach`-də səhifəni aç və iki tapşırıq əlavə et.\n2. Üç ayrı test yaz: tapşırığı tamamlamaq, tapşırığı silmək, \"Active\" filtri.\n3. Birinə `@smoke` teqi ver və yalnız onu `--grep` ilə işə sal.\n\nKodu və `--grep @smoke` əmrinin nəticəsini (neçə test işə düşdü) yaz.",
+            "required": true,
+            "placeholder": "test.describe('Tapşırıqlar', () => {\n  …\n});"
+          },
+          "title": "Praktika: qrup və hook",
+          "id": "cmwis895f8010e7a6833a"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "`describe` əlaqəli testləri qruplaşdırır, `beforeEach` ortaq hazırlığı bir yerə yığır",
+              "Hər test yenə də təmiz context-də, müstəqil işləyir",
+              "`only` sazlama üçündür; repoya düşməməlidir",
+              "Teqlər və `--grep` smoke / regression dəstlərini ayırır"
+            ]
+          },
+          "id": "cmwis895f966724deceb2"
+        },
+        {
+          "type": "QUIZ",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "`beforeEach` neçə dəfə işləyir?",
+                "options": [
+                  "Bir dəfə, ən əvvəldə",
+                  "Qrupdakı hər testdən əvvəl",
+                  "Yalnız uğursuz testdən əvvəl",
+                  "Hər faylda bir dəfə"
+                ],
+                "correctIndex": 1,
+                "explanation": "Adından göründüyü kimi: hər testdən əvvəl."
+              },
+              {
+                "id": "q2",
+                "text": "`test.only` repoya commit olunsa nə baş verər?",
+                "options": [
+                  "Heç nə",
+                  "CI-da yalnız həmin test işləyər, qalanları yoxlanmaz",
+                  "Test daha sürətli işləyər",
+                  "Bütün testlər ötürülər"
+                ],
+                "correctIndex": 1,
+                "explanation": "Bu, tez-tez edilən səhvdir; config-də `forbidOnly: !!process.env.CI` bunun qarşısını alır."
+              },
+              {
+                "id": "q3",
+                "text": "Yalnız `@smoke` teqli testləri necə işə salırsan?",
+                "options": [
+                  "`npx playwright test @smoke`",
+                  "`npx playwright test --grep @smoke`",
+                  "`npx playwright smoke`",
+                  "`npm run @smoke`"
+                ],
+                "correctIndex": 1,
+                "explanation": "`--grep` test adlarında axtarış edir; teq adın bir hissəsidir."
+              },
+              {
+                "id": "q4",
+                "text": "Testlərin bir-birindən asılı olması niyə pisdir?",
+                "options": [
+                  "Kod uzun olur",
+                  "Biri uğursuz olanda digərləri də səbəbsiz uğursuz olur və paralel işə salmaq olmur",
+                  "Brauzer yavaşlayır",
+                  "Hesabat yaranmır"
+                ],
+                "correctIndex": 1,
+                "explanation": "Müstəqil testlər istənilən sıra ilə və paralel işləyə bilir."
+              }
+            ]
+          },
+          "id": "cmwis895fb7e7787a26d7"
+        }
+      ]
+    }
+  ]
+}

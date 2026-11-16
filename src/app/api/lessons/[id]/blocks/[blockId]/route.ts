@@ -11,11 +11,15 @@ const patchSchema = z
     title: z.string().max(200).nullable(),
     content: z.unknown(),
     imageUrl: z.string().nullable(),
+    hidden: z.boolean(),
   })
   .partial()
   .strict();
 
-/** Update a block's title/content. The type never changes; content is re-validated. */
+/**
+ * Update a block's title/content, or switch it off/on (`hidden`).
+ * The type never changes; content is re-validated.
+ */
 export async function PATCH(req: NextRequest, { params }: Ctx) {
   try {
     await requireTeacher();
@@ -32,7 +36,12 @@ export async function PATCH(req: NextRequest, { params }: Ctx) {
 
     const updated = await prisma.lessonBlock.update({
       where: { id: blockId },
-      data: { title: data.title, content: data.content, imageUrl: data.imageUrl },
+      data: {
+        title: data.title,
+        content: data.content,
+        imageUrl: data.imageUrl,
+        ...(body.hidden !== undefined ? { settings: JSON.stringify({ ...safeSettings(block.settings), hidden: body.hidden }) } : {}),
+      },
     });
     return NextResponse.json(serializeBlock(updated));
   } catch (e) {
@@ -40,6 +49,14 @@ export async function PATCH(req: NextRequest, { params }: Ctx) {
   }
 }
 
+function safeSettings(raw: string): Record<string, unknown> {
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === "object" ? parsed : {};
+  } catch {
+    return {};
+  }
+}
 export async function DELETE(_req: NextRequest, { params }: Ctx) {
   try {
     await requireTeacher();

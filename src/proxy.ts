@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyToken } from "@/lib/session-token";
 
-const PUBLIC_PATHS = ["/login", "/api/auth/login", "/verify"];
+// /brand holds the logo files, which the login page shows before anyone is signed in
+const PUBLIC_PATHS = ["/login", "/api/auth/login", "/verify", "/brand"];
 const TEACHER_PATHS = ["/admin", "/preview"];
 
 export async function proxy(req: NextRequest) {

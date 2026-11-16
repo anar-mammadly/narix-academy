@@ -1,0 +1,681 @@
+{
+  "id": "cnarixacadwebesaslari0010",
+  "key": "veb-esaslari",
+  "order": 10,
+  "title": "Veb əsasları: HTML, DOM, selektorlar",
+  "description": "Test elementi səhifədə necə tapır: HTML oxumaq, DOM ağacı, CSS selektorlar və XPath.",
+  "icon": "Layers",
+  "color": "#0EA5E9",
+  "track": "automation",
+  "lessons": [
+    {
+      "slug": "html-ve-dom",
+      "title": "HTML və DOM: səhifə nədən ibarətdir",
+      "shortDescription": "Teq, atribut və DOM ağacı: avtomatlaşdırma testi səhifədə elementi tapmaq üçün məhz bunlara baxır.",
+      "estimatedMinutes": 12,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "HTML elementinin teqini, atributunu və mətnini göstərə biləcəksən",
+              "DOM ağacında valideyn və övlad elementi ayıra biləcəksən",
+              "DevTools ilə istənilən elementin kodunu tapa biləcəksən"
+            ]
+          },
+          "id": "cmwis895eb7c4e223bbad"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Tag",
+                "az": "teq",
+                "definition": "Elementin növü: `<button>`, `<input>`, `<a>`"
+              },
+              {
+                "term": "Attribute",
+                "az": "atribut",
+                "definition": "Teqin içində yazılan əlavə məlumat: `id`, `class`, `type`, `placeholder`"
+              },
+              {
+                "term": "DOM",
+                "az": "",
+                "definition": "Document Object Model — brauzerin HTML-dən qurduğu element ağacı"
+              },
+              {
+                "term": "Role",
+                "az": "rol",
+                "definition": "Elementin istifadəçi üçün nə olduğu: düymə, keçid, mətn sahəsi"
+              }
+            ]
+          },
+          "id": "cmwis895e16901906f22a"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Bir elementin anatomiyası",
+            "level": 2
+          },
+          "id": "cmwis895eccfee9a4bc6f"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "<button id=\"giris\" class=\"btn btn-primary\" type=\"submit\" disabled>\n  Daxil ol\n</button>",
+            "language": "html",
+            "caption": "Teq: `button`. Atributlar: `id`, `class`, `type`, `disabled`. Mətn: \"Daxil ol\"."
+          },
+          "id": "cmwis895eab81301ec856"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "İstifadəçi düyməni gözü ilə tapır. Test isə düyməni **koda baxaraq** tapır: teqinə, atributuna, mətninə və ya roluna görə. Ona görə avtomatlaşdırmaya başlamazdan əvvəl HTML oxumağı bacarmalısan (yazmağı yox, oxumağı)."
+          },
+          "id": "cmwis895e20f82d7d68d0"
+        },
+        {
+          "type": "TABLE",
+          "content": {
+            "headers": [
+              "Teq",
+              "Nədir",
+              "Rolu"
+            ],
+            "rows": [
+              [
+                "`<button>`",
+                "Düymə",
+                "button"
+              ],
+              [
+                "`<a href=\"...\">`",
+                "Keçid",
+                "link"
+              ],
+              [
+                "`<input type=\"text\">`",
+                "Mətn sahəsi",
+                "textbox"
+              ],
+              [
+                "`<input type=\"checkbox\">`",
+                "İşarə qutusu",
+                "checkbox"
+              ],
+              [
+                "`<select>`",
+                "Açılan siyahı",
+                "combobox"
+              ],
+              [
+                "`<h1>`…`<h6>`",
+                "Başlıq",
+                "heading"
+              ],
+              [
+                "`<img alt=\"...\">`",
+                "Şəkil",
+                "img"
+              ]
+            ]
+          },
+          "title": "Testdə ən çox rast gəldiyin elementlər",
+          "id": "cmwis895e2f652a1fdd13"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "DOM ağacı",
+            "level": 2
+          },
+          "id": "cmwis895eeeeb319acc7e"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "<form id=\"login\">\n  <label for=\"email\">Email</label>\n  <input id=\"email\" type=\"email\" placeholder=\"ad@mail.az\">\n  <button type=\"submit\">Daxil ol</button>\n</form>",
+            "language": "html"
+          },
+          "id": "cmwis895e70fae2bf81cf"
+        },
+        {
+          "type": "DIAGRAM",
+          "content": {
+            "code": "flowchart TD\n  F[\"form#login\"] --> L[\"label: Email\"]\n  F --> I[\"input#email\"]\n  F --> B[\"button: Daxil ol\"]",
+            "caption": "`form` valideyndir, içindəki üç element onun övladlarıdır. `label` ilə `input` bir-birinin qardaşıdır."
+          },
+          "id": "cmwis895e9c6e105e60bb"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "tip",
+            "body": "`<label for=\"email\">` mətn sahəsinə ad verir. Belə bağlanmış sahəni Playwright-də ən rahat yolla tapacaqsan: `getByLabel('Email')`."
+          },
+          "id": "cmwis895e5a246238b9f9"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "DevTools ilə elementə baxmaq",
+            "level": 2
+          },
+          "id": "cmwis895e407a439dfca1"
+        },
+        {
+          "type": "STEPPER",
+          "content": {
+            "steps": [
+              {
+                "title": "Səhifədə elementin üzərində sağ düyməni bas",
+                "description": "Menyudan **Inspect** (Yoxla) seç. Qısa yol: F12."
+              },
+              {
+                "title": "Elements panelində işıqlanan sətrə bax",
+                "description": "Bu, həmin elementin HTML kodudur."
+              },
+              {
+                "title": "Oxu işarəli alətlə başqa elementi seç",
+                "description": "Panelin sol yuxarı küncündəki ox: səhifədə nəyə klikləsən, kodu göstərilir."
+              },
+              {
+                "title": "Atributlara diqqət et",
+                "description": "`id`, `data-testid`, `placeholder`, `aria-label` — locator üçün namizədlərdir."
+              }
+            ]
+          },
+          "id": "cmwis895e04a449c5859e"
+        },
+        {
+          "type": "CATEGORIZE",
+          "content": {
+            "instructions": "Hər hissə nədir?\n\n`<input id=\"axtar\" type=\"search\" placeholder=\"Məhsul axtar\">`",
+            "categories": [
+              {
+                "id": "tag",
+                "label": "Teq"
+              },
+              {
+                "id": "attr",
+                "label": "Atribut adı"
+              },
+              {
+                "id": "val",
+                "label": "Atribut dəyəri"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "input",
+                "categoryId": "tag"
+              },
+              {
+                "id": "i2",
+                "text": "id",
+                "categoryId": "attr"
+              },
+              {
+                "id": "i3",
+                "text": "axtar",
+                "categoryId": "val"
+              },
+              {
+                "id": "i4",
+                "text": "placeholder",
+                "categoryId": "attr"
+              },
+              {
+                "id": "i5",
+                "text": "Məhsul axtar",
+                "categoryId": "val"
+              },
+              {
+                "id": "i6",
+                "text": "type",
+                "categoryId": "attr"
+              }
+            ]
+          },
+          "id": "cmwis895ea6ecd46fa6fc"
+        },
+        {
+          "type": "TASK",
+          "content": {
+            "instructions": "İstənilən onlayn mağazanın ana səhifəsini aç və DevTools ilə bu üç elementi yoxla: axtarış sahəsi, \"Səbət\" düyməsi (və ya ikonu), bir məhsulun adı.\n\nHər biri üçün yaz: teqi, gördüyün atributlar və element üzərindəki mətn. Sonda: hansı elementi tapmaq sənə ən çətin gəldi və niyə?",
+            "required": true,
+            "placeholder": "1) Axtarış sahəsi: teq …, atributlar …"
+          },
+          "title": "Praktika: üç elementi yoxla",
+          "id": "cmwis895e14d577e3f591"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Element teq, atributlar və mətndən ibarətdir",
+              "Brauzer HTML-i DOM ağacına çevirir: valideyn, övlad, qardaş",
+              "Test elementi koddakı əlamətlərinə görə tapır",
+              "DevTools → Inspect istənilən elementin kodunu göstərir"
+            ]
+          },
+          "id": "cmwis895e1764ff8f5f61"
+        },
+        {
+          "type": "QUIZ",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "`<a href=\"/sebet\" class=\"link\">Səbət</a>` elementində `href` nədir?",
+                "options": [
+                  "Teq",
+                  "Atribut",
+                  "Mətn",
+                  "Rol"
+                ],
+                "correctIndex": 1,
+                "explanation": "`href` atribut adıdır, `/sebet` onun dəyəridir."
+              },
+              {
+                "id": "q2",
+                "text": "DOM nədir?",
+                "options": [
+                  "HTML faylının adı",
+                  "Brauzerin HTML-dən qurduğu element ağacı",
+                  "CSS-in bir növü",
+                  "Test aləti"
+                ],
+                "correctIndex": 1,
+                "explanation": "Brauzer HTML-i oxuyub obyekt ağacı qurur; testlər bu ağacla işləyir."
+              },
+              {
+                "id": "q3",
+                "text": "`<label for=\"email\">` nə üçün faydalıdır?",
+                "options": [
+                  "Sahəni gizlədir",
+                  "Mətn sahəsinə ad verir, onu həm istifadəçi, həm test adına görə tapır",
+                  "Sahəni məcburi edir",
+                  "Rəngi dəyişir"
+                ],
+                "correctIndex": 1,
+                "explanation": "Etiketlə bağlanmış sahə `getByLabel` ilə tapılır və əlçatanlıq üçün də vacibdir."
+              },
+              {
+                "id": "q4",
+                "text": "`<button>` elementinin rolu nədir?",
+                "options": [
+                  "link",
+                  "textbox",
+                  "button",
+                  "heading"
+                ],
+                "correctIndex": 2,
+                "explanation": "Hər teqin standart rolu var; `button` üçün bu `button`-dur."
+              }
+            ]
+          },
+          "id": "cmwis895e07369e8c4d96"
+        }
+      ]
+    },
+    {
+      "slug": "css-selektorlar-ve-xpath",
+      "title": "CSS selektorlar və XPath",
+      "shortDescription": "Elementi koda görə ünvanlamaq: id, class, atribut və iç-içə selektorlar. XPath nədir və niyə son çarədir.",
+      "estimatedMinutes": 13,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "`#id`, `.class`, `[atribut]` və iç-içə CSS selektoru yaza biləcəksən",
+              "DevTools-da selektorun neçə element tapdığını yoxlaya biləcəksən",
+              "Kövrək selektoru dayanıqlısından ayıra biləcəksən"
+            ]
+          },
+          "id": "cmwis895e6bef8143310b"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Selector",
+                "az": "selektor",
+                "definition": "Elementi və ya elementləri seçən ifadə"
+              },
+              {
+                "term": "XPath",
+                "az": "",
+                "definition": "DOM ağacında yol yazaraq element tapan dil"
+              },
+              {
+                "term": "Brittle",
+                "az": "kövrək",
+                "definition": "Səhifədə kiçik dəyişiklik olanda sınan selektor"
+              },
+              {
+                "term": "data-testid",
+                "az": "",
+                "definition": "Yalnız testlər üçün əlavə olunan, dizayn dəyişəndə dəyişməyən atribut"
+              }
+            ]
+          },
+          "id": "cmwis895e79120c99823f"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "CSS selektorun əlifbası",
+            "level": 2
+          },
+          "id": "cmwis895ec3ec6efd95b0"
+        },
+        {
+          "type": "TABLE",
+          "content": {
+            "headers": [
+              "Selektor",
+              "Nəyi seçir",
+              "Nümunə"
+            ],
+            "rows": [
+              [
+                "`teq`",
+                "Həmin teqli bütün elementləri",
+                "`button`"
+              ],
+              [
+                "`#id`",
+                "Həmin id-li elementi",
+                "`#email`"
+              ],
+              [
+                "`.class`",
+                "Həmin class-lı elementləri",
+                "`.btn-primary`"
+              ],
+              [
+                "`[atribut=\"dəyər\"]`",
+                "Atributu həmin dəyərə bərabər olanları",
+                "`[type=\"submit\"]`"
+              ],
+              [
+                "`A B`",
+                "A-nın içindəki B-ləri",
+                "`form button`"
+              ],
+              [
+                "`A > B`",
+                "A-nın birbaşa övladı olan B-ləri",
+                "`ul > li`"
+              ]
+            ]
+          },
+          "id": "cmwis895e6a06df1dfebf"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "<form id=\"login\">\n  <input id=\"email\" class=\"field\" type=\"email\">\n  <input class=\"field\" type=\"password\" data-testid=\"sifre\">\n  <button class=\"btn btn-primary\" type=\"submit\">Daxil ol</button>\n</form>",
+            "language": "html"
+          },
+          "id": "cmwis895e9937c9d93da6"
+        },
+        {
+          "type": "TABLE",
+          "content": {
+            "headers": [
+              "Selektor",
+              "Tapır"
+            ],
+            "rows": [
+              [
+                "`#email`",
+                "Email sahəsi (1 element)"
+              ],
+              [
+                "`.field`",
+                "İki sahənin ikisi də (2 element)"
+              ],
+              [
+                "`[data-testid=\"sifre\"]`",
+                "Şifrə sahəsi"
+              ],
+              [
+                "`#login button`",
+                "Formanın içindəki düymə"
+              ],
+              [
+                "`input[type=\"password\"]`",
+                "Şifrə sahəsi"
+              ]
+            ]
+          },
+          "title": "Yuxarıdakı forma üçün",
+          "id": "cmwis895e14970d776ab8"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "tip",
+            "body": "DevTools-da Elements panelini aç, Ctrl+F (Mac: Cmd+F) bas və selektoru yaz. Aşağıda `1 of 3` kimi say görünür: selektorun neçə element tapdığını dərhal bilirsən."
+          },
+          "id": "cmwis895e6a8dae5b1a0e"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Dayanıqlı və kövrək selektor",
+            "level": 2
+          },
+          "id": "cmwis895ef0faa44e70d8"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Selektor səhifənin **dizaynına** bağlıdırsa, dizayner bir class-ı dəyişən kimi testin sınır, halbuki funksiya işləyir. Selektor elementin **mənasına** bağlı olmalıdır."
+          },
+          "id": "cmwis895e33b7d056f6e3"
+        },
+        {
+          "type": "TABLE",
+          "content": {
+            "headers": [
+              "Selektor",
+              "Qiymət",
+              "Niyə"
+            ],
+            "rows": [
+              [
+                "`div > div:nth-child(3) > span`",
+                "Kövrək",
+                "Səhifənin quruluşu dəyişən kimi başqa elementi göstərəcək"
+              ],
+              [
+                "`.css-1x2y3z`",
+                "Kövrək",
+                "Avtomatik yaranan class hər build-də dəyişir"
+              ],
+              [
+                "`.btn-primary`",
+                "Orta",
+                "Səhifədə bir neçə əsas düymə ola bilər"
+              ],
+              [
+                "`#email`",
+                "Yaxşı",
+                "id unikal olmalıdır və nadir dəyişir"
+              ],
+              [
+                "`[data-testid=\"sifre\"]`",
+                "Ən yaxşı",
+                "Yalnız testlər üçündür, dizaynla əlaqəsi yoxdur"
+              ]
+            ]
+          },
+          "id": "cmwis895e87ec45e1733f"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "XPath",
+            "level": 2
+          },
+          "id": "cmwis895ef11dfb4c455d"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "//button[@type=\"submit\"]          // type atributu submit olan düymə\n//label[text()=\"Email\"]            // mətni Email olan label\n//form[@id=\"login\"]//input[2]      // formadakı ikinci input",
+            "language": "text",
+            "caption": "XPath CSS-in bacardığını da, bacarmadığını da edir (mətnə görə axtarış, valideynə qalxmaq), amma uzun və kövrək olur."
+          },
+          "id": "cmwis895e5719ecc9af82"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "important",
+            "body": "Playwright-də ilk seçimin CSS də, XPath də deyil. İlk seçim **istifadəçinin gördüyü** əlamətlərdir: rol, etiket, mətn (`getByRole`, `getByLabel`). CSS ikinci, XPath son çarədir. Bunu Playwright dərslərində görəcəksən; indi məqsəd köhnə layihələrdəki selektorları oxuya bilməkdir."
+          },
+          "id": "cmwis895e38af7951472d"
+        },
+        {
+          "type": "CATEGORIZE",
+          "content": {
+            "instructions": "Selektorları qiymətləndir",
+            "categories": [
+              {
+                "id": "good",
+                "label": "Dayanıqlı"
+              },
+              {
+                "id": "bad",
+                "label": "Kövrək"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "`[data-testid=\"checkout\"]`",
+                "categoryId": "good"
+              },
+              {
+                "id": "i2",
+                "text": "`body > div:nth-child(2) > div > a`",
+                "categoryId": "bad"
+              },
+              {
+                "id": "i3",
+                "text": "`#search-input`",
+                "categoryId": "good"
+              },
+              {
+                "id": "i4",
+                "text": "`.sc-aXZVg.kRtmpL`",
+                "categoryId": "bad"
+              },
+              {
+                "id": "i5",
+                "text": "`//div[3]/div[2]/span[1]`",
+                "categoryId": "bad"
+              },
+              {
+                "id": "i6",
+                "text": "`input[name=\"email\"]`",
+                "categoryId": "good"
+              }
+            ]
+          },
+          "id": "cmwis895e2c3c9c4ba8ed"
+        },
+        {
+          "type": "TASK",
+          "content": {
+            "instructions": "Əvvəlki dərsdə yoxladığın mağaza səhifəsinə qayıt. Axtarış sahəsi və \"Səbət\" düyməsi üçün hərəsinə **iki** CSS selektor yaz: biri dayanıqlı, biri kövrək. DevTools-da Ctrl+F ilə hər birinin neçə element tapdığını yoxla.\n\nCavabında selektorları, tapdıqları element sayını və hansının niyə daha dayanıqlı olduğunu yaz.",
+            "required": true,
+            "placeholder": "Axtarış sahəsi — dayanıqlı: …  (1 element)"
+          },
+          "title": "Praktika: selektor yaz və yoxla",
+          "id": "cmwis895ec7ed5add6229"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "`#id`, `.class`, `[atribut=\"dəyər\"]` və boşluqla iç-içə seçim CSS selektorun əsasıdır",
+              "Selektoru DevTools-da Ctrl+F ilə yoxla: yalnız lazım olan element tapılmalıdır",
+              "Dizayna və quruluşa bağlı selektor kövrəkdir; `id` və `data-testid` dayanıqlıdır",
+              "XPath güclüdür, amma son çarədir"
+            ]
+          },
+          "id": "cmwis895e2d30eb5247dd"
+        },
+        {
+          "type": "QUIZ",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "`.field` selektoru nəyi seçir?",
+                "options": [
+                  "id-si field olan elementi",
+                  "class-ı field olan bütün elementləri",
+                  "field teqini",
+                  "field adlı atributu"
+                ],
+                "correctIndex": 1,
+                "explanation": "Nöqtə class, `#` isə id deməkdir."
+              },
+              {
+                "id": "q2",
+                "text": "Hansı selektor ən dayanıqlıdır?",
+                "options": [
+                  "`div:nth-child(4) > a`",
+                  "`.css-9f8a7b`",
+                  "`[data-testid=\"add-to-cart\"]`",
+                  "`//div[2]/div[1]/button`"
+                ],
+                "correctIndex": 2,
+                "explanation": "`data-testid` test üçün qoyulur və dizayn dəyişəndə dəyişmir."
+              },
+              {
+                "id": "q3",
+                "text": "`form button` selektoru nəyi tapır?",
+                "options": [
+                  "Yalnız formanın birbaşa övladı olan düymələri",
+                  "Formanın içindəki bütün düymələri",
+                  "Formadan sonrakı düyməni",
+                  "Form və button teqlərinin hamısını"
+                ],
+                "correctIndex": 1,
+                "explanation": "Boşluq \"içində hər hansı dərinlikdə\" deməkdir; birbaşa övlad üçün `>` yazılır."
+              },
+              {
+                "id": "q4",
+                "text": "Playwright-də locator seçərkən ilk üstünlük nəyə verilir?",
+                "options": [
+                  "XPath-a",
+                  "Avtomatik yaranan class-lara",
+                  "İstifadəçinin gördüyü əlamətlərə: rol, etiket, mətn",
+                  "Elementin səhifədəki sırasına"
+                ],
+                "correctIndex": 2,
+                "explanation": "İstifadəçi düyməni adına görə tanıyır; test də elə tapmalıdır."
+              }
+            ]
+          },
+          "id": "cmwis895edb0adffdaf6f"
+        }
+      ]
+    }
+  ]
+}

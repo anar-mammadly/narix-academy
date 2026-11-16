@@ -6,7 +6,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { useState, type ReactNode } from "react";
 import {
   Award, CalendarDays, ClipboardList, Flame, LayoutDashboard, LogOut, Map, Menu,
-  MessageCircle, NotebookPen, Repeat, Trophy, User, Users, X, Zap, BookOpen, type LucideIcon,
+  MessageCircle, NotebookPen, Palette, Repeat, Trophy, User, Users, X, Zap, BookOpen, type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Avatar } from "@/components/ui/Avatar";
@@ -65,6 +65,10 @@ const TEACHER_NAV: NavGroup[] = [
       { href: "/admin/questions", label: "Suallar", icon: MessageCircle },
       { href: "/admin/calendar", label: "Təqvim", icon: CalendarDays },
     ],
+  },
+  {
+    label: "Platforma",
+    items: [{ href: "/admin/appearance", label: "Görünüş", icon: Palette }],
   },
 ];
 

@@ -5,6 +5,8 @@ export type EditorBlock = {
   title: string | null;
   content: unknown;
   order: number;
+  /** Switched off: stays in the editor, students do not see it. */
+  hidden?: boolean;
 };
 
 export type EditorLesson = {

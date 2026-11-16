@@ -66,6 +66,15 @@ export async function requireBlockInLesson(lessonId: string, blockId: string) {
   return block;
 }
 
+/** A block the teacher switched off: `settings` is JSON, `{ "hidden": true }`. */
+export function isHidden(settings: string | null | undefined): boolean {
+  if (!settings) return false;
+  try {
+    return (JSON.parse(settings) as { hidden?: unknown }).hidden === true;
+  } catch {
+    return false;
+  }
+}
 /** Shape sent to the editor: content parsed back into an object. */
 export function serializeBlock(b: LessonBlock) {
   let content: unknown = {};
@@ -74,7 +83,7 @@ export function serializeBlock(b: LessonBlock) {
   } catch {
     content = {};
   }
-  return { id: b.id, type: b.type, title: b.title, content, imageUrl: b.imageUrl, order: b.order };
+  return { id: b.id, type: b.type, title: b.title, content, imageUrl: b.imageUrl, order: b.order, hidden: isHidden(b.settings) };
 }
 
 export async function lessonBlocks(lessonId: string) {

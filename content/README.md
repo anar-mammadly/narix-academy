@@ -3,6 +3,7 @@
 The curriculum lives here as JSON, one file per module (`modules/NN-key.json`).
 `npm run content:sync` validates every file and writes it to the database.
 Lesson and module ids from the old database are kept, so student progress survives.
+A module whose id is not in the database yet is created.
 `_legacy/` holds the database export taken before the restructure (2026-10-18).
 
 Edits made in the admin lesson editor are stored in the database only. Running the sync again
@@ -20,6 +21,7 @@ pick one place to author content.
   "description": "One sentence, under 140 characters.",
   "icon": "Sparkles",                   // lucide-react icon name
   "color": "#5B4BFF",
+  "track": "manual",                    // "manual" (default) or "automation"
   "lessons": [
     {
       "id": "cmn0lukgu0001cmyrmdt0kxh9",  // existing lesson id, or omit for a new lesson
@@ -38,6 +40,7 @@ pick one place to author content.
 ```
 
 Block `content` shapes are defined in `src/types/blocks.ts` (the single source of truth).
+`CHART` draws a bar, column, line, donut or pyramid chart from numbers (`kind`, `data: [{ label, value, note? }]`, `unit`, `caption`).
 A block may carry `"title"`. A block `id` is only given to keep an existing block that has student answers.
 
 ## Writing standard
