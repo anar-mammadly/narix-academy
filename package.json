@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
+    "build": "prisma generate && node scripts/migrate-on-build.mjs && next build",
     "start": "next start",
     "lint": "eslint src",
     "postinstall": "prisma generate",
@@ -13,7 +13,8 @@
     "db:seed": "tsx prisma/seed.ts",
     "db:reset": "prisma migrate reset --force",
     "content:sync": "tsx scripts/sync-curriculum.ts",
-    "content:check": "tsx scripts/sync-curriculum.ts --dry-run"
+    "content:check": "tsx scripts/sync-curriculum.ts --dry-run",
+    "db:deploy": "node scripts/migrate-on-build.mjs"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
