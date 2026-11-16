@@ -6,6 +6,8 @@ import { prisma } from "@/lib/prisma";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { buttonStyles } from "@/components/ui/Button";
 import { ModulesClient, type ModuleListItem } from "@/components/admin/ModulesClient";
+import { CurriculumSync } from "@/components/admin/CurriculumSync";
+import { planCurriculum } from "@/lib/curriculum-sync";
 
 export const metadata: Metadata = { title: "Modullar və dərslər" };
 
@@ -32,6 +34,7 @@ export default async function AdminModulesPage() {
     lessons: m.lessons.map((l) => ({ id: l.id, title: l.title, published: l.published, minutes: l.estimatedMinutes, blocks: l._count.blocks })),
   }));
   const lessonCount = items.reduce((s, m) => s + m.lessons.length, 0);
+  const plan = await planCurriculum();
 
   return (
     <div>
@@ -44,6 +47,7 @@ export default async function AdminModulesPage() {
           </Link>
         }
       />
+      <CurriculumSync plan={plan} />
       <ModulesClient modules={items} />
     </div>
   );
