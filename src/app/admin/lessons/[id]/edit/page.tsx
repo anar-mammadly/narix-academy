@@ -29,7 +29,10 @@ export default async function LessonEditPage({ params }: { params: Promise<{ id:
         published: lesson.published,
         moduleId: lesson.moduleId,
       }}
-      blocks={lesson.blocks.map((b) => ({ id: b.id, type: b.type, title: b.title, content: parseJson<unknown>(b.content, {}), order: b.order }))}
+      blocks={lesson.blocks.map((b) => ({
+        id: b.id, type: b.type, title: b.title, content: parseJson<unknown>(b.content, {}), order: b.order,
+        hidden: parseJson<{ hidden?: boolean }>(b.settings, {}).hidden === true,
+      }))}
       modules={modules}
     />
   );

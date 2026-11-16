@@ -14,7 +14,7 @@ Manual QA və test avtomatlaşdırmasını qısa, interaktiv dərslərlə öyrə
 
 ## Tələbə tərəfi
 
-- **Öyrənmə yolu:** 9 modul, 49 dərs. Hər dərs növbətini açır.
+- **Öyrənmə yolu:** 13 modul, 69 dərs, iki trek: Manual QA (8 modul) və Avtomatlaşdırma (5 modul: JavaScript əsasları, veb əsasları, Playwright, framework, peşəkar avtomatlaşdırma və final layihə). Hər dərs növbətini açır.
 - **Dərs pleyeri** (`/learn/[slug]`): focus rejimi, dərs planı, qeydlər, suallar, irəliləyiş.
 - **İnteraktiv bloklar:**
   - Quiz (hər sualdan sonra izah ilə)
@@ -23,13 +23,17 @@ Manual QA və test avtomatlaşdırmasını qısa, interaktiv dərslərlə öyrə
   - Bug Hunt (3 mini tətbiq)
   - Test Case və Bug Report builder-ləri
   - API Playground
+- **Vizuallar:** şəkil, Mermaid diaqramı və rəqəmlərdən çəkilən qrafik bloku (sütun, xətt, dairə, piramida); ana səhifədə aktivlik və irəliləyiş qrafikləri.
 - **Gamification:** XP, səviyyələr, streak, gündəlik hədəf, 14 nailiyyət, həftəlik və ümumi liderlər.
 - **Təkrar:** quizdə səhv cavablanan suallar Leitner sistemi ilə qayıdır.
 - **Digər:** ev tapşırıqları, qeydlər, suallar, təqvim, sertifikat (çap / PDF və `/verify/[code]` yoxlama səhifəsi).
 
 ## Müəllim tərəfi (`/admin`)
 
-Statistika, modul və dərs idarəetməsi, blok redaktoru (auto-save, sürüklə-burax, JSON import), tələbələr, tapşırıqların qiymətləndirilməsi, suallar və təqvim. Önizləmə: `/preview/[lessonId]`.
+Statistika və qrafiklər, modul və dərs idarəetməsi, blok redaktoru (auto-save, sürüklə-burax, JSON import), tələbələr, tapşırıqların qiymətləndirilməsi, suallar və təqvim. Önizləmə: `/preview/[lessonId]`.
+
+- **Bloku söndürmək:** redaktorda hər blokun “Tələbələrə göstər” açarı var. Söndürülən blok silinmir, sadəcə tələbəyə göstərilmir.
+- **Görünüş** (`/admin/appearance`): ana səhifə və ümumi baxış qrafiklərini, modul üzlüklərini, dərslərdəki bütün şəkil/diaqram/qrafikləri və giriş səhifəsinin illüstrasiyasını yandırıb-söndürmək; giriş səhifəsinin şəklini dəyişmək.
 
 ## Kurikulum
 

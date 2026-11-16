@@ -10,6 +10,7 @@
  *   (attempts, answers and review cards stay linked).
  * - Blocks that disappear from a file are deleted; lessons are never deleted.
  * - Modules that are no longer in any file are unpublished, not deleted.
+ * - A module whose id is not in the database yet is created.
  */
 import { readdirSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
@@ -93,14 +94,12 @@ async function main() {
 
   // ── Apply ──
   for (const { data: m } of modules) {
-    await prisma.module.update({
-      where: { id: m.id! },
-      data: {
-        title: m.title, description: m.description ?? null, order: m.order,
-        icon: m.icon ?? "BookOpen", coverColor: m.color ?? "#5b4bff", published: m.published ?? true, track: m.track ?? "manual",
-      },
-    });
-
+    // New modules are created; existing ones keep their id (and with it, student progress).
+    const moduleData = {
+      title: m.title, description: m.description ?? null, order: m.order,
+      icon: m.icon ?? "BookOpen", coverColor: m.color ?? "#5b4bff", published: m.published ?? true, track: m.track ?? "manual",
+    };
+    await prisma.module.upsert({ where: { id: m.id! }, update: moduleData, create: { id: m.id!, ...moduleData } });
     for (const [order, l] of m.lessons.entries()) {
       const existing = l.id
         ? await prisma.lesson.findUnique({ where: { id: l.id }, select: { id: true } })

@@ -1,0 +1,1182 @@
+{
+  "id": "cnarixacadpesekar00000013",
+  "key": "pesekar-avtomatlasdirma",
+  "order": 13,
+  "title": "Peşəkar avtomatlaşdırma və final layihə",
+  "description": "Mühitlər, paralel icra, flaky testlər, trace və hesabatlar, GitHub Actions CI və portfolio layihəsi.",
+  "icon": "Workflow",
+  "color": "#F97316",
+  "track": "automation",
+  "lessons": [
+    {
+      "slug": "config-muhit-ve-paralel-icra",
+      "title": "Config, mühitlər, paralel icra və retry",
+      "shortDescription": "Layihənin qovluq quruluşu, .env ilə gizli məlumat, bir neçə mühit, worker-lər, retry və flaky testlərin səbəbləri.",
+      "estimatedMinutes": 14,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Peşəkar test layihəsinin qovluq quruluşunu təsvir edə biləcəksən",
+              "Şifrə və ünvanları `.env` faylına çıxara biləcəksən",
+              "Paralel icranın və retry-ın nə vaxt kömək, nə vaxt gizlətdiyini izah edə biləcəksən"
+            ]
+          },
+          "id": "cmwis895g90ac19020d94"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Environment",
+                "az": "mühit",
+                "definition": "Tətbiqin işlədiyi yer: local, staging, production"
+              },
+              {
+                "term": "Environment variable",
+                "az": "mühit dəyişəni",
+                "definition": "Koddan kənarda saxlanan ayar: `process.env.BASE_URL`"
+              },
+              {
+                "term": "Worker",
+                "az": "",
+                "definition": "Testləri paralel icra edən ayrı proses"
+              },
+              {
+                "term": "Flaky test",
+                "az": "qeyri-sabit test",
+                "definition": "Kod dəyişmədən gah keçən, gah uğursuz olan test"
+              }
+            ]
+          },
+          "id": "cmwis895g0337aeeec07f"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Qovluq quruluşu",
+            "level": 2
+          },
+          "id": "cmwis895g66d5f549910b"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "magaza-testleri/\n├── tests/              # .spec.js faylları, funksiyaya görə qovluqlarda\n│   ├── auth.setup.js\n│   ├── giris/\n│   └── sebet/\n├── pages/              # Page Object-lər\n├── fixtures.js         # ortaq fixture-lar\n├── utils/              # test məlumatı generatorları, köməkçilər\n├── playwright.config.js\n├── .env                # gizli dəyərlər (Git-ə DÜŞMÜR)\n├── .env.example        # hansı dəyişənlər lazımdır (Git-ə düşür, dəyərsiz)\n└── .gitignore",
+            "language": "text"
+          },
+          "id": "cmwis895g68ab97e6f284"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": ".env: gizli məlumat koddan kənarda",
+            "level": 2
+          },
+          "id": "cmwis895gd510f3728e6b"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "# .env\nBASE_URL=https://staging.magaza.az\nTEST_EMAIL=qa@magaza.az\nTEST_SIFRE=buraya-real-sifre",
+            "language": "bash"
+          },
+          "id": "cmwis895g15f87623860c"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "// playwright.config.js\nimport 'dotenv/config';   // npm install -D dotenv\nimport { defineConfig } from '@playwright/test';\n\nexport default defineConfig({\n  fullyParallel: true,\n  forbidOnly: !!process.env.CI,\n  retries: process.env.CI ? 2 : 0,\n  workers: process.env.CI ? 2 : undefined,\n  reporter: 'html',\n  use: {\n    baseURL: process.env.BASE_URL,\n    trace: 'on-first-retry',\n    screenshot: 'only-on-failure',\n  },\n});",
+            "language": "javascript",
+            "caption": "`BASE_URL`-i dəyişməklə eyni testlər staging-də və ya local-da işləyir: `BASE_URL=http://localhost:3000 npx playwright test`."
+          },
+          "id": "cmwis895ge3b601da72ac"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "warning",
+            "body": "Şifrəni test koduna yazma. Repo açıq olmasa belə, Git tarixçəsində əbədi qalır. `.env` faylı `.gitignore`-da, CI-da isə GitHub Secrets-də saxlanır."
+          },
+          "id": "cmwis895gd98940d1158b"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Paralel icra",
+            "level": 2
+          },
+          "id": "cmwis895g2a21f82e5ac1"
+        },
+        {
+          "type": "CHART",
+          "content": {
+            "kind": "bar",
+            "data": [
+              {
+                "label": "1 worker",
+                "value": 20
+              },
+              {
+                "label": "2 worker",
+                "value": 10.5
+              },
+              {
+                "label": "4 worker",
+                "value": 5.5
+              },
+              {
+                "label": "8 worker",
+                "value": 3.2
+              }
+            ],
+            "unit": " dəq",
+            "caption": "Worker sayı artdıqca vaxt azalır, amma düz xətt üzrə yox: maşının nüvə sayı və serverin yükü həddi müəyyən edir."
+          },
+          "title": "200 testin icra müddəti (nümunə)",
+          "id": "cmwis895g4820b2a8a230"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Paralel icra yalnız testlər **müstəqil** olanda işləyir. İki test eyni istifadəçinin səbətini dəyişirsə, paralel işləyəndə bir-birini sındıracaq. Həll: hər test öz məlumatını yaradır (əvvəlki dərsdəki unikal məlumat)."
+          },
+          "id": "cmwis895g503647441c07"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Retry və flaky testlər",
+            "level": 2
+          },
+          "id": "cmwis895gc3c8d7f97eae"
+        },
+        {
+          "type": "TABLE",
+          "content": {
+            "headers": [
+              "Flaky testin səbəbi",
+              "Düzəliş"
+            ],
+            "rows": [
+              [
+                "`waitForTimeout` və ya `await`-siz addım",
+                "Web-first assertion ilə konkret vəziyyəti gözlə"
+              ],
+              [
+                "Testlər ortaq məlumatı dəyişir",
+                "Hər test öz unikal məlumatını yaratsın"
+              ],
+              [
+                "Kövrək locator (sıra, avtomatik class)",
+                "`getByRole`, `getByLabel`, `data-testid`"
+              ],
+              [
+                "Test əvvəlki testin nəticəsindən asılıdır",
+                "Hazırlığı `beforeEach` və ya fixture-a çıxar"
+              ],
+              [
+                "Xarici servis yavaş və ya əlçatmazdır",
+                "Həmin sorğunu mock et"
+              ]
+            ]
+          },
+          "id": "cmwis895g54b0d982c718"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "important",
+            "body": "Retry flaky testi **müalicə etmir**, gizlədir. CI-da `retries: 2` təsadüfi şəbəkə problemindən qoruyur, amma hesabatda \"flaky\" kimi işarələnən hər testin səbəbi tapılmalıdır. Bəzən səbəb testdə yox, tətbiqdəki real baqdadır."
+          },
+          "id": "cmwis895g2abb7a792f5b"
+        },
+        {
+          "type": "CATEGORIZE",
+          "content": {
+            "instructions": "Flaky testin səbəbi hansıdır?",
+            "categories": [
+              {
+                "id": "wait",
+                "label": "Gözləmə problemi"
+              },
+              {
+                "id": "data",
+                "label": "Ortaq məlumat"
+              },
+              {
+                "id": "loc",
+                "label": "Kövrək locator"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "`await page.waitForTimeout(2000)` işlədilir",
+                "categoryId": "wait"
+              },
+              {
+                "id": "i2",
+                "text": "İki test eyni hesabın profil adını dəyişir",
+                "categoryId": "data"
+              },
+              {
+                "id": "i3",
+                "text": "`div:nth-child(3) > button` selektoru",
+                "categoryId": "loc"
+              },
+              {
+                "id": "i4",
+                "text": "`page.click(...)` qarşısında `await` yoxdur",
+                "categoryId": "wait"
+              },
+              {
+                "id": "i5",
+                "text": "Bütün testlər eyni səbəti boşaldır",
+                "categoryId": "data"
+              }
+            ]
+          },
+          "id": "cmwis895g2f204bc76f66"
+        },
+        {
+          "type": "TASK",
+          "content": {
+            "instructions": "Layihəndə:\n\n1. `.env` və `.env.example` yarat, `BASE_URL`-i ora çıxar, `.gitignore`-a `.env` və `playwright/.auth` əlavə et.\n2. Testləri `--workers=1` və `--workers=4` ilə işə sal, müddətləri müqayisə et.\n3. `npx playwright test --repeat-each=5` ilə hər testi 5 dəfə işə sal: flaky olan varmı?\n\nCavabında iki müddəti və `--repeat-each` nəticəsini yaz. Flaky test tapdınsa, səbəbini yuxarıdakı cədvələ görə təyin et.",
+            "required": true,
+            "placeholder": "1 worker: … san, 4 worker: … san"
+          },
+          "title": "Praktika: mühit, paralellik, sabitlik",
+          "id": "cmwis895g7c2b6be402af"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Testlər, Page Object-lər, fixture-lar və köməkçilər ayrı qovluqlardadır",
+              "Ünvan və şifrələr `.env`-də, `.env` isə `.gitignore`-dadır",
+              "Paralel icra müstəqil testlər tələb edir",
+              "Retry gizlədir; flaky testin səbəbi tapılıb düzəldilməlidir"
+            ]
+          },
+          "id": "cmwis895g2bbdc4f0dae0"
+        },
+        {
+          "type": "QUIZ",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "`.env.example` faylı nə üçündür?",
+                "options": [
+                  "Real şifrələri saxlamaq",
+                  "Hansı dəyişənlərin lazım olduğunu dəyərsiz göstərmək",
+                  "Testləri sürətləndirmək",
+                  "Brauzer ayarları"
+                ],
+                "correctIndex": 1,
+                "explanation": "Yeni komanda üzvü onu `.env`-ə kopyalayıb öz dəyərlərini yazır."
+              },
+              {
+                "id": "q2",
+                "text": "Paralel icra üçün əsas şərt nədir?",
+                "options": [
+                  "Bütün testlər bir faylda olmalıdır",
+                  "Testlər bir-birindən və ortaq məlumatdan asılı olmamalıdır",
+                  "Yalnız Chromium işlədilməlidir",
+                  "Retry açıq olmalıdır"
+                ],
+                "correctIndex": 1,
+                "explanation": "Asılı testlər eyni anda işləyəndə bir-birini pozur."
+              },
+              {
+                "id": "q3",
+                "text": "Flaky test nədir?",
+                "options": [
+                  "Həmişə uğursuz olan test",
+                  "Kod dəyişmədən gah keçən, gah uğursuz olan test",
+                  "Çox yavaş test",
+                  "Ötürülmüş test"
+                ],
+                "correctIndex": 1,
+                "explanation": "Qeyri-sabitlik komandanın testlərə inamını azaldır."
+              },
+              {
+                "id": "q4",
+                "text": "`retries: 2` flaky testi düzəldirmi?",
+                "options": [
+                  "Bəli",
+                  "Xeyr, yalnız nəticəni gizlədir; səbəb qalır",
+                  "Yalnız CI-da",
+                  "Yalnız Firefox-da"
+                ],
+                "correctIndex": 1,
+                "explanation": "Retry simptomu örtür. Səbəb tapılmalıdır, bəzən o, real baqdır."
+              }
+            ]
+          },
+          "id": "cmwis895g721182fda823"
+        }
+      ]
+    },
+    {
+      "slug": "debug-trace-ve-hesabat",
+      "title": "Debug, Trace Viewer və hesabatlar",
+      "shortDescription": "Uğursuz testin səbəbini tapmaq: UI rejimi, Inspector, trace, screenshot və video; HTML hesabatı oxumaq.",
+      "estimatedMinutes": 12,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Uğursuz testi UI rejimində addım-addım izləyə biləcəksən",
+              "CI-da uğursuz olan testin trace faylını açıb səbəbi tapa biləcəksən",
+              "HTML hesabatdan keçən, uğursuz və flaky testləri oxuya biləcəksən"
+            ]
+          },
+          "id": "cmwis895g146f6080a191"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Trace",
+                "az": "iz",
+                "definition": "Testin tam qeydi: hər addım, DOM görüntüsü, şəbəkə sorğuları, konsol"
+              },
+              {
+                "term": "Inspector",
+                "az": "",
+                "definition": "Testi sətir-sətir dayandırıb icra edən Playwright aləti"
+              },
+              {
+                "term": "Reporter",
+                "az": "",
+                "definition": "Test nəticələrini hesabata çevirən komponent"
+              },
+              {
+                "term": "Artifact",
+                "az": "",
+                "definition": "Testdən qalan fayl: trace, screenshot, video, hesabat"
+              }
+            ]
+          },
+          "id": "cmwis895gcd447f475819"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Üç sazlama aləti",
+            "level": 2
+          },
+          "id": "cmwis895gf3cc8821e3d8"
+        },
+        {
+          "type": "TABLE",
+          "content": {
+            "headers": [
+              "Alət",
+              "Əmr",
+              "Nə vaxt"
+            ],
+            "rows": [
+              [
+                "UI rejimi",
+                "`npx playwright test --ui`",
+                "Test yazarkən: hər addımın əvvəl və sonrasını görürsən, zamanda geri gedirsən"
+              ],
+              [
+                "Inspector",
+                "`npx playwright test --debug`",
+                "Testi sətir-sətir icra etmək, locator sınamaq"
+              ],
+              [
+                "Trace Viewer",
+                "`npx playwright show-trace trace.zip`",
+                "CI-da uğursuz olan testi öz kompüterində \"yenidən izləmək\""
+              ]
+            ]
+          },
+          "id": "cmwis895ga55c3156f31e"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "tip",
+            "body": "Kodun istənilən yerinə `await page.pause();` yaz və testi `--headed` ilə işə sal: test orada dayanacaq, Inspector açılacaq və locator-ları canlı səhifədə sınaya biləcəksən."
+          },
+          "id": "cmwis895g18beb2b1c70d"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Trace: uğursuzluğun \"qara qutusu\"",
+            "level": 2
+          },
+          "id": "cmwis895g60476626b7da"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "CI-da test uğursuz oldu, amma sənin kompüterində keçir. Trace olmadan yalnız təxmin edə bilərsən. Trace faylı həmin icranın tam qeydidir: hər action, o andakı səhifə, şəbəkə sorğuları və konsol xətaları."
+          },
+          "id": "cmwis895g5b40da5bc66a"
+        },
+        {
+          "type": "STEPPER",
+          "content": {
+            "steps": [
+              {
+                "title": "Config-də trace-i aç",
+                "description": "`trace: 'on-first-retry'` — test ilk dəfə uğursuz olub təkrar işləyəndə yazılır. Hər icrada yazmaq yavaşladar."
+              },
+              {
+                "title": "HTML hesabatı aç",
+                "description": "`npx playwright show-report` — uğursuz testə kliklə."
+              },
+              {
+                "title": "Trace-ə kliklə",
+                "description": "Sol tərəfdə addımlar, ortada o andakı səhifə, aşağıda Network və Console."
+              },
+              {
+                "title": "Uğursuz addımdan əvvələ bax",
+                "description": "Səbəb çox vaxt bir addım əvvəldədir: sorğu 500 qaytarıb, ya da modal açılmayıb."
+              }
+            ]
+          },
+          "id": "cmwis895g9cf3a101ab24"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "use: {\n  trace: 'on-first-retry',        // retry zamanı tam iz\n  screenshot: 'only-on-failure',  // uğursuz olanda son ekran\n  video: 'retain-on-failure',     // uğursuz testin videosu\n},",
+            "language": "javascript",
+            "caption": "Üçü də yalnız uğursuzluqda saxlanır, ona görə keçən testləri yavaşlatmır və diskdə yer tutmur."
+          },
+          "id": "cmwis895g42059972919c"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "HTML hesabat",
+            "level": 2
+          },
+          "id": "cmwis895g23d376880d75"
+        },
+        {
+          "type": "TABLE",
+          "content": {
+            "headers": [
+              "Status",
+              "Mənası",
+              "Sən nə edirsən"
+            ],
+            "rows": [
+              [
+                "Passed",
+                "Keçdi",
+                "Heç nə"
+              ],
+              [
+                "Failed",
+                "Bütün cəhdlərdə uğursuz",
+                "Trace-ə bax: baqdır, yoxsa test köhnəlib?"
+              ],
+              [
+                "Flaky",
+                "Əvvəl uğursuz, retry-da keçdi",
+                "Səbəbi tap; gizli qalmasın"
+              ],
+              [
+                "Skipped",
+                "Ötürüldü",
+                "Niyə ötürüldüyünə bax; müvəqqəti olmalıdır"
+              ]
+            ]
+          },
+          "id": "cmwis895g76095d01171e"
+        },
+        {
+          "type": "EXAMPLE",
+          "content": {
+            "description": "Hesabatda \"sifariş təsdiqlənir\" testi uğursuzdur. Trace-də görürsən: \"Ödə\" düyməsi kliklənib, amma Network panelində `/api/pay` sorğusu 500 qaytarıb. Locator düzgündür, gözləmə düzgündür. Deməli, bu test problemi deyil, backend baqıdır.",
+            "takeaway": "Trace bug report üçün hazır sübutdur: addımlar, ekran, sorğu və cavab bir yerdədir."
+          },
+          "id": "cmwis895gca1d2ae32069"
+        },
+        {
+          "type": "ORDERING",
+          "content": {
+            "instructions": "CI-da test uğursuz olub. Səbəbi tapmaq üçün düzgün ardıcıllıq",
+            "items": [
+              "HTML hesabatı aç",
+              "Uğursuz testin xəta mesajını oxu (Expected / Received)",
+              "Trace-i aç və uğursuz addımı tap",
+              "Ondan əvvəlki addımlara, Network və Console-a bax",
+              "Qərar ver: tətbiq baqı, yoxsa test problemi"
+            ]
+          },
+          "id": "cmwis895gbb24cfe93015"
+        },
+        {
+          "type": "TASK",
+          "content": {
+            "instructions": "Testlərindən birini bilərəkdən sındır (məsələn, gözlənilən mətni dəyiş). Config-də `trace: 'on'` qoy, testi işə sal, `npx playwright show-report` ilə hesabatı və trace-i aç.\n\nCavabında yaz: 1) Trace-də hansı panellər var və hər biri nə göstərir, 2) uğursuz addımı necə tapdın, 3) bu məlumatdan bug report üçün nələri götürərdin.",
+            "required": true,
+            "placeholder": "Trace-də gördüklərim: …"
+          },
+          "title": "Praktika: trace ilə araşdırma",
+          "id": "cmwis895g4bf873345c2a"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "UI rejimi yazarkən, Inspector sətir-sətir sazlayarkən, Trace Viewer CI uğursuzluğunu araşdırarkən işlədilir",
+              "Trace, screenshot və video yalnız uğursuzluqda saxlanmalıdır",
+              "\"Flaky\" statusu xəbərdarlıqdır, uğur deyil",
+              "Trace test problemi ilə tətbiq baqını ayırmağa kömək edir"
+            ]
+          },
+          "id": "cmwis895g96ba12fd5624"
+        },
+        {
+          "type": "QUIZ",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "CI-da uğursuz olan testi öz kompüterində addım-addım izləmək üçün nə lazımdır?",
+                "options": [
+                  "Video",
+                  "Trace faylı",
+                  "Yalnız xəta mesajı",
+                  "Testi yenidən yazmaq"
+                ],
+                "correctIndex": 1,
+                "explanation": "Trace DOM görüntüləri, şəbəkə və konsol ilə tam qeyddir."
+              },
+              {
+                "id": "q2",
+                "text": "`trace: 'on-first-retry'` nə deməkdir?",
+                "options": [
+                  "Hər testdə trace yazılır",
+                  "Test uğursuz olub ilk dəfə təkrar işləyəndə trace yazılır",
+                  "Trace heç vaxt yazılmır",
+                  "Yalnız lokal işləyir"
+                ],
+                "correctIndex": 1,
+                "explanation": "Belə keçən testlər yavaşlamır, uğursuzlar üçün isə sübut qalır."
+              },
+              {
+                "id": "q3",
+                "text": "Hesabatda \"flaky\" statusu nəyi göstərir?",
+                "options": [
+                  "Test ötürülüb",
+                  "Test əvvəl uğursuz olub, retry-da keçib",
+                  "Test çox yavaşdır",
+                  "Test silinib"
+                ],
+                "correctIndex": 1,
+                "explanation": "Bu, qeyri-sabitliyin siqnalıdır və araşdırılmalıdır."
+              },
+              {
+                "id": "q4",
+                "text": "`await page.pause()` nə edir?",
+                "options": [
+                  "Testi ötürür",
+                  "Testi həmin sətirdə dayandırıb Inspector-u açır",
+                  "Brauzeri bağlayır",
+                  "5 saniyə gözləyir"
+                ],
+                "correctIndex": 1,
+                "explanation": "Canlı səhifədə locator sınamaq üçün ən rahat yoldur."
+              }
+            ]
+          },
+          "id": "cmwis895gce304eaf444a"
+        }
+      ]
+    },
+    {
+      "slug": "git-ve-github-actions",
+      "title": "Git, GitHub və CI: testlər hər dəyişiklikdə özü işləsin",
+      "shortDescription": "Kodu Git ilə saxlamaq, pull request açmaq və GitHub Actions ilə Playwright testlərini avtomatik işə salmaq.",
+      "estimatedMinutes": 14,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Dəyişikliyi commit edib GitHub-a göndərə biləcəksən",
+              "Branch və pull request axınını izah edə biləcəksən",
+              "Playwright testlərini işə salan GitHub Actions workflow-unu oxuya və qura biləcəksən"
+            ]
+          },
+          "id": "cmwis895ge44d6f850cce"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Commit",
+                "az": "",
+                "definition": "Dəyişikliklərin adlandırılmış anlıq görüntüsü"
+              },
+              {
+                "term": "Branch",
+                "az": "budaq",
+                "definition": "Əsas koddan ayrılan, müstəqil işlədiyin xətt"
+              },
+              {
+                "term": "Pull request (PR)",
+                "az": "",
+                "definition": "Branch-dəki dəyişikliyi əsas koda birləşdirmək üçün baxış tələbi"
+              },
+              {
+                "term": "CI",
+                "az": "Continuous Integration",
+                "definition": "Hər dəyişiklikdə testlərin serverdə avtomatik işləməsi"
+              }
+            ]
+          },
+          "id": "cmwis895gc3556601513c"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Gündəlik Git axını",
+            "level": 2
+          },
+          "id": "cmwis895g925ec69423c3"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "git checkout -b sebet-testleri      # yeni branch yarat və ona keç\n# ... testləri yaz ...\ngit status                          # nə dəyişib?\ngit add tests/sebet.spec.js         # commit-ə daxil ediləcək fayl\ngit commit -m \"Səbət üçün 3 test əlavə et\"\ngit push -u origin sebet-testleri   # GitHub-a göndər",
+            "language": "bash",
+            "caption": "Bundan sonra GitHub-da \"Compare & pull request\" düyməsi görünür."
+          },
+          "id": "cmwis895gdf4172da8011"
+        },
+        {
+          "type": "DIAGRAM",
+          "content": {
+            "code": "flowchart LR\n  A[Branch yarat] --> B[Test yaz]\n  B --> C[Commit + push]\n  C --> D[Pull request]\n  D --> E{CI testləri}\n  E -- keçdi --> F[Review və merge]\n  E -- uğursuz --> B",
+            "caption": "Testlər kimsə kodu oxumazdan əvvəl avtomatik işləyir."
+          },
+          "id": "cmwis895g4a308c1acd54"
+        },
+        {
+          "type": "TABLE",
+          "content": {
+            "headers": [
+              ".gitignore-da olmalıdır",
+              "Niyə"
+            ],
+            "rows": [
+              [
+                "`node_modules/`",
+                "`npm install` ilə bərpa olunur"
+              ],
+              [
+                "`.env`",
+                "Şifrələr"
+              ],
+              [
+                "`playwright/.auth/`",
+                "Sessiya nişanları"
+              ],
+              [
+                "`test-results/`, `playwright-report/`",
+                "Hər icrada yenidən yaranır"
+              ]
+            ]
+          },
+          "id": "cmwis895g3ad7b08ea16c"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "GitHub Actions workflow",
+            "level": 2
+          },
+          "id": "cmwis895gceb723f1a2bf"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "# .github/workflows/playwright.yml\nname: Playwright testləri\non:\n  push:\n    branches: [main]\n  pull_request:\n\njobs:\n  test:\n    runs-on: ubuntu-latest\n    timeout-minutes: 30\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-node@v4\n        with:\n          node-version: 22\n      - run: npm ci\n      - run: npx playwright install --with-deps\n      - run: npx playwright test\n        env:\n          BASE_URL: ${{ vars.BASE_URL }}\n          TEST_EMAIL: ${{ secrets.TEST_EMAIL }}\n          TEST_SIFRE: ${{ secrets.TEST_SIFRE }}\n      - uses: actions/upload-artifact@v4\n        if: ${{ !cancelled() }}\n        with:\n          name: playwright-report\n          path: playwright-report/\n          retention-days: 14",
+            "language": "yaml",
+            "caption": "Öz kompüterində etdiyin addımların eynisi: kodu götür, paketləri qur, brauzerləri qur, testləri işə sal. Sonda hesabat artifact kimi saxlanır."
+          },
+          "id": "cmwis895g3871df74e27f"
+        },
+        {
+          "type": "STEPPER",
+          "content": {
+            "steps": [
+              {
+                "title": "`on`",
+                "description": "Nə vaxt işləsin: main-ə push və hər pull request."
+              },
+              {
+                "title": "`npm ci`",
+                "description": "`package-lock.json`-a tam uyğun quraşdırma; CI üçün `npm install`-dan etibarlıdır."
+              },
+              {
+                "title": "`secrets`",
+                "description": "Şifrələr GitHub-da Settings → Secrets and variables → Actions bölməsində saxlanır, kodda yox."
+              },
+              {
+                "title": "`if: !cancelled()`",
+                "description": "Testlər uğursuz olsa da hesabat yüklənsin; ən çox o zaman lazımdır."
+              }
+            ]
+          },
+          "title": "Workflow-un vacib sətirləri",
+          "id": "cmwis895g0433bd913929"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "tip",
+            "body": "Uğursuz CI icrasında səhifənin aşağısındakı **Artifacts** bölməsindən `playwright-report`-u yüklə, zip-i aç və `npx playwright show-report qovluq-adı` ilə bax. Trace də onun içindədir."
+          },
+          "id": "cmwis895g563a017712c0"
+        },
+        {
+          "type": "ORDERING",
+          "content": {
+            "instructions": "Workflow-un addımlarını düzgün sıraya düz",
+            "items": [
+              "Kodu götür (checkout)",
+              "Node.js qur",
+              "Paketləri qur (npm ci)",
+              "Brauzerləri qur (playwright install)",
+              "Testləri işə sal",
+              "Hesabatı artifact kimi yüklə"
+            ]
+          },
+          "id": "cmwis895gfb37229d6a33"
+        },
+        {
+          "type": "TASK",
+          "content": {
+            "instructions": "Test layihəni GitHub-a yüklə:\n\n1. `.gitignore` yarat, yuxarıdakı dörd bəndi əlavə et.\n2. Repo yarat, kodu push et.\n3. `.github/workflows/playwright.yml` faylını əlavə et.\n4. Yeni branch-də bir testi bilərəkdən sındır və pull request aç. CI-ın qırmızı olduğunu gör, hesabatı artifact-dan yüklə.\n5. Testi düzəlt, push et, CI-ın yaşıl olduğunu gör.\n\nCavabında repo linkini və qırmızı icradan nə öyrəndiyini yaz.",
+            "required": true,
+            "placeholder": "Repo: https://github.com/…"
+          },
+          "title": "Praktika: CI qur",
+          "id": "cmwis895g360757713226"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Branch → commit → push → pull request gündəlik axındır",
+              "`.env`, `node_modules` və auth faylları Git-ə düşmür",
+              "GitHub Actions hər PR-da testləri işə salır",
+              "Şifrələr Secrets-də, hesabat isə artifact-da saxlanır"
+            ]
+          },
+          "id": "cmwis895gd77b5f2721a6"
+        },
+        {
+          "type": "QUIZ",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "CI-da niyə `npm install` yox, `npm ci` işlədilir?",
+                "options": [
+                  "Daha qısa yazılır",
+                  "Lock faylına tam uyğun, təkrarlana bilən quraşdırma edir",
+                  "Yalnız Linux-da işləyir",
+                  "Brauzerləri də qurur"
+                ],
+                "correctIndex": 1,
+                "explanation": "`npm ci` versiyaları dəyişmir, ona görə CI nəticəsi sabit olur."
+              },
+              {
+                "id": "q2",
+                "text": "Test şifrəsi CI-da harada saxlanmalıdır?",
+                "options": [
+                  "Workflow faylında",
+                  "GitHub Secrets-də",
+                  "README-də",
+                  "Test kodunda"
+                ],
+                "correctIndex": 1,
+                "explanation": "Secrets şifrələnir və loglarda gizlədilir."
+              },
+              {
+                "id": "q3",
+                "text": "`if: ${{ !cancelled() }}` olmasa nə baş verər?",
+                "options": [
+                  "Testlər işləməz",
+                  "Testlər uğursuz olanda hesabat yüklənməz",
+                  "Node qurulmaz",
+                  "PR açılmaz"
+                ],
+                "correctIndex": 1,
+                "explanation": "Standart olaraq uğursuz addımdan sonrakılar ötürülür; hesabat isə məhz o zaman lazımdır."
+              },
+              {
+                "id": "q4",
+                "text": "Pull request nədir?",
+                "options": [
+                  "Kodu silmək tələbi",
+                  "Branch-dəki dəyişikliyi əsas koda birləşdirmək üçün baxış tələbi",
+                  "Serverə giriş",
+                  "Test hesabatı"
+                ],
+                "correctIndex": 1,
+                "explanation": "PR-da həm insanlar, həm CI dəyişikliyi yoxlayır."
+              }
+            ]
+          },
+          "id": "cmwis895g329a1798b0e7"
+        }
+      ]
+    },
+    {
+      "slug": "final-layihe",
+      "title": "Final layihə: öz framework-ünü qur",
+      "shortDescription": "Nəyi avtomatlaşdırmağı seçmək, framework-ü sıfırdan qurmaq, kodu yoxlamaq və müsahibədə onu təqdim etmək.",
+      "estimatedMinutes": 15,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Tətbiq üçün avtomatlaşdırma həcmini risk əsasında seçə biləcəksən",
+              "POM, fixture, API hazırlığı və CI olan framework-ü sıfırdan qura biləcəksən",
+              "Öz kodunu yoxlama siyahısı ilə nəzərdən keçirib təqdim edə biləcəksən"
+            ]
+          },
+          "id": "cmwis895ge06afcd8b3b4"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Automation scope",
+                "az": "avtomatlaşdırma həcmi",
+                "definition": "Hansı testlərin avtomatlaşdırılacağı, hansının manual qalacağı"
+              },
+              {
+                "term": "Risk-based testing",
+                "az": "risk əsaslı test",
+                "definition": "Əvvəlcə ən çox zərər verə biləcək və ən çox istifadə olunan funksiyaları yoxlamaq"
+              },
+              {
+                "term": "Code review",
+                "az": "kod baxışı",
+                "definition": "Kodun birləşdirilməzdən əvvəl başqası tərəfindən oxunması"
+              }
+            ]
+          },
+          "id": "cmwis895g6f5800a6ee01"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Nəyi avtomatlaşdırmalı",
+            "level": 2
+          },
+          "id": "cmwis895g5bd3731c88bf"
+        },
+        {
+          "type": "TABLE",
+          "content": {
+            "headers": [
+              "Avtomatlaşdır",
+              "Manual saxla"
+            ],
+            "rows": [
+              [
+                "Hər release-də təkrarlanan regression və smoke",
+                "Bir dəfə yoxlanacaq funksiya"
+              ],
+              [
+                "Pul və məlumatla bağlı kritik axınlar: giriş, ödəniş",
+                "Görünüş, rahatlıq, \"hiss\" (usability)"
+              ],
+              [
+                "Çox məlumat variantı olan yoxlamalar",
+                "Tez-tez dəyişən, hələ sabitləşməmiş ekranlar"
+              ],
+              [
+                "API səviyyəsində yoxlana bilən qaydalar",
+                "Exploratory testing"
+              ]
+            ]
+          },
+          "id": "cmwis895g871ccfaae07f"
+        },
+        {
+          "type": "CHART",
+          "content": {
+            "kind": "donut",
+            "data": [
+              {
+                "label": "API testləri",
+                "value": 50
+              },
+              {
+                "label": "UI: kritik axınlar",
+                "value": 30
+              },
+              {
+                "label": "UI: mock ilə kənar hallar",
+                "value": 20
+              }
+            ],
+            "unit": "%",
+            "caption": "Hədəf test sayı deyil, risk örtüyüdür: 25–30 yaxşı seçilmiş test kifayətdir."
+          },
+          "title": "Final layihə üçün tövsiyə olunan bölgü",
+          "id": "cmwis895g34189b0731ee"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Layihənin tələbləri",
+            "level": 2
+          },
+          "id": "cmwis895gf40f383b70d6"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Açıq demo tətbiq seç (məsələn `saucedemo.com`, `automationexercise.com` və ya öz layihən) və onun üçün framework qur. Müsahibədə göstərəcəyin portfolio işi budur."
+          },
+          "id": "cmwis895gb7cebb1162f9"
+        },
+        {
+          "type": "STEPPER",
+          "content": {
+            "steps": [
+              {
+                "title": "Test strategiyası (1 səhifə)",
+                "description": "Hansı funksiyalar, niyə onlar, nə manual qalır. README-yə yaz."
+              },
+              {
+                "title": "Quruluş",
+                "description": "`tests/`, `pages/`, `fixtures.js`, `utils/`, `.env.example`, `.gitignore`."
+              },
+              {
+                "title": "Ən azı 3 Page Object və 1 öz fixture-un",
+                "description": "Giriş, məhsul siyahısı, səbət."
+              },
+              {
+                "title": "Auth setup",
+                "description": "`storageState` ilə bir dəfə giriş."
+              },
+              {
+                "title": "15+ UI testi, 8+ API testi",
+                "description": "Ən azı biri data-driven, ikisi mock ilə, 5-i `@smoke` teqli."
+              },
+              {
+                "title": "Config",
+                "description": "`baseURL` `.env`-dən, 2 brauzer, trace və screenshot uğursuzluqda."
+              },
+              {
+                "title": "CI",
+                "description": "GitHub Actions: PR-da smoke, main-də tam dəst; hesabat artifact-da."
+              },
+              {
+                "title": "README",
+                "description": "Necə qurulur, necə işə salınır, quruluş, strategiya."
+              }
+            ]
+          },
+          "title": "Təhvil veriləcəklər",
+          "id": "cmwis895g48c83b730537"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Özünü yoxla: code review siyahısı",
+            "level": 2
+          },
+          "id": "cmwis895g4dc69add7b25"
+        },
+        {
+          "type": "CHECKLIST",
+          "content": {
+            "items": [
+              {
+                "id": "c1",
+                "text": "Heç bir testdə `waitForTimeout` yoxdur"
+              },
+              {
+                "id": "c2",
+                "text": "Hər testdə ən azı bir assertion var və o, `await expect(locator)` formasındadır"
+              },
+              {
+                "id": "c3",
+                "text": "Locator-lar `getByRole` / `getByLabel` / `getByTestId` üzərindədir; `nth-child` və avtomatik class yoxdur"
+              },
+              {
+                "id": "c4",
+                "text": "Testlər bir-birindən asılı deyil; `--repeat-each=3` və `--workers=4` ilə hamısı keçir"
+              },
+              {
+                "id": "c5",
+                "text": "Şifrə və ünvan kodda yoxdur; `.env` və auth faylı `.gitignore`-dadır"
+              },
+              {
+                "id": "c6",
+                "text": "Page Object-lərdə assertion yoxdur"
+              },
+              {
+                "id": "c7",
+                "text": "Test adları nə yoxlandığını deyir: \"yanlış şifrə xəta göstərir\""
+              },
+              {
+                "id": "c8",
+                "text": "`test.only` qalmayıb"
+              },
+              {
+                "id": "c9",
+                "text": "README-dəki əmrlərlə layihə təmiz kompüterdə işə düşür"
+              }
+            ]
+          },
+          "title": "Təhvildən əvvəl",
+          "id": "cmwis895g79754c329d8f"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Müsahibədə",
+            "level": 2
+          },
+          "id": "cmwis895ga74709e48a95"
+        },
+        {
+          "type": "TABLE",
+          "content": {
+            "headers": [
+              "Sual",
+              "Cavabda nə olmalıdır"
+            ],
+            "rows": [
+              [
+                "Framework-ünü təsvir et",
+                "Quruluş, niyə POM və fixture, məlumatı necə hazırlayırsan, CI-da nə işləyir"
+              ],
+              [
+                "Flaky testi necə araşdırırsan?",
+                "Trace, `--repeat-each`, səbəb kateqoriyaları; retry-ın müalicə olmadığı"
+              ],
+              [
+                "Nəyi avtomatlaşdırmazdın?",
+                "Tez dəyişən UI, bir dəfəlik yoxlamalar, usability"
+              ],
+              [
+                "Locator strategiyan nədir?",
+                "İstifadəçi əlamətləri → test id → CSS; XPath son çarə"
+              ],
+              [
+                "API ilə UI testini necə birləşdirirsən?",
+                "Hazırlıq API ilə, yoxlama UI ilə; nadir hallar mock ilə"
+              ]
+            ]
+          },
+          "title": "Tez-tez verilən suallar",
+          "id": "cmwis895gbcded0c84cdf"
+        },
+        {
+          "type": "TASK",
+          "content": {
+            "instructions": "Final layihəni təhvil ver:\n\n1. GitHub repo linki.\n2. Son uğurlu CI icrasının linki.\n3. Test strategiyanın qısa xülasəsi: nəyi avtomatlaşdırdın, nəyi yox və niyə (5–8 cümlə).\n4. Layihədə ən çətin problem nə idi və necə həll etdin?\n5. Yuxarıdakı yoxlama siyahısından hansı bəndi yerinə yetirə bilmədin?",
+            "required": true,
+            "placeholder": "Repo: https://github.com/…\nCI: …\n\nStrategiya: …"
+          },
+          "title": "Final layihə: təhvil",
+          "id": "cmwis895g67a7070b9459"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Avtomatlaşdırma həcmi riskə və təkrarlanmaya görə seçilir",
+              "Framework: POM + fixture + API hazırlığı + auth setup + CI",
+              "Təhvildən əvvəl kodu yoxlama siyahısı ilə nəzərdən keçir",
+              "Müsahibədə qərarlarının səbəbini izah et, alətlərin adını saymaqla kifayətlənmə"
+            ]
+          },
+          "id": "cmwis895gc37df5f83879"
+        },
+        {
+          "type": "QUIZ",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "Hansı test avtomatlaşdırma üçün ən uyğun namizəddir?",
+                "options": [
+                  "Hər release-də təkrarlanan giriş və ödəniş regression-u",
+                  "Yeni dizaynın \"gözəl görünməsi\"",
+                  "Bir dəfəlik məlumat köçürməsinin yoxlanması",
+                  "Hələ dəyişən prototip ekranı"
+                ],
+                "correctIndex": 0,
+                "explanation": "Təkrarlanan, kritik və sabit funksiyalar ən yüksək faydanı verir."
+              },
+              {
+                "id": "q2",
+                "text": "Risk-based testing nə deməkdir?",
+                "options": [
+                  "Bütün funksiyaları bərabər yoxlamaq",
+                  "Əvvəlcə ən çox zərər verə biləcək və ən çox işlənən hissələri yoxlamaq",
+                  "Yalnız yeni funksiyaları yoxlamaq",
+                  "Testləri təsadüfi seçmək"
+                ],
+                "correctIndex": 1,
+                "explanation": "Vaxt məhduddur; prioritet riskə görə verilir."
+              },
+              {
+                "id": "q3",
+                "text": "`--repeat-each=3 --workers=4` ilə yoxlama nəyi üzə çıxarır?",
+                "options": [
+                  "Sintaksis xətalarını",
+                  "Flaky və bir-birindən asılı testləri",
+                  "Yavaş serveri",
+                  "Köhnə brauzeri"
+                ],
+                "correctIndex": 1,
+                "explanation": "Təkrar və paralel icra gizli asılılıqları və qeyri-sabitliyi göstərir."
+              },
+              {
+                "id": "q4",
+                "text": "Müsahibədə \"flaky testi necə düzəldirsən?\" sualına ən zəif cavab hansıdır?",
+                "options": [
+                  "Trace ilə səbəbi tapıram",
+                  "`retries` sayını artırıram",
+                  "Sabit gözləmələri web-first assertion ilə əvəz edirəm",
+                  "Testin öz məlumatını yaratmasını təmin edirəm"
+                ],
+                "correctIndex": 1,
+                "explanation": "Retry problemi gizlədir; qalan üçü səbəbi aradan qaldırır."
+              }
+            ]
+          },
+          "id": "cmwis895g8168dfcaed23"
+        }
+      ]
+    }
+  ]
+}

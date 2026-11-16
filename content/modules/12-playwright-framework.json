@@ -1,0 +1,982 @@
+{
+  "id": "cnarixacadframework000012",
+  "key": "playwright-framework",
+  "order": 12,
+  "title": "Playwright ilə framework qurmaq",
+  "description": "Page Object Model, fixture-lar, saxlanmış sessiya, API testləri və mocking.",
+  "icon": "Layers",
+  "color": "#8B5CF6",
+  "track": "automation",
+  "lessons": [
+    {
+      "slug": "page-object-model",
+      "title": "Page Object Model (POM)",
+      "shortDescription": "Locator-ları və səhifə hərəkətlərini bir class-da toplamaq: testlər qısalır, dizayn dəyişəndə bir yeri düzəldirsən.",
+      "estimatedMinutes": 14,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "POM-un hansı problemi həll etdiyini izah edə biləcəksən",
+              "Bir səhifə üçün Page Object class-ı yaza biləcəksən",
+              "Testdə Page Object-dən istifadə edə biləcəksən"
+            ]
+          },
+          "id": "cmwis895gcb53a3965742"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Page Object",
+                "az": "səhifə obyekti",
+                "definition": "Bir səhifənin (və ya hissəsinin) locator-larını və hərəkətlərini saxlayan class"
+              },
+              {
+                "term": "Class",
+                "az": "sinif",
+                "definition": "Obyekt yaratmaq üçün şablon: xüsusiyyətlər və metodlar"
+              },
+              {
+                "term": "constructor",
+                "az": "",
+                "definition": "`new` ilə obyekt yarananda bir dəfə işləyən metod"
+              },
+              {
+                "term": "DRY",
+                "az": "",
+                "definition": "Don't Repeat Yourself — eyni kodu iki yerdə yazma"
+              }
+            ]
+          },
+          "id": "cmwis895gd62b48a83f81"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Problem: locator 20 testdə təkrarlanır",
+            "level": 2
+          },
+          "id": "cmwis895g2eff11fd5a2e"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Giriş forması 20 testdə istifadə olunur. Bir gün \"Daxil ol\" düyməsinin adı \"Giriş\" olur. POM yoxdursa, 20 testin hamısını düzəltməlisən. POM varsa, **bir sətri**."
+          },
+          "id": "cmwis895gbb675feb71bb"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Page Object yazmaq",
+            "level": 2
+          },
+          "id": "cmwis895g92a99495739b"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "// pages/LoginPage.js\nexport class LoginPage {\n  constructor(page) {\n    this.page = page;\n    this.email = page.getByLabel('Email');\n    this.sifre = page.getByLabel('Şifrə');\n    this.girisDuymesi = page.getByRole('button', { name: 'Daxil ol' });\n    this.xeta = page.getByRole('alert');\n  }\n\n  async ac() {\n    await this.page.goto('/giris');\n  }\n\n  async daxilOl(email, sifre) {\n    await this.email.fill(email);\n    await this.sifre.fill(sifre);\n    await this.girisDuymesi.click();\n  }\n}",
+            "language": "javascript",
+            "caption": "`constructor`-da locator-lar (səhifədə **nə** var), metodlarda hərəkətlər (səhifədə **nə etmək** olar). `this` — bu obyektin özü."
+          },
+          "id": "cmwis895gbcb752c6046d"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "// tests/giris.spec.js\nimport { test, expect } from '@playwright/test';\nimport { LoginPage } from '../pages/LoginPage.js';\n\ntest('yanlış şifrə xəta göstərir', async ({ page }) => {\n  const girisSehifesi = new LoginPage(page);\n  await girisSehifesi.ac();\n  await girisSehifesi.daxilOl('aysel@mail.az', 'yanlis');\n\n  await expect(girisSehifesi.xeta).toHaveText('Email və ya şifrə yanlışdır');\n});",
+            "language": "javascript",
+            "caption": "Test indi niyyəti oxunur: aç, daxil ol, xətanı yoxla. Locator detalları testdə yoxdur."
+          },
+          "id": "cmwis895g6be0f4dfd7db"
+        },
+        {
+          "type": "TABLE",
+          "content": {
+            "headers": [
+              "Page Object-də olur",
+              "Testdə olur"
+            ],
+            "rows": [
+              [
+                "Locator-lar",
+                "Test məlumatı (hansı email, hansı şifrə)"
+              ],
+              [
+                "Hərəkət metodları (`daxilOl`, `axtar`)",
+                "Ssenarinin addımları"
+              ],
+              [
+                "Səhifəyə aid köməkçi metodlar",
+                "`expect` yoxlamaları"
+              ]
+            ]
+          },
+          "title": "Nə harada yaşayır",
+          "id": "cmwis895g6accabae5b0c"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "important",
+            "body": "Assertion-ları Page Object-in içinə yazma. Page Object səhifəni **təsvir edir**, test isə **yoxlayır**. Əks halda bir metod bəzi testlər üçün yanlış şeyi yoxlayacaq."
+          },
+          "id": "cmwis895g58958cf61bdb"
+        },
+        {
+          "type": "CATEGORIZE",
+          "content": {
+            "instructions": "Bu kod harada olmalıdır?",
+            "categories": [
+              {
+                "id": "po",
+                "label": "Page Object"
+              },
+              {
+                "id": "test",
+                "label": "Test faylı"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "`page.getByLabel('Email')`",
+                "categoryId": "po"
+              },
+              {
+                "id": "i2",
+                "text": "`await expect(xeta).toBeVisible()`",
+                "categoryId": "test"
+              },
+              {
+                "id": "i3",
+                "text": "`async sebeteAt(mehsulAdi) { ... }`",
+                "categoryId": "po"
+              },
+              {
+                "id": "i4",
+                "text": "`'aysel@mail.az'` test məlumatı",
+                "categoryId": "test"
+              },
+              {
+                "id": "i5",
+                "text": "`await this.page.goto('/sebet')`",
+                "categoryId": "po"
+              }
+            ]
+          },
+          "id": "cmwis895ge7d034dc4848"
+        },
+        {
+          "type": "TASK",
+          "content": {
+            "instructions": "TodoMVC üçün `pages/TodoPage.js` yaz. İçində olsun: yeni tapşırıq sahəsi və tapşırıqlar siyahısı üçün locator-lar; `ac()`, `elaveEt(metn)`, `tamamla(metn)` və `sil(metn)` metodları. Sonra əvvəlki dərsdəki üç testi bu class-dan istifadə edəcək şəkildə yenidən yaz.\n\nCavabına `TodoPage.js` kodunu və testlərdən birini yapışdır. Bir cümlə ilə yaz: testlər əvvəlkindən nə ilə fərqlənir?",
+            "required": true,
+            "placeholder": "// pages/TodoPage.js\nexport class TodoPage {\n  …\n}"
+          },
+          "title": "Praktika: TodoPage",
+          "id": "cmwis895gedc155a724bc"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "POM locator və hərəkətləri bir class-da toplayır",
+              "Səhifə dəyişəndə yalnız Page Object düzəlir",
+              "Assertion-lar testdə qalır",
+              "Test məlumatı Page Object-ə parametr kimi ötürülür"
+            ]
+          },
+          "id": "cmwis895g140762f2daf0"
+        },
+        {
+          "type": "QUIZ",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "POM-un əsas faydası nədir?",
+                "options": [
+                  "Testlər daha sürətli işləyir",
+                  "Locator bir yerdə saxlanır, dəyişiklik bir yerdə edilir",
+                  "Brauzer sayı artır",
+                  "Assertion-lara ehtiyac qalmır"
+                ],
+                "correctIndex": 1,
+                "explanation": "Baxım (maintenance) asanlaşır: bir düzəliş bütün testlərə təsir edir."
+              },
+              {
+                "id": "q2",
+                "text": "`constructor(page)` nə vaxt işləyir?",
+                "options": [
+                  "Hər metoddan əvvəl",
+                  "`new LoginPage(page)` yazılanda bir dəfə",
+                  "Test bitəndə",
+                  "Heç vaxt, sadəcə elandır"
+                ],
+                "correctIndex": 1,
+                "explanation": "Obyekt yarananda işləyir və locator-ları hazırlayır."
+              },
+              {
+                "id": "q3",
+                "text": "Hansı kod Page Object-ə aid **deyil**?",
+                "options": [
+                  "`this.axtar = page.getByPlaceholder('Axtar')`",
+                  "`async axtarisEt(soz) { ... }`",
+                  "`await expect(netice).toHaveCount(5)`",
+                  "`await this.page.goto('/')`"
+                ],
+                "correctIndex": 2,
+                "explanation": "Gözlənilən nəticə testə aiddir; eyni səhifə fərqli testlərdə fərqli yoxlanır."
+              },
+              {
+                "id": "q4",
+                "text": "`this.email` nə deməkdir?",
+                "options": [
+                  "Qlobal dəyişən",
+                  "Bu obyektin `email` xüsusiyyəti",
+                  "Funksiyanın parametri",
+                  "Import edilmiş dəyər"
+                ],
+                "correctIndex": 1,
+                "explanation": "`this` class-dan yaradılmış konkret obyekti göstərir."
+              }
+            ]
+          },
+          "id": "cmwis895g8bbaebd8ed3f"
+        }
+      ]
+    },
+    {
+      "slug": "fixtures-ve-test-data",
+      "title": "Fixtures və test məlumatı",
+      "shortDescription": "Hazırlığı fixture-a çıxarmaq, eyni testi müxtəlif məlumatla işə salmaq (data-driven) və unikal test məlumatı yaratmaq.",
+      "estimatedMinutes": 13,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Fixture-un nə olduğunu və `page`-in də fixture olduğunu izah edə biləcəksən",
+              "Öz fixture-unu `test.extend` ilə yaza biləcəksən",
+              "Bir testi məlumat siyahısı üzrə təkrar işə sala biləcəksən"
+            ]
+          },
+          "id": "cmwis895g800a393ac442"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Fixture",
+                "az": "",
+                "definition": "Testə hazır verilən resurs: Playwright onu testdən əvvəl qurur, sonra yığışdırır"
+              },
+              {
+                "term": "Data-driven testing",
+                "az": "məlumatla idarə olunan test",
+                "definition": "Eyni test məntiqini müxtəlif giriş məlumatı ilə işə salmaq"
+              },
+              {
+                "term": "Test data",
+                "az": "test məlumatı",
+                "definition": "Testin istifadə etdiyi istifadəçilər, məhsullar, dəyərlər"
+              }
+            ]
+          },
+          "id": "cmwis895ga0fa1e9f1fb0"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Fixture nədir",
+            "level": 2
+          },
+          "id": "cmwis895g1a1039a1b23e"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "`async ({ page }) => ...` yazanda `page`-i sən yaratmırsan: Playwright onu hazır verir. Bu, daxili fixture-dur. Eyni yolla **öz** hazır resurslarını da testə verə bilərsən, məsələn hazır Page Object və ya artıq daxil olmuş istifadəçi."
+          },
+          "id": "cmwis895gf0f0a38e3e36"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "// fixtures.js\nimport { test as base } from '@playwright/test';\nimport { LoginPage } from './pages/LoginPage.js';\n\nexport const test = base.extend({\n  girisSehifesi: async ({ page }, use) => {\n    const sehife = new LoginPage(page);\n    await sehife.ac();   // hazırlıq\n    await use(sehife);   // test burada işləyir\n    // buradan sonrası testdən sonra işləyir (təmizlik)\n  },\n});\n\nexport { expect } from '@playwright/test';",
+            "language": "javascript"
+          },
+          "id": "cmwis895g61cd55a6916e"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "// tests/giris.spec.js\nimport { test, expect } from '../fixtures.js';\n\ntest('yanlış şifrə', async ({ girisSehifesi }) => {\n  await girisSehifesi.daxilOl('aysel@mail.az', 'yanlis');\n  await expect(girisSehifesi.xeta).toBeVisible();\n});",
+            "language": "javascript",
+            "caption": "`new LoginPage(page)` və `ac()` testdən yox oldu. Test yalnız istədiyi fixture-un adını yazır."
+          },
+          "id": "cmwis895gd8cd074c21b2"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "tip",
+            "body": "`beforeEach` bir faylın testlərinə xidmət edir. Fixture bütün layihədə istifadə olunur və yalnız onu **istəyən** test üçün qurulur."
+          },
+          "id": "cmwis895g5927a8b793e5"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Data-driven: bir test, çox məlumat",
+            "level": 2
+          },
+          "id": "cmwis895gc9f334a655f2"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "const yanlisGirisler = [\n  { ad: 'boş email', email: '', sifre: 'Test123!', mesaj: 'Email tələb olunur' },\n  { ad: 'səhv format', email: 'aysel', sifre: 'Test123!', mesaj: 'Email düzgün deyil' },\n  { ad: 'qısa şifrə', email: 'aysel@mail.az', sifre: '12', mesaj: 'Şifrə ən azı 8 simvol olmalıdır' },\n];\n\nfor (const { ad, email, sifre, mesaj } of yanlisGirisler) {\n  test(`giriş rədd edilir: ${ad}`, async ({ girisSehifesi }) => {\n    await girisSehifesi.daxilOl(email, sifre);\n    await expect(girisSehifesi.xeta).toHaveText(mesaj);\n  });\n}",
+            "language": "javascript",
+            "caption": "Dövr üç ayrı test yaradır, hər biri öz adı ilə hesabatda görünür. Equivalence partitioning və boundary dəyərlərini buraya yazırsan."
+          },
+          "id": "cmwis895gd18fba571d84"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Unikal məlumat",
+            "level": 2
+          },
+          "id": "cmwis895g46b3de469b26"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "// utils/data.js\nexport function yeniIstifadeci() {\n  const nomre = Date.now();\n  return { ad: `Test ${nomre}`, email: `test${nomre}@mail.az`, sifre: 'Test123!' };\n}",
+            "language": "javascript",
+            "caption": "Qeydiyyat testi hər dəfə eyni email-i işlətsə, ikinci işə salmada \"bu email artıq var\" xətası alacaq. Unikal məlumat testi təkrarlana bilən edir."
+          },
+          "id": "cmwis895gd61d8f311bcd"
+        },
+        {
+          "type": "CATEGORIZE",
+          "content": {
+            "instructions": "Hər ehtiyac üçün uyğun alət hansıdır?",
+            "categories": [
+              {
+                "id": "fix",
+                "label": "Fixture"
+              },
+              {
+                "id": "data",
+                "label": "Data-driven dövr"
+              },
+              {
+                "id": "uniq",
+                "label": "Unikal məlumat generatoru"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "Hər testə hazır açılmış səbət səhifəsi lazımdır",
+                "categoryId": "fix"
+              },
+              {
+                "id": "i2",
+                "text": "Şifrə sahəsini 6 müxtəlif yanlış dəyərlə yoxlamaq",
+                "categoryId": "data"
+              },
+              {
+                "id": "i3",
+                "text": "Hər işə salmada yeni email ilə qeydiyyat",
+                "categoryId": "uniq"
+              },
+              {
+                "id": "i4",
+                "text": "Testdən sonra yaradılan sifarişi silmək",
+                "categoryId": "fix"
+              }
+            ]
+          },
+          "id": "cmwis895g6c2986846340"
+        },
+        {
+          "type": "TASK",
+          "content": {
+            "instructions": "TodoMVC layihən üçün:\n\n1. `fixtures.js`-də `todoSehifesi` fixture-u yaz: `TodoPage` yaradıb səhifəni açsın.\n2. Data-driven test yaz: bu üç mətn üçün tapşırığın siyahıda göründüyünü yoxla — adi mətn, 60 simvolluq uzun mətn, `<b>teq</b>` kimi xüsusi simvollu mətn.\n\nKodu və üç testin nəticəsini yaz. Hansısa mətn gözlənilməz davrandımı?",
+            "required": true,
+            "placeholder": "// fixtures.js\n…"
+          },
+          "title": "Praktika: fixture və data-driven test",
+          "id": "cmwis895gfece7587d027"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "Fixture testə hazır resurs verir və ondan sonra təmizlik aparır",
+              "`test.extend` ilə öz fixture-unu yazırsan; `use()`-dan əvvəl hazırlıq, sonra təmizlik",
+              "Dövr içində `test(...)` eyni məntiqi fərqli məlumatla işə salır",
+              "Unikal məlumat testləri təkrarlana bilən edir"
+            ]
+          },
+          "id": "cmwis895g3d62719c0db9"
+        },
+        {
+          "type": "QUIZ",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "`await use(sehife)` sətrindən **sonra** yazılan kod nə vaxt işləyir?",
+                "options": [
+                  "Testdən əvvəl",
+                  "Test bitdikdən sonra",
+                  "Heç vaxt",
+                  "Yalnız test uğursuz olanda"
+                ],
+                "correctIndex": 1,
+                "explanation": "`use`-a qədər hazırlıq, ondan sonra təmizlikdir."
+              },
+              {
+                "id": "q2",
+                "text": "`page` nədir?",
+                "options": [
+                  "Qlobal dəyişən",
+                  "Playwright-in daxili fixture-u",
+                  "Page Object",
+                  "Konfiqurasiya ayarı"
+                ],
+                "correctIndex": 1,
+                "explanation": "Playwright onu hər test üçün yaradır və verir."
+              },
+              {
+                "id": "q3",
+                "text": "Data-driven testin faydası nədir?",
+                "options": [
+                  "Bir test məntiqi çoxlu giriş dəyərini əhatə edir",
+                  "Testlər paralel işləmir",
+                  "Assertion yazmaq lazım olmur",
+                  "Brauzer açılmır"
+                ],
+                "correctIndex": 0,
+                "explanation": "Kod təkrarlanmır, yeni hal əlavə etmək bir sətirdir."
+              },
+              {
+                "id": "q4",
+                "text": "Qeydiyyat testində niyə `Date.now()` ilə email yaradılır?",
+                "options": [
+                  "Daha sürətli olsun deyə",
+                  "Hər işə salmada unikal olsun deyə",
+                  "Email-i gizlətmək üçün",
+                  "Playwright bunu tələb edir"
+                ],
+                "correctIndex": 1,
+                "explanation": "Təkrarlanan email ikinci işə salmada testi sındırar."
+              }
+            ]
+          },
+          "id": "cmwis895g62aeec8d0393"
+        }
+      ]
+    },
+    {
+      "slug": "authentication-storagestate",
+      "title": "Authentication: bir dəfə daxil ol, hər testdə istifadə et",
+      "shortDescription": "Girişi hər testdə təkrarlamaq əvəzinə sessiyanı storageState ilə saxlamaq və setup layihəsi qurmaq.",
+      "estimatedMinutes": 12,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "Hər testdə UI ilə daxil olmağın niyə bahalı olduğunu izah edə biləcəksən",
+              "`storageState` ilə sessiyanı fayla saxlaya biləcəksən",
+              "Setup layihəsi ilə girişi bütün testlərdən əvvəl bir dəfə icra edə biləcəksən"
+            ]
+          },
+          "id": "cmwis895gd94988b5c5a0"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "Session",
+                "az": "sessiya",
+                "definition": "Serverin səni tanıması üçün brauzerdə saxlanan məlumat"
+              },
+              {
+                "term": "Cookie",
+                "az": "",
+                "definition": "Saytın brauzerdə saxladığı kiçik məlumat; çox vaxt sessiya nişanı burada olur"
+              },
+              {
+                "term": "storageState",
+                "az": "",
+                "definition": "Context-in cookie və localStorage məlumatının JSON faylı"
+              },
+              {
+                "term": "Setup project",
+                "az": "hazırlıq layihəsi",
+                "definition": "Digər testlərdən əvvəl işləyən xüsusi Playwright layihəsi"
+              }
+            ]
+          },
+          "id": "cmwis895g2e403748dc33"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Problem",
+            "level": 2
+          },
+          "id": "cmwis895g142c9da6436e"
+        },
+        {
+          "type": "CHART",
+          "content": {
+            "kind": "bar",
+            "data": [
+              {
+                "label": "Hər testdə UI ilə giriş",
+                "value": 400,
+                "note": "200 test × 2 saniyə"
+              },
+              {
+                "label": "Bir dəfə giriş + storageState",
+                "value": 2,
+                "note": "1 × 2 saniyə"
+              }
+            ],
+            "unit": " san",
+            "caption": "Giriş 2 saniyə çəkirsə, onu hər testdə təkrarlamaq dəstə 6 dəqiqədən çox əlavə edir və giriş səhifəsindəki hər problem bütün testləri sındırır."
+          },
+          "title": "200 testdə girişə sərf olunan vaxt",
+          "id": "cmwis895ge6af4eb084a3"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Həll: sessiyanı saxla",
+            "level": 2
+          },
+          "id": "cmwis895gc6332367eaba"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "// tests/auth.setup.js\nimport { test as setup, expect } from '@playwright/test';\n\nconst authFayli = 'playwright/.auth/user.json';\n\nsetup('daxil ol', async ({ page }) => {\n  await page.goto('/giris');\n  await page.getByLabel('Email').fill(process.env.TEST_EMAIL);\n  await page.getByLabel('Şifrə').fill(process.env.TEST_SIFRE);\n  await page.getByRole('button', { name: 'Daxil ol' }).click();\n  await expect(page.getByRole('button', { name: 'Çıxış' })).toBeVisible();\n\n  await page.context().storageState({ path: authFayli });\n});",
+            "language": "javascript",
+            "caption": "Giriş bir dəfə UI ilə edilir, sonra cookie-lər fayla yazılır."
+          },
+          "id": "cmwis895g73bc73c5cc22"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "// playwright.config.js (yalnız projects hissəsi)\nprojects: [\n  { name: 'setup', testMatch: /.*\\.setup\\.js/ },\n  {\n    name: 'chromium',\n    use: { ...devices['Desktop Chrome'], storageState: 'playwright/.auth/user.json' },\n    dependencies: ['setup'],\n  },\n],",
+            "language": "javascript",
+            "caption": "`dependencies` — əvvəlcə `setup` işləsin. `storageState` — hər test artıq daxil olmuş context ilə başlasın."
+          },
+          "id": "cmwis895g74bc1a7692ad"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "warning",
+            "body": "`playwright/.auth` qovluğunu `.gitignore`-a əlavə et. Bu faylda real sessiya nişanı var; repoya düşsə, onu görən hər kəs həmin hesaba girə bilər."
+          },
+          "id": "cmwis895g47c81956d997"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Girişin özünü test etmək",
+            "level": 2
+          },
+          "id": "cmwis895g3078f71205f5"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "// tests/giris.spec.js — bu faylda saxlanmış sessiya istifadə olunmur\ntest.use({ storageState: { cookies: [], origins: [] } });\n\ntest('yanlış şifrə ilə giriş rədd edilir', async ({ page }) => { /* ... */ });",
+            "language": "javascript",
+            "caption": "Giriş funksiyasını yoxlayan testlər təmiz, daxil olmamış vəziyyətdən başlamalıdır."
+          },
+          "id": "cmwis895g25d879ffc68d"
+        },
+        {
+          "type": "ORDERING",
+          "content": {
+            "instructions": "`npx playwright test` işə düşəndə nə baş verir?",
+            "items": [
+              "`setup` layihəsi işə düşür",
+              "UI ilə giriş edilir",
+              "Sessiya `user.json` faylına yazılır",
+              "`chromium` layihəsinin testləri başlayır",
+              "Hər test faylda saxlanmış sessiya ilə açılır"
+            ]
+          },
+          "id": "cmwis895gbc2e78a20e48"
+        },
+        {
+          "type": "TASK",
+          "content": {
+            "instructions": "Giriş tələb edən istənilən demo sayt seç (məsələn `https://www.saucedemo.com`, istifadəçi `standard_user`, şifrə `secret_sauce`).\n\n1. `auth.setup.js` yaz və sessiyanı fayla saxla.\n2. Config-də `setup` layihəsini və `storageState`-i qur.\n3. Girişsiz birbaşa məhsullar səhifəsini açan və məhsul siyahısının göründüyünü yoxlayan test yaz.\n\nCavabında config-in `projects` hissəsini yaz və izah et: test girişi necə ötürdü?",
+            "required": true,
+            "placeholder": "projects: [\n  …\n]"
+          },
+          "title": "Praktika: saxlanmış sessiya",
+          "id": "cmwis895gcac1f302772e"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "UI ilə girişi hər testdə təkrarlamaq yavaş və kövrəkdir",
+              "`storageState` cookie və localStorage-i fayla yazır",
+              "Setup layihəsi + `dependencies` girişi bir dəfə icra edir",
+              "Auth faylı `.gitignore`-da olmalıdır; giriş testləri boş sessiya ilə başlayır"
+            ]
+          },
+          "id": "cmwis895g049bc9aa8bec"
+        },
+        {
+          "type": "QUIZ",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "`storageState` faylında nə saxlanır?",
+                "options": [
+                  "Test kodu",
+                  "Cookie-lər və localStorage",
+                  "Ekran görüntüləri",
+                  "Brauzerin özü"
+                ],
+                "correctIndex": 1,
+                "explanation": "Bu, context-in sessiya məlumatıdır."
+              },
+              {
+                "id": "q2",
+                "text": "`dependencies: ['setup']` nə edir?",
+                "options": [
+                  "setup layihəsini silir",
+                  "Bu layihədən əvvəl setup layihəsini işə salır",
+                  "Testləri paralel edir",
+                  "Brauzeri dəyişir"
+                ],
+                "correctIndex": 1,
+                "explanation": "Asılılıq sırası təmin edir: əvvəl giriş, sonra testlər."
+              },
+              {
+                "id": "q3",
+                "text": "Auth faylı niyə Git-ə düşməməlidir?",
+                "options": [
+                  "Çox böyükdür",
+                  "İçində real sessiya nişanı var",
+                  "Git JSON oxumur",
+                  "Testləri yavaşladır"
+                ],
+                "correctIndex": 1,
+                "explanation": "Sessiya nişanı parol kimidir."
+              },
+              {
+                "id": "q4",
+                "text": "Giriş funksiyasını yoxlayan test hansı vəziyyətdən başlamalıdır?",
+                "options": [
+                  "Daxil olmuş",
+                  "Daxil olmamış (boş storageState)",
+                  "Fərqi yoxdur",
+                  "Admin kimi"
+                ],
+                "correctIndex": 1,
+                "explanation": "Əks halda giriş səhifəsi dərhal yönləndirər və test heç nə yoxlamaz."
+              }
+            ]
+          },
+          "id": "cmwis895g0b90cdf9e82e"
+        }
+      ]
+    },
+    {
+      "slug": "api-testing-ve-mocking",
+      "title": "API testləri və mocking",
+      "shortDescription": "Playwright ilə birbaşa API sorğusu göndərmək, API ilə test məlumatı hazırlamaq və serverin cavabını saxta cavabla əvəz etmək.",
+      "estimatedMinutes": 14,
+      "minQuizScore": 70,
+      "blocks": [
+        {
+          "type": "OBJECTIVES",
+          "content": {
+            "items": [
+              "`request` fixture-u ilə GET və POST sorğusu göndərib cavabı yoxlaya biləcəksən",
+              "Test məlumatını UI əvəzinə API ilə hazırlaya biləcəksən",
+              "`page.route` ilə cavabı mock edib çətin vəziyyəti (boş siyahı, server xətası) yoxlaya biləcəksən"
+            ]
+          },
+          "id": "cmwis895g9d317c09d872"
+        },
+        {
+          "type": "KEY_TERMS",
+          "content": {
+            "terms": [
+              {
+                "term": "API request context",
+                "az": "",
+                "definition": "Brauzer olmadan HTTP sorğusu göndərən Playwright aləti (`request`)"
+              },
+              {
+                "term": "Mock",
+                "az": "saxta cavab",
+                "definition": "Real serverin əvəzinə testin özünün qaytardığı cavab"
+              },
+              {
+                "term": "Route",
+                "az": "",
+                "definition": "Müəyyən ünvana gedən sorğunu tutub idarə etmək"
+              },
+              {
+                "term": "Endpoint",
+                "az": "",
+                "definition": "API-nin bir ünvanı, məsələn `/api/products`"
+              }
+            ]
+          },
+          "id": "cmwis895g15e62f60c32e"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "API testi: brauzersiz",
+            "level": 2
+          },
+          "id": "cmwis895gb234d4abc4be"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "import { test, expect } from '@playwright/test';\n\ntest('məhsul siyahısı qayıdır', async ({ request }) => {\n  const cavab = await request.get('/api/products');\n\n  expect(cavab.status()).toBe(200);\n  const mehsullar = await cavab.json();\n  expect(mehsullar.length).toBeGreaterThan(0);\n  expect(mehsullar[0]).toHaveProperty('ad');\n});\n\ntest('yeni məhsul yaranır', async ({ request }) => {\n  const cavab = await request.post('/api/products', {\n    data: { ad: 'Siçan', qiymet: 25 },\n  });\n  expect(cavab.status()).toBe(201);\n});",
+            "language": "javascript",
+            "caption": "HTTP dərsindəki bilik birbaşa işləyir: metod, status code, JSON body. Burada `expect` locator üzərində deyil, adi dəyər üzərindədir, ona görə `await` yalnız sorğudadır."
+          },
+          "id": "cmwis895g550bda6876e0"
+        },
+        {
+          "type": "CHART",
+          "content": {
+            "kind": "pyramid",
+            "data": [
+              {
+                "label": "UI (E2E) testləri",
+                "value": 10,
+                "note": "yavaş, bahalı"
+              },
+              {
+                "label": "API testləri",
+                "value": 30,
+                "note": "sürətli, sabit"
+              },
+              {
+                "label": "Unit testləri",
+                "value": 60,
+                "note": "ən sürətli; developer yazır"
+              }
+            ],
+            "unit": "%",
+            "caption": "Nisbətlər nümunədir. Fikir budur: eyni şeyi API ilə yoxlamaq olursa, UI testi yazma."
+          },
+          "title": "Test piramidası",
+          "id": "cmwis895g8d336fc1806e"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "API ilə hazırlıq, UI ilə yoxlama",
+            "level": 2
+          },
+          "id": "cmwis895g280365bfa6e9"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "test('sifariş siyahıda görünür', async ({ page, request }) => {\n  // hazırlıq: sifarişi API ilə yarat (0.2 saniyə; UI ilə 15 saniyə çəkərdi)\n  const cavab = await request.post('/api/orders', { data: { mehsulId: 7, say: 2 } });\n  const { id } = await cavab.json();\n\n  // yoxlama: UI onu göstərirmi?\n  await page.goto('/sifarisler');\n  await expect(page.getByTestId(`sifaris-${id}`)).toBeVisible();\n});",
+            "language": "javascript",
+            "caption": "Ən güclü birləşmə: testin **məqsədi olmayan** addımları API ilə keç, yalnız yoxladığın hissəni UI ilə et."
+          },
+          "id": "cmwis895g5156cf582bad"
+        },
+        {
+          "type": "HEADING",
+          "content": {
+            "text": "Mocking: serverin cavabını əvəz etmək",
+            "level": 2
+          },
+          "id": "cmwis895gf1f287143dee"
+        },
+        {
+          "type": "TEXT",
+          "content": {
+            "body": "Bəzi vəziyyətləri real serverdə yaratmaq çətindir: boş siyahı, 500 xətası, çox yavaş cavab. `page.route` sorğunu tutur və sənin yazdığın cavabı qaytarır."
+          },
+          "id": "cmwis895g856a1e42e11c"
+        },
+        {
+          "type": "CODE",
+          "content": {
+            "code": "test('məhsul yoxdursa boş vəziyyət göstərilir', async ({ page }) => {\n  await page.route('**/api/products', (route) => route.fulfill({ json: [] }));\n\n  await page.goto('/mehsullar');\n  await expect(page.getByText('Hələ məhsul yoxdur')).toBeVisible();\n});\n\ntest('server xətasında mesaj göstərilir', async ({ page }) => {\n  await page.route('**/api/products', (route) => route.fulfill({ status: 500 }));\n\n  await page.goto('/mehsullar');\n  await expect(page.getByRole('alert')).toContainText('Xəta baş verdi');\n});",
+            "language": "javascript",
+            "caption": "`page.route` `page.goto`-dan **əvvəl** yazılmalıdır, yoxsa sorğu artıq getmiş olar."
+          },
+          "id": "cmwis895g8409e8b84904"
+        },
+        {
+          "type": "NOTE",
+          "content": {
+            "variant": "warning",
+            "body": "Mock yalnız frontend-in cavaba necə reaksiya verdiyini yoxlayır. Hər şeyi mock etsən, frontend ilə backend-in birlikdə işlədiyini heç bir test sübut etməyəcək. Əsas ssenarilər real serverlə, çətin və nadir vəziyyətlər mock ilə yoxlanır."
+          },
+          "id": "cmwis895g7556c8e59dfd"
+        },
+        {
+          "type": "CATEGORIZE",
+          "content": {
+            "instructions": "Hansı yanaşma uyğundur?",
+            "categories": [
+              {
+                "id": "api",
+                "label": "API testi"
+              },
+              {
+                "id": "ui",
+                "label": "UI testi"
+              },
+              {
+                "id": "mock",
+                "label": "UI + mock"
+              }
+            ],
+            "items": [
+              {
+                "id": "i1",
+                "text": "Endpoint düzgün status code qaytarır",
+                "categoryId": "api"
+              },
+              {
+                "id": "i2",
+                "text": "İstifadəçi səbətdən ödənişə qədər gedə bilir",
+                "categoryId": "ui"
+              },
+              {
+                "id": "i3",
+                "text": "Server 500 qaytaranda xəta mesajı çıxır",
+                "categoryId": "mock"
+              },
+              {
+                "id": "i4",
+                "text": "Yanlış token ilə sorğu 401 alır",
+                "categoryId": "api"
+              },
+              {
+                "id": "i5",
+                "text": "Nəticə siyahısı boş olanda \"tapılmadı\" yazılır",
+                "categoryId": "mock"
+              }
+            ]
+          },
+          "id": "cmwis895g4e6bcf343f74"
+        },
+        {
+          "type": "TASK",
+          "content": {
+            "instructions": "`https://jsonplaceholder.typicode.com` açıq API-si üçün (config-də `baseURL` kimi qur):\n\n1. `GET /posts/1` — status 200 və cavabda `title` sahəsinin olduğunu yoxla.\n2. `POST /posts` — `{ title: 'test', body: 'mətn', userId: 1 }` göndər, status 201 və cavabdakı `title`-ı yoxla.\n3. `GET /posts/99999` — hansı status code qayıdır? Bunu yoxlayan test yaz.\n\nÜç testin kodunu və 3-cü testdə nə gördüyünü yaz.",
+            "required": true,
+            "placeholder": "test('GET /posts/1', async ({ request }) => {\n  …\n});"
+          },
+          "title": "Praktika: üç API testi",
+          "id": "cmwis895ga8250ba3da5b"
+        },
+        {
+          "type": "SUMMARY",
+          "content": {
+            "points": [
+              "`request` fixture-u brauzersiz HTTP sorğusu göndərir: sürətli və sabit",
+              "Hazırlığı API ilə, yoxlamanı UI ilə etmək testi qısaldır",
+              "`page.route` + `route.fulfill` cavabı mock edir; `goto`-dan əvvəl yazılır",
+              "Mock nadir vəziyyətlər üçündür, əsas axın real serverlə yoxlanır"
+            ]
+          },
+          "id": "cmwis895gf0bb64ce0eee"
+        },
+        {
+          "type": "QUIZ",
+          "content": {
+            "questions": [
+              {
+                "id": "q1",
+                "text": "API testi UI testindən niyə sürətlidir?",
+                "options": [
+                  "Brauzer və səhifə render olunmur",
+                  "Daha az assertion var",
+                  "Server sürətlənir",
+                  "Paralel işləmir"
+                ],
+                "correctIndex": 0,
+                "explanation": "Sorğu birbaşa serverə gedir, vizual hissə yoxdur."
+              },
+              {
+                "id": "q2",
+                "text": "`route.fulfill({ status: 500 })` nə edir?",
+                "options": [
+                  "Serveri söndürür",
+                  "Sorğuya real server əvəzinə 500 cavabı qaytarır",
+                  "Testi uğursuz edir",
+                  "Sorğunu təkrarlayır"
+                ],
+                "correctIndex": 1,
+                "explanation": "Brauzer cavabın serverdən gəldiyini düşünür; frontend-in reaksiyasını yoxlayırsan."
+              },
+              {
+                "id": "q3",
+                "text": "`page.route` niyə `page.goto`-dan əvvəl yazılır?",
+                "options": [
+                  "Sintaksis belə tələb edir",
+                  "Səhifə açılanda sorğu dərhal gedir; tutmaq üçün əvvəlcədən hazır olmalısan",
+                  "Daha gözəl görünür",
+                  "Fərqi yoxdur"
+                ],
+                "correctIndex": 1,
+                "explanation": "Gec qurulan route artıq getmiş sorğunu tuta bilməz."
+              },
+              {
+                "id": "q4",
+                "text": "Hər şeyi mock etməyin riski nədir?",
+                "options": [
+                  "Testlər yavaşlayır",
+                  "Frontend ilə backend-in birlikdə işlədiyi yoxlanmır",
+                  "Brauzer açılmır",
+                  "Hesabat yaranmır"
+                ],
+                "correctIndex": 1,
+                "explanation": "Mock real inteqrasiyanı əvəz etmir."
+              }
+            ]
+          },
+          "id": "cmwis895ge24e09cc7948"
+        }
+      ]
+    }
+  ]
+}
