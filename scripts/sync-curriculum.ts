@@ -15,6 +15,14 @@ import { readdirSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 import { randomBytes } from "node:crypto";
 import { PrismaClient } from "@prisma/client";
+
+// `tsx` does not read .env the way the Prisma CLI does; load it here so the
+// script works with a plain `npm run …`. On a server the variables are already set.
+try {
+  process.loadEnvFile();
+} catch {
+  // no .env file: rely on the environment
+}
 import { validateBlock } from "../src/lib/block-schema";
 
 const DRY = process.argv.includes("--dry-run");
@@ -27,7 +35,7 @@ type FileLesson = {
   id?: string; slug: string; title: string; shortDescription?: string; estimatedMinutes?: number;
   minQuizScore?: number; published?: boolean; blocks: FileBlock[];
 };
-type FileModule = { id?: string; key: string; order: number; title: string; description?: string; icon?: string; color?: string; published?: boolean; lessons: FileLesson[] };
+type FileModule = { id?: string; key: string; order: number; title: string; description?: string; icon?: string; color?: string; published?: boolean; track?: "manual" | "automation"; lessons: FileLesson[] };
 
 const newId = () => "c" + Date.now().toString(36) + randomBytes(8).toString("hex").slice(0, 12);
 
@@ -89,7 +97,7 @@ async function main() {
       where: { id: m.id! },
       data: {
         title: m.title, description: m.description ?? null, order: m.order,
-        icon: m.icon ?? "BookOpen", coverColor: m.color ?? "#5b4bff", published: m.published ?? true,
+        icon: m.icon ?? "BookOpen", coverColor: m.color ?? "#5b4bff", published: m.published ?? true, track: m.track ?? "manual",
       },
     });
 

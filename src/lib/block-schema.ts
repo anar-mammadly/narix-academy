@@ -22,6 +22,12 @@ export const contentSchemas: Record<BlockType, z.ZodTypeAny> = {
   STEPPER: z.object({ steps: z.array(z.object({ title: text, description: str, icon: str.optional() })).min(1) }),
   CODE: z.object({ code: str, language: str, caption: str.optional() }),
   DIAGRAM: z.object({ code: text, caption: str.optional() }),
+  CHART: z.object({
+    kind: z.enum(["bar", "columns", "line", "donut", "pyramid"]),
+    data: z.array(z.object({ label: text, value: z.number().finite().min(0), note: str.optional() })).min(2).max(12),
+    unit: str.optional(),
+    caption: str.optional(),
+  }),
   CHECKLIST: z.object({ items: z.array(z.object({ id: text, text: text })).min(1) }),
   SUMMARY: z.object({ points: z.array(text).min(1) }),
   DIVIDER: z.object({}).passthrough(),

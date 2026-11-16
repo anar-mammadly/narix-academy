@@ -4,7 +4,9 @@ import { ArrowRight, Check, Clock, Flame, Lock, Repeat, Target, Trophy, Zap } fr
 import { getSession } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { flattenPath, getStudentPath } from "@/lib/curriculum";
-import { leaderboard, weekActivity } from "@/lib/stats";
+import { leaderboard, recentActivity, weekActivity } from "@/lib/stats";
+import { getAppearance } from "@/lib/site-settings";
+import { ChartBlock } from "@/components/lesson/blocks/Chart";
 import { ACHIEVEMENTS, levelFromXp } from "@/lib/game";
 import { cn } from "@/lib/utils";
 import { buttonStyles } from "@/components/ui/Button";
@@ -23,13 +25,15 @@ export default async function DashboardPage() {
   const session = await getSession();
   if (!session) redirect("/login");
 
-  const [path, user, week, reviewDue, owned, board] = await Promise.all([
+  const [path, user, week, reviewDue, owned, board, twoWeeks, appearance] = await Promise.all([
     getStudentPath(session.userId),
     prisma.user.findUniqueOrThrow({ where: { id: session.userId }, select: { name: true, xp: true, streakCount: true, longestStreak: true, dailyGoalXp: true } }),
     weekActivity(session.userId),
     prisma.reviewItem.count({ where: { userId: session.userId, dueAt: { lte: new Date() } } }),
     prisma.userAchievement.findMany({ where: { userId: session.userId }, orderBy: { unlockedAt: "desc" } }),
     leaderboard("week"),
+    recentActivity(session.userId, 14),
+    getAppearance(),
   ]);
 
   const lessons = flattenPath(path);
@@ -207,6 +211,23 @@ export default async function DashboardPage() {
           </section>
         </div>
       </div>
+      {/* Charts — switched on and off under Admin → Görünüş */}
+      {appearance.dashboardCharts && (
+        <section aria-label="Statistika" className="grid gap-4 lg:grid-cols-2">
+          <ChartBlock
+            title="Son 14 gündə qazandığın XP"
+            c={{ kind: "columns", data: twoWeeks.map((d) => ({ label: String(Number(d.day.slice(8))), value: d.xp })), caption: "Hər sütun bir gündür; sonuncu sütun bu gündür." }}
+          />
+          <ChartBlock
+            title="Modullar üzrə irəliləyiş"
+            c={{
+              kind: "bar",
+              unit: "%",
+              data: path.slice(0, 12).map((m) => ({ label: m.title, value: m.lessons.length ? Math.round((m.done / m.lessons.length) * 100) : 0, note: `${m.done}/${m.lessons.length} dərs` })),
+            }}
+          />
+        </section>
+      )}
     </div>
   );
 }

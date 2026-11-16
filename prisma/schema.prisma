@@ -53,6 +53,8 @@ model Module {
   published   Boolean  @default(false)
   coverColor  String   @default("#2563eb")
   icon        String   @default("BookOpen")
+  // "manual" or "automation": the path groups modules under a track heading
+  track       String   @default("manual")
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -324,4 +326,12 @@ model ReviewItem {
 
   @@unique([userId, blockId, questionId])
   @@index([userId, dueAt])
+}
+
+// Site-wide settings changed from the admin panel (key → JSON value),
+// e.g. "appearance": which charts and illustrations are shown.
+model SiteSetting {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
 }

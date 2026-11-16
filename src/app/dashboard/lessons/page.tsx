@@ -4,6 +4,8 @@ import { redirect } from "next/navigation";
 import { ArrowRight, Check, Clock, Lock, Play } from "lucide-react";
 import { getSession } from "@/lib/auth";
 import { getStudentPath, type PathLesson } from "@/lib/curriculum";
+import { getAppearance } from "@/lib/site-settings";
+import { ModuleArt } from "@/components/charts/ModuleArt";
 import { cn } from "@/lib/utils";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { ProgressBar } from "@/components/ui/ProgressBar";
@@ -15,7 +17,7 @@ export const metadata: Metadata = { title: "Öyrənmə yolu" };
 export default async function LessonsPage({ searchParams }: { searchParams: Promise<{ locked?: string }> }) {
   const session = await getSession();
   if (!session) redirect("/login");
-  const [path, { locked }] = await Promise.all([getStudentPath(session.userId), searchParams]);
+  const [path, { locked }, appearance] = await Promise.all([getStudentPath(session.userId), searchParams, getAppearance()]);
 
   const total = path.reduce((s, m) => s + m.lessons.length, 0);
   const done = path.reduce((s, m) => s + m.done, 0);
@@ -53,11 +55,12 @@ export default async function LessonsPage({ searchParams }: { searchParams: Prom
             return (
               <li key={m.id} className="overflow-clip rounded-2xl border border-line bg-surface">
                 <div className="relative flex items-start gap-4 p-5 sm:p-6" style={{ background: `linear-gradient(135deg, color-mix(in oklab, ${m.color} 14%, transparent), transparent 65%)` }}>
+                  {appearance.moduleArt && <ModuleArt color={m.color} index={mi} className="pointer-events-none absolute right-2 top-1/2 hidden h-[120px] w-[220px] -translate-y-1/2 opacity-70 sm:block" />}
                   <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl text-white shadow-pop" style={{ background: m.color }}>
                     <ModuleIcon name={m.icon} className="h-6 w-6" />
                   </span>
                   <div className="min-w-0 flex-1">
-                    <p className="text-xs font-medium text-muted">Modul {mi + 1}</p>
+                    <p className="text-xs font-medium text-muted">{m.track === "automation" ? "Avtomatlaşdırma" : "Manual QA"} · Modul {mi + 1}</p>
                     <h2 className="font-display text-lg font-semibold text-ink sm:text-xl">{m.title}</h2>
                     {m.description && <p className="mt-1 text-sm text-ink-2">{m.description}</p>}
                     <div className="mt-3 flex items-center gap-3">

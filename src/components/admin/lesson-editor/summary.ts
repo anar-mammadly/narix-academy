@@ -24,6 +24,7 @@ export function blockSummary(type: BlockType, raw: unknown): string {
     case "STEPPER": return `${count(c.steps)} addım`;
     case "CODE": return `${str(c.language) || "kod"} · ${typeof c.code === "string" ? c.code.split("\n").length : 0} sətir`;
     case "DIAGRAM": return str(c.caption) || "Mermaid diaqramı";
+    case "CHART": return `${str(c.kind) || "qrafik"} · ${count(c.data)} dəyər`;
     case "CHECKLIST": return `${count(c.items)} bənd`;
     case "SUMMARY": return `${count(c.points)} əsas fikir`;
     case "DIVIDER": return "";

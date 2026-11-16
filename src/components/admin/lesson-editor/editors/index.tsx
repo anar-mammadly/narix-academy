@@ -6,6 +6,7 @@ import type { EditorProps } from "../types";
 import * as R from "./reading";
 import { ImageEditor, VideoEditor } from "./media";
 import { TableEditor } from "./TableEditor";
+import { ChartEditor } from "./visual";
 import { BugHuntEditor, CategorizeEditor, OrderingEditor, QuizEditor, TaskEditor } from "./interactive";
 
 type FormEditors = { [K in BlockType]?: (props: EditorProps<BlockContentMap[K]>) => ReactNode };
@@ -23,6 +24,7 @@ const FORMS: FormEditors = {
   CALLOUT: R.CalloutEditor,
   STEPPER: R.StepperEditor,
   CODE: R.CodeEditor,
+  CHART: ChartEditor,
   CHECKLIST: R.ChecklistEditor,
   SUMMARY: R.SummaryEditor,
   QUIZ: QuizEditor,

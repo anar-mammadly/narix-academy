@@ -13,6 +13,14 @@ import { join } from "node:path";
 import bcrypt from "bcryptjs";
 import { PrismaClient } from "@prisma/client";
 
+// `tsx` does not read .env the way the Prisma CLI does; load it here so the
+// script works with a plain `npm run …`. On a server the variables are already set.
+try {
+  process.loadEnvFile();
+} catch {
+  // no .env file: rely on the environment
+}
+
 const prisma = new PrismaClient();
 
 type LegacyModule = {

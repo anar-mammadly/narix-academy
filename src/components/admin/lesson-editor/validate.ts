@@ -10,7 +10,7 @@ const PATH_LABEL: Record<string, string> = {
   instructions: "təlimat", code: "kod", solution: "həll", assert: "yoxlama", name: "ad", feature: "funksiya",
   requirement: "tələb", expected: "gözlənilən nəticə", actual: "faktiki nəticə", scenario: "ssenari", baseUrl: "baza URL",
   path: "yol", status: "status", correctIndex: "düzgün cavab", categoryId: "kateqoriya", sampleSolution: "nümunə həll",
-  minSteps: "minimum addım", level: "səviyyə", url: "URL",
+  minSteps: "minimum addım", level: "səviyyə", url: "URL", data: "Dəyər", value: "rəqəm", kind: "növ",
 };
 
 function humanPath(path: (string | number)[]) {

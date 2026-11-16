@@ -18,6 +18,7 @@ export const BLOCK_TYPES = [
   "STEPPER",
   "CODE",
   "DIAGRAM",
+  "CHART",
   "CHECKLIST",
   "SUMMARY",
   "DIVIDER",
@@ -60,6 +61,19 @@ export type CalloutContent = { emoji?: string; title: string; body: string; colo
 export type StepperContent = { steps: { title: string; description: string; icon?: string }[] };
 export type CodeContent = { code: string; language: string; caption?: string };
 export type DiagramContent = { code: string; caption?: string };
+// A small data chart drawn by the platform (no image file):
+//   bar      horizontal bars, good for comparing named things
+//   columns  vertical columns, good for a few values over time
+//   line     a trend
+//   donut    shares of a whole
+//   pyramid  layers from a narrow top to a wide base (first item = top)
+export type ChartKind = "bar" | "columns" | "line" | "donut" | "pyramid";
+export type ChartContent = {
+  kind: ChartKind;
+  data: { label: string; value: number; note?: string }[];
+  unit?: string; // shown after each value, e.g. "%" or " san"
+  caption?: string;
+};
 export type ChecklistContent = { items: { id: string; text: string }[] };
 export type SummaryContent = { points: string[] };
 export type DividerContent = Record<string, never>;
@@ -147,6 +161,7 @@ export type BlockContentMap = {
   STEPPER: StepperContent;
   CODE: CodeContent;
   DIAGRAM: DiagramContent;
+  CHART: ChartContent;
   CHECKLIST: ChecklistContent;
   SUMMARY: SummaryContent;
   DIVIDER: DividerContent;
@@ -168,7 +183,11 @@ export type LessonBlockData = {
   content: string; // JSON of BlockContentMap[type]
   imageUrl?: string | null;
   order: number;
+  /** Switched off by the teacher: kept in the editor, not shown to students. */
+  hidden?: boolean;
 };
+/** Blocks that are pictures rather than text; the teacher can switch them all off at once. */
+export const VISUAL_BLOCKS: BlockType[] = ["IMAGE", "DIAGRAM", "CHART"];
 
 export type Role = "TEACHER" | "STUDENT";
 export type Lang = "az" | "en";

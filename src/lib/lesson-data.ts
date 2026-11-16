@@ -2,7 +2,7 @@ import "server-only";
 import { prisma } from "./prisma";
 import type { PlayerLesson } from "@/components/lesson/LessonPlayer";
 import type { QuestionItem } from "@/components/lesson/LessonPanels";
-import type { BlockType } from "@/types/blocks";
+import { VISUAL_BLOCKS, type BlockType } from "@/types/blocks";
 
 const lessonInclude = {
   module: { select: { title: true, coverColor: true } },
@@ -15,7 +15,20 @@ export async function loadLesson(where: { slug: string } | { id: string }) {
 
 type Loaded = NonNullable<Awaited<ReturnType<typeof loadLesson>>>;
 
-export function toPlayerLesson(l: Loaded): PlayerLesson {
+function hiddenByTeacher(settings: string) {
+  try {
+    return (JSON.parse(settings) as { hidden?: unknown }).hidden === true;
+  } catch {
+    return false;
+  }
+}
+/**
+ * The lesson as a student sees it: blocks the teacher switched off are left
+ * out, and so are all pictures, diagrams and charts when `visuals` is false
+ * (Admin → Görünüş).
+ */
+export function toPlayerLesson(l: Loaded, { visuals = true }: { visuals?: boolean } = {}): PlayerLesson {
+  const blocks = l.blocks.filter((b) => !hiddenByTeacher(b.settings) && (visuals || !VISUAL_BLOCKS.includes(b.type as BlockType)));
   return {
     id: l.id,
     slug: l.slug,
@@ -24,7 +37,7 @@ export function toPlayerLesson(l: Loaded): PlayerLesson {
     estimatedMinutes: l.estimatedMinutes,
     minQuizScore: l.minQuizScore,
     module: { title: l.module.title, color: l.module.coverColor },
-    blocks: l.blocks.map((b) => ({ id: b.id, type: b.type as BlockType, title: b.title, content: b.content, imageUrl: b.imageUrl, order: b.order })),
+    blocks: blocks.map((b) => ({ id: b.id, type: b.type as BlockType, title: b.title, content: b.content, imageUrl: b.imageUrl, order: b.order })),
   };
 }
 

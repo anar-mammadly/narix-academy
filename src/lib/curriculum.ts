@@ -18,6 +18,8 @@ export type PathModule = {
   icon: string;
   color: string;
   order: number;
+  /** "manual" or "automation" */
+  track: string;
   lessons: PathLesson[];
   done: number;
 };
@@ -69,7 +71,7 @@ export async function getStudentPath(userId: string): Promise<PathModule[]> {
           return { ...l, status };
         });
       return {
-        id: m.id, title: m.title, description: m.description, icon: m.icon, color: m.coverColor, order: m.order,
+        id: m.id, title: m.title, description: m.description, icon: m.icon, color: m.coverColor, order: m.order, track: m.track,
         lessons, done: lessons.filter((l) => l.status === "done").length,
       };
     })

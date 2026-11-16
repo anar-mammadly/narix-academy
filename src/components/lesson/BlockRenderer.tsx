@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { parseJson, type BlockType, type LessonBlockData } from "@/types/blocks";
 import type { AttemptState } from "./shared";
 import * as R from "./blocks/ReadingBlocks";
+import { ChartBlock } from "./blocks/Chart";
 import Quiz from "./blocks/Quiz";
 import Ordering from "./blocks/Ordering";
 import Categorize from "./blocks/Categorize";
@@ -37,6 +38,7 @@ export function BlockRenderer({
     case "STEPPER": return <R.StepperBlock c={c} title={block.title} />;
     case "CODE": return <R.CodeBlock c={c} title={block.title} />;
     case "DIAGRAM": return <R.DiagramBlock c={c} />;
+    case "CHART": return <ChartBlock c={c} title={block.title} />;
     case "CHECKLIST": return <R.ChecklistBlock c={c} title={block.title} blockId={block.id} />;
     case "SUMMARY": return <R.SummaryBlock c={c} />;
     case "DIVIDER": return <R.DividerBlock />;

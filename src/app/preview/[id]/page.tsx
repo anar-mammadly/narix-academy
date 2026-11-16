@@ -4,6 +4,7 @@ import { requireTeacher } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { loadLesson, toPlayerLesson } from "@/lib/lesson-data";
 import LessonPlayer from "@/components/lesson/LessonPlayer";
+import { getAppearance } from "@/lib/site-settings";
 
 export default async function LessonPreviewPage({ params }: { params: Promise<{ id: string }> }) {
   const session = await requireTeacher();
@@ -26,7 +27,7 @@ export default async function LessonPreviewPage({ params }: { params: Promise<{ 
         <Eye className="h-4 w-4" aria-hidden /> Önizləmə — tələbə dərsi belə görür. Cavablar saxlanılmır.
       </div>
       <LessonPlayer
-        lesson={toPlayerLesson(lesson)}
+        lesson={toPlayerLesson(lesson, { visuals: (await getAppearance()).lessonVisuals })}
         attempts={{}}
         submissions={{}}
         note=""

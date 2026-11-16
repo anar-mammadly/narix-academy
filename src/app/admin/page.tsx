@@ -15,6 +15,9 @@ import { Avatar } from "@/components/ui/Avatar";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { buttonStyles } from "@/components/ui/Button";
+import { moduleCompletion, recentCompletions } from "@/lib/stats";
+import { getAppearance } from "@/lib/site-settings";
+import { ChartBlock } from "@/components/lesson/blocks/Chart";
 
 export const metadata: Metadata = { title: "Ümumi baxış" };
 
@@ -28,6 +31,8 @@ type ActivityItem = { id: string; at: Date; who: string; text: string; href: str
 export default async function AdminPage() {
   const session = await requireTeacher();
   const weekAgo = daysAgo(7);
+  const appearance = await getAppearance();
+  const [completions, completion] = appearance.adminCharts ? await Promise.all([recentCompletions(14), moduleCompletion()]) : [[], []];
 
   const [{ rows: students, totalLessons: total }, openQuestions, ungraded, activeWeek, recentDone, recentHw, recentQ] = await Promise.all([
     loadStudentRows(),
@@ -152,6 +157,19 @@ export default async function AdminPage() {
           )}
         </Card>
       </div>
+      {/* Charts — switched on and off under Admin → Görünüş */}
+      {appearance.adminCharts && completion.length > 0 && (
+        <section aria-label="Qrafiklər" className="mt-6 grid gap-4 lg:grid-cols-2">
+          <ChartBlock
+            title="Son 14 gündə tamamlanan dərslər"
+            c={{ kind: "columns", data: completions.map((d) => ({ label: String(Number(d.day.slice(8))), value: d.count })), caption: "Bütün tələbələr üzrə; sonuncu sütun bu gündür." }}
+          />
+          <ChartBlock
+            title="Modulların tamamlanması"
+            c={{ kind: "bar", unit: "%", data: completion.slice(0, 12).map((m) => ({ label: m.title, value: m.percent })), caption: "Hər modulun dərslərinin orta hesabla neçə faizi bitirilib." }}
+          />
+        </section>
+      )}
     </div>
   );
 }

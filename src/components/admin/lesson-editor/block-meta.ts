@@ -1,7 +1,7 @@
 import {
   AlignLeft, Bug, Code2, FileCode2, FileWarning, Columns3, GitBranch, Heading, Image as ImageIcon, Lightbulb,
   ListChecks, ListOrdered, ListTodo, Megaphone, Minus, Network, NotebookPen, PencilLine, Rows3, Shapes,
-  BookMarked, Target, TestTubes, Video, CircleHelp, type LucideIcon, ClipboardCheck,
+  BookMarked, Target, TestTubes, Video, CircleHelp, type LucideIcon, ClipboardCheck, ChartColumn,
 } from "lucide-react";
 import type { BadgeTone } from "@/components/ui/Badge";
 import { BLOCK_TYPES, type BlockContentMap, type BlockType } from "@/types/blocks";
@@ -36,6 +36,7 @@ export const BLOCK_META: Record<BlockType, BlockMeta> = {
   STEPPER: { label: "Addımlar", description: "Ardıcıl proses addım-addım", icon: ListOrdered, group: "read", tone: "iris" },
   CODE: { label: "Kod", description: "Sintaksis rəngləməsi ilə kod nümunəsi", icon: Code2, group: "read", tone: "neutral" },
   DIAGRAM: { label: "Diaqram", description: "Mermaid ilə axın sxemi", icon: GitBranch, group: "read", tone: "iris" },
+  CHART: { label: "Qrafik", description: "Rəqəmlərdən sütun, xətt, dairə və ya piramida", icon: ChartColumn, group: "read", tone: "sky" },
   CHECKLIST: { label: "Yoxlama siyahısı", description: "Tələbənin işarələdiyi siyahı", icon: ListTodo, group: "read", tone: "pass" },
   SUMMARY: { label: "Xülasə", description: "Dərsin əsas fikirləri", icon: Rows3, group: "read", tone: "pass" },
   DIVIDER: { label: "Ayırıcı", description: "Bölmələr arasında xətt", icon: Minus, group: "read", tone: "neutral" },
@@ -90,6 +91,12 @@ export function defaultContent<T extends BlockType>(type: T): BlockContentMap[T]
     STEPPER: () => ({ steps: [{ title: "Birinci addım", description: "" }, { title: "İkinci addım", description: "" }] }),
     CODE: () => ({ code: "", language: "javascript", caption: "" }),
     DIAGRAM: () => ({ code: "flowchart LR\n  A[Tələb] --> B[Test case]\n  B --> C[İcra]\n  C --> D{Keçdi?}\n  D -- Bəli --> E[Bağla]\n  D -- Xeyr --> F[Bug report]", caption: "" }),
+    CHART: () => ({
+      kind: "bar",
+      unit: "%",
+      caption: "",
+      data: [{ label: "Birinci", value: 60 }, { label: "İkinci", value: 40 }],
+    }),
     CHECKLIST: () => ({ items: [{ id: uid("c"), text: "Birinci yoxlama" }, { id: uid("c"), text: "İkinci yoxlama" }] }),
     SUMMARY: () => ({ points: ["Əsas fikir"] }),
     DIVIDER: () => ({}),
