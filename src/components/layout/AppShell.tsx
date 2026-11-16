@@ -100,9 +100,9 @@ export function AppShell({ role, user, children }: { role: "STUDENT" | "TEACHER"
 
       {/* Desktop sidebar */}
       <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 flex-col border-r border-line bg-surface lg:flex">
-        <div className="flex h-16 items-center justify-between px-5">
-          <Link href={role === "STUDENT" ? "/dashboard" : "/admin"} aria-label="Narix Academy — ana səhifə"><Logo /></Link>
-          <ThemeToggle />
+        <div className="flex h-16 items-center justify-between gap-2 pl-5 pr-2.5">
+          <Link href={role === "STUDENT" ? "/dashboard" : "/admin"} className="min-w-0" aria-label="Narix Academy — ana səhifə"><Logo /></Link>
+          <ThemeToggle className="shrink-0" />
         </div>
         {role === "STUDENT" && <GameCard user={user} />}
         {nav}
