@@ -15,12 +15,12 @@ export function Logo({ compact, className }: { compact?: boolean; className?: st
     );
   }
   return (
-    <span className={cn("inline-flex items-center gap-2", className)}>
+    <span className={cn("inline-flex min-w-0 items-center gap-1.5", className)}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/brand/narix-logo.png" alt="Narix" width={104} height={23} className="h-[23px] w-auto dark:hidden" />
+      <img src="/brand/narix-logo.png" alt="Narix" width={90} height={20} className="h-5 w-auto shrink-0 dark:hidden" />
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/brand/narix-logo-light.png" alt="" aria-hidden width={104} height={23} className="hidden h-[23px] w-auto dark:block" />
-      <span className="border-l border-line-strong pl-2 font-display text-[0.95rem] font-medium leading-none tracking-tight text-muted">academy</span>
+      <img src="/brand/narix-logo-light.png" alt="" aria-hidden width={90} height={20} className="hidden h-5 w-auto shrink-0 dark:block" />
+      <span className="border-l border-line-strong pl-1.5 font-display text-sm font-medium leading-none tracking-tight text-muted">academy</span>
     </span>
   );
 }

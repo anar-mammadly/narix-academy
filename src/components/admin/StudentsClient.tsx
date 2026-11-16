@@ -4,7 +4,7 @@ import { RelativeTime } from "@/components/ui/RelativeTime";
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Flame, Search, UserPlus, Users, Zap } from "lucide-react";
+import { Flame, Search, Trash2, UserCheck, UserPlus, UserX, Users, Zap } from "lucide-react";
 import { Input } from "@/components/ui/Input";
 import { Tabs } from "@/components/ui/Tabs";
 import { Avatar } from "@/components/ui/Avatar";
@@ -78,15 +78,30 @@ export function StudentsClient({ rows, totalLessons, initialFilter, serverNow }:
     }
   }
 
-  function accountActions(student: StudentRow) {
+  // `compact` (the desktop table) uses icon buttons so the column stays narrow;
+  // the phone cards have room for buttons with words.
+  function accountActions(student: StudentRow, compact = false) {
+    const toggleLabel = student.isActive ? "Deaktiv et" : "Aktiv et";
+    if (compact) {
+      const iconButton = "grid h-9 w-9 place-items-center rounded-lg text-ink-2 transition-colors disabled:opacity-50";
+      return (
+        <div className="flex items-center justify-end gap-1">
+          <button type="button" title={toggleLabel} aria-label={`${student.name}: ${toggleLabel.toLocaleLowerCase("az")}`} disabled={busy !== null} onClick={() => changeAccount(student)} className={cn(iconButton, "hover:bg-surface-2 hover:text-ink")}>
+            {student.isActive ? <UserX className="h-4 w-4" aria-hidden /> : <UserCheck className="h-4 w-4" aria-hidden />}
+          </button>
+          <button type="button" title="Hesabı sil" aria-label={`${student.name}: hesabı sil`} disabled={busy !== null} onClick={() => changeAccount(student, true)} className={cn(iconButton, "hover:bg-bug-soft hover:text-bug")}>
+            <Trash2 className="h-4 w-4" aria-hidden />
+          </button>
+        </div>
+      );
+    }
     return <div className="flex flex-wrap gap-2">
-      <Button size="sm" variant="secondary" disabled={busy !== null} loading={busy === student.id} onClick={() => changeAccount(student)} aria-label={`${student.name}: ${student.isActive ? "deaktiv et" : "aktiv et"}`}>
-        {student.isActive ? "Deaktiv et" : "Aktiv et"}
+      <Button size="sm" variant="secondary" disabled={busy !== null} loading={busy === student.id} onClick={() => changeAccount(student)} aria-label={`${student.name}: ${toggleLabel.toLocaleLowerCase("az")}`}>
+        {toggleLabel}
       </Button>
       <Button size="sm" variant="danger-ghost" disabled={busy !== null} onClick={() => changeAccount(student, true)} aria-label={`${student.name}: hesabı sil`}>Sil</Button>
     </div>;
   }
-
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<Filter>(initialFilter);
   const [sort, setSort] = useState<Sort>("name");
@@ -162,55 +177,59 @@ export function StudentsClient({ rows, totalLessons, initialFilter, serverNow }:
         <EmptyState icon={<Search className="h-6 w-6" />} title="Uyğun tələbə tapılmadı" description="Axtarışı və ya filtri dəyişin." />
       ) : (
         <>
-          {/* Desktop table */}
+          {/* Desktop table. Six columns that fit the page at every width: the name
+              column takes what is left and shortens long names; streak and last
+              activity appear from wide screens up (below that, last activity moves
+              under the name). */}
           <div className="hidden md:block">
             <Table>
               <TableHead>
                 <tr>
-                  <TableTh>Tələbə</TableTh>
+                  <TableTh className="w-full">Tələbə</TableTh>
                   <TableTh>İrəliləyiş</TableTh>
-                  <TableTh>XP</TableTh>
-                  <TableTh>Səviyyə</TableTh>
-                  <TableTh>Seriya</TableTh>
-                  <TableTh>Son aktivlik</TableTh>
-                  <TableTh>Hesab</TableTh>
-                  <TableTh>Əməliyyatlar</TableTh>
+                  <TableTh>XP və səviyyə</TableTh>
+                  <TableTh className="hidden xl:table-cell">Seriya</TableTh>
+                  <TableTh className="hidden xl:table-cell">Son aktivlik</TableTh>
+                  <TableTh className="text-right">Hesab</TableTh>
                 </tr>
               </TableHead>
               <TableBody className="bg-surface">
                 {list.map((r) => (
                   <TableRow key={r.id} className="align-middle hover:bg-surface-2/60">
-                    <TableTd className="min-w-56">
+                    <TableTd className="w-full min-w-0 max-w-0">
                       <div className="flex items-center gap-3">
                         <Avatar name={r.name} src={r.avatarUrl} size="sm" />
                         <div className="min-w-0">
-                          <div className="truncate font-semibold text-ink">{r.name}</div>
-                          <div className="truncate text-xs text-muted">{r.email}</div>
+                          <div className="truncate font-semibold text-ink" title={r.name}>{r.name}</div>
+                          <div className="truncate text-xs text-muted" title={r.email}>{r.email}</div>
+                          <div className={cn("truncate text-xs xl:hidden", isInactive(r, now) ? "text-flame" : "text-muted")}>Son aktivlik: {lastLabel(r.lastActive)}</div>
                         </div>
                       </div>
                     </TableTd>
-                    <TableTd className="min-w-44">
+                    <TableTd className="min-w-0 whitespace-nowrap">
                       <div className="flex items-center gap-2">
-                        <ProgressBar value={r.progress} size="sm" tone="pass" label={`${r.name}: irəliləyiş`} className="w-24" />
+                        <ProgressBar value={r.progress} size="sm" tone="pass" label={`${r.name}: irəliləyiş`} className="w-16 lg:w-20" />
                         <span className="tabular-nums text-ink">{r.progress}%</span>
                       </div>
                       <div className="mt-0.5 text-xs text-muted">{r.completed}/{totalLessons} dərs</div>
                     </TableTd>
-                    <TableTd className="min-w-24"><Xp n={r.xp} /></TableTd>
-                    <TableTd className="min-w-32">
-                      <Badge tone="iris">Səv. {r.level}</Badge>
-                      <div className="mt-0.5 text-xs text-muted">{r.levelTitle}</div>
+                    <TableTd className="min-w-0 whitespace-nowrap">
+                      <Xp n={r.xp} />
+                      <div className="mt-0.5 text-xs text-muted" title={r.levelTitle}>Səv. {r.level}</div>
                     </TableTd>
-                    <TableTd className="min-w-20"><Streak n={r.streak} /></TableTd>
-                    <TableTd className={cn("min-w-32 whitespace-nowrap", isInactive(r, now) && "text-flame")}>{lastLabel(r.lastActive)}</TableTd>
-                    <TableTd><Badge>{r.isActive ? "Aktiv hesab" : "Deaktiv hesab"}</Badge></TableTd>
-                    <TableTd>{accountActions(r)}</TableTd>
+                    <TableTd className="hidden min-w-0 xl:table-cell"><Streak n={r.streak} /></TableTd>
+                    <TableTd className={cn("hidden min-w-0 whitespace-nowrap xl:table-cell", isInactive(r, now) && "text-flame")}>{lastLabel(r.lastActive)}</TableTd>
+                    <TableTd className="min-w-0 whitespace-nowrap">
+                      <div className="flex items-center justify-end gap-2">
+                        <Badge tone={r.isActive ? "pass" : "neutral"}>{r.isActive ? "Aktiv" : "Deaktiv"}</Badge>
+                        {accountActions(r, true)}
+                      </div>
+                    </TableTd>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
           </div>
-
           {/* Mobile cards */}
           <ul className="space-y-2.5 md:hidden">
             {list.map((r) => (
